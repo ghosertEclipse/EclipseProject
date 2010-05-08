@@ -1,2 +1,4 @@
 # ignore the .metadata in all workspaces
 *.metadata*
+*.class
+*.pyc
