@@ -1,0 +1,2 @@
+1. After git clone, make sure you've cp ~/Dropbox/home/jiawzhang/workspace/.metadata to all the workspaces in this folder to customize the eclipse font, color and shortcuts.
+2. There is a .gitignore file in this folder to ignore the untracked files/folders including .metadata above, you can also add template files .class, .a, .o or .~ etc to this file.
