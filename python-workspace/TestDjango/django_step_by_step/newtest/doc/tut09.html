@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Django Step by Step (九)</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="django-step-by-step">
+<h1 class="title">Django Step by Step (九)</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body">limodou</td>
+</tr>
+<tr class="field"><th class="docinfo-name">联系:</th><td class="field-body"><a class="reference" href="mailto:limodou&#64;gmail.com">limodou&#64;gmail.com</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
+</tr>
+<tr class="field"><th class="docinfo-name">主页:</th><td class="field-body"><a class="reference" href="http://wiki.woodpecker.org.cn/moin/NewEdit">http://wiki.woodpecker.org.cn/moin/NewEdit</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">BLOG:</th><td class="field-body"><a class="reference" href="http://www.donews.net/limodou">http://www.donews.net/limodou</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权:</th><td class="field-body">FDL</td>
+</tr>
+</tbody>
+</table>
+<div class="contents topic">
+<p class="topic-title first"><a id="id1" name="id1">目录</a></p>
+<ul class="auto-toc simple">
+<li><a class="reference" href="#id2" id="id7" name="id7">1&nbsp;&nbsp;&nbsp;引言</a></li>
+<li><a class="reference" href="#address-models-py" id="id8" name="id8">2&nbsp;&nbsp;&nbsp;修改 address/models.py 实现排序</a></li>
+<li><a class="reference" href="#templates-address-address-list-html" id="id9" name="id9">3&nbsp;&nbsp;&nbsp;修改 templates/address/address_list.html 实现分页显示</a></li>
+<li><a class="reference" href="#address-urls-py" id="id10" name="id10">4&nbsp;&nbsp;&nbsp;修改 address/urls.py</a></li>
+<li><a class="reference" href="#server" id="id11" name="id11">5&nbsp;&nbsp;&nbsp;启动 server 测试</a></li>
+<li><a class="reference" href="#urls-py" id="id12" name="id12">6&nbsp;&nbsp;&nbsp;修改 urls.py</a></li>
+<li><a class="reference" href="#settings-py" id="id13" name="id13">7&nbsp;&nbsp;&nbsp;修改 settings.py</a></li>
+<li><a class="reference" href="#newtest-media" id="id14" name="id14">8&nbsp;&nbsp;&nbsp;创建 newtest/media 目录</a></li>
+<li><a class="reference" href="#templates-base-html" id="id15" name="id15">9&nbsp;&nbsp;&nbsp;创建 templates/base.html</a></li>
+<li><a class="reference" href="#id4" id="id16" name="id16">10&nbsp;&nbsp;&nbsp;修改 templates/address/address_list.html</a></li>
+<li><a class="reference" href="#id5" id="id17" name="id17">11&nbsp;&nbsp;&nbsp;启动 server 测试</a></li>
+<li><a class="reference" href="#id6" id="id18" name="id18">12&nbsp;&nbsp;&nbsp;重要的版权问题</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id7" id="id2" name="id2">1&nbsp;&nbsp;&nbsp;引言</a></h1>
+<p>不知道大家有没有对这个通讯录感到厌烦了，希望没有，因为还有一些东西没有讲完呢。</p>
+<p>最让我感觉不满意的就是通讯录的显示了，的确很难看，希望可以美化一下。那么主要从这几方面：</p>
+<blockquote>
+<ul class="simple">
+<li>对姓名进行排序</li>
+<li>生成分页结果</li>
+<li>增加css和一些图片</li>
+</ul>
+</blockquote>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id8" id="address-models-py" name="address-models-py">2&nbsp;&nbsp;&nbsp;修改 address/models.py 实现排序</a></h1>
+<p>可以在 model 中增加一个叫 <tt class="docutils literal"><span class="pre">Meta</span></tt> 的内类，然后通过对其设置类属性可以用来控制 model 的模型属性。如我们想实现表的排序，可以在 <tt class="docutils literal"><span class="pre">Meta</span></tt> 中增加一个 <tt class="docutils literal"><span class="pre">ordering</span> <span class="pre">=</span> <span class="pre">['name']</span></tt> 的属性即可。它表示按 <tt class="docutils literal"><span class="pre">name</span></tt> 进行排序。它可以有多个字段。如果在字段前加'-'表示倒序。修改完毕在浏览器中看一下效果就知道了。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">在 0.92 版之前 Meta 为 META 。同时我们在前一讲看到的 Admin 也是原本在 META 下使用的。但在 0.92 版发生了改变。</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id9" id="templates-address-address-list-html" name="templates-address-address-list-html">3&nbsp;&nbsp;&nbsp;修改 templates/address/address_list.html 实现分页显示</a></h1>
+<pre class="literal-block">
+&lt;h1 id=&quot;title&quot;&gt;通讯录&lt;/h1&gt;
+&lt;hr&gt;
+&lt;div&gt;
+&lt;table border=&quot;0&quot; width=&quot;500&quot;&gt;
+&lt;tr align=&quot;right&quot;&gt;
+  &lt;td&gt;{% if has_previous %}
+    &lt;a href=&quot;/address?page={{ previous }}&quot;&gt;上一页&lt;/a&gt;
+    {% endif %} {% if has_next %}
+    &lt;a href=&quot;/address?page={{ next }}&quot;&gt;下一页&lt;/a&gt;
+    {% endif %}&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;table border=&quot;1&quot; width=&quot;500&quot;&gt;
+&lt;tr&gt;
+  &lt;th&gt;姓名&lt;/th&gt;
+  &lt;th&gt;性别&lt;/th&gt;
+  &lt;th&gt;电话&lt;/th&gt;
+  &lt;th&gt;手机&lt;/th&gt;
+  &lt;th&gt;房间&lt;/th&gt;
+&lt;/tr&gt;
+{% for person in object_list %}
+&lt;tr&gt;
+  &lt;td&gt;{{ person.name }}&lt;/td&gt;
+  &lt;td&gt;{{ person.gender }}&lt;/td&gt;
+  &lt;td&gt;{{ person.telphone }}&lt;/td&gt;
+  &lt;td&gt;{{ person.mobile }}&lt;/td&gt;
+  &lt;td&gt;{{ person.room }}&lt;/td&gt;
+&lt;/tr&gt;
+{% endfor %}
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;table border=&quot;0&quot; width=&quot;500&quot;&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;form enctype=&quot;multipart/form-data&quot; method=&quot;POST&quot; action=&quot;/address/upload/&quot;&gt;
+文件导入：&lt;input type=&quot;file&quot; name=&quot;file&quot;/&gt;&lt;br/&gt;
+&lt;input type=&quot;submit&quot; value=&quot;上传文件&quot;/&gt;
+&lt;/form&gt;
+&lt;/td&gt;
+&lt;td&gt;&lt;p&gt;&lt;a href=&quot;/address/output/&quot;&gt;导出为csv文件&lt;/a&gt;&lt;/p&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+</pre>
+<p>这时我仍然使用的是 generic view 来处理。但对布局作了简单的调整，将导入和导出的内容移到下面去了。同时增加了对分页的支持:</p>
+<pre class="literal-block">
+{% if has_previous %}
+&lt;a href=&quot;/address?page={{ previous }}&quot;&gt;上一页&lt;/a&gt;
+{% endif %} {% if has_next %}
+&lt;a href=&quot;/address?page={{ next }}&quot;&gt;下一页&lt;/a&gt;
+{% endif %}
+</pre>
+<p>在使用 generic view的 <tt class="docutils literal"><span class="pre">object_list</span></tt> 时，它会根据 URL Dispatch 中是否设置了 <tt class="docutils literal"><span class="pre">paginate_by</span></tt> 这个参数来决定是否使用分页机制。一会我们会看到在 <tt class="docutils literal"><span class="pre">urls.py</span></tt> 的这个参数。一旦设置了这个参数，则 <tt class="docutils literal"><span class="pre">object_list</span></tt> 会使用 Django 提供的一个分页处理器来实现分页。它会自动产生分页所用到的许多的变量，这里我们使用了 <tt class="docutils literal"><span class="pre">has_previous</span></tt>, <tt class="docutils literal"><span class="pre">previous</span></tt>, <tt class="docutils literal"><span class="pre">has_next</span></tt>, <tt class="docutils literal"><span class="pre">next</span></tt> 这四个变量，还有其它一些变量可以使用。具体的参见 <a class="reference" href="http://www.djangoproject.com/documentation/generic_views/">Generic views</a> 文档。</p>
+<p>这里是根据是否有前一页和下一页来分别生成相应的链接。对于分页的链接，需要在url中增加一个 Query 关键字 <tt class="docutils literal"><span class="pre">page</span></tt> 。因此我的模板中会使用 <tt class="docutils literal"><span class="pre">page={{</span> <span class="pre">previous</span> <span class="pre">}}</span></tt> 和 <tt class="docutils literal"><span class="pre">page={{</span> <span class="pre">next</span> <span class="pre">}}</span></tt> 分别指向前一页和下一页的页码。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id10" id="address-urls-py" name="address-urls-py">4&nbsp;&nbsp;&nbsp;修改 address/urls.py</a></h1>
+<pre class="literal-block">
+from django.conf.urls.defaults import *
+from newtest.address.models import Address
+
+info_dict = {
+#    'model': Address,
+    'queryset': Address.objects.all(),
+}
+urlpatterns = patterns('',
+    (r'^/?$', 'django.views.generic.list_detail.object_list',
+        dict(paginate_by=10, **info_dict)),
+    (r'^upload/$', 'address.views.upload'),
+    (r'^output/$', 'address.views.output'),
+)
+</pre>
+<p>修改了原来传给的 <tt class="docutils literal"><span class="pre">object_list</span></tt> 的 <tt class="docutils literal"><span class="pre">info_dict</span></tt> 参数，这里设置每页的条数为 <tt class="docutils literal"><span class="pre">10</span></tt> 条:</p>
+<pre class="literal-block">
+dict(paginate_by=10, **info_dict)
+</pre>
+<p>这是将新的参数与原来的参数合成一个新的字典。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id11" id="server" name="server">5&nbsp;&nbsp;&nbsp;启动 server 测试</a></h1>
+<p>显示效果为</p>
+<img alt="tut08_01.jpg" src="tut08_01.jpg" />
+<p>下面让我们为它添加一些CSS和图片，让它变得好看一些。</p>
+<p>首先要说明一下，我们一直处于开发和测试阶段，因此我们一直使用的都是 Django 自带的 server(其实我个人感觉这个 server 的速度也挺快的)，但最终我们的目的是把它部署到 Apache 上去。现在我们打算增加 CSS 和添加一些图片， Django 提供了这个能力，这就是对静态文件的支持，但是它只是建议在开发过程中使用。真正到了实际环境下，还是让专门的 web server 如 Apache 来做这些事情。只要改一下链接设置就好了。更详细的说明要参见 <a class="reference" href="http://www.djangoproject.com/documentation/static_files/">Serving static/media files</a> 的文档。同时在 Django 中为了不让你依赖这个功能，特别在文档的开始有强烈的声明：使用这个方法是低效和不安全的。同时当 <tt class="docutils literal"><span class="pre">DEBUG</span></tt> 设置(在 <tt class="docutils literal"><span class="pre">settings.py</span></tt> 中有这个选项， <tt class="docutils literal"><span class="pre">True</span></tt> 表示处于调试期，会有一些特殊的功能)为 <tt class="docutils literal"><span class="pre">False</span></tt> 时，这个功能就自动无效了，除非你修改代码让它生效。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id12" id="urls-py" name="urls-py">6&nbsp;&nbsp;&nbsp;修改 urls.py</a></h1>
+<pre class="literal-block">
+from django.conf.urls.defaults import *
+from django.conf import settings
+
+urlpatterns = patterns('',
+    # Example:
+    # (r'^testit/', include('newtest.apps.foo.urls.foo')),
+    (r'^$', 'newtest.helloworld.index'),
+    (r'^add/$', 'newtest.add.index'),
+    (r'^list/$', 'newtest.list.index'),
+    (r'^csv/(?P&lt;filename&gt;\w+)/$', 'newtest.csv_test.output'),
+    (r'^login/$', 'newtest.login.login'),
+    (r'^logout/$', 'newtest.login.logout'),
+    (r'^wiki/$', 'newtest.wiki.views.index'),
+    (r'^wiki/(?P&lt;pagename&gt;\w+)/$', 'newtest.wiki.views.index'),
+    (r'^wiki/(?P&lt;pagename&gt;\w+)/edit/$', 'newtest.wiki.views.edit'),
+    (r'^wiki/(?P&lt;pagename&gt;\w+)/save/$', 'newtest.wiki.views.save'),
+    (r'^address/', include('newtest.address.urls')),
+    (r'^site_media/(?P&lt;path&gt;.*)$', 'django.views.static.serve',
+        {'document_root': settings.STATIC_PATH}),
+
+    # Uncomment this for admin:
+     (r'^admin/', include('django.contrib.admin.urls')),
+)
+</pre>
+<p>你会看到 <tt class="docutils literal"><span class="pre">site_media</span></tt> 就是我将用来存放 CSS 和图片的地方。 <tt class="docutils literal"><span class="pre">django.views.static.serve</span></tt> 需要一个 <tt class="docutils literal"><span class="pre">document_root</span></tt> 的参数，这里我使用了一个 <tt class="docutils literal"><span class="pre">STATIC_PATH</span></tt> ，它从哪里来呢？它是我自已在 <tt class="docutils literal"><span class="pre">settings.py</span></tt> 中定义的。在前面有一个导入语句:</p>
+<pre class="literal-block">
+from django.conf import settings
+</pre>
+<p>从这里可以看到是如何使用 settings.py 的，我们完全可以自已定义新的东西，并让它在整个项目中生效。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id13" id="settings-py" name="settings-py">7&nbsp;&nbsp;&nbsp;修改 settings.py</a></h1>
+<p>在最后增加:</p>
+<pre class="literal-block">
+STATIC_PATH = './media'
+</pre>
+<p>那么我需要在 <tt class="docutils literal"><span class="pre">newtest</span></tt> 目录下创建一个 <tt class="docutils literal"><span class="pre">media</span></tt> 的目录。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id14" id="newtest-media" name="newtest-media">8&nbsp;&nbsp;&nbsp;创建 newtest/media 目录</a></h1>
+<p>这样根据上面 <tt class="docutils literal"><span class="pre">urls.py</span></tt> 的设置，我们以后将通过 <tt class="docutils literal"><span class="pre">/site_media/XXX</span></tt> 来使用某些静态文件。</p>
+<p>为了美化，我想需要一个 CSS 文件来定义一些样式，同时我还想提供一个 Django Powered 的图片。 <a class="reference" href="http://www.djangoproject.com/community/badges/">在这里有官方提供的图标</a> 。 于是我下了一个放在了 <tt class="docutils literal"><span class="pre">media</span></tt> 目录下。同时 CSS 怎么办，自已重头写，太麻烦，反正只是一个测试。于是我下载了 Django 站点用的 css 叫 <tt class="docutils literal"><span class="pre">base.css</span></tt> 也放在了 <tt class="docutils literal"><span class="pre">media</span></tt> 下面。下面就是对模板的改造。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">在 SVN 中我放了一个 css 和 gif 图片大家可以使用，不然可能看不出效果。</p>
+</div>
+<p>为了通用化，我新增了一个 <tt class="docutils literal"><span class="pre">base.html</span></tt> 它是一个框架，而以前的 <tt class="docutils literal"><span class="pre">address_list.html</span></tt> 是它的一个子模板。这样我们就可以了解如何使用模板间的嵌套了。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id15" id="templates-base-html" name="templates-base-html">9&nbsp;&nbsp;&nbsp;创建 templates/base.html</a></h1>
+<pre class="literal-block">
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot;
+    &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xml:lang=&quot;en&quot; lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta http-equiv=&quot;Content-type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+        &lt;meta http-equiv=&quot;Content-Language&quot; content=&quot;en-us&quot; /&gt;
+
+        &lt;title&gt;Address&lt;/title&gt;
+
+        &lt;meta name=&quot;ROBOTS&quot; content=&quot;ALL&quot; /&gt;
+        &lt;meta http-equiv=&quot;imagetoolbar&quot; content=&quot;no&quot; /&gt;
+        &lt;meta name=&quot;MSSmartTagsPreventParsing&quot; content=&quot;true&quot; /&gt;
+        &lt;meta name=&quot;Copyright&quot; content=&quot;This site's design and contents Copyright (c) 2005  Limodou.&quot; /&gt;
+
+        &lt;meta name=&quot;keywords&quot; content=&quot;Python, Django, framework, open-source&quot; /&gt;
+        &lt;meta name=&quot;description&quot; content=&quot;Django is a high-level Python Web framework that encourages rapid development and clean, pragmatic design.&quot; /&gt;
+
+        &lt;link href=&quot;/site_media/base.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;
+
+    &lt;/head&gt;
+
+    &lt;body&gt;
+        &lt;div id=&quot;container&quot;&gt;
+            {% block content %}content{% endblock %}
+        &lt;/div&gt;
+        &lt;div id=&quot;footer&quot;&gt;
+            &lt;div&gt;
+            &lt;img src=&quot;/site_media/djangopowered.gif&quot;/&gt;
+            &lt;/div&gt;
+            &lt;p&gt;&amp;copy; 2005 Limodou. Django is a registered trademark of Lawrence Journal-World.&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>有些代码也是从 Django 的网页中拷贝来的。特别要注意的是:</p>
+<pre class="literal-block">
+{% block content %}content{% endblock %}
+</pre>
+<p>这样就是定了一个可以扩展的模块变量块，我们将在 <tt class="docutils literal"><span class="pre">address_list.html</span></tt> 中扩展它。同时对 CSS 和 Django-Powered 的图片引用的代码是:</p>
+<pre class="literal-block">
+&lt;link href=&quot;/site_media/base.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;
+&lt;img src=&quot;/site_media/djangopowered.gif&quot;/&gt;
+</pre>
+<p>前面都是从 <tt class="docutils literal"><span class="pre">site_media</span></tt> 开始的。这样就将使用我们前面在 <tt class="docutils literal"><span class="pre">urls.py</span></tt> 中的设置了。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id16" id="id4" name="id4">10&nbsp;&nbsp;&nbsp;修改 templates/address/address_list.html</a></h1>
+<pre class="literal-block">
+{% extends &quot;base.html&quot; %}
+{% block content %}
+&lt;style type=&quot;text/css&quot;&gt;
+h1#title {color:white;}
+&lt;/style&gt;
+&lt;div id=&quot;header&quot;&gt;
+&lt;h1 id=&quot;title&quot;&gt;通讯录&lt;/h1&gt;
+&lt;/div&gt;
+&lt;hr&gt;
+&lt;div id=&quot;content-main&quot;&gt;
+    &lt;table border=&quot;0&quot; width=&quot;500&quot;&gt;
+    &lt;tr align=&quot;right&quot;&gt;
+      &lt;td&gt;{% if has_previous %}
+        &lt;a href=&quot;/address?page={{ previous }}&quot;&gt;上一页&lt;/a&gt;
+        {% endif %} {% if has_next %}
+        &lt;a href=&quot;/address?page={{ next }}&quot;&gt;下一页&lt;/a&gt;
+        {% endif %}&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;table border=&quot;1&quot; width=&quot;500&quot;&gt;
+    &lt;tr&gt;
+      &lt;th&gt;姓名&lt;/th&gt;
+      &lt;th&gt;性别&lt;/th&gt;
+      &lt;th&gt;电话&lt;/th&gt;
+      &lt;th&gt;手机&lt;/th&gt;
+      &lt;th&gt;房间&lt;/th&gt;
+    &lt;/tr&gt;
+    {% for person in object_list %}
+    &lt;tr&gt;
+      &lt;td&gt;{{ person.name }}&lt;/td&gt;
+      &lt;td&gt;{{ person.gender }}&lt;/td&gt;
+      &lt;td&gt;{{ person.telphone }}&lt;/td&gt;
+      &lt;td&gt;{{ person.mobile }}&lt;/td&gt;
+      &lt;td&gt;{{ person.room }}&lt;/td&gt;
+    &lt;/tr&gt;
+    {% endfor %}
+    &lt;/table&gt;
+    &lt;table border=&quot;0&quot; width=&quot;500&quot;&gt;
+    &lt;tr&gt;
+    &lt;td&gt;
+    &lt;form enctype=&quot;multipart/form-data&quot; method=&quot;POST&quot; action=&quot;/address/upload/&quot;&gt;
+    文件导入：&lt;input type=&quot;file&quot; name=&quot;file&quot;/&gt;&lt;br/&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;上传文件&quot;/&gt;
+    &lt;/form&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;p&gt;&lt;a href=&quot;/address/output/&quot;&gt;导出为csv文件&lt;/a&gt;&lt;/p&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/table&gt;
+&lt;/div&gt;
+{% endblock %}
+</pre>
+<p>基本上没有太大的变化，主要是增加了一些 <tt class="docutils literal"><span class="pre">div</span></tt> 标签，同时最开始使用:</p>
+<pre class="literal-block">
+{% extends &quot;base&quot; %}
+</pre>
+<p>表示是对 base 的扩展，然后是相应的块的定义:</p>
+<pre class="literal-block">
+{% block content %}
+...
+{% endblock %}
+</pre>
+<p>注意，所有扩展的东西一定要写在块语句的里面，一旦写到了外面，那样就不起作用了。</p>
+<p>Django 的模板可以不止一次的扩展，但这里没有演示。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id17" id="id5" name="id5">11&nbsp;&nbsp;&nbsp;启动 server 测试</a></h1>
+<p>现在你看到的页面是不是象我这样？</p>
+<img alt="tut08_02.jpg" src="tut08_02.jpg" />
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id18" id="id6" name="id6">12&nbsp;&nbsp;&nbsp;重要的版权问题</a></h1>
+<p>版权是一个可能我们大多数人都不重视的问题，但在实际生产中，这是一个必须重视的问题。许多东西象CSS,图片，甚至可能是一种布局，设计都有可能有版权，在使用这些东西的时候一定要注意相关的说明。不要给自已造成麻烦。如果你不清楚，建议你去找清楚的人，或与所有者联系。特别是对于开源，版权更是一个很重要的东西，因为这是保护我们的武器，希望每个人都重视。特别是对于正式发布的东西，一定要将版权问题交待清楚。</p>
+</div>
+</div>
+</body>
+</html>

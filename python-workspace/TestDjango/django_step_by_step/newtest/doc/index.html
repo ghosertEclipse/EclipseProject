@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Django Step by Step</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="django-step-by-step">
+<h1 class="title">Django Step by Step</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body">limodou</td>
+</tr>
+<tr class="field"><th class="docinfo-name">联系:</th><td class="field-body"><a class="reference" href="mailto:limodou&#64;gmail.com">limodou&#64;gmail.com</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.2</td>
+</tr>
+<tr class="field"><th class="docinfo-name">主页:</th><td class="field-body"><a class="reference" href="http://wiki.woodpecker.org.cn/moin/NewEdit">http://wiki.woodpecker.org.cn/moin/NewEdit</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">BLOG:</th><td class="field-body"><a class="reference" href="http://www.donews.net/limodou">http://www.donews.net/limodou</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权:</th><td class="field-body">FDL</td>
+</tr>
+</tbody>
+</table>
+<p>这是 <a class="reference" href="http://www.djangoproject.com/">Django</a> 的系列教程。在写作中 Django 本身也在不停地发展变化，而且本人的水平有限，错误是难免的。欢迎你与我讨论 Django, <a class="reference" href="http://www.python.org/">Python</a>, 甚至 <a class="reference" href="http://wiki.woodpecker.org.cn/moin/NewEdit">NewEdit</a> 相关的问题。</p>
+<p>本文档在不继写作中，所有代码及文档源码存放于啄木鸟社区 SVN 中:</p>
+<pre class="literal-block">
+http://cvs.woodpecker.org.cn/svn/woodpecker/zqlib/tangle/limodou/django-stepbystep/newtest
+</pre>
+<p>本文档静态发布地址在 <a class="reference" href="http://www.woodpecker.org.cn/obp/django/django-stepbystep/newtest/doc/">http://www.woodpecker.org.cn/obp/django/django-stepbystep/newtest/doc/</a></p>
+<p>如果你在其它地方看到此文档，则可能不是最新的，欢迎访问我的 <a class="reference" href="http://www.donews.net/limodou">Blog</a> 或访问上面的静态页面了解最新的变化。也欢迎加入 CPUG(<a class="reference" href="http://www.python.cn/">http://www.python.cn/</a>) 的邮件列表 <a class="reference" href="http://groups.google.com/group/python-cn">http://groups.google.com/group/python-cn</a> 与我们一起讨论 Django 及 Web 开发技术。</p>
+<p>本文档也可以打包下载， <a class="reference" href="http://wiki.woodpecker.org.cn/moin/LimodouShare?action=AttachFile&amp;do=get&amp;target=djangostepbystep.zip">点击下载</a> 。</p>
+<p>更新日期 2006/07/07</p>
+<p>本教程 &lt;一&gt; 到 &lt;十六&gt; 章节赶在 2006 年春节前修改和编写完成。感谢所有帮助过我的人。特别感谢 Zoom.Quiet 所做的工作。</p>
+<p>本文档使用 reStructuredText 格式编写。在线发布由 Zoom.Quiet 直接通过 SVN 发布。</p>
+<div class="contents topic">
+<p class="topic-title first"><a id="id2" name="id2">目录</a></p>
+<ul class="auto-toc simple">
+<li><a class="reference" href="#id3" id="id37" name="id37">1&nbsp;&nbsp;&nbsp;第一讲</a></li>
+<li><a class="reference" href="#id5" id="id38" name="id38">2&nbsp;&nbsp;&nbsp;第二讲</a></li>
+<li><a class="reference" href="#id7" id="id39" name="id39">3&nbsp;&nbsp;&nbsp;第三讲</a></li>
+<li><a class="reference" href="#id9" id="id40" name="id40">4&nbsp;&nbsp;&nbsp;第四讲</a></li>
+<li><a class="reference" href="#id11" id="id41" name="id41">5&nbsp;&nbsp;&nbsp;第五讲</a></li>
+<li><a class="reference" href="#id13" id="id42" name="id42">6&nbsp;&nbsp;&nbsp;第六讲</a></li>
+<li><a class="reference" href="#id15" id="id43" name="id43">7&nbsp;&nbsp;&nbsp;第七讲</a></li>
+<li><a class="reference" href="#id17" id="id44" name="id44">8&nbsp;&nbsp;&nbsp;第八讲</a></li>
+<li><a class="reference" href="#id19" id="id45" name="id45">9&nbsp;&nbsp;&nbsp;第九讲</a></li>
+<li><a class="reference" href="#id21" id="id46" name="id46">10&nbsp;&nbsp;&nbsp;第十讲</a></li>
+<li><a class="reference" href="#id23" id="id47" name="id47">11&nbsp;&nbsp;&nbsp;第十一讲</a></li>
+<li><a class="reference" href="#id25" id="id48" name="id48">12&nbsp;&nbsp;&nbsp;第十二讲</a></li>
+<li><a class="reference" href="#id27" id="id49" name="id49">13&nbsp;&nbsp;&nbsp;第十三讲</a></li>
+<li><a class="reference" href="#id29" id="id50" name="id50">14&nbsp;&nbsp;&nbsp;第十四讲</a></li>
+<li><a class="reference" href="#id31" id="id51" name="id51">15&nbsp;&nbsp;&nbsp;第十五讲</a></li>
+<li><a class="reference" href="#id33" id="id52" name="id52">16&nbsp;&nbsp;&nbsp;第十六讲</a></li>
+<li><a class="reference" href="#id35" id="id53" name="id53">17&nbsp;&nbsp;&nbsp;第十七讲</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a id="id3" name="id3">1&nbsp;&nbsp;&nbsp;<a class="reference" href="tut01.html">第一讲</a></a></h1>
+<p>本讲作为入门第一篇。主要讲解了 <a class="reference" href="http://karrigell.sourceforge.net/">Karrigell</a> 与 Django 的不同体验。同时介绍了一个最简单的 Hello, Django! 的例子。</p>
+</div>
+<div class="section">
+<h1><a id="id5" name="id5">2&nbsp;&nbsp;&nbsp;<a class="reference" href="tut02.html">第二讲</a></a></h1>
+<p>生成一个web form 用来做加法的简单例子。</p>
+</div>
+<div class="section">
+<h1><a id="id7" name="id7">3&nbsp;&nbsp;&nbsp;<a class="reference" href="tut03.html">第三讲</a></a></h1>
+<p>使用Template的简单例子。</p>
+</div>
+<div class="section">
+<h1><a id="id9" name="id9">4&nbsp;&nbsp;&nbsp;<a class="reference" href="tut04.html">第四讲</a></a></h1>
+<p>生成csv格式文件并下载的例子。</p>
+</div>
+<div class="section">
+<h1><a id="id11" name="id11">5&nbsp;&nbsp;&nbsp;<a class="reference" href="tut05.html">第五讲</a></a></h1>
+<p>session的示例，开始进入数据库的世界。</p>
+</div>
+<div class="section">
+<h1><a id="id13" name="id13">6&nbsp;&nbsp;&nbsp;<a class="reference" href="tut06.html">第六讲</a></a></h1>
+<p>一个wiki的例子。</p>
+</div>
+<div class="section">
+<h1><a id="id15" name="id15">7&nbsp;&nbsp;&nbsp;<a class="reference" href="tut07.html">第七讲</a></a></h1>
+<p>一个通讯录的例子。</p>
+</div>
+<div class="section">
+<h1><a id="id17" name="id17">8&nbsp;&nbsp;&nbsp;<a class="reference" href="tut08.html">第八讲</a></a></h1>
+<p>为通讯录增加文件导入和导出功能。</p>
+</div>
+<div class="section">
+<h1><a id="id19" name="id19">9&nbsp;&nbsp;&nbsp;<a class="reference" href="tut09.html">第九讲</a></a></h1>
+<p>通讯录的美化，使用嵌套模板，静态文件，分页处理等。</p>
+</div>
+<div class="section">
+<h1><a id="id21" name="id21">10&nbsp;&nbsp;&nbsp;<a class="reference" href="tut10.html">第十讲</a></a></h1>
+<p>扩展django的模板，自定义filter，进一步美化。</p>
+</div>
+<div class="section">
+<h1><a id="id23" name="id23">11&nbsp;&nbsp;&nbsp;<a class="reference" href="tut11.html">第十一讲</a></a></h1>
+<p>用户管理和使用authentication来限制用户的行为。</p>
+</div>
+<div class="section">
+<h1><a id="id25" name="id25">12&nbsp;&nbsp;&nbsp;<a class="reference" href="tut12.html">第十二讲</a></a></h1>
+<p>搜索功能的实现和Apache上的部署体验。</p>
+</div>
+<div class="section">
+<h1><a id="id27" name="id27">13&nbsp;&nbsp;&nbsp;<a class="reference" href="tut13.html">第十三讲</a></a></h1>
+<p>简单的Ajax的实现(一)，MochiKit的一些使用。</p>
+</div>
+<div class="section">
+<h1><a id="id29" name="id29">14&nbsp;&nbsp;&nbsp;<a class="reference" href="tut14.html">第十四讲</a></a></h1>
+<p>简单的Ajax的实现(二)，使用SimpleJson来交换数据。</p>
+</div>
+<div class="section">
+<h1><a id="id31" name="id31">15&nbsp;&nbsp;&nbsp;<a class="reference" href="tut15.html">第十五讲</a></a></h1>
+<p>i18n 的一个简单实现。</p>
+</div>
+<div class="section">
+<h1><a id="id33" name="id33">16&nbsp;&nbsp;&nbsp;<a class="reference" href="tut16.html">第十六讲</a></a></h1>
+<p>自定义 Calendar Tag 。</p>
+</div>
+<div class="section">
+<h1><a id="id35" name="id35">17&nbsp;&nbsp;&nbsp;<a class="reference" href="tut17.html">第十七讲</a></a></h1>
+<p>View, Template, Tag之间的关系</p>
+<img alt="djangopowered.gif" src="djangopowered.gif" />
+</div>
+</div>
+</body>
+</html>

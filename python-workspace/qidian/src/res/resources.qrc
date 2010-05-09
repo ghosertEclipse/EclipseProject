@@ -1,0 +1,10 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+<file alias="user.ico">images/user.ico</file>
+<file alias="book.ico">images/book.ico</file>
+<file alias="add.gif">images/add.gif</file>
+<file alias="edit.gif">images/edit.gif</file>
+<file alias="remove.gif">images/remove.gif</file>
+<file alias="app.ico">images/app.ico</file>
+</qresource>
+</RCC>

@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Django Step by Step (十六)</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="django-step-by-step">
+<h1 class="title">Django Step by Step (十六)</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body">limodou</td>
+</tr>
+<tr class="field"><th class="docinfo-name">联系:</th><td class="field-body"><a class="reference" href="mailto:limodou&#64;gmail.com">limodou&#64;gmail.com</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
+</tr>
+<tr class="field"><th class="docinfo-name">主页:</th><td class="field-body"><a class="reference" href="http://wiki.woodpecker.org.cn/moin/NewEdit">http://wiki.woodpecker.org.cn/moin/NewEdit</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">BLOG:</th><td class="field-body"><a class="reference" href="http://www.donews.net/limodou">http://www.donews.net/limodou</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权:</th><td class="field-body">FDL</td>
+</tr>
+</tbody>
+</table>
+<div class="contents topic">
+<p class="topic-title first"><a id="id1" name="id1">目录</a></p>
+<ul class="auto-toc simple">
+<li><a class="reference" href="#id2" id="id6" name="id6">1&nbsp;&nbsp;&nbsp;引言</a></li>
+<li><a class="reference" href="#htmlcalendar" id="id7" name="id7">2&nbsp;&nbsp;&nbsp;下载 HTMLCalendar 模块并安装</a></li>
+<li><a class="reference" href="#htmltemplate" id="id8" name="id8">3&nbsp;&nbsp;&nbsp;下载 HTMLTemplate 模块并安装</a></li>
+<li><a class="reference" href="#my-alendar" id="id9" name="id9">4&nbsp;&nbsp;&nbsp;创建 my_alendar 应用</a></li>
+<li><a class="reference" href="#my-calendar-templatetags" id="id10" name="id10">5&nbsp;&nbsp;&nbsp;创建 my_calendar/templatetags 目录</a></li>
+<li><a class="reference" href="#my-calendar-templatetags-init-py" id="id11" name="id11">6&nbsp;&nbsp;&nbsp;创建 my_calendar/templatetags/__init__.py 文件</a></li>
+<li><a class="reference" href="#my-calendar-templatetags-my-calendar-py" id="id12" name="id12">7&nbsp;&nbsp;&nbsp;创建 my_calendar/templatetags/my_calendar.py 文件</a></li>
+<li><a class="reference" href="#templates-my-calendar" id="id13" name="id13">8&nbsp;&nbsp;&nbsp;创建 templates/my_calendar 目录</a></li>
+<li><a class="reference" href="#templates-my-calendar-calendar-html" id="id14" name="id14">9&nbsp;&nbsp;&nbsp;创建 templates/my_calendar/calendar.html 文件</a></li>
+<li><a class="reference" href="#usls-py" id="id15" name="id15">10&nbsp;&nbsp;&nbsp;修改 usls.py</a></li>
+<li><a class="reference" href="#settings-py-my-calendar" id="id16" name="id16">11&nbsp;&nbsp;&nbsp;修改 settings.py 安装 my_calendar 应用</a></li>
+<li><a class="reference" href="#server" id="id17" name="id17">12&nbsp;&nbsp;&nbsp;启动 server 测试</a></li>
+<li><a class="reference" href="#id4" id="id18" name="id18">13&nbsp;&nbsp;&nbsp;修改 my_calendar/templatetags/my_calendar.py</a></li>
+<li><a class="reference" href="#id5" id="id19" name="id19">14&nbsp;&nbsp;&nbsp;启动 server 测试</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id6" id="id2" name="id2">1&nbsp;&nbsp;&nbsp;引言</a></h1>
+<p><a class="reference" href="http://www.djangoproject.com/">Django</a> 中的模板系统可以被自由扩展，如自定义 filter, 自定义 Tag 等。其中 filter 用于对变量的处理。而 Tag 则功能强大，几乎可以做任何事情。我认为 Tag 的好处有非常多，比如：</p>
+<ul class="simple">
+<li>可以简单化代码的生成。一个 Tag 相当于一个代码片段，把重复的东西做成 Tag 可以避免许多重复的工作。</li>
+<li>可以用来组合不同的应用。将一个应用的展示处理成 Tag 的方式，这样就可以在一个模板中组合不同的应用展示 Tag，而且修改模板也相对容易。</li>
+</ul>
+<p>如果要自定义 Tag ，那么要了解 Tag 的处理过程。在 Django 中， Tag 的处理分为两步。</p>
+<ol class="arabic simple">
+<li>编译。即把 Tag 编译为一系列的 <tt class="docutils literal"><span class="pre">django.template.Node</span></tt> 结点。</li>
+<li>渲染(Render)。即对每个 Node 调用它们的 <tt class="docutils literal"><span class="pre">render()</span></tt> 方法，然后将输出结果拼接起来。</li>
+</ol>
+<p>因此自定义一个 Tag ，你需要针对这两步处理来做工作。</p>
+<p>在 <a class="reference" href="#the-django-template-language-for-python-programmers">The Django template language: For Python programmers</a> 文档中讲解了一些例子。大家可以看一下。</p>
+<p id="the-django-template-language-for-python-programmers">那么下面，我将实现一个显示日历的自定义 Tag 。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id7" id="htmlcalendar" name="htmlcalendar">2&nbsp;&nbsp;&nbsp;下载 HTMLCalendar 模块并安装</a></h1>
+<p>不想全部自已做，因此找了一个现成的模块。去 <a class="reference" href="http://freespace.virgin.net/hamish.sanderson/htmlcalendar.html">HTMLCalender</a> 的主页下载这个模块。</p>
+<p>然后解压到一个目录下，执行安装:</p>
+<pre class="literal-block">
+python setup.py install
+</pre>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id8" id="htmltemplate" name="htmltemplate">3&nbsp;&nbsp;&nbsp;下载 HTMLTemplate 模块并安装</a></h1>
+<p>然后解压到一个目录下，执行安装:</p>
+<pre class="literal-block">
+python setup.py install
+</pre>
+<p>因为上面的 HTMLCalender 需要它才可以运行。去 <a class="reference" href="http://freespace.virgin.net/hamish.sanderson/htmltemplate.html">HTMLTemplate</a> 主页下载这个模块。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id9" id="my-alendar" name="my-alendar">4&nbsp;&nbsp;&nbsp;创建 my_alendar 应用</a></h1>
+<pre class="literal-block">
+manage.py startapp my_calendar
+</pre>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">这里起名为 <tt class="docutils literal"><span class="pre">my_calendar</span></tt> 。因为如果起名为 <tt class="docutils literal"><span class="pre">calendar</span></tt> 会与系统的 <tt class="docutils literal"><span class="pre">calendar</span></tt> 模块重名。</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id10" id="my-calendar-templatetags" name="my-calendar-templatetags">5&nbsp;&nbsp;&nbsp;创建 my_calendar/templatetags 目录</a></h1>
+<pre class="literal-block">
+cd my_calendar
+md templatetags
+</pre>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">在 Windows 下是 <tt class="docutils literal"><span class="pre">md</span></tt>, 在 Linux 下是 <tt class="docutils literal"><span class="pre">mkdir</span></tt> 。</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id11" id="my-calendar-templatetags-init-py" name="my-calendar-templatetags-init-py">6&nbsp;&nbsp;&nbsp;创建 my_calendar/templatetags/__init__.py 文件</a></h1>
+<p>空文件即可。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id12" id="my-calendar-templatetags-my-calendar-py" name="my-calendar-templatetags-my-calendar-py">7&nbsp;&nbsp;&nbsp;创建 my_calendar/templatetags/my_calendar.py 文件</a></h1>
+<pre class="literal-block">
+from django import template
+
+register = template.Library()
+
+class CalendarNode(template.Node):
+    def __init__(self):
+        pass
+
+    def render(self, context):
+        return &quot;Calendar&quot;
+
+def do_calendar(parser, token):
+    return CalendarNode()
+
+register.tag('calendar', do_calendar)
+</pre>
+<p>上面的代码只是一个空架子。不过让我们仔细地解释一下：</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">register</span></tt> 与自定义 filter 一样，它将用来注册一个 Tag 的名字到系统中去。</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">CalendarNode</span></tt> 它是 <tt class="docutils literal"><span class="pre">template.Node</span></tt> 的一个子类。每个 Tag 都需要从 <tt class="docutils literal"><span class="pre">Node</span></tt> 派生。这个类可以只有 <tt class="docutils literal"><span class="pre">render()</span></tt> 方法，用来返回处理后的文本。 <tt class="docutils literal"><span class="pre">__init__()</span></tt> 可能是有用的，先预留。</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">render()</span></tt> 方法接受一个 <tt class="docutils literal"><span class="pre">context</span></tt> 参数。这个参数就是在执行模板的渲染时由 View 传入的。不过更复杂的例子是你可以修改 <tt class="docutils literal"><span class="pre">context</span></tt> ，这样达到注入新变量的目的。不过本例没有演示。</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">do_calendar()</span></tt> 是一个由模板处理引擎在发现一个 Tag 的名字之后，将进行调用的方法。那么我们的 Tag 可能在模板中写为 <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">calendar</span> <span class="pre">%}</span></tt> 。这个方法将在下面通过注册过程与一个名字相对应，这里我们想使用 <tt class="docutils literal"><span class="pre">calendar</span></tt> 。</p>
+<p>它接受两个参数：</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">parser</span></tt> 这是模板处理引擎对象，我们没有用到。</li>
+<li><tt class="docutils literal"><span class="pre">token</span></tt> 表示 Tag 的原始文本。如果在模板中我们定义 Tag 为 <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">calendar</span> <span class="pre">2006</span> <span class="pre">1</span> <span class="pre">%}</span></tt>, 那么 <tt class="docutils literal"><span class="pre">token</span></tt> 就为 <tt class="docutils literal"><span class="pre">calendar</span> <span class="pre">2006</span> <span class="pre">1</span></tt> 。因此你需要对它进一步地处理。</li>
+</ul>
+<p>它将返回一个 Node 的实例，在本例中就是 <tt class="docutils literal"><span class="pre">CalendarNode</span></tt> 实例。</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">register.tag('calendar',</span> <span class="pre">do_calendar)</span></tt> 用来注册 Tag 名字和对应的处理方法。</p>
+</li>
+</ul>
+<p>尽管我们没有对 calendar 所带的参数进行处理，但它仍然可以显示。要知道我们还没有使用 HTMLCalender 模块呢。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id13" id="templates-my-calendar" name="templates-my-calendar">8&nbsp;&nbsp;&nbsp;创建 templates/my_calendar 目录</a></h1>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id14" id="templates-my-calendar-calendar-html" name="templates-my-calendar-calendar-html">9&nbsp;&nbsp;&nbsp;创建 templates/my_calendar/calendar.html 文件</a></h1>
+<pre class="literal-block">
+{% load my_calendar %}
+{% calendar 2006 1 %}
+</pre>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id15" id="usls-py" name="usls-py">10&nbsp;&nbsp;&nbsp;修改 usls.py</a></h1>
+<p>增加下面的 url 配置:</p>
+<pre class="literal-block">
+(r'^calendar/$', 'django.views.generic.simple.direct_to_template',
+    {'template': 'my_calendar/calendar'}),
+</pre>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id16" id="settings-py-my-calendar" name="settings-py-my-calendar">11&nbsp;&nbsp;&nbsp;修改 settings.py 安装 my_calendar 应用</a></h1>
+<pre class="literal-block">
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'newtest.wiki',
+    'newtest.address',
+    'newtest.ajax',
+    'newtest.my_calendar',
+    'django.contrib.admin',
+)
+</pre>
+<p>增加了 my_calendar 应用。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id17" id="server" name="server">12&nbsp;&nbsp;&nbsp;启动 server 测试</a></h1>
+<p>页面上应该显示出 Calendar 的文本。我们在模板中定义的参数没有被用到。因为我们没有真正调用 HTMLCalender 输出，因此上面只是说明框架是可用的。</p>
+<p>下面让我们加入参数的处理。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id18" id="id4" name="id4">13&nbsp;&nbsp;&nbsp;修改 my_calendar/templatetags/my_calendar.py</a></h1>
+<pre class="literal-block">
+from django import template
+import HTMLCalendar
+
+register = template.Library()
+
+class CalendarNode(template.Node):
+    def __init__(self, year, mon):
+        self.year = int(year)
+        self.mon = int(mon)
+
+    def render(self, context):
+        return HTMLCalendar.MonthCal().render(self.year, self.mon)
+
+def do_calendar(parser, token):
+    try:
+        tag_name, arg = token.contents.split(None, 1)
+    except ValueError:
+        #if no args then using current date
+        import datetime
+        today = datetime.date.today()
+        year, mon = today.year, today.mon
+    else:
+        try:
+            year, mon = arg.split(None, 1)
+        except ValueError:
+            raise template.TemplateSyntaxError, &quot;%r tag requires year and mon arguments&quot; % tag_name
+
+    return CalendarNode(year, mon)
+
+register.tag('calendar', do_calendar)
+</pre>
+<p>主要改动如下：</p>
+<ol class="arabic simple">
+<li>增加了 <tt class="docutils literal"><span class="pre">import</span> <span class="pre">HTMLCalendar</span></tt> 的导入。</li>
+<li>修改了 <tt class="docutils literal"><span class="pre">CalendarNode</span></tt> 的 <tt class="docutils literal"><span class="pre">__init__()</span></tt> 方法，增加了两个参数。</li>
+<li>修改了 <tt class="docutils literal"><span class="pre">CalendarNode</span></tt> 的 <tt class="docutils literal"><span class="pre">render()</span></tt> 方法。改成输出一个 Calendar 的表格。</li>
+<li>修改了 <tt class="docutils literal"><span class="pre">do_calendar()</span></tt> 函数，增加了参数的处理。如果没有输入参数则使用当前的年、月值。否则使用指定的年、月参数。如果解析有误，则引发异常。</li>
+</ol>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">不过在调试的过程中，的确有一些错误。象开始时我命名为 <tt class="docutils literal"><span class="pre">calendar</span></tt> 目录，结果造成与系统的 <tt class="docutils literal"><span class="pre">calendar</span></tt> 模块重名。然后不得已进行了改名。为什么发现要导入 HTMLTemplate 呢？因为在处理时 HTMLCalender 抛出了异常。但成功后我已经把这些调试语句去掉了。而且发现这些错误 Django 报告得有些简单，你可能不清楚倒底是什么错。因此最好的方法：一是在命令行下导入试一下，看一看有没有导入的错误。另外就是使用 <tt class="docutils literal"><span class="pre">try..except</span></tt> 然后使用 traceback 模块打印异常信息。</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id19" id="id5" name="id5">14&nbsp;&nbsp;&nbsp;启动 server 测试</a></h1>
+<p>你会看到：</p>
+<img alt="tut16_01.jpg" src="tut16_01.jpg" />
+<p>也许感到不好看，没关系，可以通过 CSS 进行美化。当然，这样可能还是不让人满意，比如：不是 i18n 方式的，因此看不到中文。不过这已经不是我们的重点了。掌握了自定义 Tag 的方法就可以自行进行改造了。</p>
+<p>同时 HTMLCalender 模块本身可以传入一些链接，这样就可以在日历上点击了。这里不再试验了。有兴趣的可以自已做一下。</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Django Step by Step (十二)</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="django-step-by-step">
+<h1 class="title">Django Step by Step (十二)</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body">limodou</td>
+</tr>
+<tr class="field"><th class="docinfo-name">联系:</th><td class="field-body"><a class="reference" href="mailto:limodou&#64;gmail.com">limodou&#64;gmail.com</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
+</tr>
+<tr class="field"><th class="docinfo-name">主页:</th><td class="field-body"><a class="reference" href="http://wiki.woodpecker.org.cn/moin/NewEdit">http://wiki.woodpecker.org.cn/moin/NewEdit</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">BLOG:</th><td class="field-body"><a class="reference" href="http://www.donews.net/limodou">http://www.donews.net/limodou</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权:</th><td class="field-body">FDL</td>
+</tr>
+</tbody>
+</table>
+<div class="contents topic">
+<p class="topic-title first"><a id="id1" name="id1">目录</a></p>
+<ul class="auto-toc simple">
+<li><a class="reference" href="#id2" id="id6" name="id6">1&nbsp;&nbsp;&nbsp;引言</a></li>
+<li><a class="reference" href="#templates-address-address-list-html" id="id7" name="id7">2&nbsp;&nbsp;&nbsp;修改 templates/address/address_list.html</a></li>
+<li><a class="reference" href="#address-views-py" id="id8" name="id8">3&nbsp;&nbsp;&nbsp;修改 address/views.py</a></li>
+<li><a class="reference" href="#address-urls-py" id="id9" name="id9">4&nbsp;&nbsp;&nbsp;修改 address/urls.py</a></li>
+<li><a class="reference" href="#server" id="id10" name="id10">5&nbsp;&nbsp;&nbsp;启动 server 测试</a></li>
+<li><a class="reference" href="#apache" id="id11" name="id11">6&nbsp;&nbsp;&nbsp;部署到 Apache 上的体验</a><ul class="auto-toc">
+<li><a class="reference" href="#mod-python" id="id12" name="id12">6.1&nbsp;&nbsp;&nbsp;安装 mod_python 模块</a></li>
+<li><a class="reference" href="#httpd-conf" id="id13" name="id13">6.2&nbsp;&nbsp;&nbsp;修改 httpd.conf 文件</a></li>
+<li><a class="reference" href="#settings-py-settings-apache-py" id="id14" name="id14">6.3&nbsp;&nbsp;&nbsp;复制 settings.py 到 settings_apache.py</a></li>
+<li><a class="reference" href="#settings-apache-py" id="id15" name="id15">6.4&nbsp;&nbsp;&nbsp;修改 settings_apache.py</a></li>
+<li><a class="reference" href="#id4" id="id16" name="id16">6.5&nbsp;&nbsp;&nbsp;测试</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#id5" id="id17" name="id17">7&nbsp;&nbsp;&nbsp;后话</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id6" id="id2" name="id2">1&nbsp;&nbsp;&nbsp;引言</a></h1>
+<p>如果通讯录中的记录很多，我希望有一种搜索的方法，下面就让我们加一个搜索功能吧。当然，这个搜索功能是很简单的。在 <a class="reference" href="http://www.djangoproject.com/">Django</a> 邮件列表中看到 WorldOnline(好象是它)有一个搜索的框架，可以定义哪些模块的哪些字段要参加搜索。这样在处理时会自动将相应的信息加入到搜索数据库中进行预处理。现在这个框架并没有开放源码，而且它底层使用的搜索的东西并不是 Django 本身的。这里我只是对姓名字段进行查找。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id7" id="templates-address-address-list-html" name="templates-address-address-list-html">2&nbsp;&nbsp;&nbsp;修改 templates/address/address_list.html</a></h1>
+<pre class="literal-block">
+[...]
+&lt;hr&gt;
+&lt;div id=&quot;content-main&quot;&gt;
+    &lt;table border=&quot;0&quot; width=&quot;500&quot;&gt;
+    &lt;tr align=&quot;right&quot;&gt;&lt;td&gt;
+    &lt;form method=&quot;GET&quot; action=&quot;/address/search/&quot;&gt;
+    搜索姓名：&lt;input name=&quot;search&quot; type=&quot;text&quot; value=&quot;{{ searchvalue }}&quot;/&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;提交&quot;/&gt;
+    &lt;/form&gt;
+    &lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;table border=&quot;0&quot; width=&quot;500&quot;&gt;
+    &lt;tr align=&quot;right&quot;&gt;
+      &lt;td&gt;{% if has_previous %}
+[...]
+</pre>
+<p>在显示分页的代码上面增加了搜索的处理。</p>
+<p>从上面可以看到，条件输入处我增加了一个 <tt class="docutils literal"><span class="pre">searchvalue</span></tt> 的变量，希望在提交一个搜索后，显示页面的同时显示当前显示时使用的条件。</p>
+<p>这里存在一个困难：如何把搜索条件，搜索字符串与通用 view 相关联呢？只要我们生成正确的 queryset(结果集) 即可。但这个结果集需要查询姓名为指定名称的记录，如何实现呢？</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">在以前 <tt class="docutils literal"><span class="pre">object_list</span></tt> 可以传入 <tt class="docutils literal"><span class="pre">extra_lookup_kwargs</span></tt> 参数，但后来由于使用了 queryset ，则这个参数不再需要了。</p>
+</div>
+<p>通过 <tt class="docutils literal"><span class="pre">urls.py</span></tt> 我想是不行的，因为它只从 url 解析，而且对于 QUERY_STRING 是不进行解析的(QUERY_STRING 是指： <tt class="docutils literal"><span class="pre">http://example.com/add/?name=test</span></tt> 中 <tt class="docutils literal"><span class="pre">?</span></tt> 后面的东西，也就是 <tt class="docutils literal"><span class="pre">name=test</span></tt> )。对于搜索条件，我会使用一个 form 来处理， <tt class="docutils literal"><span class="pre">method</span></tt> 会设为 <tt class="docutils literal"><span class="pre">GET</span></tt> ，因此生成的 url 中，查询条件正如这个例子，如： <tt class="docutils literal"><span class="pre">http://localhost:8000/address/search/?search=limodou</span></tt> 。这样无法变成上面所要用到的参数。</p>
+<p>因此我决定自定义一个新的 view 方法。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id8" id="address-views-py" name="address-views-py">3&nbsp;&nbsp;&nbsp;修改 address/views.py</a></h1>
+<pre class="literal-block">
+from django.views.generic.list_detail import object_list
+def search(request):
+    name = request.REQUEST['search']
+    if name:
+        extra_lookup_kwargs = {'name__icontains':name}
+        extra_context = {'searchvalue':name}
+#        return object_list(request, Address,
+#            paginate_by=10, extra_context=extra_context,
+#            extra_lookup_kwargs=extra_lookup_kwargs)
+        return object_list(request, Address.objects.filter(name__icontains=name),
+            paginate_by=10, extra_context=extra_context)
+    else:
+        return HttpResponseRedirect('/address/')
+</pre>
+<p>上述代码加到最后去。这里并没有完全重写，而是在 object_list 外面封装了一层，主要是生成要用在 object_list 的中参数。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last"><tt class="docutils literal"><span class="pre">extra_context</span></tt> 是可以传入到模板中的上下文字典。</p>
+</div>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last"><tt class="docutils literal"><span class="pre">name_icontains</span></tt> 是 Django 中过滤条件的写法。这里是说只要包含指定的字符的即可，而且不区分大小写。详细地要看 Django 的 DB-API 文档。</p>
+</div>
+<p><tt class="docutils literal"><span class="pre">request.REQUEST</span> <span class="pre">['search']</span></tt> 或者从 GET 或者从 POST 中得到数据，是一个方便的用法。它将得到提交的查询姓名条件，如果存在，则生成 <tt class="docutils literal"><span class="pre">extra_lookup_kwargs</span></tt> 和 <tt class="docutils literal"><span class="pre">extra_context</span></tt> 参数，然后按 <tt class="docutils literal"><span class="pre">object_list</span></tt> 的要求传入。如果没有提交，则回到 address 的起始页面。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id9" id="address-urls-py" name="address-urls-py">4&nbsp;&nbsp;&nbsp;修改 address/urls.py</a></h1>
+<pre class="literal-block">
+from django.conf.urls.defaults import *
+from newtest.address.models import Address
+
+info_dict = {
+#    'model': Address,
+    'queryset': Address.objects.all(),
+}
+urlpatterns = patterns('',
+    (r'^/?$', 'django.views.generic.list_detail.object_list',
+        dict(paginate_by=10, **info_dict)),
+    (r'^upload/$', 'address.views.upload'),
+    (r'^output/$', 'address.views.output'),
+    (r'^search/$', 'address.views.search'),
+)
+</pre>
+<p>增加了一个 search 的 url 链接映射。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id10" id="server" name="server">5&nbsp;&nbsp;&nbsp;启动 server 测试</a></h1>
+<p>感觉这个通讯录也差不多了，现在让我们将其部署到 Apache 上去跑一跑吧。</p>
+<p>但部署到 apache 时才知道，问题很多啊。主要问题如下：</p>
+<ol class="loweralpha">
+<li><p class="first">模块名不全</p>
+<p>比如许多例子我都是从当前目录(<tt class="docutils literal"><span class="pre">newtest</span></tt>)下开始计算，因为在 Windows 下，Python_ 会自动将当前目录加入到 <tt class="docutils literal"><span class="pre">sys.path</span></tt> 中，因此直接使用 <tt class="docutils literal"><span class="pre">address.*</span></tt> 之类的不会出错，但在 Apache 下需要使用 <tt class="docutils literal"><span class="pre">newtest.address.*</span></tt> 这样的方式。必须按教程的方式处理。主要修改 <tt class="docutils literal"><span class="pre">urls.py</span></tt> 文件。</p>
+</li>
+</ol>
+<ol class="loweralpha" start="2">
+<li><p class="first">相对路径的问题</p>
+<p>许多使用相对路径的地方都不对了。必须使用绝对路径。不过这一点对于部署来说的确有些麻烦，好在要改动的地方不多，主要在 <tt class="docutils literal"><span class="pre">settings.py</span></tt> 中。如数据库名字(sqlite3)，模板的位置。</p>
+</li>
+</ol>
+<p>其它的就是要注意的地方了。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id11" id="apache" name="apache">6&nbsp;&nbsp;&nbsp;部署到 Apache 上的体验</a></h1>
+<p>只能说是体验了，因为我不是 Apache 的专家，也不是 mod_python 的专家，因此下面的内容只能算是我个人的配置记录，希望对大家有所帮助。</p>
+<div class="section">
+<h2><a class="toc-backref" href="#id12" id="mod-python" name="mod-python">6.1&nbsp;&nbsp;&nbsp;安装 mod_python 模块</a></h2>
+<p>Django 对于 Apache 使用 2.X ，对于 mod_python 使用 3.X。安装 mod_python(在windows下)倒是不麻烦。但在 Django 的邮件列表中却有人对于 mod_python 和 Apache 有所讨论，主要的问题是这些改动相对较大，比如说复载，安装需要 root 权限，要重启 Apache 等。这的确是一个要注意的问题，因此有人建议使用 FastCGI 或 SCGI 来处理(这两个都不懂啊)。</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id13" id="httpd-conf" name="httpd-conf">6.2&nbsp;&nbsp;&nbsp;修改 httpd.conf 文件</a></h2>
+<pre class="literal-block">
+Listen 127.0.0.1:8888
+&lt;VirtualHost 127.0.0.1:8888&gt;
+    &lt;Location &quot;/&quot;&gt;
+        SetHandler python-program
+        PythonPath &quot;['D:/project/svn/limodou/django-stepbystep/newtest'] + sys.path&quot;
+        PythonHandler django.core.handlers.modpython
+        SetEnv DJANGO_SETTINGS_MODULE newtest.settings_apache
+        PythonAutoReload Off
+        PythonDebug On
+    &lt;/Location&gt;
+    Alias /site_media d:/project/svn/limodou/django-stepbystep/newtest/newtest/media
+    Alias /media C:/Python24/Lib/site-packages/Django-0.91-py2.4.egg/django/contrib/admin/media
+    &lt;Location &quot;/site_media&quot;&gt;
+        SetHandler None
+    &lt;/Location&gt;
+    &lt;Location &quot;/media&quot;&gt;
+        SetHandler None
+    &lt;/Location&gt;
+&lt;/VirtualHost&gt;
+</pre>
+<p>这里我使用了虚拟主机(<a class="reference" href="http://www.uplinux.com/download/doc/apache/ApacheManual/vhosts/examples.html">参考文档</a>) 来设置。即使用一台机器，不同的端口来对应不同的服务。主要原因是我希望 Django 的服务可以从 <tt class="docutils literal"><span class="pre">/</span></tt> 开始，但我还有其它的一些东西要处理。因此不希望对其它的东西有所影响。我没有两个域名，或两个 IP ，因此采用了两个不同的端口。这只是我的一种方式。因为我在本机处理，因此 IP 是 <tt class="docutils literal"><span class="pre">127.0.0.1</span></tt> 。实际中你应该进行修改。</p>
+<p><tt class="docutils literal"><span class="pre">PythonPath</span></tt> 是绝对路径。 <tt class="docutils literal"><span class="pre">PythonDebug</span></tt> 和 <tt class="docutils literal"><span class="pre">PythonAutoReload</span></tt> 建议在生产时设为 <tt class="docutils literal"><span class="pre">Off</span></tt> 。这里我还设了两个别名，用来指向 <tt class="docutils literal"><span class="pre">site_media</span></tt> 和 <tt class="docutils literal"><span class="pre">media</span></tt> 目录。在 <tt class="docutils literal"><span class="pre">site_media</span></tt> 和 <tt class="docutils literal"><span class="pre">media</span></tt> 的 <tt class="docutils literal"><span class="pre">Location</span></tt> 中设置不进行脚本的解析。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">上面的 media 路径是指向 Django 在 Python 上的安装目录。你完全可以将其拷贝出来，这样可能要方便得多。另外在 linux 下使用 ln 也相当的方便。</p>
+</div>
+<p>同时可以注意到 <tt class="docutils literal"><span class="pre">settings</span></tt> 我改为了 <tt class="docutils literal"><span class="pre">settings_apache</span></tt> 了。一方面将要把其中的内容有关相对路径的东西改为绝对路径，另一方面我还想保持现在的 <tt class="docutils literal"><span class="pre">settings.py</span></tt> 。</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id14" id="settings-py-settings-apache-py" name="settings-py-settings-apache-py">6.3&nbsp;&nbsp;&nbsp;复制 settings.py 到 settings_apache.py</a></h2>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id15" id="settings-apache-py" name="settings-apache-py">6.4&nbsp;&nbsp;&nbsp;修改 settings_apache.py</a></h2>
+<p>将相对路径改为绝对路径。主要有：</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">DATABASE_NAME</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">MEDIA_ROOT</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">TEMPLATE_DIRS</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">STATIC_PATH</span></tt></li>
+</ul>
+<p>将 <tt class="docutils literal"><span class="pre">DEBUG</span></tt> 和 <tt class="docutils literal"><span class="pre">TEMPLATE_DEBUG</span></tt> 改为 <tt class="docutils literal"><span class="pre">False</span></tt> 。这样静态文件 serverview 就无效了。这就是为什么上面的 Apache 的配置中要配置 <tt class="docutils literal"><span class="pre">site_media</span></tt> 的原因。</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id16" id="id4" name="id4">6.5&nbsp;&nbsp;&nbsp;测试</a></h2>
+<p><a class="reference" href="http://localhost:8888/address">http://localhost:8888/address</a></p>
+<p>更详细的内容请参见 mod_python 文档。关于 admin 的 media 和 template 好象并不需要配置，大家有什么结果可以告诉我。</p>
+<p>同时如果你不想每次重启 Apache 来进行测试，可以将:</p>
+<pre class="literal-block">
+MaxRequestsPerChild 0
+</pre>
+<p>改为:</p>
+<pre class="literal-block">
+MaxRequestsPerChild 1
+</pre>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id17" id="id5" name="id5">7&nbsp;&nbsp;&nbsp;后话</a></h1>
+<p>上面的步骤是直接把开发的东西发布到了 Apache 中去，但实际中开发与运行可能环境根本不一样，最主要可能就是数据库方面的变化，如果model变化，则有可能要编写数据切换程序。许多实际的问题都需要仔细地考虑。</p>
+</div>
+</div>
+</body>
+</html>

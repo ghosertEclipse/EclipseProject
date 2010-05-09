@@ -1,0 +1,4 @@
+1. dev_appserver only support one request at a time.
+   Look for another single server to replace dev_appserver or Using django instead.
+   See Gmail GAE-Group answer, it may works.
+2. Python thread wait-notify implementation.

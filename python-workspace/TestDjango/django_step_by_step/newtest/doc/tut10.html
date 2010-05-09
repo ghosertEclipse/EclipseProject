@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Django Step by Step (十)</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="django-step-by-step">
+<h1 class="title">Django Step by Step (十)</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body">limodou</td>
+</tr>
+<tr class="field"><th class="docinfo-name">联系:</th><td class="field-body"><a class="reference" href="mailto:limodou&#64;gmail.com">limodou&#64;gmail.com</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
+</tr>
+<tr class="field"><th class="docinfo-name">主页:</th><td class="field-body"><a class="reference" href="http://wiki.woodpecker.org.cn/moin/NewEdit">http://wiki.woodpecker.org.cn/moin/NewEdit</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">BLOG:</th><td class="field-body"><a class="reference" href="http://www.donews.net/limodou">http://www.donews.net/limodou</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权:</th><td class="field-body">FDL</td>
+</tr>
+</tbody>
+</table>
+<div class="contents topic">
+<p class="topic-title first"><a id="id1" name="id1">目录</a></p>
+<ul class="auto-toc simple">
+<li><a class="reference" href="#id2" id="id4" name="id4">1&nbsp;&nbsp;&nbsp;引言</a></li>
+<li><a class="reference" href="#address-templatetags" id="id5" name="id5">2&nbsp;&nbsp;&nbsp;创建 address/templatetags 目录</a></li>
+<li><a class="reference" href="#address-templatetags-init-py" id="id6" name="id6">3&nbsp;&nbsp;&nbsp;创建 address/templatetags/__init__.py 文件</a></li>
+<li><a class="reference" href="#change-gender-py" id="id7" name="id7">4&nbsp;&nbsp;&nbsp;创建自定义模板文件 change_gender.py</a></li>
+<li><a class="reference" href="#id3" id="id8" name="id8">5&nbsp;&nbsp;&nbsp;编辑 change_gender.py</a></li>
+<li><a class="reference" href="#templates-address-address-list-html" id="id9" name="id9">6&nbsp;&nbsp;&nbsp;修改 templates/address/address_list.html</a></li>
+<li><a class="reference" href="#server" id="id10" name="id10">7&nbsp;&nbsp;&nbsp;启动 server 进行测试</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id4" id="id2" name="id2">1&nbsp;&nbsp;&nbsp;引言</a></h1>
+<p>首先让我们说一说 <tt class="docutils literal"><span class="pre">media</span></tt> 链接吧。在上一讲中我使用了 <tt class="docutils literal"><span class="pre">site_media</span></tt> 作为静态文件的起始目录。但你知道吗，原来我想使用的是 <tt class="docutils literal"><span class="pre">media</span></tt> ，但为什么又改了呢？原因就是： admin 给占了。如果我使用 <tt class="docutils literal"><span class="pre">media</span></tt> ， <a class="reference" href="http://www.djangoproject.com/">Django</a> 会指向 admin 的 <tt class="docutils literal"><span class="pre">media</span></tt> 目录，这可不是你想要的。因此这一点要特别提醒。</p>
+<p>现在我们看一看所展示出来的页面，你满意吗？还有可以改进的地方。比如性别，它显示出来的直接是数据库的值，而不是对应的“男”，“女”，怎么办。还有表格显示也不是很好看。没说的，改！</p>
+<p>最初我想使用 CustomManipulator (Manipulator 是 Django 中用来自动生成元素对应的 HTML 代码的对象，你可以定制它)，但使用 Manipulator 的话，你不能再使用 generic view 了，需要自已去实现 generic view 的某些代码，当然可以 copy and paste，但我目前不想那样做。于是我想到可以扩展 Django 的模板，自定义一个 filter 来实现它。(具体扩展的文档参见 <a class="reference" href="http://www.djangoproject.com/documentation/templates_python/">The Django template language: For Python programmers</a> ，你不仅可以扩展filter，还可以扩展 Tag ，还可以设置模板变量，还可以进行块处理等复杂的操作，自已去看吧。)</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id5" id="address-templatetags" name="address-templatetags">2&nbsp;&nbsp;&nbsp;创建 address/templatetags 目录</a></h1>
+<p>注意，这个目录要在某个应用的下面，同时它应与 models, views.py在同一层目录下。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id6" id="address-templatetags-init-py" name="address-templatetags-init-py">3&nbsp;&nbsp;&nbsp;创建 address/templatetags/__init__.py 文件</a></h1>
+<p>文件为空即可。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id7" id="change-gender-py" name="change-gender-py">4&nbsp;&nbsp;&nbsp;创建自定义模板文件 change_gender.py</a></h1>
+<p>文件名为你想要装入到模板中的名字。如文件起名为 <tt class="docutils literal"><span class="pre">change_gender.py</span></tt> ，那么你将可以在模板中使用:</p>
+<pre class="literal-block">
+{% load change_gender %}
+</pre>
+<p>来导入。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id8" id="id3" name="id3">5&nbsp;&nbsp;&nbsp;编辑 change_gender.py</a></h1>
+<pre class="literal-block">
+#coding=utf-8
+from django import template
+
+register = template.Library()
+
+#&#64;register.filter(name='change_gender')
+def change_gender(value):
+    if value == 'M':
+        return '男'
+    else:
+        return '女'
+
+register.filter('change_gender', change_gender)
+</pre>
+<p>先是导入 <tt class="docutils literal"><span class="pre">template</span></tt> 模块，然后生成一个 <tt class="docutils literal"><span class="pre">register</span></tt> 的对象，我将用来它注册我所定义的 filter 。我实现的 filter 将命名为 <tt class="docutils literal"><span class="pre">&quot;change_gender&quot;</span></tt> ，它没有参数(一个filter可以接受一个参数，或没有参数)。当 <tt class="docutils literal"><span class="pre">value</span></tt> 为 <tt class="docutils literal"><span class="pre">M</span></tt> 时返回 <tt class="docutils literal"><span class="pre">男</span></tt> ，当 <tt class="docutils literal"><span class="pre">value</span></tt> 为 <tt class="docutils literal"><span class="pre">F</span></tt> 时返回 <tt class="docutils literal"><span class="pre">女</span></tt>  。然后调用 <tt class="docutils literal"><span class="pre">register</span></tt> 的 filter 来注册它。这里有两种写法，一种是使用 <a class="reference" href="http://www.python.org/">Python</a> 2.4才支持的 decorator (此行注释掉了)，另一种是使用标准的写法。在使用 decorator 时，如果 filter 方法有多个参数的话，需要指明 <tt class="docutils literal"><span class="pre">name</span></tt> 参数，否则可以直接写为:</p>
+<pre class="literal-block">
+&#64;register.filter
+</pre>
+<p>它自动将函数名认为是filter的名字。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">象 decorator(<cite>&#64;register.filter</cite>) 这样的用法要在 Python 2.4 中才可以使用，因此如果你的代码也允许在 2.3 上运行的话，不要使用这样的用法。而改用传统的在函数定义之后重定义的方法。就象上面所做的一样。同时还要注意避免使用一些 2.4 的内置函数和语法，如 <tt class="docutils literal"><span class="pre">enumerate</span></tt> , generator 产生式之类的东西。因此上面我使用的是 2.3 的方式。</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id9" id="templates-address-address-list-html" name="templates-address-address-list-html">6&nbsp;&nbsp;&nbsp;修改 templates/address/address_list.html</a></h1>
+<pre class="literal-block">
+{% extends &quot;base.html&quot; %}
+{% block content %}
+{% load change_gender %}
+&lt;style type=&quot;text/css&quot;&gt;
+h1#title {color:white;}
+.mytr1 {background:#D9F9D0}
+.mytr2 {background:#C1F8BA}
+.myth {background:#003333}
+.th_text {color:#ffffff}
+&lt;/style&gt;
+&lt;div id=&quot;header&quot;&gt;
+&lt;h1 id=&quot;title&quot;&gt;通讯录&lt;/h1&gt;
+&lt;/div&gt;
+&lt;hr&gt;
+&lt;div id=&quot;content-main&quot;&gt;
+    &lt;table border=&quot;0&quot; width=&quot;500&quot;&gt;
+    &lt;tr align=&quot;right&quot;&gt;
+      &lt;td&gt;{% if has_previous %}
+        &lt;a href=&quot;/address?page={{ previous }}&quot;&gt;上一页&lt;/a&gt;
+        {% endif %} {% if has_next %}
+        &lt;a href=&quot;/address?page={{ next }}&quot;&gt;下一页&lt;/a&gt;
+        {% endif %}&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;table border=&quot;0&quot; width=&quot;500&quot; cellspacing=&quot;2&quot;&gt;
+    &lt;tr class=&quot;myth&quot;&gt;
+      &lt;th&gt;&lt;span class=&quot;th_text&quot;&gt;姓名&lt;/span&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;span class=&quot;th_text&quot;&gt;性别&lt;/span&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;span class=&quot;th_text&quot;&gt;电话&lt;/span&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;span class=&quot;th_text&quot;&gt;手机&lt;/span&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;span class=&quot;th_text&quot;&gt;房间&lt;/span&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    {% for person in object_list %}
+    &lt;tr class=&quot;{% cycle mytr1,mytr2 %}&quot;&gt;
+      &lt;td&gt;{{ person.name }}&lt;/td&gt;
+      &lt;td&gt;{{ person.gender|change_gender }}&lt;/td&gt;
+      &lt;td&gt;{{ person.telphone }}&lt;/td&gt;
+      &lt;td&gt;{{ person.mobile }}&lt;/td&gt;
+      &lt;td&gt;{{ person.room }}&lt;/td&gt;
+    &lt;/tr&gt;
+    {% endfor %}
+    &lt;/table&gt;
+    &lt;table border=&quot;0&quot; width=&quot;500&quot;&gt;
+    &lt;tr&gt;
+    &lt;td&gt;
+    &lt;form enctype=&quot;multipart/form-data&quot; method=&quot;POST&quot; action=&quot;/address/upload/&quot;&gt;
+    文件导入：&lt;input type=&quot;file&quot; name=&quot;file&quot;/&gt;&lt;br/&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;上传文件&quot;/&gt;
+    &lt;/form&gt;
+    &lt;/td&gt;
+    &lt;td&gt;&lt;p&gt;&lt;a href=&quot;/address/output/&quot;&gt;导出为csv文件&lt;/a&gt;&lt;/p&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;/table&gt;
+&lt;/div&gt;
+{% endblock %}
+</pre>
+<p>改动了以下几个地方：</p>
+<ol class="arabic">
+<li><p class="first">增加了 <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">load</span> <span class="pre">change_gender</span> <span class="pre">%}</span></tt> 来导入自定义的 filter 。</p>
+</li>
+<li><p class="first">增加了几个样式，象 <tt class="docutils literal"><span class="pre">mytr1</span></tt>, <tt class="docutils literal"><span class="pre">mytr2</span></tt> 等。</p>
+</li>
+<li><p class="first">显示结果的 table 改为:</p>
+<pre class="literal-block">
+&lt;table border=&quot;0&quot; width=&quot;500&quot; cellspacing=&quot;2&quot;&gt;
+</pre>
+</li>
+<li><p class="first">表头改为:</p>
+<pre class="literal-block">
+&lt;tr class=&quot;myth&quot;&gt;
+  &lt;th&gt;&lt;span class=&quot;th_text&quot;&gt;姓名&lt;/span&gt;&lt;/th&gt;
+  &lt;th&gt;&lt;span class=&quot;th_text&quot;&gt;性别&lt;/span&gt;&lt;/th&gt;
+  &lt;th&gt;&lt;span class=&quot;th_text&quot;&gt;电话&lt;/span&gt;&lt;/th&gt;
+  &lt;th&gt;&lt;span class=&quot;th_text&quot;&gt;手机&lt;/span&gt;&lt;/th&gt;
+  &lt;th&gt;&lt;span class=&quot;th_text&quot;&gt;房间&lt;/span&gt;&lt;/th&gt;
+&lt;/tr&gt;
+</pre>
+<p>增加了样式处理</p>
+</li>
+<li><p class="first">数据显示的 <tt class="docutils literal"><span class="pre">tr</span></tt> 标签改为:</p>
+<pre class="literal-block">
+&lt;tr class=&quot;{% cycle mytr1,mytr2 %}&quot;&gt;
+</pre>
+<p>使用了 <tt class="docutils literal"><span class="pre">cycle</span></tt> Tag 来处理表格行的样式切换。注意： <tt class="docutils literal"><span class="pre">cycle</span></tt> 处理的是字符串。</p>
+</li>
+<li><p class="first">修改 <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">person.gender</span> <span class="pre">}}</span></tt> 为 <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">person.gender|change_gender</span> <span class="pre">}}</span></tt></p>
+</li>
+</ol>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id10" id="server" name="server">7&nbsp;&nbsp;&nbsp;启动 server 进行测试</a></h1>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">注意，一定要重启。象 <tt class="docutils literal"><span class="pre">templatetags</span></tt> 之类是在导入时处理的，因此如果 server 已经启动再添加的话是不起作用的。其它象增加 app, 修改 <tt class="docutils literal"><span class="pre">settings.py</span></tt> 都是要重启，而修改 <tt class="docutils literal"><span class="pre">urls.py</span></tt> , view, model代码，模板什么的可以不用重启，在必要时 Django 的测试 web server 会自动重启。如果你使用 Apache 的话，估计绝大多数情况下要重启，可能只有修改模板不用吧。不过也仍然可以设置 Apache 以便让每次请求过来时重新装入 Python 模块。</p>
+</div>
+<p>如果一切成功，你会看到 <tt class="docutils literal"><span class="pre">M</span></tt>, <tt class="docutils literal"><span class="pre">F</span></tt> 都改过来了。这里如果你感兴趣还可以改成小图标来表示，点缀一下。</p>
+<p>效果画面为：</p>
+<img alt="tut10_01.jpg" src="tut10_01.jpg" />
+</div>
+</div>
+</body>
+</html>

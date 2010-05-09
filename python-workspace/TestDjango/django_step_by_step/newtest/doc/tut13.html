@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Django Step by Step (十三)</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="django-step-by-step">
+<h1 class="title">Django Step by Step (十三)</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body">limodou</td>
+</tr>
+<tr class="field"><th class="docinfo-name">联系:</th><td class="field-body"><a class="reference" href="mailto:limodou&#64;gmail.com">limodou&#64;gmail.com</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
+</tr>
+<tr class="field"><th class="docinfo-name">主页:</th><td class="field-body"><a class="reference" href="http://wiki.woodpecker.org.cn/moin/NewEdit">http://wiki.woodpecker.org.cn/moin/NewEdit</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">BLOG:</th><td class="field-body"><a class="reference" href="http://www.donews.net/limodou">http://www.donews.net/limodou</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权:</th><td class="field-body">FDL</td>
+</tr>
+</tbody>
+</table>
+<div class="contents topic">
+<p class="topic-title first"><a id="id1" name="id1">目录</a></p>
+<ul class="auto-toc simple">
+<li><a class="reference" href="#id2" id="id5" name="id5">1&nbsp;&nbsp;&nbsp;引言</a></li>
+<li><a class="reference" href="#id3" id="id6" name="id6">2&nbsp;&nbsp;&nbsp;创建 Ajax 应用</a></li>
+<li><a class="reference" href="#ajax-views-py" id="id7" name="id7">3&nbsp;&nbsp;&nbsp;修改 ajax/views.py</a></li>
+<li><a class="reference" href="#templates-ajax" id="id8" name="id8">4&nbsp;&nbsp;&nbsp;创建 templates/ajax 目录</a></li>
+<li><a class="reference" href="#templates-ajax-ajax-html" id="id9" name="id9">5&nbsp;&nbsp;&nbsp;创建 templates/ajax/ajax.html</a></li>
+<li><a class="reference" href="#media-ajax-test-js" id="id10" name="id10">6&nbsp;&nbsp;&nbsp;创建 media/ajax_test.js</a></li>
+<li><a class="reference" href="#urls-py" id="id11" name="id11">7&nbsp;&nbsp;&nbsp;修改 urls.py</a></li>
+<li><a class="reference" href="#id4" id="id12" name="id12">8&nbsp;&nbsp;&nbsp;安装 ajax 应用</a></li>
+<li><a class="reference" href="#server" id="id13" name="id13">9&nbsp;&nbsp;&nbsp;启动 server 测试</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id5" id="id2" name="id2">1&nbsp;&nbsp;&nbsp;引言</a></h1>
+<p>经过一段时间的学习，我想大家对于 <a class="reference" href="http://www.djangoproject.com/">Django</a> 的一些基础的东西已经有所了解，但 Django 本身的内容不仅仅如此，它还在发展中，还有许多的专题是我还没有向大家介绍的。因此，随着我和大家一同地学习，我会继续向大家介绍一些更高级的话题。</p>
+<p>随着对于web的了解越来越多，我对于 web 上的开发也越来越有兴趣。的确，在实际的工作中我也发现，现在越来越强调团队的管理，许多事情单纯搞一两个人是很困难的，因此如何提高团队工作的一致性和方便性越来越重要，比如：在我所在的项目组，有一些统计信息需要每个人提供，然后进行汇总。目前还是采用手工的方式，这种方式的确简单，但不能自动地进行管理，也不利于以后的归档处理。因此我很希望做成 web 的应用，让每个人可以自由创建项目，提交数据。但就是这样的一个简单的工作，也不是非常简单的事情。如何快速对 Django 加深了解，如何提高开发效率，如何更有效地利用 web 是我更关心的，而不仅仅是做出一个可用的应用来。这包括一系列的 <a class="reference" href="http://wiki.woodpecker.org.cn/moin/NewEdit/">NewEdit</a> 的扩展，及其关知识的积累。</p>
+<p>特别让我感兴趣，并且可以极大的提高用户体验的一种 web 技术就是 <a class="reference" href="http://www.ajaxpatterns.org/Main_Page">Ajax</a> 了。它是什么？它是一种技术的总称，包括了 Html, CSS, XML, Javascript 等与 web 相关技术的合集，在我以前的 Blog 也有一些涉及，但那时关注的焦点不在 web 上。现在有机会和时间好好地了解了一下，特别是在 Django 中已经做为实现的目标正在逐步地开展起来，只不过目前还没有可用的东西呈现出来。那么在 Django 的 community 的 blog 上，有人发表了一篇关于使用 <a class="reference" href="http://dojotoolkit.org/">dojo</a> (一个 Ajax 的库)来实现在搜索栏中实时输入信息时，可以动态显示与输入信息相匹配的blog列表的一个例子。他利用 dojo 实现了一个自定义的 widget ，但我感到这种技术对于我这种对于dojo框架不熟悉的人非常有困难。从 blog 上看，实现的过程还是有些复杂。我喜欢先从简单的东西入手。 <a class="reference" href="http://www.mochikit.com/">MochiKit</a> 在 Django 的 Ajax 的讨论中是另一个为大家关注的东西，最大的好处是它的文档最齐全，而且从本人的理解来说，它更简单。而 dojo 则更是提供了很多的 web UI 的控件， MochiKit 基本上没有。不过，在目前情况下我也只是希望体验一下 Ajax 技术，并且做一些简单的应用，而在简单的情况下，我认为 MochiKit 做为入门，作为简单的应用也足够了。</p>
+<p>下面就让我以 MochiKit 为基础来向大家介绍一下如何在 Django 中使用它，使用一些简单的 Ajax 技术。</p>
+<p>首先让我们关心一下 Ajax 与 Django 的关系。其实 Ajax 本身包含许多的内容，它有浏览器端的显示技术，有与后台通讯的处理，因此与 Django 有关系的其实只有与后台交互那块东西。这样，更多的关于前端显示的技术，如：显示特效，这些都属于 CSS, Javascript的内容，而这些与 <a class="reference" href="http://www.python.org/">Python</a> 本身的关系也不大，因此你还需要掌握这些东西才可以做得更好。也许有机会会有专题和学习和介绍这些方面的东西。</p>
+<p>下面的试验主要关注的是前端与后端的交互，也就是如何实现浏览器与 Django 交互，体验不进行页面的刷新(这是Ajax最大的好处，一切都好象在本地进行一样)。</p>
+<p>就目前来说， Ajax 与后台交互都是通过浏览器提供的 <tt class="docutils literal"><span class="pre">XMLHttpRequest</span></tt> 对象来实现的。这个对象支持同步和异步的调用，但由于 Javascript 本身没有多线程这个东西，因此为了不阻塞浏览器，一般都采用异步方式来调用，而这也是一般的 Ajax 框架提供了默认方式。就目前来说，交互数据也有多种格式，比如：XML, Json , 纯文本/Html。 XML 不用说了，但一般采用 http 协议的 web server 是无法直接支持，因此需要进行转换。同时在浏览器你要同时进行XML的解析，不是非常方便。 Json 是一种数据表示格式，它非常象 Python 的数据类型。而且它只有数据，没有任何的格式，因此数据传输量非常小。再加上处理起来也很方便，在传输上可以直接转换为文本，然后再转换成不同语言的数据结构即可。对于 Python 是非常方便。再有就是文本/Html方式，一种是自定义格式，通过转化为文本进行处理，另一种就是直接使用 html 标记。前一种需要自行做扩展，后一种则是最方便。下面我们将先使用 html 方式，然后再使用 Json 来进行试验。</p>
+<p>我设计了一个非常简单的例子：提供一个输入框，用户输入文本，然后点提交，直接在下面显示后台返回的结果。因为我不是 Javascript , CSS 的专家，可能有不对的地方。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id6" id="id3" name="id3">2&nbsp;&nbsp;&nbsp;创建 Ajax 应用</a></h1>
+<pre class="literal-block">
+manage.py startapp ajax
+</pre>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id7" id="ajax-views-py" name="ajax-views-py">3&nbsp;&nbsp;&nbsp;修改 ajax/views.py</a></h1>
+<pre class="literal-block">
+# Create your views here.
+from django.http import HttpResponse
+
+def input(request):
+    input = request.REQUEST[&quot;input&quot;]
+    return HttpResponse('&lt;p&gt;You input is &quot;%s&quot;&lt;/p&gt;' % input)
+</pre>
+<p>从这里可以看出，我需要一个 <tt class="docutils literal"><span class="pre">input</span></tt> 字段，然后返回一个HTML的片段。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id8" id="templates-ajax" name="templates-ajax">4&nbsp;&nbsp;&nbsp;创建 templates/ajax 目录</a></h1>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id9" id="templates-ajax-ajax-html" name="templates-ajax-ajax-html">5&nbsp;&nbsp;&nbsp;创建 templates/ajax/ajax.html</a></h1>
+<pre class="literal-block">
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;
+    &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Ajax Test&lt;/title&gt;
+        &lt;script type=&quot;text/javascript&quot; src=&quot;/site_media/MochiKit.js&quot;&gt;&lt;/script&gt;
+        &lt;script type=&quot;text/javascript&quot; src=&quot;/site_media/ajax_test.js&quot;&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;
+            Ajax 演示
+        &lt;/h1&gt;
+        &lt;div&gt;
+        &lt;form id=&quot;form&quot;&gt;
+        输入：&lt;input type=&quot;text&quot; name=&quot;input&quot;/&gt;
+        &lt;input id=&quot;submit&quot; type=&quot;button&quot; value=&quot;提交&quot; /&gt;
+        &lt;/form&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;output&quot;&gt;&lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>这个模板将作为初始页面，它用来处理向后台发起请求。在这里它没有需要特殊处理的模板变量，只需要显示即可。但在这里的确有许多要说明的东西。</p>
+<p>这是一个标准的 html 的页面，在 head 标签中，它将引入两个 js 文件： <tt class="docutils literal"><span class="pre">MochiKit.js</span></tt> 和 <tt class="docutils literal"><span class="pre">ajax_test.js</span></tt> 。从 url 上可以看出，我将会把它们放在 <tt class="docutils literal"><span class="pre">site_media</span></tt> 下，这个地址就是 <tt class="docutils literal"><span class="pre">media</span></tt> 目录。 <tt class="docutils literal"><span class="pre">MochiKit.js</span></tt> 你需要从 MochiKit 网站下载(最新版本为 1.2)。 MochiKit 下载后有两种格式，一种是单个文件，另一种是分散的文件。我这里使用的是单个文件。</p>
+<p>在 html 文件中有一个 form ，它的 id 是 <tt class="docutils literal"><span class="pre">form</span></tt> ，我将用它来查找 form 对象。它有一个文本输入框，还有一个按钮，但这个按钮并不是 submit 按钮。这里有许多与标准的 form 不一样的地方，没有 <tt class="docutils literal"><span class="pre">action</span></tt>, 没有 <tt class="docutils literal"><span class="pre">method</span></tt> ，而且没有 submit 按钮。为什么要这样，为了简单，而且我发现这是 MochiKit 的开发方式。以前写 HTML，CSS, Javascript 和事件之类的处理，我们一般可能会写在一起，但这样的确很乱。在学习了一段 MochiKit 之后，我发现它的代码分离做得非常棒，而这也是目前可能流行的做法。它会在独立的 Javascript 中编写代码，在装载页面时动态地查找相应的元素，然后设置元素的一些属性，如 style ，事件代码等。而在 Html 文档中，你看到的元素中一般就只有 id , class 等内容。这样的好处可以使得处理为以后重用及优化带来方便，同时可以通过编程的方式实现批量的处理，而且也使得 Html 页面更简单和清晰。因为我要使用 Ajax 去动态提交信息，不需要真正的 form 的提交机制，我只是需要用到 form 元素中的数据而已，因此象 <tt class="docutils literal"><span class="pre">action</span></tt>, <tt class="docutils literal"><span class="pre">method</span></tt> 等内容都没有用。 <tt class="docutils literal"><span class="pre">id</span></tt> 是必须的，我需要根据它找到我想要处理的元素对象。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">不过分离的作法是你的文件将增多，也可能不如放在一个文件中便于部署吧。这是一个仁者见仁，智者见智的作法。</p>
+</div>
+<p><tt class="docutils literal"><span class="pre">&lt;div</span> <span class="pre">id=&quot;output&quot;&gt;&lt;/div&gt;</span></tt> 它是用来显示结果的层。</p>
+<p>整个处理过程就是：</p>
+<blockquote>
+在装载 html 页面时，会对按钮进行初始化处理，即增加一个 <tt class="docutils literal"><span class="pre">onclick</span></tt> 的事件处理，它将完成 Ajax 的请求及结果返回后的处理。然后用户在页面显示出来后，可以输入文本，点击按钮后，将调用 <tt class="docutils literal"><span class="pre">onclick</span></tt> 方法，然后提交信息到 Django ，由 Django 返回信息，再由 Ajax 的 deferred 对象(后面会介绍)调用显示处理。</blockquote>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id10" id="media-ajax-test-js" name="media-ajax-test-js">6&nbsp;&nbsp;&nbsp;创建 media/ajax_test.js</a></h1>
+<pre class="literal-block">
+function submit(){
+    var form = $(&quot;form&quot;);
+    var d = doSimpleXMLHttpRequest('/ajax/input/', form);
+    d.addCallbacks(onSuccess, onFail);
+}
+onSuccess = function (data){
+    var output = $(&quot;output&quot;);
+    output.innerHTML = data.responseText;
+    showElement(output);
+}
+onFail = function (data){
+    alert(data);
+}
+function init() {
+    var btn = $(&quot;submit&quot;);
+    btn.onclick = submit;
+    var output = $(&quot;output&quot;);
+    hideElement(output);
+}
+
+addLoadEvent(init);
+</pre>
+<p>这里有许多是 MochiKit 的方法。</p>
+<p>首先让我们看 <tt class="docutils literal"><span class="pre">addLoadEvent(init);</span></tt> 它表示将 <tt class="docutils literal"><span class="pre">init()</span></tt> 函数加到 <tt class="docutils literal"><span class="pre">onload</span></tt> 的响应事件对列中。浏览器在装载完一个页面后，会自动调用 <tt class="docutils literal"><span class="pre">onload</span></tt> 事件处理。因此在这里是进行初始化的最好的地方。</p>
+<p><tt class="docutils literal"><span class="pre">init()</span></tt> 方法一方面完成对 id 名为 <tt class="docutils literal"><span class="pre">submit</span></tt> 的按钮 <tt class="docutils literal"><span class="pre">onclick</span></tt> 处理函数的绑定工作，另一个是将 id 为
+<tt class="docutils literal"><span class="pre">output</span></tt>
+的元素隐藏。其实不隐藏也无所谓，因为它本来就是空的，因此你也看不到东西。不过如果有其它的东西这样的处理却也不错。</p>
+<p><tt class="docutils literal"><span class="pre">$()</span></tt> 是 MochiKit 提供的一个 <tt class="docutils literal"><span class="pre">getElement()</span></tt> 函数别名，它将根据元素的 id 来得到某个对象。</p>
+<p><tt class="docutils literal"><span class="pre">hideElement()</span></tt> 是隐藏某个元素。想要显示某个元素可以使用 <tt class="docutils literal"><span class="pre">showElement()</span></tt> 。</p>
+<p>最重要的工作都在 <tt class="docutils literal"><span class="pre">submit()</span></tt> 这个函数中。它首先得到 id 为 <tt class="docutils literal"><span class="pre">form</span></tt> 的对象，然后调用 MochiKit 提供的 <tt class="docutils literal"><span class="pre">doSimpleXMLHttpRequest()</span></tt> 函数提交一个 Ajax 请求到后台。第一个参数是请求的 url ，第二个如果有的话，应该是 Query String ，即一个 url 的 <tt class="docutils literal"><span class="pre">?</span></tt> 后面的东西。这里我只是将 <tt class="docutils literal"><span class="pre">form</span></tt> 传给它， <tt class="docutils literal"><span class="pre">doSimpleXMLHttpRequest()</span></tt> 会自动调用 <tt class="docutils literal"><span class="pre">queryString()</span></tt> (也是 MochiKit 的一个方法)来取得 <tt class="docutils literal"><span class="pre">form</span></tt> 中的字段信息。比如你输入了 <tt class="docutils literal"><span class="pre">aaa</span></tt> ，那么最终在 Django 你会看到的是:</p>
+<pre class="literal-block">
+/ajax/input/?input=aaa
+</pre>
+<p><tt class="docutils literal"><span class="pre">doSimpleXMLHttpRequest()</span></tt> 会返回一个 deferred 对象，它是一个延迟执行对象，在执行了 <tt class="docutils literal"><span class="pre">doSimpleXMLHttpRequest()</span></tt> 之后，结果可能当时并没有返回回来，因为这是一个异步调用。因此为了在结果回来之后做后续的处理，我还需要挂接两个异步函数，一个用来处理成功的情况，一个是用来处理失败的情况。 <tt class="docutils literal"><span class="pre">d.addCallbacks(onSuccess,</span> <span class="pre">onFail);</span></tt> 就是做这件事的。</p>
+<p><tt class="docutils literal"><span class="pre">onSuccess()</span></tt> 在 deferred 正确返回后会被调用。 <tt class="docutils literal"><span class="pre">data</span></tt> 是 <tt class="docutils literal"><span class="pre">XMLHttpRequest</span></tt> 对象本身，它有一个 <tt class="docutils literal"><span class="pre">responseText</span></tt> 属性可以使用。这里因为 Django 返回的是 Html 片段，因此我只是简单地将 <tt class="docutils literal"><span class="pre">output</span></tt> 对象(用于显示的 div 层)的内容进行了设置。然后调用 <tt class="docutils literal"><span class="pre">showElement()</span></tt> 来将层显示出来。</p>
+<p><tt class="docutils literal"><span class="pre">onFail()</span></tt> 则只是调用 <tt class="docutils literal"><span class="pre">alert()</span></tt> 显示出错而已。</p>
+<p>这里有许多 Javascript 和 MochiKit 的东西，如果大家不了解则需要补补课了。其中 MochiKit 的内容在它自带的例子和文档中可以查阅，特别是 MochiKit 自带了一个象 Python shell 一样的命令行解释环境可以进行测试，非常的方便。具体的看 MochiKit 网站上的 <a class="reference" href="http://mochikit.com/screencasts/MochiKit_Intro-1">ScreenCast</a> 可以了解。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id11" id="urls-py" name="urls-py">7&nbsp;&nbsp;&nbsp;修改 urls.py</a></h1>
+<p>增加两行:</p>
+<pre class="literal-block">
+(r'^ajax/$', 'django.views.generic.simple.direct_to_template',
+    {'template': 'ajax/ajax.html'}),
+(r'^ajax/input/$', 'newtest.ajax.views.input'),
+</pre>
+<p>前一个使用了 generic view 所提供的 <tt class="docutils literal"><span class="pre">direct_to_template()</span></tt> 方法可以直接显示一个模板。后一个则指向了 <tt class="docutils literal"><span class="pre">views.index()</span></tt> 方法，它用于在前一个页面点击按钮后与后台交互的处理。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id12" id="id4" name="id4">8&nbsp;&nbsp;&nbsp;安装 ajax 应用</a></h1>
+<p>修改 <tt class="docutils literal"><span class="pre">settings.py</span></tt></p>
+<pre class="literal-block">
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'newtest.wiki',
+    'newtest.address',
+    'newtest.ajax',
+    'django.contrib.admin',
+)
+</pre>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id13" id="server" name="server">9&nbsp;&nbsp;&nbsp;启动 server 测试</a></h1>
+<p>这样你在文本框中输入内容，点击提交后就会立即在文本框的下面看到结果，而页面没有刷新，这就是 Ajax 就直接的做用。</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Django Step by Step (十七)</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="django-step-by-step">
+<h1 class="title">Django Step by Step (十七)</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body">limodou</td>
+</tr>
+<tr class="field"><th class="docinfo-name">联系:</th><td class="field-body"><a class="reference" href="mailto:limodou&#64;gmail.com">limodou&#64;gmail.com</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
+</tr>
+<tr class="field"><th class="docinfo-name">主页:</th><td class="field-body"><a class="reference" href="http://wiki.woodpecker.org.cn/moin/NewEdit">http://wiki.woodpecker.org.cn/moin/NewEdit</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">BLOG:</th><td class="field-body"><a class="reference" href="http://www.donews.net/limodou">http://www.donews.net/limodou</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权:</th><td class="field-body">FDL</td>
+</tr>
+</tbody>
+</table>
+<div class="contents topic">
+<p class="topic-title first"><a id="id1" name="id1">目录</a></p>
+<ul class="auto-toc simple">
+<li><a class="reference" href="#id2" id="id5" name="id5">1&nbsp;&nbsp;&nbsp;引言</a></li>
+<li><a class="reference" href="#view-temaplte-tag" id="id6" name="id6">2&nbsp;&nbsp;&nbsp;View, Temaplte 和 Tag 之间的关系</a></li>
+<li><a class="reference" href="#id3" id="id7" name="id7">3&nbsp;&nbsp;&nbsp;如何设计</a></li>
+<li><a class="reference" href="#id4" id="id8" name="id8">4&nbsp;&nbsp;&nbsp;结论</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id5" id="id2" name="id2">1&nbsp;&nbsp;&nbsp;引言</a></h1>
+<p>经过前面许多讲之后，我想大家应该对 <a class="reference" href="http://www.djangoproject.com/">Django</a> 的基本开发概念和过程已经有所了解。那么是时候讲一些关于设计方面的东西。首先要声明，目前 Django 基本上还没有什么设计的教程，而我也只能写一些个人体会。</p>
+<p>那么这篇教程的体会就是：View, Template and Templatetag</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id6" id="view-temaplte-tag" name="view-temaplte-tag">2&nbsp;&nbsp;&nbsp;View, Temaplte 和 Tag 之间的关系</a></h1>
+<p>View 在 Django 中是用来处理请求的，一个 url 请求上来后经过 Django 的处理首先找到这个 url pattern 对应的 View 模块的某个方法。因此 View 是处理请求的起点，同时，在 View 中的方法需要返回，因此它还是一个请求的终点。因此象 Template 和 Tag 只不过是处理中的某些环节。 View 可处理的范围远大于 Template 而 Tag 则只能用在 Template 中。因此从使用范围上说：View &gt; Template &gt; Tag。</p>
+<p>Template 是用来输出内容的，目前在 Django 中你可以用它输出文本之类的东西。但象图片之类的非文本的东西，则只能通过 View 来实现，再有如果想在输出时加入一些特殊的 HttpHeader 的控制也只能在 View 中实现。当然，在大多数情况下我们只处理动态的文本生成，其它许多东西都是静态的。象图片之类的可以通过链接来引用。</p>
+<p>Tag 是在 Template 中被使用的。它的作用很多，如控制模板逻辑，还可以输出内容并做转换等。Tag 可以自定义，因此你可以在 Tag 中做几乎你想做的有关内容输出的任何事，如从数据库中取出内容，然后加工，输出，许多事情。</p>
+<p>在 Django 中提供了一种方便的方法，可以直接将 url 与模板相对应起来。但并不是说你不需要 View 的参与，而是这个 View 的功能是预先写好的，它的作用很简单，就是在 View 方法中直接渲染一个模板并输出。因此说，看上去好象是直接对应，但实际上还是有 View 的处理。比如:</p>
+<pre class="literal-block">
+(r'^ajax/$', 'django.views.generic.simple.direct_to_template',
+    {'template': 'ajax/ajax.html'}),
+</pre>
+<p>这是在讲 Ajax 的一个 url 的配置，其中使用了 <tt class="docutils literal"><span class="pre">django.views.generic.simple.direct_to_template</span></tt> 这个做好的 View 方法。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id7" id="id3" name="id3">3&nbsp;&nbsp;&nbsp;如何设计</a></h1>
+<p>从上面的分析我们可以看出， View, Template, Tag 功能不尽相同，但的确有部分功能的重叠，特别是在文本信息的输出。</p>
+<p>如何比较好的选择使用什么来输出呢？</p>
+<p>可以从几下以方面考虑：</p>
+<ol class="arabic">
+<li><p class="first">输出内容</p>
+<p>HTML或文本内容，可以考虑使用 View + Template + Tag ，其它的考虑使用 View</p>
+</li>
+<li><p class="first">输出范围</p>
+<p>如果是多数据源，比如一个首页，可能包含许多不同的内容，如个人信息统计，Blog展示，日历，相关的链接，分类等，这些信息类型不同，如何比较好的处理呢？可以以 View 为主，即数据在 View 中提供，在模板中考虑输出和布局。但有一个问题，重用不方便。因此采用 Tag 可能更适合。因此对于单一或简单数据源可以只采用 View 和 Template 来实现，而对于多数据源可以采用使用 Temaplate 控制布局，Tag 用来输出单数据源信息。</p>
+</li>
+</ol>
+<p>同时对于多数据源的信息还可以考虑使用 Ajax 技术动态的将信息结合在一起。但使用 Ajax 则需要动态与后台交互，将单数据源的信息组织在一起，这样每个来源都是一个 View 的处理。不过这个有些复杂，这里我们不去考虑它。</p>
+<p>因此当你设计结构时，首先考虑实现的内容，是文本的，则可以考虑使用 View, Template 和 Tag。</p>
+<p>然后再看是否有重用的需要，有的话，将可重用的部分使用 Tag 来实现，而 View 和 Template 作布局和控制。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id8" id="id4" name="id4">4&nbsp;&nbsp;&nbsp;结论</a></h1>
+<p>这里我想到一个问题：我一直想使用 Admin 作为我的数据管理的界面。但经过上面的分析，Admin 目前大多数情况下只处理单一数据表，有些包含关系的，比如一对一，多对一，多对多的可以在一个编辑页面中同时处理多个表的记录，但它还是有可能无法满足复杂的多数据源的表现和编辑问题。因此 Admin 应该可以认为是一个缺省的数据库管理界面，而不完全是一个用户管理界面。因此大多数情况下，你仍然需要自定义管理界面，而不能完全依靠 Admin 。除非你的应用简单，同时对于管理界面的要求不高。</p>
+<p>解决了这个问题，于是我们不必太留恋 Admin 的功能，我相信会有一些好的解决方案来满足我们的要求，或者就是我们自已来创建这样的项目。</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+javah -jni -classpath ./bin test.Hello

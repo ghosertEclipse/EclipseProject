@@ -1,0 +1,160 @@
+=====================
+ Django Step by Step 
+=====================
+
+:作者: limodou
+:联系: limodou@gmail.com
+:版本: 0.2
+:主页: http://wiki.woodpecker.org.cn/moin/NewEdit
+:BLOG: http://www.donews.net/limodou
+:版权: FDL
+
+这是 Django_ 的系列教程。在写作中 Django 本身也在不停地发展变化，而且本人的水平有限，错误是难免的。欢迎你与我讨论 Django, Python_, 甚至 NewEdit_ 相关的问题。
+
+本文档在不继写作中，所有代码及文档源码存放于啄木鸟社区 SVN 中::
+
+    http://cvs.woodpecker.org.cn/svn/woodpecker/zqlib/tangle/limodou/django-stepbystep/newtest
+    
+本文档静态发布地址在 http://www.woodpecker.org.cn/obp/django/django-stepbystep/newtest/doc/
+
+如果你在其它地方看到此文档，则可能不是最新的，欢迎访问我的 Blog_ 或访问上面的静态页面了解最新的变化。也欢迎加入 CPUG(http://www.python.cn/) 的邮件列表 http://groups.google.com/group/python-cn 与我们一起讨论 Django 及 Web 开发技术。
+
+本文档也可以打包下载， `点击下载`_ 。
+
+.. _`点击下载`: http://wiki.woodpecker.org.cn/moin/LimodouShare?action=AttachFile&do=get&target=djangostepbystep.zip
+
+更新日期 2006/07/07
+
+本教程 <一> 到 <十六> 章节赶在 2006 年春节前修改和编写完成。感谢所有帮助过我的人。特别感谢 Zoom.Quiet 所做的工作。
+
+本文档使用 reStructuredText 格式编写。在线发布由 Zoom.Quiet 直接通过 SVN 发布。
+
+.. _Blog: http://www.donews.net/limodou
+.. _Django: http://www.djangoproject.com/
+.. _Python: http://www.python.org/
+.. _NewEdit: http://wiki.woodpecker.org.cn/moin/NewEdit
+
+.. contents:: 目录
+.. sectnum::
+
+`第一讲`_
+-----------
+
+本讲作为入门第一篇。主要讲解了 Karrigell_ 与 Django 的不同体验。同时介绍了一个最简单的 Hello, Django! 的例子。 
+
+.. _`第一讲`: tut01.html
+.. _Karrigell: http://karrigell.sourceforge.net/
+
+`第二讲`_
+-----------
+
+生成一个web form 用来做加法的简单例子。
+
+.. _`第二讲`: tut02.html
+
+`第三讲`_
+-----------
+
+使用Template的简单例子。
+
+.. _`第三讲`: tut03.html
+
+`第四讲`_
+-----------
+
+生成csv格式文件并下载的例子。
+
+.. _`第四讲`: tut04.html
+
+`第五讲`_
+-----------
+
+session的示例，开始进入数据库的世界。
+
+.. _`第五讲`: tut05.html
+
+`第六讲`_
+-----------
+
+一个wiki的例子。
+
+.. _`第六讲`: tut06.html
+
+`第七讲`_
+-----------
+
+一个通讯录的例子。
+
+.. _`第七讲`: tut07.html
+
+`第八讲`_
+-----------
+
+为通讯录增加文件导入和导出功能。
+
+.. _`第八讲`: tut08.html
+
+`第九讲`_
+-----------
+
+通讯录的美化，使用嵌套模板，静态文件，分页处理等。
+
+.. _`第九讲`: tut09.html
+
+`第十讲`_
+-----------
+
+扩展django的模板，自定义filter，进一步美化。
+
+.. _`第十讲`: tut10.html
+
+`第十一讲`_
+-----------
+
+用户管理和使用authentication来限制用户的行为。
+
+.. _`第十一讲`: tut11.html
+
+`第十二讲`_
+-----------
+
+搜索功能的实现和Apache上的部署体验。
+
+.. _`第十二讲`: tut12.html
+
+`第十三讲`_
+-----------
+
+简单的Ajax的实现(一)，MochiKit的一些使用。
+
+.. _`第十三讲`: tut13.html
+
+`第十四讲`_
+-----------
+
+简单的Ajax的实现(二)，使用SimpleJson来交换数据。
+
+.. _`第十四讲`: tut14.html
+
+`第十五讲`_
+-----------
+
+i18n 的一个简单实现。
+
+.. _`第十五讲`: tut15.html
+
+`第十六讲`_
+-----------
+
+自定义 Calendar Tag 。
+
+.. _`第十六讲`: tut16.html
+
+`第十七讲`_
+-----------
+
+View, Template, Tag之间的关系
+
+.. _`第十七讲`: tut17.html
+
+.. image:: djangopowered.gif

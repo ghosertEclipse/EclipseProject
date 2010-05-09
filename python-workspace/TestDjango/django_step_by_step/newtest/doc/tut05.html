@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Django Step by Step (五)</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="django-step-by-step">
+<h1 class="title">Django Step by Step (五)</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body">limodou</td>
+</tr>
+<tr class="field"><th class="docinfo-name">联系:</th><td class="field-body"><a class="reference" href="mailto:limodou&#64;gmail.com">limodou&#64;gmail.com</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
+</tr>
+<tr class="field"><th class="docinfo-name">主页:</th><td class="field-body"><a class="reference" href="http://wiki.woodpecker.org.cn/moin/NewEdit">http://wiki.woodpecker.org.cn/moin/NewEdit</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">BLOG:</th><td class="field-body"><a class="reference" href="http://www.donews.net/limodou">http://www.donews.net/limodou</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权:</th><td class="field-body">FDL</td>
+</tr>
+</tbody>
+</table>
+<div class="contents topic">
+<p class="topic-title first"><a id="id1" name="id1">目录</a></p>
+<ul class="auto-toc simple">
+<li><a class="reference" href="#id2" id="id5" name="id5">1&nbsp;&nbsp;&nbsp;引言</a></li>
+<li><a class="reference" href="#newtest-login-py" id="id6" name="id6">2&nbsp;&nbsp;&nbsp;在newtest下创建 login.py</a></li>
+<li><a class="reference" href="#templates-login-html" id="id7" name="id7">3&nbsp;&nbsp;&nbsp;创建 templates/login.html</a></li>
+<li><a class="reference" href="#urls-py" id="id8" name="id8">4&nbsp;&nbsp;&nbsp;修改 urls.py</a></li>
+<li><a class="reference" href="#server" id="id9" name="id9">5&nbsp;&nbsp;&nbsp;启动 server 运行</a></li>
+<li><a class="reference" href="#settings-py" id="id10" name="id10">6&nbsp;&nbsp;&nbsp;修改 settings.py</a></li>
+<li><a class="reference" href="#id3" id="id11" name="id11">7&nbsp;&nbsp;&nbsp;初始化数据库</a></li>
+<li><a class="reference" href="#id4" id="id12" name="id12">8&nbsp;&nbsp;&nbsp;启动 server</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id5" id="id2" name="id2">1&nbsp;&nbsp;&nbsp;引言</a></h1>
+<p>其实本教程以展示基本概念为已任，对于一些高级的话题我也在不停地学习中，希望能有所展示。让我们一起学习吧。</p>
+<p>在了解了基本的 Django 开发的过程及 Django 的一些基本特性之后，越来越多的东西在等着我们。现在我们就学习一下 session 吧。 session 可以翻译为“会话”，做过web的可能都知道。它就是为了实现页面间的数据交换而产生的东西，一般有一个 session_id ，它会保存在浏览器的 cookie 中，因此如果你的浏览器禁止了 cookie ，下面的试验是做不了的。</p>
+<p>在 Django 中的 session 也非常简单，它就存在于 <tt class="docutils literal"><span class="pre">request</span></tt> 对象的 <tt class="docutils literal"><span class="pre">session</span></tt> 属性中。你可以把它看成一个字典就可以了。</p>
+<p>下面我们做一个非常简单的功能：首先当用户进入某个页面，这个页面会显示一个登录页面，上面有一个文本框用来输入用户名，还有一个提交按钮用来提交数据。当用户输入用户名，然后点提交，则显示显示用户已经登录，并且打印出用户的姓名来，同时还提供一个“注销”按钮。然后如果用户再次进入这个页面，则显示同登录成功后的页面。如果点击注销则重新进入未登录的页面。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id6" id="newtest-login-py" name="newtest-login-py">2&nbsp;&nbsp;&nbsp;在newtest下创建 login.py</a></h1>
+<pre class="literal-block">
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
+
+def login(request):
+    username = request.POST.get('username', None)
+    if username:
+        request.session['username'] = username
+    username = request.session.get('username', None)
+    if username:
+        return render_to_response('login.html', {'username':username})
+    else:
+        return render_to_response('login.html')
+
+def logout(request):
+    try:
+        del request.session['username']
+    except KeyError:
+        pass
+    return HttpResponseRedirect(&quot;/login/&quot;)
+</pre>
+<p>有些复杂了吗？没关系，让我解释一下。这里有两个方法： <tt class="docutils literal"><span class="pre">login()</span></tt> 和 <tt class="docutils literal"><span class="pre">logout()</span></tt> 。 <tt class="docutils literal"><span class="pre">login()</span></tt> 用来提供初始页面、处理提供数据和判断用户是否登录。而 <tt class="docutils literal"><span class="pre">logout()</span></tt> 只是用来从 session 中删除用户名，同时将页面重定向到 login 画面。这里我仍然使用了模板，并且根据传入不同的字典来控制模板的生成。是的，因为 Django 的模块支持条件判断，所以可以做到。</p>
+<p>在 <tt class="docutils literal"><span class="pre">login()</span></tt> 中的判断逻辑是：</p>
+<blockquote>
+<ul class="simple">
+<li>先从 POST 中取 <tt class="docutils literal"><span class="pre">username</span></tt> (这样 <tt class="docutils literal"><span class="pre">username</span></tt> 需要由模板的 form 来提供)，如果存在则加入到 session 中去。加入 session 很简单，就是一个字典的 Key 赋值。</li>
+<li>然后再从 session 中取 <tt class="docutils literal"><span class="pre">username</span></tt> ，有两种可能：一种是上一步实现的。还有一种可能是直接从以前的 session 中取出来的，它不是新产生的。而这里并没有细分这两种情况。因此这个判断其实对应两种页面请求的处理：一种是提交了用户姓名，而另一种则是处理完用户提交姓名之后，用户再次进入的情况。而用户再次进入时，由于我们在前面已经将他的名字保存在 session 里面了，因此可以直接取出来。如果 session 中存在，则表示用户已经登录过，则输出 <tt class="docutils literal"><span class="pre">login.html</span></tt> 模板，同时传入了 <tt class="docutils literal"><span class="pre">username</span></tt> 字典值。而如果 session 中不存在，说明用户从来没有登录过，则输出 <tt class="docutils literal"><span class="pre">login.html</span></tt> 模板，这次不带值。</li>
+</ul>
+</blockquote>
+<p>因此对于同一个 <tt class="docutils literal"><span class="pre">login.html</span></tt> 模板传入的不同值，后面我们会看到模板是如何区分的。</p>
+<p>在 <tt class="docutils literal"><span class="pre">logout()</span></tt> 中很简单。先试着删除 session ，然后重定向页面到 login 页面。这里使用了 <tt class="docutils literal"><span class="pre">HttpResponseRedirect</span></tt> 方法，它是从以前我们看到的 <tt class="docutils literal"><span class="pre">HttpResponse</span></tt> 派生来的子类。更多的派生子类和关于 response 的内容要参考 <a class="reference" href="http://www.djangoproject.com/documentation/request_response/">Request and response objects</a> 文档。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id7" id="templates-login-html" name="templates-login-html">3&nbsp;&nbsp;&nbsp;创建 templates/login.html</a></h1>
+<pre class="literal-block">
+{% if not username %}
+&lt;form method=&quot;post&quot; action=&quot;/login/&quot;&gt;
+    用户名：&lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;&quot;&gt;&lt;br/&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;登录&quot;&gt;
+&lt;/form&gt;
+{% else %}
+你已经登录了！{{ username }}&lt;br/&gt;
+&lt;form method=&quot;post&quot; action=&quot;/logout/&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;注销&quot;&gt;
+&lt;/form&gt;
+{% endif %}
+</pre>
+<p>整个是一个 <tt class="docutils literal"><span class="pre">if</span></tt> 语句。在 Django 模板中的 <tt class="docutils literal"><span class="pre">if</span></tt> 可以象 <a class="reference" href="http://www.python.org/">Python</a> 一样使用，如使用 <tt class="docutils literal"><span class="pre">not</span></tt> , <tt class="docutils literal"><span class="pre">and</span></tt> , <tt class="docutils literal"><span class="pre">or</span></tt> 。象 <tt class="docutils literal"><span class="pre">if</span> <span class="pre">not</span> <span class="pre">username</span></tt> 表示什么呢？它表示如果 <tt class="docutils literal"><span class="pre">username</span></tt> 不存在，或为空，或是假值等等。而此时我们利用了 <tt class="docutils literal"><span class="pre">username</span></tt> 不存在这种判断。</p>
+<p>上面的逻辑表示，如果 <tt class="docutils literal"><span class="pre">username</span></tt> 不存在，则显示一个表单，显示用户名输入文本框。如果存在，则显示已经登录信息，同时显示用户名和注销按钮。而这个注销铵钮对应于 <tt class="docutils literal"><span class="pre">logout()</span></tt> 方法。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id8" id="urls-py" name="urls-py">4&nbsp;&nbsp;&nbsp;修改 urls.py</a></h1>
+<pre class="literal-block">
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    # Example:
+    # (r'^testit/', include('newtest.apps.foo.urls.foo')),
+    (r'^$', 'newtest.helloworld.index'),
+    (r'^add/$', 'newtest.add.index'),
+    (r'^list/$', 'newtest.list.index'),
+    (r'^csv/(?P&lt;filename&gt;\w+)/$', 'newtest.csv_test.output'),
+    (r'^login/$', 'newtest.login.login'),
+    (r'^logout/$', 'newtest.login.logout'),
+
+    # Uncomment this for admin:
+#     (r'^admin/', include('django.contrib.admin.urls')),
+)
+</pre>
+<p>增加了 login 和 logout 两个url映射。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id9" id="server" name="server">5&nbsp;&nbsp;&nbsp;启动 server 运行</a></h1>
+<p>但我要说，你一定会报错。而且我的也在报错。为什么，因为从这一刻起，我们就要进入有数据库的环境了。因为在 django 中 session 是存放在数据库中的。所以在这里要进行数据库的初始化了。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id10" id="settings-py" name="settings-py">6&nbsp;&nbsp;&nbsp;修改 settings.py</a></h1>
+<p>主要修改以下地方:</p>
+<pre class="literal-block">
+DATABASE_ENGINE = 'sqlite3'
+DATABASE_NAME = './data.db'
+DATABASE_USER = ''
+DATABASE_PASSWORD = ''
+DATABASE_HOST = ''
+DATABASE_PORT = ''
+</pre>
+<p>这里我使用 sqlite3 。在使用数据库时，你同时需要自已去安装相应的数据库处理模块。对于 sqlite3 只需要修改两项： <tt class="docutils literal"><span class="pre">DATABASE_ENGINE</span></tt> 和 <tt class="docutils literal"><span class="pre">DATABASE_NAME</span></tt> 。这里数据文件名我使用了相对路径，我想在实际情况下可能使用绝对路径为好。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">sqlite3 对应的是 pysqlite2 模块，可以从 <a class="reference" href="http://pysqlite.org/">http://pysqlite.org/</a> 下载到最新版本。</p>
+</div>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">如果你使用utf-8，要注意缺省字符编码应为utf-8。同时对于 <tt class="docutils literal"><span class="pre">DATABASE_PORT</span></tt> 字段，Django 目前允许使用数字或字符串表示了。</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id11" id="id3" name="id3">7&nbsp;&nbsp;&nbsp;初始化数据库</a></h1>
+<p>改了配置还不够，还要执行相应的建库、建表的操作，使用 <tt class="docutils literal"><span class="pre">django-admin.py</span></tt> 或 <tt class="docutils literal"><span class="pre">manage.py</span></tt> 都可以:</p>
+<pre class="literal-block">
+manage.py syncdb
+</pre>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">原来使用 init 命令。但后来Magic-removal分枝删除了 init 命令，新增了 syncdb 命令。它可以自动创建已经安装的 App 中，在数据库中不存在的 Model。并且会自动将表的权限赋与超级用户。并且把超级用户的创建也结合到了一起。</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id12" id="id4" name="id4">8&nbsp;&nbsp;&nbsp;启动 server</a></h1>
+<p>这次再进入试吧</p>
+<p><a class="reference" href="http://localhost:8000/login/">http://localhost:8000/login/</a></p>
+<p>从此我们要进入数据库的世界了，当然目前还没有用到，而 Django 提供的许多自动化的高级功能都是需要数据库支持的。</p>
+</div>
+</div>
+</body>
+</html>

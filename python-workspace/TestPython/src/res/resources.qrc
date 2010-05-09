@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+<file alias="cal.png">cal.png</file>
+<file alias="mask.png">mask.png</file>
+<file alias="main.jpg">main.jpg</file>
+</qresource>
+</RCC>

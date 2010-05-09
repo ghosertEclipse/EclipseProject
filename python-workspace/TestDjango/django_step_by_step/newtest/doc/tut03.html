@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Django Step by Step (三)</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="django-step-by-step">
+<h1 class="title">Django Step by Step (三)</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body">limodou</td>
+</tr>
+<tr class="field"><th class="docinfo-name">联系:</th><td class="field-body"><a class="reference" href="mailto:limodou&#64;gmail.com">limodou&#64;gmail.com</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
+</tr>
+<tr class="field"><th class="docinfo-name">主页:</th><td class="field-body"><a class="reference" href="http://wiki.woodpecker.org.cn/moin/NewEdit">http://wiki.woodpecker.org.cn/moin/NewEdit</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">BLOG:</th><td class="field-body"><a class="reference" href="http://www.donews.net/limodou">http://www.donews.net/limodou</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权:</th><td class="field-body">FDL</td>
+</tr>
+</tbody>
+</table>
+<div class="contents topic">
+<p class="topic-title first"><a id="id1" name="id1">目录</a></p>
+<ul class="auto-toc simple">
+<li><a class="reference" href="#id2" id="id3" name="id3">1&nbsp;&nbsp;&nbsp;引言</a></li>
+<li><a class="reference" href="#list-py" id="id4" name="id4">2&nbsp;&nbsp;&nbsp;创建 list.py</a></li>
+<li><a class="reference" href="#newtest-templates" id="id5" name="id5">3&nbsp;&nbsp;&nbsp;在 newtest 中创建 templates 目录</a></li>
+<li><a class="reference" href="#settings-py" id="id6" name="id6">4&nbsp;&nbsp;&nbsp;修改 settings.py</a></li>
+<li><a class="reference" href="#templates-list-html" id="id7" name="id7">5&nbsp;&nbsp;&nbsp;创建 templates/list.html</a></li>
+<li><a class="reference" href="#urls-py" id="id8" name="id8">6&nbsp;&nbsp;&nbsp;修改 urls.py</a></li>
+<li><a class="reference" href="#server" id="id9" name="id9">7&nbsp;&nbsp;&nbsp;启动 server</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id3" id="id2" name="id2">1&nbsp;&nbsp;&nbsp;引言</a></h1>
+<p>本教程只想从浅到深地将大家带入到 <a class="reference" href="http://www.djangoproject.com/">Django</a> 的世界，因此都是以简单的例子出发，而且这些例子都是为了说明问题，本身并没有什么实际的意义。因此许多高级话题都无法涉及，需要大家自行看文档，做试验。</p>
+<p>从上一例我们看到，表格的生成是直接在 <tt class="docutils literal"><span class="pre">index()</span></tt> 函数中返回的 HTML 代码，这种混合方式对于大型开发非常不好，下面我们就学习模板的使用。 Django 自带有模板系统，但你可以不使用它，只要在 <tt class="docutils literal"><span class="pre">return</span></tt> 前使用自已喜欢的模板系统进行处理，然后返回即可。但 Django 自带的模板系统有很多特点，我不做过多的说明。我只是想使用它。</p>
+<p>现在我的问题就是：</p>
+<blockquote>
+我有一个通讯录数据，我想使用一个表格来显示。</blockquote>
+<p>为了方便，我们不需要使用数据库，因此我把它存在 view 文件中。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id4" id="list-py" name="list-py">2&nbsp;&nbsp;&nbsp;创建 list.py</a></h1>
+<pre class="literal-block">
+#coding=utf-8
+from django.shortcuts import render_to_response
+
+address = [
+    {'name':'张三', 'address':'地址一'},
+    {'name':'李四', 'address':'地址二'}
+    ]
+
+def index(request):
+    return render_to_response('list.html', {'address': address})
+</pre>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">我使用了汉字，并且字符的编码使用了 utf-8 ，请注意，而且以后如果不特别注明，所有的带汉字的文件，包括模板都将使用 utf-8 编码。</p>
+</div>
+<p>这里使用了一个新方法是 <tt class="docutils literal"><span class="pre">render_to_response</span></tt> ，它可以直接调用模板并返回生成好的文本，直接返回它即可。它接收两个参数，第一个是模板的名字。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">在 Django 中，模板文件都是以 <tt class="docutils literal"><span class="pre">.html</span></tt> 结尾的，但也不一定要这样，只是如果使用其它的名字需要修改配置文件。同时最新的Magic-Removal分枝必需要输入完整的模板文件名称，不能省略后面的 <tt class="docutils literal"><span class="pre">.html</span></tt> 。这一点要注意。</p>
+</div>
+<p>第二个参数是一个字典，这里只有一个 Key ，名字是 <tt class="docutils literal"><span class="pre">address</span></tt> ，它的值是一个字典的列表。只要注意模板所接收的就是这样的字典和包含字典的列表就行了。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">在0.91中 <tt class="docutils literal"><span class="pre">render_to_response</span></tt> 是在 <tt class="docutils literal"><span class="pre">django.core.extensions</span></tt> 中的，而到了 0.92 转变为 <tt class="docutils literal"><span class="pre">django.shortcuts</span></tt> 。</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id5" id="newtest-templates" name="newtest-templates">3&nbsp;&nbsp;&nbsp;在 newtest 中创建 templates 目录</a></h1>
+<p>用来存放模板文件</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id6" id="settings-py" name="settings-py">4&nbsp;&nbsp;&nbsp;修改 settings.py</a></h1>
+<pre class="literal-block">
+TEMPLATE_DIRS = (
+    # Put strings here, like &quot;/home/html/django_templates&quot;.
+    # Always use forward slashes, even on Windows.
+    './templates',
+)
+</pre>
+<p>如果有多个模板目录，加进去就行了。 Django 会按顺序搜索的。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">Django 还支持在 App 中定义一个 templates 目录。这样 Django 在启动时会检查所有的 App 的 <tt class="docutils literal"><span class="pre">templates</span></tt> 目录，如果存在，则将路径放在 <tt class="docutils literal"><span class="pre">TEMPLATE_DIRS</span></tt> 之后。这样就方便定义模板路径了。</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id7" id="templates-list-html" name="templates-list-html">5&nbsp;&nbsp;&nbsp;创建 templates/list.html</a></h1>
+<pre class="literal-block">
+&lt;h2&gt;通讯录&lt;/h2&gt;
+&lt;table border=&quot;1&quot;&gt;
+  &lt;tr&gt;&lt;th&gt;姓名&lt;/th&gt;&lt;th&gt;地址&lt;/th&gt;&lt;/tr&gt;
+  {% for user in address %}
+  &lt;tr&gt;
+  &lt;td&gt;{{ user.name }}&lt;/td&gt;
+  &lt;td&gt;{{ user.address }}&lt;/td&gt;
+  &lt;/tr&gt;
+{% endfor %}
+&lt;/table&gt;
+</pre>
+<p>很简单，就是生成了一个两列的表格。在 Django 模板中 {{}} 表示引用一个变量， {%%} 表示代码调用。在变量引用中， Django 还支持对变量属性的访问，同时它还有一定的策略，详细的建议查看 <a class="reference" href="http://www.djangoproject.com/documentation/templates/">The Django template language</a> 文档。这里我也使用了汉字，因此它也需要使用 utf-8 编码。</p>
+<p>这里使用 <tt class="docutils literal"><span class="pre">for</span> <span class="pre">..</span> <span class="pre">in</span></tt> 的模板 Tag 处理。因此 <tt class="docutils literal"><span class="pre">address</span></tt> 需要是一个集合。在我们的 View 代码中， <tt class="docutils literal"><span class="pre">address</span></tt> 为一个 list 值。每个 list 又是一个字典。因此 <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">user.name</span> <span class="pre">}}</span></tt> 和 <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">user.address</span> <span class="pre">}}</span></tt> 就是将这个字典中的元素取出来。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">在后面我们将了解更多的模板中的 Tag 标签的使用。而且你会发现， Django 中的 Tag 很强大，可以通过扩展形成庞大的 Tag 库方便模板的开发。</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id8" id="urls-py" name="urls-py">6&nbsp;&nbsp;&nbsp;修改 urls.py</a></h1>
+<pre class="literal-block">
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    # Example:
+    # (r'^testit/', include('newtest.apps.foo.urls.foo')),
+    (r'^$', 'newtest.helloworld.index'),
+    (r'^add/$', 'newtest.add.index'),
+    (r'^list/$', 'newtest.list.index'),
+
+    # Uncomment this for admin:
+#     (r'^admin/', include('django.contrib.admin.urls')),
+)
+</pre>
+<p>增加了 list 的 url 映射。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id9" id="server" name="server">7&nbsp;&nbsp;&nbsp;启动 server</a></h1>
+<p>效果如这样：</p>
+<img alt="表格" src="tut03_01.jpg" />
+</div>
+</div>
+</body>
+</html>

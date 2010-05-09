@@ -1,0 +1,70 @@
+<ui version="4.0" >
+ <class>VoteDialog</class>
+ <widget class="QDialog" name="VoteDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>396</width>
+    <height>253</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>投票对话框</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" >
+   <item>
+    <widget class="QSplitter" name="splitter" >
+     <property name="orientation" >
+      <enum>Qt::Vertical</enum>
+     </property>
+     <widget class="QLabel" name="label_4" >
+      <property name="text" >
+       <string>投票说明：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label" >
+      <property name="text" >
+       <string>投票系统正访问起点进行自动投票。如果您发现投票状态长时间没有响应（超过5分钟），请点击“取消自动投票”按钮，并重新投票。</string>
+      </property>
+      <property name="wordWrap" >
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Line" name="line" >
+      <property name="orientation" >
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2" >
+      <property name="text" >
+       <string>投票状态：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lbVoteStatus" >
+      <property name="text" >
+       <string>正在登录起点网站进行投票。。。</string>
+      </property>
+      <property name="wordWrap" >
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="Line" name="line_2" >
+      <property name="orientation" >
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btCancel" >
+      <property name="text" >
+       <string>取消自动投票</string>
+      </property>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+  <zorder>splitter</zorder>
+  <zorder>splitter</zorder>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

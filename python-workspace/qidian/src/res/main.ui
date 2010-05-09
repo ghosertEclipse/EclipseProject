@@ -1,0 +1,244 @@
+<ui version="4.0" >
+ <class>MainDialog</class>
+ <widget class="QDialog" name="MainDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>942</width>
+    <height>563</height>
+   </rect>
+  </property>
+  <property name="font" >
+   <font>
+    <family>Arial</family>
+    <pointsize>9</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle" >
+   <string>疯狂起点投票机</string>
+  </property>
+  <property name="locale" >
+   <locale country="China" language="Chinese" />
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" >
+   <item>
+    <layout class="QGridLayout" name="gridLayout" >
+     <item row="0" column="0" >
+      <widget class="QGroupBox" name="groupBox" >
+       <property name="title" >
+        <string>起点用户列表(右键点击下表添加用户)</string>
+       </property>
+       <widget class="QTableWidget" name="userTableWidget" >
+        <property name="geometry" >
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>441</width>
+          <height>201</height>
+         </rect>
+        </property>
+        <property name="font" >
+         <font>
+          <family>Arial</family>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="autoFillBackground" >
+         <bool>false</bool>
+        </property>
+        <property name="midLineWidth" >
+         <number>0</number>
+        </property>
+        <property name="horizontalScrollBarPolicy" >
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
+        <property name="editTriggers" >
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="dragEnabled" >
+         <bool>true</bool>
+        </property>
+        <property name="dragDropMode" >
+         <enum>QAbstractItemView::DragOnly</enum>
+        </property>
+        <property name="selectionMode" >
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="selectionBehavior" >
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <property name="rowCount" >
+         <number>0</number>
+        </property>
+        <column>
+         <property name="text" >
+          <string>用户名</string>
+         </property>
+        </column>
+        <column>
+         <property name="text" >
+          <string>用户类型</string>
+         </property>
+        </column>
+        <column>
+         <property name="text" >
+          <string>大号/小号</string>
+         </property>
+        </column>
+        <column>
+         <property name="text" >
+          <string>日推荐票</string>
+         </property>
+        </column>
+        <column>
+         <property name="text" >
+          <string>日广告票</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QPushButton" name="btRefreshUser" >
+        <property name="geometry" >
+         <rect>
+          <x>140</x>
+          <y>230</y>
+          <width>141</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text" >
+         <string>刷新用户列表</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item row="1" column="0" >
+      <widget class="QGroupBox" name="groupBox_2" >
+       <property name="title" >
+        <string>起点图书列表(右键点击下表添加图书)</string>
+       </property>
+       <widget class="QListWidget" name="bookListWidget" >
+        <property name="geometry" >
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>441</width>
+          <height>192</height>
+         </rect>
+        </property>
+        <property name="font" >
+         <font>
+          <family>Arial</family>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="acceptDrops" >
+         <bool>true</bool>
+        </property>
+        <property name="viewMode" >
+         <enum>QListView::IconMode</enum>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label" >
+        <property name="geometry" >
+         <rect>
+          <x>0</x>
+          <y>220</y>
+          <width>441</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text" >
+         <string>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'Arial'; font-size:9pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">&lt;span style=" color:#0147d5;">拖曳用户列表中的用户至图书列表中的某本图书进行投票，同一本书可重复投票&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+        </property>
+        <property name="alignment" >
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </widget>
+     </item>
+     <item rowspan="2" row="0" column="1" >
+      <widget class="QGroupBox" name="groupBox_3" >
+       <property name="title" >
+        <string>投票列表(右键点击下表删除投票)</string>
+       </property>
+       <widget class="QTreeWidget" name="voteTreeWidget" >
+        <property name="geometry" >
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>431</width>
+          <height>471</height>
+         </rect>
+        </property>
+        <property name="font" >
+         <font>
+          <family>Arial</family>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="allColumnsShowFocus" >
+         <bool>false</bool>
+        </property>
+        <property name="headerHidden" >
+         <bool>false</bool>
+        </property>
+        <column>
+         <property name="text" >
+          <string>书名/用户名</string>
+         </property>
+        </column>
+        <column>
+         <property name="text" >
+          <string>用户类型</string>
+         </property>
+        </column>
+        <column>
+         <property name="text" >
+          <string>大号/小号</string>
+         </property>
+        </column>
+        <column>
+         <property name="text" >
+          <string>推荐投票数</string>
+         </property>
+        </column>
+        <column>
+         <property name="text" >
+          <string>广告投票数</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QPushButton" name="btStartVote" >
+        <property name="geometry" >
+         <rect>
+          <x>150</x>
+          <y>500</y>
+          <width>151</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text" >
+         <string>开始投票</string>
+        </property>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>userTableWidget</tabstop>
+  <tabstop>btRefreshUser</tabstop>
+  <tabstop>bookListWidget</tabstop>
+  <tabstop>voteTreeWidget</tabstop>
+  <tabstop>btStartVote</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

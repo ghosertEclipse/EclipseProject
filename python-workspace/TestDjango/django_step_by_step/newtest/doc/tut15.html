@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Django Step by Step (十五)</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="django-step-by-step">
+<h1 class="title">Django Step by Step (十五)</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body">limodou</td>
+</tr>
+<tr class="field"><th class="docinfo-name">联系:</th><td class="field-body"><a class="reference" href="mailto:limodou&#64;gmail.com">limodou&#64;gmail.com</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
+</tr>
+<tr class="field"><th class="docinfo-name">主页:</th><td class="field-body"><a class="reference" href="http://wiki.woodpecker.org.cn/moin/NewEdit">http://wiki.woodpecker.org.cn/moin/NewEdit</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">BLOG:</th><td class="field-body"><a class="reference" href="http://www.donews.net/limodou">http://www.donews.net/limodou</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权:</th><td class="field-body">FDL</td>
+</tr>
+</tbody>
+</table>
+<div class="contents topic">
+<p class="topic-title first"><a id="id1" name="id1">目录</a></p>
+<ul class="auto-toc simple">
+<li><a class="reference" href="#id2" id="id5" name="id5">1&nbsp;&nbsp;&nbsp;引言</a><ul class="auto-toc">
+<li><a class="reference" href="#id3" id="id6" name="id6">1.1&nbsp;&nbsp;&nbsp;在程序和模板中定义翻译字符串</a></li>
+<li><a class="reference" href="#po" id="id7" name="id7">1.2&nbsp;&nbsp;&nbsp;生成 po 文件</a></li>
+<li><a class="reference" href="#id4" id="id8" name="id8">1.3&nbsp;&nbsp;&nbsp;配置</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#ajax-views-py" id="id9" name="id9">2&nbsp;&nbsp;&nbsp;修改 ajax/views.py</a></li>
+<li><a class="reference" href="#settings-py" id="id10" name="id10">3&nbsp;&nbsp;&nbsp;修改 settings.py</a></li>
+<li><a class="reference" href="#ajax-locale" id="id11" name="id11">4&nbsp;&nbsp;&nbsp;创建 ajax/locale 目录</a></li>
+<li><a class="reference" href="#make-messasges-py-ajax" id="id12" name="id12">5&nbsp;&nbsp;&nbsp;拷贝 make-messasges.py 到 ajax 目录下</a></li>
+<li><a class="reference" href="#make-messasges-py" id="id13" name="id13">6&nbsp;&nbsp;&nbsp;执行 make-messasges.py</a></li>
+<li><a class="reference" href="#poedit-django-po" id="id14" name="id14">7&nbsp;&nbsp;&nbsp;使用 poEdit 翻译 django.po 文件</a></li>
+<li><a class="reference" href="#server" id="id15" name="id15">8&nbsp;&nbsp;&nbsp;启动 server 测试</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id5" id="id2" name="id2">1&nbsp;&nbsp;&nbsp;引言</a></h1>
+<p>在 <a class="reference" href="http://www.ajaxpatterns.org/Main_Page">Ajax</a> 的试验中，你会看到有一些是用英文写的。下面就让我们学习如何将应用改为支持 i18n 处理的吧。在本讲中我会讲述我实现的过程，同时对一些问题进行讨论。
+<a class="reference" href="http://www.djangoproject.com/">Django</a> 中 i18n 的实现过程:</p>
+<div class="section">
+<h2><a class="toc-backref" href="#id6" id="id3" name="id3">1.1&nbsp;&nbsp;&nbsp;在程序和模板中定义翻译字符串</a></h2>
+<p>在程序中就是使用 <tt class="docutils literal"><span class="pre">_()</span></tt> 将要翻译的字符串包括起来。这里有几种做法，一种是什么都不导入，这样就使用缺省的方式，另一种是导入 Django 提供的翻译函数。特别是 Django 提供了 Lazy 翻译函数，特别可以用在动态语言的切换。在模板中分几种情况：</p>
+<ul class="simple">
+<li>可以使用 <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">trans</span> <span class="pre">%}</span></tt> 标签。它用来翻译一句话，但不能在它中间使用模板变量。</li>
+<li>如果是大段的文本，或要处理模板变量，可以使用 <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">blocktrans</span> <span class="pre">%}{%</span> <span class="pre">endblocktrans</span> <span class="pre">%}</span></tt> 来处理。</li>
+</ul>
+<p>Django 还支持简单的 Javascript 的 i18n 的处理，但有兴趣自已去看吧。</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id7" id="po" name="po">1.2&nbsp;&nbsp;&nbsp;生成 po 文件</a></h2>
+<p>定义好翻译串之后使用 <tt class="docutils literal"><span class="pre">bin/make-messages.py</span></tt> 来生成 po 文件。</p>
+<p>Django 支持多层次的处理。比如在整个 Django 的源码项目，在某一个工程，在某一个应用。在不同层次去实现 i18n 时，需要在不同的层次的根目录去执行 <tt class="docutils literal"><span class="pre">make-messages.py</span></tt> 。那么可以将 <tt class="docutils literal"><span class="pre">make-messages.py</span></tt> 拷贝到相应的目录去执行，特别是在你的工程或应用中。在执行 <tt class="docutils literal"><span class="pre">make-messasges.py</span></tt> 时，需要你预先创建 <tt class="docutils literal"><span class="pre">conf/locale</span></tt> 或 <tt class="docutils literal"><span class="pre">locale</span></tt> 目录，而 <tt class="docutils literal"><span class="pre">make-messasges.py</span></tt> 是不会自动为你创建的。那么 <tt class="docutils literal"><span class="pre">conf/locale</span></tt> 多用在源码中，象 Django 的源码就是放在 <tt class="docutils literal"><span class="pre">conf/locale</span></tt> 中的。 <strong>但在运行时，对于自已的项目和应用却是从 ``locale`` 中来找的</strong> 。因此还是建议你创建 <tt class="docutils literal"><span class="pre">locale</span></tt> 来存放 po 文件。</p>
+<p>第一次执行时:</p>
+<pre class="literal-block">
+make-messages.py -l zh_CN
+</pre>
+<p>这时会生成 <tt class="docutils literal"><span class="pre">locale/zh_CN/LC_MESSAGES/django.po</span></tt> 和 <tt class="docutils literal"><span class="pre">django.pot</span></tt> 两个文件。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p>在 0.92 版之前需要使用 po 工具将 .pot 合并到 .po 文件中。但 0.92 版则已经自动做好合并了。如果有 .pot 文件，可以：</p>
+<p class="last">用 poEdit 打开 <tt class="docutils literal"><span class="pre">django.po</span></tt> 后，选择类目-&gt;从POT文件更新(我使用的是 poEdit 中文版)。这样内容就更新到 po 中去了。</p>
+</div>
+<p>然后你就可以开始翻译了。翻译完成之后，首先要执行类目-&gt;设置，将缺省的参数修改一下。主要是：项目名称及版本，团队，团队专用电子邮件，字符集(一般为 utf-8)。这些如果不改， poEdit 在保存时会报错。使用 poEdit 的一个好处是，在保存时它会自动将 po 编译成 mo 文件。</p>
+<p>以后再更新时:</p>
+<pre class="literal-block">
+make-messasges.py -a
+</pre>
+<p>如果已经有多个语言文件，那么执行时会同时更新这些 po 文件。</p>
+</div>
+<div class="section">
+<h2><a class="toc-backref" href="#id8" id="id4" name="id4">1.3&nbsp;&nbsp;&nbsp;配置</a></h2>
+<p>Django 有一系列的策略来实现 i18n 的功能。基本上分为静态和动态。</p>
+<p>静态是指在 <tt class="docutils literal"><span class="pre">settings.py</span></tt> 中设置 <tt class="docutils literal"><span class="pre">LANGUAGE_CODE</span></tt> 为你想要的语言。那么这里要注意，中文的语言编码是 <tt class="docutils literal"><span class="pre">zh-cn</span></tt> ，但 <tt class="docutils literal"><span class="pre">locale</span></tt> 目录下却是 <tt class="docutils literal"><span class="pre">zh_CN</span></tt> 。这是为什么：其实一个是 language(zh-cn) ，一个是 locale(zh_CN) ，在 Django 的 <tt class="docutils literal"><span class="pre">utils.translation.py</span></tt> 中有专门的方法可以进行转换。因此在 Django 的程序中使用的是 language 的形式，在目录中却是使用 locale 的形式。一旦设为静态，则它表示是全局性质的，在所有其它的策略失效后将使用这种策略。</p>
+<p>而动态是指在运行中对于不同的用户，不同的浏览器的支持的语言可以有不同的语言翻译文件被使用。这种方式需要在 <tt class="docutils literal"><span class="pre">settings.py</span></tt> 中安装 <tt class="docutils literal"><span class="pre">django.middleware.locale.LocaleMiddleware</span></tt> 到 <tt class="docutils literal"><span class="pre">MIDDLEWARE_CLASSES</span></tt> 中去。同时如果你想在实现应用中的翻译文件被使用，也要采用这种方式。</p>
+<p>在一个请求发送到 Django 之后，如果安装了 <tt class="docutils literal"><span class="pre">LocaleMiddleware</span></tt> ，它会采用下面的策略：</p>
+<blockquote>
+<ul class="simple">
+<li>在当前用户的 session 中查找 <tt class="docutils literal"><span class="pre">django_language</span></tt> 键字。</li>
+<li>如果没有找到则在 cookie 中查找叫 <tt class="docutils literal"><span class="pre">django_language</span></tt> 的值。</li>
+<li>如果没有找到，则查看 <tt class="docutils literal"><span class="pre">Accept-Language</span></tt> HTTP 头。这个头是由浏览器发送给服务器的。</li>
+<li>如果没有找到，则使用全局的 <tt class="docutils literal"><span class="pre">LANGUAGE_CODE</span></tt> 设置。</li>
+</ul>
+</blockquote>
+<p>如果你使用 FireFox 可以在 Tools-&gt;Options-&gt;Advanced-&gt;Eidt Languages 设置你所接受的语言，并且将 <tt class="docutils literal"><span class="pre">zh-cn</span></tt> 放在最前面。</p>
+<p>上面讲述得还是有些粗，建议你好好阅读 i18n 的文档。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">国际化处理的文档请参阅： <a class="reference" href="http://www.djangoproject.com/documentation/i18n/">Internationalization</a> 文档</p>
+</div>
+<p>下面开始我们的试验。</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id9" id="ajax-views-py" name="ajax-views-py">2&nbsp;&nbsp;&nbsp;修改 ajax/views.py</a></h1>
+<pre class="literal-block">
+#coding=utf-8
+# Create your views here.
+from django.http import HttpResponse
+
+def input(request):
+    input = request.REQUEST[&quot;input&quot;]
+    return HttpResponse(_('&lt;p&gt;You input is &quot;%s&quot;&lt;/p&gt;') % input)
+
+def json(request):
+    a = {'head':(unicode(_('Name'), 'utf-8'), unicode(_('Telphone'), 'utf-8')),
+        'body':[(u'张三', '1111'), (u'李四', '2222')]}
+    import simplejson
+    return HttpResponse(simplejson.dumps(a))
+</pre>
+<p>这里对所有英文都使用 <tt class="docutils literal"><span class="pre">_()</span></tt> 进行了封装。但对于 Json 方法，这里我使用 <tt class="docutils literal"><span class="pre">unicode(_('Name'),</span> <span class="pre">'utf-8')</span></tt> 进行了转换。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">目前来说， Django 内部使用 utf-8 编码。因此从 <tt class="docutils literal"><span class="pre">_()</span></tt> 返回的并不象我以前认为的是 unicode ，而是 utf-8 编码。那么关于缺省编码是在 <tt class="docutils literal"><span class="pre">django.conf.global_settings.py</span></tt> 中有一个 <tt class="docutils literal"><span class="pre">DEFAULT_CHARSET</span></tt> 的值。缺省情况下它是 utf-8 。但现在的问题是 simplejson 需要 unicode 来正确处理汉字。那么我只有将 <tt class="docutils literal"><span class="pre">_()</span></tt> 返回的值转化为 unicode 。</p>
+</div>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">在 Django 的邮件列表中已经开始讨论 Django 的核心是否全部采用 unicode 的问题。</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id10" id="settings-py" name="settings-py">3&nbsp;&nbsp;&nbsp;修改 settings.py</a></h1>
+<p>增加 <tt class="docutils literal"><span class="pre">LocaleMiddleware</span></tt></p>
+<pre class="literal-block">
+MIDDLEWARE_CLASSES = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.doc.XViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+)
+</pre>
+<p>这里在文档中对于 <tt class="docutils literal"><span class="pre">LocaleMiddleware</span></tt> 的顺序有要求，要求排在 <tt class="docutils literal"><span class="pre">SessionMiddleware</span></tt> 之后，但在其它的 Middleware 之前。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">话虽如此，但我感觉目前顺序影响不大，也许只是个人感觉吧。</p>
+</div>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id11" id="ajax-locale" name="ajax-locale">4&nbsp;&nbsp;&nbsp;创建 ajax/locale 目录</a></h1>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id12" id="make-messasges-py-ajax" name="make-messasges-py-ajax">5&nbsp;&nbsp;&nbsp;拷贝 make-messasges.py 到 ajax 目录下</a></h1>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id13" id="make-messasges-py" name="make-messasges-py">6&nbsp;&nbsp;&nbsp;执行 make-messasges.py</a></h1>
+<pre class="literal-block">
+cd ajax
+make-message.py -l zh_CN
+</pre>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id14" id="poedit-django-po" name="poedit-django-po">7&nbsp;&nbsp;&nbsp;使用 poEdit 翻译 django.po 文件</a></h1>
+<p>按上面说的先更新 pot 文件，然后修改缺省的参数，再保存。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">如果你没有 poEdit，或不在 Windows 平台下，那么只好自已去想办法了。同时这里 make-message.py 还需要 Windows 下的 xgettext 工具。可以在 <a class="reference" href="http://code.djangoproject.com/wiki/Localization">http://code.djangoproject.com/wiki/Localization</a> 找到说明。</p>
+</div>
+<p>这里我没有演示模板的处理。因为 Ajax 所用到的模板没有放在 <tt class="docutils literal"><span class="pre">ajax</span></tt> 目录下，而是放在 <tt class="docutils literal"><span class="pre">templates</span></tt> 目录下。因此，如果想支持 i18n 的话，目录的布置是一个问题。所以不再试验了。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id15" id="server" name="server">8&nbsp;&nbsp;&nbsp;启动 server 测试</a></h1>
+<p>是不是都是中文了呢？如果不是，看一看是否浏览器没有设置成接受 <tt class="docutils literal"><span class="pre">zh-cn</span></tt> 。</p>
+</div>
+</div>
+</body>
+</html>

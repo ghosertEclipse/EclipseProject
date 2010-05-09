@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Django Step by Step (四)</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="django-step-by-step">
+<h1 class="title">Django Step by Step (四)</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body">limodou</td>
+</tr>
+<tr class="field"><th class="docinfo-name">联系:</th><td class="field-body"><a class="reference" href="mailto:limodou&#64;gmail.com">limodou&#64;gmail.com</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
+</tr>
+<tr class="field"><th class="docinfo-name">主页:</th><td class="field-body"><a class="reference" href="http://wiki.woodpecker.org.cn/moin/NewEdit">http://wiki.woodpecker.org.cn/moin/NewEdit</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">BLOG:</th><td class="field-body"><a class="reference" href="http://www.donews.net/limodou">http://www.donews.net/limodou</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权:</th><td class="field-body">FDL</td>
+</tr>
+</tbody>
+</table>
+<div class="contents topic">
+<p class="topic-title first"><a id="id1" name="id1">目录</a></p>
+<ul class="auto-toc simple">
+<li><a class="reference" href="#id2" id="id3" name="id3">1&nbsp;&nbsp;&nbsp;引言</a></li>
+<li><a class="reference" href="#templates-list-html" id="id4" name="id4">2&nbsp;&nbsp;&nbsp;修改 templates/list.html</a></li>
+<li><a class="reference" href="#newtest-csv-test-py" id="id5" name="id5">3&nbsp;&nbsp;&nbsp;在newtest下增加 csv_test.py</a></li>
+<li><a class="reference" href="#templates-csv-html" id="id6" name="id6">4&nbsp;&nbsp;&nbsp;增加 templates/csv.html</a></li>
+<li><a class="reference" href="#urls-py" id="id7" name="id7">5&nbsp;&nbsp;&nbsp;修改 urls.py</a></li>
+<li><a class="reference" href="#server" id="id8" name="id8">6&nbsp;&nbsp;&nbsp;启动 server</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id3" id="id2" name="id2">1&nbsp;&nbsp;&nbsp;引言</a></h1>
+<p>经过前几节的学习，我想大家应该比较熟悉 Django 的大致开发流程：</p>
+<blockquote>
+<ul class="simple">
+<li>增加 view 方法</li>
+<li>增加模板</li>
+<li>修改 <tt class="docutils literal"><span class="pre">urls.py</span></tt></li>
+</ul>
+</blockquote>
+<p>就是这样。剩下的就是挖掘 Django 提供的其它的能力。在我们还没有进入模型(model)之前还是再看一看外围的东西，再更进一步体验 Django 吧。</p>
+<p>在 Django 中我看到了一个生成 csv 格式的文档(<a class="reference" href="http://www.djangoproject.com/documentation/outputting_csv/">Outputting CSV dynamically</a>)，非常好，它没有数据库，正好用来做演示。</p>
+<p>现在我的需求就是提供 csv 格式文件的下载。</p>
+<p>我们会在原来 list(表格) 例子基础上进行演示，步骤就是上面的流程。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id4" id="templates-list-html" name="templates-list-html">2&nbsp;&nbsp;&nbsp;修改 templates/list.html</a></h1>
+<p>在文件最后增加:</p>
+<pre class="literal-block">
+&lt;p&gt;&lt;a href=&quot;/csv/address/&quot;&gt;csv格式下载&lt;/a&gt;&lt;/p&gt;
+</pre>
+<p>它将显示为一个链接，它所指向的链接将用来生成 csv 文件。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id5" id="newtest-csv-test-py" name="newtest-csv-test-py">3&nbsp;&nbsp;&nbsp;在newtest下增加 csv_test.py</a></h1>
+<pre class="literal-block">
+#coding=utf-8
+from django.http import HttpResponse
+from django.template import loader, Context
+
+address = [
+    ('张三', '地址一'),
+    ('李四', '地址二')
+    ]
+
+def output(request, filename):
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=%s.csv' % filename
+
+    t = loader.get_template('csv.html')
+    c = Context({
+        'data': address,
+    })
+    response.write(t.render(c))
+    return response
+</pre>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">此文件原来为 <tt class="docutils literal"><span class="pre">csv.py</span></tt> ，但后来发现与系统的 csv 模块重名，因此改名</p>
+</div>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">在 0.91 版中 <tt class="docutils literal"><span class="pre">HttpResponse</span></tt> 是从 <tt class="docutils literal"><span class="pre">django.utils.httpwrappers</span></tt> 导入的，而 0.92 为 <tt class="docutils literal"><span class="pre">django.http</span></tt> 。 <tt class="docutils literal"><span class="pre">loader,</span> <span class="pre">Context</span></tt> 是从 <tt class="docutils literal"><span class="pre">django.core.template</span></tt> 导入的，而 0.92 为 <tt class="docutils literal"><span class="pre">django.template</span></tt> 。具体可以参考： <a class="reference" href="http://code.djangoproject.com/wiki/NamespaceSimplification">NamespaceSimplification</a> 文档。以后类似的地方不再详述。</p>
+</div>
+<p>这里使用的东西多了一些。这里没有 <tt class="docutils literal"><span class="pre">render_to_response</span></tt> 了，而是演示了一个完整的从头进行模板解析的处理过程。为什么需要这样，因为我们需要修改 <tt class="docutils literal"><span class="pre">response</span></tt> 对象的值，而 <tt class="docutils literal"><span class="pre">render_to_response</span></tt> 封装了它使得我们无法修改。从这里我们也可以看到，在调用一个方法时， Django 会传入一个 <tt class="docutils literal"><span class="pre">request</span></tt> 对象，在返回时，你需要将内容写入 <tt class="docutils literal"><span class="pre">response</span></tt> ，必要时修改它的某些属性。更详细的建议你参考 django 所带的 request_response 文档，里面详细描述了两个对象的内容，并且还可以在交互环境下进行测试，学习非常方便。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">response 对象也是由 Django 自动维护的。具体的内容参见 <a class="reference" href="http://www.djangoproject.com/documentation/request_response/">Request and response objects</a> 文档。</p>
+</div>
+<p>这里 <tt class="docutils literal"><span class="pre">address</span></tt> 不再是字典的列表，而是 tuple 的列表。让人高兴的是， Django 的模板除了可以处理字典，还可以处理序列，而且可以处理序列中的元素。一会在模板定义中我们会看到。</p>
+<p>这里 <tt class="docutils literal"><span class="pre">output()</span></tt> 是我们希望 Django 调用的方法，不再是 <tt class="docutils literal"><span class="pre">index()</span></tt> 了。(不能老是一样的呀。)而且它与前面的 <tt class="docutils literal"><span class="pre">index()</span></tt> 不同，它带了一个参数。这里主要是想演示 url 的参数解析。因此你要注意，这个参数一定是放在 url 上的。它表示输出文件名。</p>
+<pre class="literal-block">
+response = HttpResponse(mimetype='text/csv')
+response['Content-Disposition'] = 'attachment; filename=%s.csv' % filename
+</pre>
+<p>这两行是用来处理输出类型和附件的，以前我也没有用过，这回也学到了。它表明返回的是一个 csv 格式的文件。</p>
+<pre class="literal-block">
+t = loader.get_template('csv.html')
+c = Context({
+    'data': address,
+})
+response.write(t.render(c))
+</pre>
+<p>这几行就是最原始的模板使用方法。先通过 <tt class="docutils literal"><span class="pre">loader</span></tt> 来找到需要的模板，然后生成一个 template 对象，再生成一个 <tt class="docutils literal"><span class="pre">Context</span></tt> 对象，它就是一个字典集。然后 <tt class="docutils literal"><span class="pre">t.render(c)</span></tt> 这个用来对模板和提供的变量进行合并处理，生成最终的结果。最后调用 <tt class="docutils literal"><span class="pre">response.write()</span></tt> 将内容写入。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id6" id="templates-csv-html" name="templates-csv-html">4&nbsp;&nbsp;&nbsp;增加 templates/csv.html</a></h1>
+<pre class="literal-block">
+{% for row in data %}&quot;{{ row.0|addslashes}}&quot;, &quot;{{ row.1|addslashes}}&quot;,
+{% endfor %}
+</pre>
+<p>使用了一个 for 循环。这里 <tt class="docutils literal"><span class="pre">data</span></tt> 与上面的 <tt class="docutils literal"><span class="pre">Context</span></tt> 的 <tt class="docutils literal"><span class="pre">data</span></tt> 相对应。因为 <tt class="docutils literal"><span class="pre">data</span></tt> 是一个列表，它的每行是一个 tuple ，因此 <tt class="docutils literal"><span class="pre">row.0,</span> <span class="pre">row.1</span></tt> 就是取 tuple 的第一个和第二个元素。 <tt class="docutils literal"><span class="pre">|</span></tt> 是一个过滤符，它表示将前一个的处理结果作为输入传入下一个处理。因此 Django 的模板很强大，使用起来也非常直观和方便。 <tt class="docutils literal"><span class="pre">addslashes</span></tt> 是 Django 模板内置的过滤 Tag ，它用来将结果中的特殊字符加上反斜线。</p>
+<p>同时我们注意到，每个 <tt class="docutils literal"><span class="pre">{{}}</span></tt> 前后都有一个双引号，这样就保证每个字符串使用双引号引起来。然后在第一个与第二个元素之间还使用了逗号分隔。最后 <tt class="docutils literal"><span class="pre">endfor</span></tt> 在下一行，表示上面每行模板后有一个回车。</p>
+<p>Django 还允许你自定义 Tag ，在 <a class="reference" href="http://www.djangoproject.com/documentation/templates_python/">The Django template language: For Python programmers</a> 文档中有描述，其实是很简单的。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id7" id="urls-py" name="urls-py">5&nbsp;&nbsp;&nbsp;修改 urls.py</a></h1>
+<pre class="literal-block">
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('',
+    # Example:
+    # (r'^testit/', include('newtest.apps.foo.urls.foo')),
+    (r'^$', 'newtest.helloworld.index'),
+    (r'^add/$', 'newtest.add.index'),
+    (r'^list/$', 'newtest.list.index'),
+    (r'^csv/(?P&lt;filename&gt;\w+)/$', 'newtest.csv_test.output'),
+
+    # Uncomment this for admin:
+#     (r'^admin/', include('django.contrib.admin.urls')),
+)
+</pre>
+<p>增加了 csv 的 url 映射。</p>
+<p>上面的正则表达式有些复杂了，因为有参数的处理在里面。 <tt class="docutils literal"><span class="pre">(?P&lt;filename&gt;\w+)</span></tt> 这是一个将解析结果起名为 <tt class="docutils literal"><span class="pre">filename</span></tt> 的正则表达式，它完全符合 Python 正则表达式的用法。在最新的 Django 中，还可以简化一下： <tt class="docutils literal"><span class="pre">(\w+)</span></tt> 。但这样需要你的参数是按顺序传入的，在一个方法有多个参数时一定要注意顺序。</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">关于 url 的配置问题在 <a class="reference" href="http://www.djangoproject.com/documentation/url_dispatch/">URL configuration</a> 文档中有说明。</p>
+</div>
+<p>还记得吗？我们的链接是写成 <tt class="docutils literal"><span class="pre">/csv/address/</span></tt> ，因此上面实际上会变成对 <tt class="docutils literal"><span class="pre">csv.output(filename='address')</span></tt> 的调用。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id8" id="server" name="server">6&nbsp;&nbsp;&nbsp;启动 server</a></h1>
+<p>看一下结果吧。点击链接，浏览器会提示你保存文件的。</p>
+<p>很简单吧。但这里面的内容其实也不少，而且许多地方都有很大的扩展空间。</p>
+</div>
+</div>
+</body>
+</html>

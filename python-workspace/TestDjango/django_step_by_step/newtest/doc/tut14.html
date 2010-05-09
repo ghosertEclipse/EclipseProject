@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Django Step by Step (十四)</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="django-step-by-step">
+<h1 class="title">Django Step by Step (十四)</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body">limodou</td>
+</tr>
+<tr class="field"><th class="docinfo-name">联系:</th><td class="field-body"><a class="reference" href="mailto:limodou&#64;gmail.com">limodou&#64;gmail.com</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
+</tr>
+<tr class="field"><th class="docinfo-name">主页:</th><td class="field-body"><a class="reference" href="http://wiki.woodpecker.org.cn/moin/NewEdit">http://wiki.woodpecker.org.cn/moin/NewEdit</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">BLOG:</th><td class="field-body"><a class="reference" href="http://www.donews.net/limodou">http://www.donews.net/limodou</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权:</th><td class="field-body">FDL</td>
+</tr>
+</tbody>
+</table>
+<div class="contents topic">
+<p class="topic-title first"><a id="id1" name="id1">目录</a></p>
+<ul class="auto-toc simple">
+<li><a class="reference" href="#id2" id="id3" name="id3">1&nbsp;&nbsp;&nbsp;引言</a></li>
+<li><a class="reference" href="#ajax-views-py" id="id4" name="id4">2&nbsp;&nbsp;&nbsp;修改 ajax/views.py</a></li>
+<li><a class="reference" href="#templates-ajax-ajax-html" id="id5" name="id5">3&nbsp;&nbsp;&nbsp;修改 templates/ajax/ajax.html</a></li>
+<li><a class="reference" href="#media-ajax-test-js" id="id6" name="id6">4&nbsp;&nbsp;&nbsp;修改 media/ajax_test.js</a></li>
+<li><a class="reference" href="#urls-py" id="id7" name="id7">5&nbsp;&nbsp;&nbsp;修改 urls.py</a></li>
+<li><a class="reference" href="#server" id="id8" name="id8">6&nbsp;&nbsp;&nbsp;启动 server 进行测试</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id3" id="id2" name="id2">1&nbsp;&nbsp;&nbsp;引言</a></h1>
+<p><a class="reference" href="http://www.ajaxpatterns.org/Main_Page">Ajax</a> 因为大量地使用了 Javascript ，而调试 Javascript 的确不是件容易的事，在这方面只有不停地测试，还要靠耐心。而且 Ajax 本身可能还有一些安全方面的东西需要考虑，但这些话题需要你自已去学习了。</p>
+<p>在试验了简单的 Html 返回片段之后，让我们再体验一下 Json 的应用吧。为了使用 Json ，我下载了 <a class="reference" href="http://undefined.org/python/#simplejson">simplejson</a> 模块。我下载的是 1.1 版本。还可以使用 easy_install 来安装。</p>
+<p>如何使用 simplejson 在它自带的文档有示例很简单，下面我们就用它来试验 Json 的例子。</p>
+<p>我将在上一例的基础之上，增加一个按钮，这个按钮点击后，会发送一个请求(不带 Json 信息)，然后 <a class="reference" href="http://www.djangoproject.com/">Django</a> 会返回一个 Json 格式的表格数据，分为头和体两部分。然后前端动态生成一个表格显示在 <tt class="docutils literal"><span class="pre">output</span></tt> 层中。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id4" id="ajax-views-py" name="ajax-views-py">2&nbsp;&nbsp;&nbsp;修改 ajax/views.py</a></h1>
+<pre class="literal-block">
+#coding=utf-8
+# Create your views here.
+from django.http import HttpResponse
+
+def input(request):
+    input = request.REQUEST[&quot;input&quot;]
+    return HttpResponse('&lt;p&gt;You input is &quot;%s&quot;&lt;/p&gt;' % input)
+
+def json(request):
+    a = {'head':('Name', 'Telphone'), 'body':[(u'张三', '1111'), (u'李四', '2222')]}
+    import simplejson
+    return HttpResponse(simplejson.dumps(a))
+</pre>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">由于使用了汉字，前面的 <tt class="docutils literal"><span class="pre">coding=utf-8</span></tt> 一定要加上。</p>
+</div>
+<p><tt class="docutils literal"><span class="pre">json()</span></tt> 是新加的方法。 <tt class="docutils literal"><span class="pre">a</span></tt> 是一个字典，它会被封装为 Json 的格式。这里还使用了汉字，但使用了 unicode 的表示。我发现 simplejson 在处理非 ascii 码时会自动转为 unicode ，但不正确，因此我直接使用了unicode。因此我希望浏览器可以根据这个数据生成表格。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id5" id="templates-ajax-ajax-html" name="templates-ajax-ajax-html">3&nbsp;&nbsp;&nbsp;修改 templates/ajax/ajax.html</a></h1>
+<pre class="literal-block">
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;
+    &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Ajax Test&lt;/title&gt;
+        &lt;script type=&quot;text/javascript&quot; src=&quot;/site_media/MochiKit.js&quot;&gt;&lt;/script&gt;
+        &lt;script type=&quot;text/javascript&quot; src=&quot;/site_media/ajax_test.js&quot;&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;
+            Ajax 演示
+        &lt;/h1&gt;
+        &lt;div&gt;
+        &lt;form id=&quot;form&quot;&gt;
+        输入：&lt;input type=&quot;text&quot; name=&quot;input&quot;/&gt;
+        &lt;input id=&quot;submit&quot; type=&quot;button&quot; value=&quot;提交&quot; /&gt;
+        &lt;input id=&quot;json&quot; type=&quot;button&quot; value=&quot;JSON演示&quot; /&gt;
+        &lt;/form&gt;
+        &lt;/div&gt;
+        &lt;div id=&quot;output&quot;&gt;&lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p>这里只是增加了一个按钮， id 是 <tt class="docutils literal"><span class="pre">json</span></tt> 。它将用来触发 Ajax 请求。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id6" id="media-ajax-test-js" name="media-ajax-test-js">4&nbsp;&nbsp;&nbsp;修改 media/ajax_test.js</a></h1>
+<pre class="literal-block">
+function callJson(){
+    var d = loadJSONDoc('/ajax/json/');
+    d.addCallbacks(onSuccessJson, onFail);
+}
+row_display = function (row) {
+    return TR(null, map(partial(TD, null), row));
+}
+onSuccessJson = function (data){
+    var output = $(&quot;output&quot;);
+    table = TABLE({border:&quot;1&quot;}, THEAD(null, row_display(data.head)),
+        TBODY(null, map(row_display, data.body)));
+    replaceChildNodes(output, table);
+    showElement(output);
+}
+function init() {
+    var btn = $(&quot;submit&quot;);
+    btn.onclick = submit;
+    var output = $(&quot;output&quot;);
+    hideElement(output);
+    var btn = $(&quot;json&quot;);
+    btn.onclick = callJson;
+}
+</pre>
+<p>在最后一行 <tt class="docutils literal"><span class="pre">addLoadEvent(init);</span></tt> 前加入上面的内容。对于 id 为 <tt class="docutils literal"><span class="pre">json</span></tt> 的按钮的事件绑定方式与上一例相同，都是在 <tt class="docutils literal"><span class="pre">init()</span></tt> 中进行的。在 <tt class="docutils literal"><span class="pre">callJson()</span></tt> 中进行实际的 Json 调用，这次使用了 <a class="reference" href="http://www.mochikit.com/">MochiKit</a> 提供的 <tt class="docutils literal"><span class="pre">loadJSONDoc()</span></tt> 函数，它将执行一个 url 请求，同时将返回结果自动转化为 Json 对象。一旦成功，将调用 <tt class="docutils literal"><span class="pre">onSuccessJson()</span></tt> 函数。在这里将动态生成一个表格，并显示出来。</p>
+<p>表格的显示使用了 MochiKit 的 DOM 中的示例的方法。 <tt class="docutils literal"><span class="pre">row_display()</span></tt> 是用来生成一行的。 <tt class="docutils literal"><span class="pre">TBODY</span></tt> 中使用map来处理数组数据。在 MochiKit 中有许多象 <a class="reference" href="http://www.python.org/">Python</a> 内置方法的函数，因为它的许多概念就是学的 Python 。 <tt class="docutils literal"><span class="pre">replaceChildNodes()</span></tt> 是用来将生成的结果替换掉 <tt class="docutils literal"><span class="pre">output</span></tt> 元素的内容。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id7" id="urls-py" name="urls-py">5&nbsp;&nbsp;&nbsp;修改 urls.py</a></h1>
+<pre class="literal-block">
+(r'^ajax/json/$', 'newtest.ajax.views.json'),
+</pre>
+<p>增加上面一行。这样就增加了一个 Json 的 url 映射。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id8" id="server" name="server">6&nbsp;&nbsp;&nbsp;启动 server 进行测试</a></h1>
+<p>这里两个演示共用了 <tt class="docutils literal"><span class="pre">output</span></tt> 层作为显示的对象，你可以同时试一试两个例子的效果。</p>
+<p>不过这里有一个问题：只有返回时使用了 Json 。的确是，这样是最简单处理的情况。因为 Json 可以包装为字符串，这样不用在底层进行特殊处理。如果请求也是 Json 的，需要设计一种调用规则，同时很有可能要实现 MiddleWare 来支持。在 Django 中的确有人已经做过类似的工作。不过我目前没有研究得那么深，因此只要可以处理返回为 Json 的情况已经足够了。而且 Django 也正在进行 Ajax 的支持工作，不过可能是以 <a class="reference" href="http://dojotoolkit.org/">dojo</a> 为基础的，让我们拭目以待吧。</p>
+</div>
+</div>
+</body>
+</html>

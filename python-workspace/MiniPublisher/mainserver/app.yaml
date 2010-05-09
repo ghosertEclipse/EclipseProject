@@ -1,0 +1,22 @@
+application: minipublisher
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+# This remote handler should be put on the top of any other handlers below, otherwise, the 404 error will be thrown.
+# Because the request will be handled order by handlers.
+# If the request is executed by signInOutUp.py first, 404 happens since no remote handler is found so far.
+- url: /remote_api
+  script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
+  login: admin
+  
+- url: /xmlrpc
+  script: remoteCallRegister.py
+  
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /.*
+  script: signInOutUp.py
+  

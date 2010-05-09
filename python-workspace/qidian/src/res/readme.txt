@@ -1,0 +1,1 @@
+Make sure run adj_ui.py after producing ui_main.py from main.ui

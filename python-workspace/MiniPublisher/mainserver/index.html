@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+  <body>
+  
+    Sign In/Up message: <br>
+    {% if errorMessages %}
+      errorMessages: <br>
+      {% for errorMessage in errorMessages %}
+        <font color='red'> {{ errorMessage }} </font> <br>
+      {% endfor %}
+    {% endif %}
+    {% if successMessage %}
+      successMessage: <br>
+      {{ successMessage }} <br>
+      Delete the current user: <br>
+      <a href='/deleteUser?username={{ username }}'>{{ username }}</a>
+    {% endif %}
+  
+    <form action="/signUp" method="post">
+      <div>UserName: <input type='textbox' name="username"/></div>
+      <div>Email: <input type='textbox' name="email"/></div>
+      <div>Password: <input type='password' name="password"/></div>
+      <div>Re-Password: <input type='password' name="repassword"/></div>
+      <div><input type="submit" value="Sign Up"></div>
+    </form>
+    
+    <form action="/signIn" method="post">
+      <div>UserName: <input type='textbox' name="username"/></div>
+      <div>Password: <input type='password' name="password"/></div>
+      <div><input type="submit" value="Sign In"></div>
+    </form>
+    
+    <a href='/test'>test link</a>
+    <br><br>
+    
+    Current User List:
+    {% if userModels %}
+	  <table border="1">
+	    <tr>
+	      <th>Key Info</th>
+	      <th>用户名</th>
+	      <th>邮件地址</th>
+	      <th>密码</th>
+	      <th>ip 地址</th>
+	      <th>注册时间</th>
+	      <th>最后修改时间</th>
+	    </tr>
+	    {% for userModel in userModels %}
+	      <tr>
+	        <td>{{ userModel.key.id_or_name }}</td>
+	        <td>{{ userModel.username }}</td>
+	        <td>{{ userModel.email }}</td>
+	        <td>{{ userModel.password }}</td>
+	        <td>{{ userModel.ip }}</td>
+	        <td>{{ userModel.createdTime }}</td>
+	        <td>{{ userModel.updatedTime }}</td>
+	      </tr>
+        {% endfor %}
+	  </table>
+    {% endif %}
+
+  </body>
+</html>

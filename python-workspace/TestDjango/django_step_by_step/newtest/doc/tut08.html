@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.4: http://docutils.sourceforge.net/" />
+<title>Django Step by Step (八)</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2005-12-18 01:56:14 +0100 (Sun, 18 Dec 2005) $
+:Revision: $Revision: 4224 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em ;
+  background-color: #eeeeee }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+tt.docutils {
+  background-color: #eeeeee }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="django-step-by-step">
+<h1 class="title">Django Step by Step (八)</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr class="field"><th class="docinfo-name">作者:</th><td class="field-body">limodou</td>
+</tr>
+<tr class="field"><th class="docinfo-name">联系:</th><td class="field-body"><a class="reference" href="mailto:limodou&#64;gmail.com">limodou&#64;gmail.com</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版本:</th><td class="field-body">0.1</td>
+</tr>
+<tr class="field"><th class="docinfo-name">主页:</th><td class="field-body"><a class="reference" href="http://wiki.woodpecker.org.cn/moin/NewEdit">http://wiki.woodpecker.org.cn/moin/NewEdit</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">BLOG:</th><td class="field-body"><a class="reference" href="http://www.donews.net/limodou">http://www.donews.net/limodou</a></td>
+</tr>
+<tr class="field"><th class="docinfo-name">版权:</th><td class="field-body">FDL</td>
+</tr>
+</tbody>
+</table>
+<div class="contents topic">
+<p class="topic-title first"><a id="id1" name="id1">目录</a></p>
+<ul class="auto-toc simple">
+<li><a class="reference" href="#id2" id="id6" name="id6">1&nbsp;&nbsp;&nbsp;引言</a></li>
+<li><a class="reference" href="#templates-address-address-list-html" id="id7" name="id7">2&nbsp;&nbsp;&nbsp;修改 templates/address/address_list.html</a></li>
+<li><a class="reference" href="#address-views-py" id="id8" name="id8">3&nbsp;&nbsp;&nbsp;修改 address/views.py</a></li>
+<li><a class="reference" href="#templates-error-html" id="id9" name="id9">4&nbsp;&nbsp;&nbsp;创建 templates/error.html</a></li>
+<li><a class="reference" href="#address-urls-py" id="id10" name="id10">5&nbsp;&nbsp;&nbsp;修改 address/urls.py</a></li>
+<li><a class="reference" href="#server" id="id11" name="id11">6&nbsp;&nbsp;&nbsp;启动 server 测试</a></li>
+<li><a class="reference" href="#templates-csv-html" id="id12" name="id12">7&nbsp;&nbsp;&nbsp;修改 templates/csv.html</a></li>
+<li><a class="reference" href="#id3" id="id13" name="id13">8&nbsp;&nbsp;&nbsp;修改 templates/address/address_list.html</a></li>
+<li><a class="reference" href="#apps-address-views-py" id="id14" name="id14">9&nbsp;&nbsp;&nbsp;修改 apps/address/views.py</a></li>
+<li><a class="reference" href="#id4" id="id15" name="id15">10&nbsp;&nbsp;&nbsp;修改 address/urls.py</a></li>
+<li><a class="reference" href="#id5" id="id16" name="id16">11&nbsp;&nbsp;&nbsp;启动 server 测试</a></li>
+</ul>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id6" id="id2" name="id2">1&nbsp;&nbsp;&nbsp;引言</a></h1>
+<p>上一讲的确很长，但如果看代码你会发现，代码主要在 model 的调整中，``urls.py`` 的工作不多，而连一行 view 的代码都没有写。是不是非常方便呢！</p>
+<p>那么让我们来继续完善这个通讯录吧。</p>
+<p>现在我想完成的是：</p>
+<blockquote>
+增加批量导入和导出功能</blockquote>
+<p>为什么要批量导入呢？因为一般情况下，我一定是已经有了一个通讯录文件(象以前我说过的Excel文件)，那么现在需要转到 web 上来，难道要我一条条全部手工录入吗？能不能上传文件，自动插入到数据库中去呢？那么就让我们实现一个文件上传的处理吧。</p>
+<p>为了简化，我采用csv格式文本文件(这个文件在svn中有一个例子 <tt class="docutils literal"><span class="pre">data.csv</span></tt> ，不然就自行生成好了)。</p>
+<pre class="literal-block">
+abc,M,11,11,11,
+bcd,M,11,11,11,
+ass,M,11,11,11,
+dfsdf,F,11,11,11,
+sfas,F,11,11,11,
+...
+</pre>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id7" id="templates-address-address-list-html" name="templates-address-address-list-html">2&nbsp;&nbsp;&nbsp;修改 templates/address/address_list.html</a></h1>
+<pre class="literal-block">
+&lt;h1 id=&quot;title&quot;&gt;通讯录&lt;/h1&gt;
+&lt;hr&gt;
+&lt;form enctype=&quot;multipart/form-data&quot; method=&quot;POST&quot; action=&quot;/address/upload/&quot;&gt;
+上传通讯录文件： &lt;input type=&quot;file&quot; name=&quot;file&quot;/&gt;&lt;br/&gt;
+&lt;input type=&quot;submit&quot; value=&quot;上传文件&quot;/&gt;
+&lt;/form&gt;
+&lt;table border=&quot;1&quot;&gt;
+&lt;tr&gt;
+  &lt;th&gt;姓名&lt;/th&gt;
+  &lt;th&gt;性别&lt;/th&gt;
+  &lt;th&gt;电话&lt;/th&gt;
+  &lt;th&gt;手机&lt;/th&gt;
+  &lt;th&gt;房间&lt;/th&gt;
+&lt;/tr&gt;
+{% for person in object_list %}
+&lt;tr&gt;
+  &lt;td&gt;{{ person.name }}&lt;/td&gt;
+  &lt;td&gt;{{ person.gender }}&lt;/td&gt;
+  &lt;td&gt;{{ person.telphone }}&lt;/td&gt;
+  &lt;td&gt;{{ person.mobile }}&lt;/td&gt;
+  &lt;td&gt;{{ person.room }}&lt;/td&gt;
+&lt;/tr&gt;
+{% endfor %}
+&lt;/table&gt;
+</pre>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id8" id="address-views-py" name="address-views-py">3&nbsp;&nbsp;&nbsp;修改 address/views.py</a></h1>
+<pre class="literal-block">
+#coding=utf-8
+# Create your views here.
+from newtest.address.models import Address
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
+
+def upload(request):
+    file_obj = request.FILES.get('file', None)
+    if file_obj:
+        import csv
+        import StringIO
+        buf = StringIO.StringIO(file_obj['content'])
+        try:
+            reader = csv.reader(buf)
+        except:
+            return render_to_response('address/error.html',
+                {'message':'你需要上传一个csv格式的文件！'})
+        for row in reader:
+#            objs = Address.objects.get_list(name__exact=row[0])
+            objs = Address.objects.filter(name=row[0])
+            if not objs:
+                obj = Address(name=row[0], gender=row[1],
+                    telphone=row[2], mobile=row[3], room=row[4])
+            else:
+                obj = objs[0]
+                obj.gender = row[1]
+                obj.telphone = row[2]
+                obj.mobile = row[3]
+                obj.room = row[4]
+            obj.save()
+
+        return HttpResponseRedirect('/address/')
+    else:
+        return render_to_response('address/error.html',
+            {'message':'你需要上传一个文件！'})
+</pre>
+<p>这里有一个 <tt class="docutils literal"><span class="pre">upload()</span></tt> 方法，它将使用 csv 模块来处理上传的 csv 文件。首先查找姓名是否存在于数据库中，如果不存在则创建新记录。如果存在则进行替换。如果没有指定文件直接上传，则报告一个错误。如果解析 csv 文件出错，则也报告一个错误。</p>
+<p>报造错误使用了一个名为 error 的模板，我们马上要创建。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id9" id="templates-error-html" name="templates-error-html">4&nbsp;&nbsp;&nbsp;创建 templates/error.html</a></h1>
+<pre class="literal-block">
+&lt;h2&gt;出错&lt;/h2&gt;
+&lt;p&gt;{{ message }}&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;a href=&quot;/address/&quot;&gt;返回&lt;/a&gt;&lt;/p&gt;
+</pre>
+<p>很简单。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id10" id="address-urls-py" name="address-urls-py">5&nbsp;&nbsp;&nbsp;修改 address/urls.py</a></h1>
+<pre class="literal-block">
+from django.conf.urls.defaults import *
+from newtest.address.models import Address
+
+info_dict = {
+#    'model': Address,
+    'queryset': Address.objects.all(),
+}
+urlpatterns = patterns('',
+    (r'^/?$', 'django.views.generic.list_detail.object_list', info_dict),
+    (r'^upload/$', 'address.views.upload'),
+)
+</pre>
+<p>增加一个 upload 的 url 映射。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id11" id="server" name="server">6&nbsp;&nbsp;&nbsp;启动 server 测试</a></h1>
+<p>这样导入功能就做完了。那导出呢？很简单了，参考 csv 的例子去做就可以了。不过，并不全是这样，仍然有要修改的地方，比如 csv.html 模板，它因为写死了处理几个元素，因此需要改成一个循环处理。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id12" id="templates-csv-html" name="templates-csv-html">7&nbsp;&nbsp;&nbsp;修改 templates/csv.html</a></h1>
+<pre class="literal-block">
+{% for row in data %}{% for i in row %}&quot;{{ i|addslashes }}&quot;,{% endfor %}
+{% endfor %}
+</pre>
+<p>将原来固定个数的输出改为循环处理。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id13" id="id3" name="id3">8&nbsp;&nbsp;&nbsp;修改 templates/address/address_list.html</a></h1>
+<p>增加一个生成导出的 csv 文件的链接</p>
+<pre class="literal-block">
+&lt;h1 id=&quot;title&quot;&gt;通讯录&lt;/h1&gt;
+&lt;hr&gt;
+&lt;form enctype=&quot;multipart/form-data&quot; method=&quot;POST&quot; action=&quot;/address/upload/&quot;&gt;
+上传通讯录文件： &lt;input type=&quot;file&quot; name=&quot;file&quot;/&gt;&lt;br/&gt;
+&lt;input type=&quot;submit&quot; value=&quot;上传文件&quot;/&gt;
+&lt;/form&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;a href=&quot;/address/output/&quot;&gt;导出为csv格式文件&lt;/a&gt;&lt;/p&gt;
+&lt;table border=&quot;1&quot;&gt;
+&lt;tr&gt;
+  &lt;th&gt;姓名&lt;/th&gt;
+  &lt;th&gt;性别&lt;/th&gt;
+  &lt;th&gt;电话&lt;/th&gt;
+  &lt;th&gt;手机&lt;/th&gt;
+  &lt;th&gt;房间&lt;/th&gt;
+&lt;/tr&gt;
+{% for person in object_list %}
+&lt;tr&gt;
+  &lt;td&gt;{{ person.name }}&lt;/td&gt;
+  &lt;td&gt;{{ person.gender }}&lt;/td&gt;
+  &lt;td&gt;{{ person.telphone }}&lt;/td&gt;
+  &lt;td&gt;{{ person.mobile }}&lt;/td&gt;
+  &lt;td&gt;{{ person.room }}&lt;/td&gt;
+&lt;/tr&gt;
+{% endfor %}
+&lt;/table&gt;
+</pre>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id14" id="apps-address-views-py" name="apps-address-views-py">9&nbsp;&nbsp;&nbsp;修改 apps/address/views.py</a></h1>
+<pre class="literal-block">
+#coding=utf-8
+# Create your views here.
+from newtest.address.models import Address
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render_to_response
+from django.template import loader, Context
+
+def upload(request):
+    file_obj = request.FILES.get('file', None)
+    if file_obj:
+        import csv
+        import StringIO
+        buf = StringIO.StringIO(file_obj['content'])
+        try:
+            reader = csv.reader(buf)
+        except:
+            return render_to_response('address/error.html',
+                {'message':'你需要上传一个csv格式的文件！'})
+        for row in reader:
+#            objs = Address.objects.get_list(name__exact=row[0])
+            objs = Address.objects.filter(name=row[0])
+            if not objs:
+                obj = Address(name=row[0], gender=row[1],
+                    telphone=row[2], mobile=row[3], room=row[4])
+            else:
+                obj = objs[0]
+                obj.gender = row[1]
+                obj.telphone = row[2]
+                obj.mobile = row[3]
+                obj.room = row[4]
+            obj.save()
+
+        return HttpResponseRedirect('/address/')
+    else:
+        return render_to_response('address/error.html',
+            {'message':'你需要上传一个文件！'})
+
+def output(request):
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=%s' % 'address.csv'
+    t = loader.get_template('csv.html')
+#    objs = Address.objects.get_list()
+    objs = Address.objects.all()
+    d = []
+    for o in objs:
+        d.append((o.name, o.gender, o.telphone, o.mobile, o.room))
+    c = Context({
+        'data': d,
+    })
+    response.write(t.render(c))
+    return response
+</pre>
+<p>在开始处增加了对 <tt class="docutils literal"><span class="pre">HttpResponse</span></tt>, <tt class="docutils literal"><span class="pre">loader</span></tt>, <tt class="docutils literal"><span class="pre">Context</span></tt> 的导入。然后增加了用于输出处理的 <tt class="docutils literal"><span class="pre">output()</span></tt> 方法。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id15" id="id4" name="id4">10&nbsp;&nbsp;&nbsp;修改 address/urls.py</a></h1>
+<pre class="literal-block">
+from django.conf.urls.defaults import *
+from newtest.address.models import Address
+
+info_dict = {
+#    'model': Address,
+    'queryset': Address.objects.all(),
+}
+urlpatterns = patterns('',
+    (r'^/?$', 'django.views.generic.list_detail.object_list', info_dict),
+    (r'^upload/$', 'address.views.upload'),
+    (r'^output/$', 'address.views.output'),
+)
+</pre>
+<p>增加了对 output 方法的 url 映射。</p>
+</div>
+<div class="section">
+<h1><a class="toc-backref" href="#id16" id="id5" name="id5">11&nbsp;&nbsp;&nbsp;启动 server 测试</a></h1>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+  <body>
+    {% for greeting in greetings %}
+      ip: {{ greeting.ip }}
+      {% if greeting.author %}
+        <b>{{ greeting.author.nickname }}</b> wrote:
+      {% else %}
+       An anonymous person wrote:
+      {% endif %}
+      <blockquote>id: {{ greeting.key.id }}, {{ greeting.content|escape }}</blockquote>
+    {% endfor %}
+    
+
+    <form action="/sign" method="post">
+      <div><textarea name="content" rows="3" cols="60"></textarea></div>
+      <div><input type="submit" value="Sign Guestbook"></div>
+    </form>
+    
+    versionId: {{versionId}}
+    <br>
+    counter: {{counter}}
+    <br>
+    test optimistic locking:
+    <form action="/increment" method="post">
+        Input increment num: <input type='textbox' name='increment'/>
+        <input type='hidden' name='key_name' value='{{ key_name }}'/>
+        <input type='hidden' name='versionId' value='{{ versionId }}'/>
+        <input type='submit' value='Add Amount'/>
+    </form>
+    <a href="{{ url }}">{{ url_linktext }}</a>
+
+  </body>
+</html>
