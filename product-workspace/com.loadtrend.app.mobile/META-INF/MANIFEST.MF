@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Mobile Plug-in
+Bundle-SymbolicName: com.loadtrend.app.mobile; singleton:=true
+Bundle-Version: 1.0.5
+Bundle-Activator: com.loadtrend.app.mobile.MobilePlugin
+Bundle-Vendor: LOADTREND
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.forms,
+ com.loadtrend.app.mobile.clientRemote,
+ org.eclipse.update.core,
+ org.eclipse.update.ui,
+ org.eclipse.update.configurator
+Eclipse-AutoStart: true
+Bundle-ClassPath: .,
+ lib/comm.jar,
+ lib/mobile.jar,
+ lib/dom4j-1.6.1.jar,
+ lib/nativecall-0.4.1.jar,
+ lib/nativeloader-200505172341.jar

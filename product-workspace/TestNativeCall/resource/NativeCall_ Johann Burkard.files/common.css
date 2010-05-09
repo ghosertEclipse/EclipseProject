@@ -1,0 +1,128 @@
+BODY {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+IMG {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+FORM {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+DIV {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+TR P {
+	BORDER-TOP-WIDTH: 0px; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+H1 {
+	FONT-WEIGHT: normal; FONT-FAMILY: "trebuchet ms", verdana, sans-serif
+}
+H2 {
+	FONT-WEIGHT: normal; FONT-FAMILY: "trebuchet ms", verdana, sans-serif
+}
+H3 {
+	FONT-WEIGHT: normal; FONT-FAMILY: "trebuchet ms", verdana, sans-serif
+}
+H4 {
+	FONT-WEIGHT: normal; FONT-FAMILY: "trebuchet ms", verdana, sans-serif
+}
+H5 {
+	FONT-WEIGHT: normal; FONT-FAMILY: "trebuchet ms", verdana, sans-serif
+}
+H6 {
+	FONT-WEIGHT: normal; FONT-FAMILY: "trebuchet ms", verdana, sans-serif
+}
+P {
+	FONT-FAMILY: tahoma, helvetica, arial, sans-serif
+}
+LI {
+	FONT-FAMILY: tahoma, helvetica, arial, sans-serif
+}
+DT {
+	FONT-FAMILY: tahoma, helvetica, arial, sans-serif
+}
+DD {
+	FONT-FAMILY: tahoma, helvetica, arial, sans-serif
+}
+BUTTON {
+	FONT-FAMILY: tahoma, helvetica, arial, sans-serif
+}
+INPUT {
+	FONT-FAMILY: tahoma, helvetica, arial, sans-serif
+}
+SELECT {
+	FONT-FAMILY: tahoma, helvetica, arial, sans-serif
+}
+TEXTAREA {
+	FONT-FAMILY: tahoma, helvetica, arial, sans-serif
+}
+ADDRESS {
+	FONT-FAMILY: tahoma, helvetica, arial, sans-serif
+}
+CITE {
+	FONT-FAMILY: tahoma, helvetica, arial, sans-serif
+}
+.text {
+	FONT-FAMILY: tahoma, helvetica, arial, sans-serif
+}
+BUTTON {
+	BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px
+}
+SELECT {
+	BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px
+}
+INPUT {
+	BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px
+}
+TEXTAREA {
+	BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px
+}
+OPTION {
+	BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px
+}
+UNKNOWN {
+	PADDING-LEFT: 1px
+}
+TEXTAREA {
+	PADDING-LEFT: 1px; OVERFLOW: auto
+}
+PRE {
+	FONT-FAMILY: "andale mono", "courier new", "lucida console", 
+ courier, monospace
+}
+CODE {
+	FONT-FAMILY: "andale mono", "courier new", "lucida console", 
+ courier, monospace
+}
+ACRONYM {
+	CURSOR: help
+}
+abbr {
+	CURSOR: help
+}
+DFN {
+	CURSOR: help
+}
+DT {
+	FONT-WEIGHT: bold
+}
+TABLE {
+	WIDTH: 100%
+}
+.wide {
+	WIDTH: 100%
+}
+.hide {
+	DISPLAY: none
+}
+.handheldShow {
+	DISPLAY: none
+}
+.center {
+	TEXT-ALIGN: center
+}
+.pseudoLink {
+	CURSOR: pointer
+}
+.scale {
+	max-width: 100%
+}

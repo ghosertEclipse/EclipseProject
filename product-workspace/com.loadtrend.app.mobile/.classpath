@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="lib" path="lib/comm.jar"/>
+	<classpathentry sourcepath="/TestMobile/src" kind="lib" path="lib/mobile.jar"/>
+	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/nativecall-0.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/nativeloader-200505172341.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

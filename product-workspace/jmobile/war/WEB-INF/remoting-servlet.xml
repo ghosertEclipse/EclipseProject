@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!--
+  - Dispatcher servlet for HTTP remoting via Hessian, Burlap, and Spring's
+  - HTTP invoker (see remoting-servlet.xml for the controllers).
+  -->
+<beans>
+
+	<!-- HTTP invoker exporter for the JPetStore OrderService -->
+	<!-- Spring's HTTP invoker uses Java serialization via HTTP  -->
+	<bean name="/jMobileManager-httpinvoker" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="jMobileManager"/>
+		<property name="serviceInterface" value="com.loadtrend.web.mobile.service.JMobileManager"/>
+	</bean>
+	
+	<bean name="/jMobileClientManager-httpinvoker" class="com.loadtrend.web.mobile.client.RequestHttpInvokerServiceExporter">
+		<property name="service">
+		    <bean class="com.loadtrend.web.mobile.client.impl.JMobileClientManagerImpl">
+		      <property name="jmobileManager" ref="jMobileManager" />
+		    </bean>
+		</property>
+		<property name="serviceInterface" value="com.loadtrend.web.mobile.client.JMobileClientManager"/>
+	</bean>
+
+</beans>

@@ -1,0 +1,114 @@
+H1 {
+	FONT-SIZE: 16px; TEXT-TRANSFORM: uppercase
+}
+H2 {
+	FONT-SIZE: 15px
+}
+H3 {
+	FONT-SIZE: 14px
+}
+H4 {
+	FONT-SIZE: 13px
+}
+H5 {
+	FONT-SIZE: 12px
+}
+H6 {
+	FONT-SIZE: 12px
+}
+P {
+	FONT-SIZE: 11px
+}
+LI {
+	FONT-SIZE: 11px
+}
+DT {
+	FONT-SIZE: 11px
+}
+DD {
+	FONT-SIZE: 11px
+}
+BUTTON {
+	FONT-SIZE: 11px
+}
+INPUT {
+	FONT-SIZE: 11px
+}
+SELECT {
+	FONT-SIZE: 11px
+}
+TEXTAREA {
+	FONT-SIZE: 11px
+}
+ADDRESS {
+	FONT-SIZE: 11px
+}
+PRE {
+	FONT-SIZE: 11px
+}
+CODE {
+	FONT-SIZE: 11px
+}
+BLOCKQUOTE {
+	FONT-SIZE: 11px
+}
+IMG {
+	max-width: 100%
+}
+BLOCKQUOTE {
+	MARGIN: 4%
+}
+.handheldHide {
+	DISPLAY: none
+}
+.handheldShow {
+	DISPLAY: block
+}
+SPAN.handheldShow {
+	DISPLAY: inline
+}
+#contentLink {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px 0px 8px; PADDING-TOP: 0px
+}
+#bottomLinks {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 8px 0px 0px; PADDING-TOP: 0px
+}
+#photoJohann {
+	DISPLAY: none
+}
+#logo {
+	PADDING-BOTTOM: 2px; TEXT-ALIGN: center
+}
+#menu {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; PADDING-BOTTOM: 2px; PADDING-TOP: 2px; BACKGROUND-COLOR: #eee
+}
+#menu OL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 2px; PADDING-TOP: 0px
+}
+#menu LI {
+	DISPLAY: inline
+}
+#menu A {
+	FONT-WEIGHT: bold; COLOR: #000
+}
+#search {
+	COLOR: #fff; BACKGROUND-COLOR: #334766
+}
+#search FORM P {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+#search FORM P LABEL {
+	DISPLAY: none
+}
+#search .button {
+	COLOR: #fc0; BACKGROUND-COLOR: #668fcc
+}
+#footer {
+	BORDER-TOP: #666 1px dotted
+}
+#footer UL {
+	MARGIN-TOP: 0px; PADDING-TOP: 0px
+}
+.entryTrackback {
+	DISPLAY: none
+}

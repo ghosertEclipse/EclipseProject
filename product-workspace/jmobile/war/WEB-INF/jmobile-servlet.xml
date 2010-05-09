@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	
+	<!-- ========================= DEFINITIONS OF PUBLIC CONTROLLERS ========================= -->
+
+	<bean id="defaultHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+
+	<bean name="/synchData.do" class="com.loadtrend.web.mobile.web.action.SynchDataController">
+        <property name="jmobileManager" ref="jMobileManager"/>
+	</bean>
+	
+    <bean name="/uploadFile.do" class="com.loadtrend.web.mobile.web.action.UploadFileController">
+        <property name="formView" value="UploadFile"/>
+        <property name="successView" value="redirect:/listUploadFiles.do?uploader={0}&amp;mpage=1&amp;ppage=1"/>
+        <property name="commandClass" value="com.loadtrend.web.mobile.web.form.UploadFileForm"/>
+        <property name="commandName" value="uploadFileForm"/>
+        <property name="validator" ref="uploadFileValidator"/>
+        <property name="validateOnBinding" value="false"/>
+        <property name="maxFileSize" value="524288"/>
+        <property name="maxFilenameLength" value="50"/>
+        <property name="topWeekPayTimesUploaderNumber" value="10"/>
+        <property name="jmobileManager" ref="jMobileManager"/>
+	</bean>
+	
+    <bean name="/viewUploadFiles.do" class="com.loadtrend.web.mobile.web.action.ViewUploadFileController">
+        <property name="formView" value="UploadFile"/>
+        <property name="successView" value="redirect:/listUploadFiles.do?uploader={0}&amp;mpage=1&amp;ppage=1"/>
+        <property name="commandClass" value="com.loadtrend.web.mobile.web.form.UploadFileForm"/>
+        <property name="commandName" value="uploadFileForm"/>
+        <property name="validator" ref="viewUploadFileValidator"/>
+        <property name="topWeekPayTimesUploaderNumber" value="10"/>
+        <property name="jmobileManager" ref="jMobileManager"/>
+	</bean>
+	
+	<bean name="/listUploadFiles.do" class="com.loadtrend.web.mobile.web.action.ListUploadFileController">
+        <property name="view" value="ListUploadFiles"/>
+        <property name="jmobileManager" ref="jMobileManager"/>
+        <property name="picturePageSize" value="15"/>
+        <property name="musicPageSize" value="18"/>
+	</bean>
+	
+	<bean name="/pushPopup.do" class="com.loadtrend.web.mobile.web.action.PushPopupController">
+        <property name="view" value="PushPopup"/>
+        <property name="jmobileManager" ref="jMobileManager"/>
+	</bean>
+	
+	<!-- ========================= DEFINITIONS OF PROTECTED CONTROLLERS ========================= -->
+	
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+	             <!--
+	             <prop key="/listNote.do">ListNoteAction</prop> 
+	             -->
+     		</props>
+        </property>
+    </bean>
+    
+    <!-- 
+	<bean id="ListNoteAction" class="com.loadtrend.bbs.action.ListNoteAction">
+		<property name="pageView" value="listNote"/>
+		<property name="errorView" value="error"/>
+		<property name="noteManager" ref="noteManager"/>
+	</bean>
+	-->
+	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+	
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="messages" />
+    </bean>
+    
+    <!--
+	    通过SimpleMappingExceptionResolver我们可以将不同的异常映射到不同的jsp页
+	    面（通过exceptionMappings属性的配置），同时我们也可以为所有的异常指定一个默认的异
+	    常提示页面（通过defaultErrorView属性的配置），如果所抛出的异常在exceptionMappings
+	    中没有对应的映射，则Spring将用此默认配置显示异常信息（注意这里配置的异常显示界面均
+	    仅包括主文件名，至于文件路径和后缀已经在viewResolver中指定）
+	-->
+	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+	    <property name="defaultErrorView">
+	        <value>failure</value>
+        </property>
+        <property name="exceptionMappings">
+        <props>
+        <prop key="java.sql.SQLException">ShowDBError</prop>
+        <prop key="java.lang.Exception">ShowError</prop>
+        </props>
+        </property>
+    </bean>
+    
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- set the max upload size 10MB -->
+        <property name="maxUploadSize">
+            <value>10485760</value>
+        </property>
+        <property name="maxInMemorySize">
+            <value>4096</value>
+        </property>
+    </bean>
+    
+    <bean id="uploadFileValidator" class="com.loadtrend.web.mobile.web.validate.UploadFileValidator"/>
+    
+    <bean id="viewUploadFileValidator" class="com.loadtrend.web.mobile.web.validate.ViewUploadFileValidator"/>
+    
+</beans>

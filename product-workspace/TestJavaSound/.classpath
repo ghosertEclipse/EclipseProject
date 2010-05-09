@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry path="JavaSoundDemo/src" kind="src"/>
+	<classpathentry path="Mp3Decoder/src" kind="src"/>
+	<classpathentry path="Mp3Decoder/srctest" kind="src"/>
+	<classpathentry path="System" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry path="src" kind="src"/>
+	<classpathentry path="lib/tritonus_share.jar" kind="lib"/>
+	<classpathentry path="Mp3Encoder" kind="src"/>
+	<classpathentry path="lib/tritonus_mp3.jar" kind="lib"/>
+	<classpathentry path="D:/eclipse/plugins/org.junit_3.8.1/junit.jar" kind="lib"/>
+	<classpathentry path="lib/jl1.0.jar" kind="lib"/>
+	<classpathentry path="bin" kind="output"/>
+</classpath>

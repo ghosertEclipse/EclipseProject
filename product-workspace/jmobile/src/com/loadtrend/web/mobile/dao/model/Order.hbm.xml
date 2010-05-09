@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.loadtrend.web.mobile.dao.model.Order" table="orders" catalog="jmobile">
+    
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="native"/>
+        </id>
+        
+        <property name="productcode" type="string">
+            <column name="productcode" length="10" />
+        </property>
+        
+        <property name="payer" type="string">
+            <column name="payer" length="20" />
+        </property>
+        
+        <property name="sender" type="string">
+            <column name="sender" length="15" />
+        </property>
+        
+        <property name="receiver" type="string">
+            <column name="receiver" length="20" />
+        </property>
+        
+        <property name="linkid" type="string">
+            <column name="linkid" length="40" />
+        </property>
+        
+        <property name="param" type="string">
+            <column name="param" length="160" />
+        </property>
+        
+        <property name="paySuccess" type="string">
+            <column name="paySuccess" length="2" />
+        </property>
+        
+        <property name="pushSuccess" type="string">
+            <column name="pushSuccess" length="2" />
+        </property>
+        
+        <property name="optime" type="timestamp">
+            <column name="optime" />
+        </property>
+        
+        <many-to-one name="item" class="com.loadtrend.web.mobile.dao.model.Item" column="itemid" cascade="none">
+        </many-to-one>
+    
+    </class>
+</hibernate-mapping>

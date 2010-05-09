@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app PUBLIC
+	"-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+	"http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+	<!--
+	  - Key of the system property that should specify the root directory of this
+	  - web app. Applied by WebAppRootListener or Log4jConfigListener.
+	  -->
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>jmobile.root</param-value>
+	</context-param>
+
+	<!--
+	  - Location of the Log4J config file, for initialization and refresh checks.
+	  - Applied by Log4jConfigListener.
+	  -->
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/log4j.properties</param-value>
+	</context-param>
+
+	<context-param>
+	    <param-name>contextConfigLocation</param-name>
+	    <param-value>
+	       /WEB-INF/applicationContext-hibernate.xml  /WEB-INF/applicationContext-service.xml
+	    </param-value>
+	</context-param>
+	
+    <filter> 
+        <filter-name>SetCharacterEncoding</filter-name> 
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> 
+        <init-param> 
+            <param-name>encoding</param-name> 
+            <param-value>UTF-8</param-value> 
+        </init-param> 
+    </filter> 
+    
+    <filter-mapping> 
+        <filter-name>SetCharacterEncoding</filter-name> 
+        <url-pattern>*.do</url-pattern> 
+    </filter-mapping> 
+    
+    <filter-mapping> 
+        <filter-name>SetCharacterEncoding</filter-name> 
+        <url-pattern>*.jsp</url-pattern> 
+    </filter-mapping> 
+    
+    <listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+    
+	<!--
+		After you finish the configuration below, Web container will load /WEB-INF/applicationContext.xml
+		and instance ApplicationContext automatically, if you want to specify the location, you can set 
+		context-param like below:
+		
+		<context-param>
+		    <param-name>contextConfigLocation</param-name>
+		    <param-value>/WEB-INF/myApplicationContext.xml</param-value>
+		</context-param>
+		
+		Then you can get the reference of ApplicationContext with the method:
+		WebApplicationContextUtils.getWebApplicationContext
+	-->
+	
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+     
+    <!-- If the spring config file is not written correctly, you will get the "Error ListenerStart" message and 
+         the webapp will not be load, you can't debug the application even. So you can use the configuration below
+         instead of <listener/> to start the webapp, and debug it.
+         
+    <servlet>
+        <servlet-name>SpringContextServlet</servlet-name>
+            <servlet-class>org.springframework.web.context.ContextLoaderServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    
+    -->
+		
+    <!--
+        Web container will load /WEB-INF/<servlet-name>-servlet.xml
+        Here is: /WEB-INF/jmobile-servlet.xml
+		and maintain the inner ApplicationContext for this servlet automatically. 
+	-->
+	<servlet>
+		<servlet-name>jmobile</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	
+	<!--
+	- Dispatcher servlet definition for HTTP remoting via Hessian, Burlap, and
+	- Spring's HTTP invoker (see remoting-servlet.xml for the controllers).
+	-->
+	<servlet>
+		<servlet-name>remoting</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>jmobile</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+	<!--
+	- Dispatcher servlet mapping for HTTP remoting via Hessian, Burlap, and
+	- Spring's HTTP invoker (see remoting-servlet.xml for the controllers).
+	-->
+	<servlet-mapping>
+		<servlet-name>remoting</servlet-name>
+		<url-pattern>/remoting/*</url-pattern>
+	</servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+</web-app>

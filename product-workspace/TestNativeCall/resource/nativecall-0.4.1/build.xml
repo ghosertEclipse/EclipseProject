@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- $Id: build.xml,v 1.10 2006/01/05 19:59:53 grnull Exp $ -->
+<project name="NativeCall 1" basedir="." default="All">
+
+ <description>Building the NativeCall distribution.</description>
+
+ <!-- Compile with Jikes -->
+
+ <property name="build.compiler" value="jikes"/>
+
+ <!-- Locations -->
+
+ <property name="home" location="."/>
+
+ <!-- Application info -->
+
+ <property name="app" value="NativeCall"/>
+ <property name="app.name" value="nativecall"/>
+ <property name="app.version" value="0.4.1"/>
+
+ <target name="Init">
+
+  <tstamp/>
+
+  <tstamp>
+   <format property="build.TIME" pattern="yyyyMMddHHmm"/>
+  </tstamp>
+
+  <tstamp>
+   <format property="build.DATE" pattern="yyyy.dd.MM"/>
+  </tstamp>
+
+ </target>
+
+ <target name="Prepare" depends="Init">
+
+  <description>Preparing build...</description>
+
+  <buildnumber/>
+
+  <delete quiet="true">
+   <fileset dir="bin"/>
+  </delete>
+
+  <mkdir dir="bin"/>
+
+  <copy todir="bin">
+   <fileset dir="src/java">
+    <exclude name="**/**.java"/>
+    <exclude name="**/**.html"/>
+   </fileset>
+  </copy>
+
+ </target>
+
+ <target name="Compile" depends="Prepare">
+
+  <description>Compiling sources...</description>
+
+  <javac srcdir="src/java" destdir="bin" target="1.2">
+   <compilerarg line="-g:lines,vars,source"/>
+  </javac>
+
+ </target>
+
+ <target name="Package">
+
+  <description>Making various components</description>
+  
+  <delete file="${app.name}-${app.version}.jar" quiet="true"/>
+
+  <jar destfile="${app.name}-${app.version}.jar" index="true">
+   <fileset dir="bin"/>
+   <zipfileset prefix="META-INF" file="documentation/copying.txt"/>
+   <manifest>
+    <section name="com/eaio/nativecall">
+     <attribute name="Sealed" value="true"/>
+     <attribute name="Implementation-Title" value="eaio: NativeCall - calling operating system methods from Java"/>
+     <attribute name="Implementation-Version" value="${app.version} (Build ${build.number} ${build.TIME})"/>
+     <attribute name="Implementation-Vendor" value="eaio (&lt;http://eaio.com&gt;)"/>
+    </section>
+   </manifest>
+  </jar>
+  
+  <mkdir dir="temp"/>
+
+  <copy todir="temp">
+   <fileset dir="src/cpp">
+    <include name="**/Release/**.dll"/>
+    <include name="**/**.so"/>
+    <include name="**/**.jnilib"/>
+   </fileset>
+   <mapper type="flatten"/>
+  </copy>
+  
+  <!-- Build ZIP -->
+
+  <delete file="${app.name}-${app.version}.zip" quiet="true"/>
+
+  <zip destfile="${app.name}-${app.version}.zip">
+   <zipfileset prefix="${app.name}-${app.version}" file="build.xml"/>
+   <zipfileset prefix="${app.name}-${app.version}" file=".classpath"/>
+   <zipfileset prefix="${app.name}-${app.version}" file=".project"/>
+   <zipfileset prefix="${app.name}-${app.version}" file="emma_run_alltests.bat"/>
+   <zipfileset prefix="${app.name}-${app.version}" file="generate_headers.bat"/>
+   <zipfileset prefix="${app.name}-${app.version}" file="${app.name}-${app.version}.jar"/>
+   <zipfileset prefix="${app.name}-${app.version}" file="nativeloader*.jar"/>
+   <zipfileset prefix="${app.name}-${app.version}" dir="temp"/>
+   <zipfileset prefix="${app.name}-${app.version}/documentation" dir="documentation"/>
+   <zipfileset prefix="${app.name}-${app.version}/documentation/coverage" dir="coverage"/>
+   <zipfileset prefix="${app.name}-${app.version}/srctest/java" dir="srctest/java"/>
+   <zipfileset prefix="${app.name}-${app.version}/src/java" dir="src/java"/>
+   <zipfileset prefix="${app.name}-${app.version}/src/cpp" dir="src/cpp">
+    <exclude name="**/**ncb"/>
+    <exclude name="**/**opt"/>
+    <exclude name="**/**sbr"/>
+    <exclude name="**/**bsc"/>
+    <exclude name="**/**exp"/>
+    <exclude name="**/**idb"/>
+    <exclude name="**/**res"/>
+    <exclude name="**/**aps"/>
+    <exclude name="**/**pch"/>
+    <exclude name="**/**ilk"/>
+    <exclude name="**/**pdb"/>
+    <exclude name="**/**.lib"/>
+    <exclude name="**/**LIB"/>
+   </zipfileset>
+  </zip>
+  
+  <delete dir="temp" quiet="true"/>
+
+ </target>
+
+ <target name="Apidocs">
+
+  <description>Creating Apidocs...</description>
+
+  <delete quiet="true">
+   <fileset dir="documentation/apidoc"/>
+  </delete>
+
+  <mkdir dir="documentation/apidoc"/>
+ 
+  <javadoc destdir="documentation/apidoc" package="true" version="false" author="true" use="true" link="http://java.sun.com/j2se/1.4.2/docs/api">
+   <packageset dir="src/java"/>
+  </javadoc>
+
+ </target>
+
+ <target name="All" depends="Apidocs, Compile, Package"/>
+
+</project>

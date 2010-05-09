@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mobile> 
+  <settings errorprompt="false" prompt="系统提示：您发送的指令不存在，请回复一条空消息查看指令" continuePrompt="剩{0}条,回复:继续 数字" continueCommand="继续" numberOfThread="5" restartThreadCommand="restart" restartAllThreadCommand="restartall" deleteAfterArrival="false" deleteUnable="WARNING_ROOTNODE_MANDATORY" addUnable="WARNING_SYSTEMNODE_ADDUNABLE" value="全局设置中心"/>  
+  <smscenter enable="true" deleteUnable="WARNING_ROOTNODE_MANDATORY" class="com.loadtrend.app.mobile.arrivalaction.SMSCenterAction" value="短信信息中心"> 
+    <node code="天气" value="天气"> 
+      <node code="上海" value="上海"> 
+        <node value="07年07月01日－ 02日 风向： 西南风  风力： 4-5 级  空气质量： 良  紫外线强度： 中等" addUnable="WARNING_CODE_MANDATORY_FORADDNODE" code=""/> 
+      </node>  
+      <node code="北京" value="北京"> 
+        <node value="06年07月01日－ 02日 风力： 小于3级  空气质量： 较差  紫外线强度： 强" addUnable="WARNING_CODE_MANDATORY_FORADDNODE"/> 
+      </node>  
+      <node code="香港" value="香港"> 
+        <node value="06年07月01日－ 02日 风向： 东南风  风力： 3-4 级  空气质量： 良  紫外线强度： 中等" addUnable="WARNING_CODE_MANDATORY_FORADDNODE"/> 
+      </node> 
+    </node>  
+    <node code="名字" value="名字"> 
+      <node code="1" value="男孩请回复1"> 
+        <node value="恭喜你，名字是张男孩！" addUnable="WARNING_CODE_MANDATORY_FORADDNODE"/> 
+      </node>  
+      <node code="2" value="女孩请回复2"> 
+        <node value="恭喜你，名字是张女孩！" addUnable="WARNING_CODE_MANDATORY_FORADDNODE"/> 
+      </node> 
+    </node> 
+  </smscenter>  
+  <smscontrol resultReturnable="true" closeCommand="close" enable="true" deleteUnable="WARNING_ROOTNODE_MANDATORY" class="com.loadtrend.app.mobile.arrivalaction.SMSControllerAction" value="短信控制中心"> 
+    <control code="music" value="歌曲点播" command="C:\Program Files\Windows Media Player\wmplayer.exe"> 
+      <file code="01" value="I Believe" path="F:\Music\I Believe.mp3"/>  
+      <file code="02" value="Super Star" path="F:\Music\S.H.E - Super Star.wma"/>  
+      <file code="03" value="情不自禁" path="F:\Music\情不自禁.wma"/> 
+    </control>  
+    <control code="txt" value="打开文本" command="C:\WINDOWS\WindowsUpdate.log"/>  
+    <control code="google" value="访问google" command="http://www.google.com"/>  
+    <control code="ie" value="用IE访问google" command="C:\Program Files\Internet Explorer\iexplore.exe"> 
+      <file code="google" value="google" path="http://www.google.com"/> 
+    </control> 
+  </smscontrol>  
+  <smsconsole resultReturnable="true" consoleCommand="cmd" enable="true" deleteUnable="WARNING_ROOTNODE_MANDATORY" class="com.loadtrend.app.mobile.arrivalaction.SMSConsoleAction" value="短信命令行中心"> 
+    <console code="关机" value="关机" command="shutdown -t 0 -s" editable="false" deleteUnable="WARNING_SYSTEMNODE_DELETEUNABLE" addUnable="WARNING_SYSTEMNODE_ADDUNABLE"/>  
+    <console code="ver" value="Windows版本信息" command="ver"/>  
+    <console code="mem" value="内存信息" command="mem"/>  
+    <console code="date" value="计算机时间信息" command="date"/> 
+  </smsconsole> 
+</mobile>

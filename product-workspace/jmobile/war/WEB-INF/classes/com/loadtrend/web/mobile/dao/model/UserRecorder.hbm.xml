@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.loadtrend.web.mobile.dao.model.UserRecorder" table="userRecorders" catalog="jmobile">
+        
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="native"/>
+        </id>
+        
+        <property name="loginTime" type="timestamp">
+            <column name="loginTime" />
+        </property>
+        
+        <property name="mobile" type="string">
+            <column name="mobile" length="20" />
+        </property>
+        
+        <property name="ip" type="string">
+            <column name="ip" length="15" />
+        </property>
+        
+    </class>
+</hibernate-mapping>

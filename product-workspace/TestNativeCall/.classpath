@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry path="src" kind="src"/>
+	<classpathentry path="test" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry sourcepath="resource/nativecall-0.4.1/src" path="lib/nativecall-0.4.1.jar" kind="lib"/>
+	<classpathentry sourcepath="resource/nativecall-0.4.1/src" path="lib/nativeloader-200505172341.jar" kind="lib"/>
+	<classpathentry sourcepath="ECLIPSE_HOME/plugins/org.eclipse.jdt.source_3.1.1/src/org.junit_3.8.1/junitsrc.zip" path="JUNIT_HOME/junit.jar" kind="var"/>
+	<classpathentry path="SWT_CONTAINER/PLATFORM" kind="con"/>
+	<classpathentry path="bin" kind="output"/>
+</classpath>

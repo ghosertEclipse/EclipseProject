@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.1"?>
+
+<product name="MobileLoadTool" id="com.loadtrend.app.mobile.loadtool.MobileLoadTool" application="com.loadtrend.app.mobile.loadtool.application" useFeatures="false">
+
+   <configIni use="default"/>
+
+   <plugins>
+      <plugin id="com.loadtrend.app.mobile.loadtool"/>
+      <plugin id="com.loadtrend.app.util.springClientRemote"/>
+      <plugin id="org.eclipse.core.commands"/>
+      <plugin id="org.eclipse.core.expressions"/>
+      <plugin id="org.eclipse.core.runtime"/>
+      <plugin id="org.eclipse.help"/>
+      <plugin id="org.eclipse.jface"/>
+      <plugin id="org.eclipse.osgi"/>
+      <plugin id="org.eclipse.swt"/>
+      <plugin id="org.eclipse.swt.win32.win32.x86"/>
+      <plugin id="org.eclipse.ui"/>
+      <plugin id="org.eclipse.ui.forms"/>
+      <plugin id="org.eclipse.ui.workbench"/>
+   </plugins>
+
+</product>

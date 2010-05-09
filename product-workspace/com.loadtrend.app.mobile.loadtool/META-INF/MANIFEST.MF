@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Loadtool Plug-in
+Bundle-SymbolicName: com.loadtrend.app.mobile.loadtool; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: com.loadtrend.app.mobile.loadtool.LoadtoolPlugin
+Bundle-Vendor: LOADTREND
+Bundle-Localization: plugin
+Eclipse-AutoStart: true
+Eclipse-BuddyPolicy: registered
+Eclipse-RegisterBuddy: com.loadtrend.app.util.springClientRemote
+Bundle-ClassPath: .,
+ lib/commons-codec-1.3.jar,
+ lib/commons-httpclient-3.0.1.jar,
+ lib/commons-logging.jar,
+ lib/nativecall-0.4.1.jar,
+ lib/nativeloader-200505172341.jar
+Require-Bundle: com.loadtrend.app.util.springClientRemote,
+ org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.ui.forms

@@ -1,0 +1,722 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0059)http://blog.csdn.net/turbochen/archive/2004/05/07/8105.aspx -->
+<HTML><HEAD><TITLE>Java串行端口通讯技术</TITLE>
+<META content="MSHTML 6.00.2900.2604" name=GENERATOR>
+<META http-equiv=Content-Type content="text/html; charset=utf-8"><LINK media=all 
+href="Java串行端口通讯技术.files/style.css" type=text/css rel=stylesheet><LINK media=all 
+href="Java串行端口通讯技术.files/customcss.css" type=text/css rel=stylesheet><LINK 
+media=print href="Java串行端口通讯技术.files/print.css" type=text/css 
+rel=stylesheet><LINK title=RSS href="http://blog.csdn.net/turbochen/rss.aspx" 
+type=application/rss+xml rel=alternate></HEAD>
+<BODY>
+<FORM language=javascript id=Form1 name=Form1 
+onsubmit="if (!ValidatorOnSubmit()) return false;" action=8105.aspx 
+method=post><INPUT type=hidden name=__VIEWSTATE>
+<SCRIPT language=javascript src="Java串行端口通讯技术.files/WebUIValidation.js" 
+type=text/javascript></SCRIPT>
+ 
+<DIV id=top>
+<DIV>
+<TABLE>
+  <TBODY>
+  <TR>
+    <TD class=HeaderTitles>
+      <H1><A class=headermaintitle id=Header1_HeaderTitle 
+      href="http://blog.csdn.net/turbochen/">Java憩园</A></H1>
+      <P id=tagline>Turbo Chen's Blog</P></TD></TR></TBODY></TABLE></DIV>
+<DIV class=HeaderBar>
+<TABLE class=HeaderBar id=HeaderBar>
+  <TBODY>
+  <TR>
+    <TD class=HeaderBarTab noWrap>&nbsp; <A id=Header1_MyLinks1_HomeLink 
+      title=到聚合站点 href="http://blog.csdn.net/">CSDNBlog</A>&nbsp;&nbsp;|&nbsp; 
+      <A id=Header1_MyLinks1_ContactLink accessKey=9 
+      href="http://blog.csdn.net/turbochen/contact.aspx">联络</A>&nbsp;&nbsp;|&nbsp; 
+      <A id=Header1_MyLinks1_Syndication 
+      href="http://blog.csdn.net/turbochen/Rss.aspx">聚合</A> <A class=XMLLink 
+      id=Header1_MyLinks1_XMLLink 
+      href="http://blog.csdn.net/turbochen/Rss.aspx"><IMG alt="" 
+      src="Java串行端口通讯技术.files/xml.gif" border=0></A>&nbsp;&nbsp;|&nbsp; <A 
+      id=Header1_MyLinks1_Admin 
+      href="http://blog.csdn.net/turbochen/login.aspx">登录</A> <IMG 
+      id=Header1_BlueTab alt="" src="Java串行端口通讯技术.files/BlueTabRight.jpg" 
+      align=absMiddle border=0> </TD>
+    <TD class=HeaderBarTabBack noWrap width="100%">
+      <DIV class=BlogStatsBar>
+      <TABLE class=BlogStatsBar>
+        <TBODY>
+        <TR>
+          <TD width="100%"></TD>
+          <TD class=BlogStatsBar noWrap>&nbsp; 68 篇文章&nbsp;&nbsp;|&nbsp;&nbsp; 
+            0 篇收藏&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; 21 
+            个评论&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; 5 个Trackbacks 
+      </TD></TR></TBODY></TABLE></DIV></TD></TR></TBODY></TABLE></DIV></DIV>
+<DIV id=leftmenu>
+<H3>公告</H3>
+<DIV class=News>****************<BR><FONT color=blue></FONT><A 
+href="http://www.javagarden.org/" target=_blank>进入我的个人主页</A><BR><FONT 
+color=blue></FONT><A 
+href="http://www.csdn.net/develop/author/netauthor/turbochen/" 
+target=_blank>进入我的CSDN专栏</A><BR><FONT color=blue></FONT><A 
+href="http://www.javagarden.org/wiki/wiki.asp" 
+target=_blank>进入我的Wiki站点</A><BR>****************
+<P>我的E-Mail: TurboChen@163.com<BR>我的MSN: TurboChen@163.com
+<P>
+<HR>
+<FONT color=red>[版权申明]</FONT><BR>我的原创文章版权归本人所有，如需转载请经得本人同意。
+<P><FONT color=red>[重要通知]</FONT><BR>以下两个国际域名都可访问Java憩园 <A 
+href="http://www.javagarden.net/" 
+target=_blank>http://www.javagarden.net/</A><BR><A 
+href="http://www.javagarden.org/" target=_blank>http://www.javagarden.org/</A> 
+<P>
+<HR>
+<FORM id=Form1 action="http://blog.csdn.net/BlogSearch/search.aspx" 
+method="post" name="Form1"><INPUT type=hidden 
+value=dDwtNzIxMjI4MDEzOzs+xprYDVs0wQ7XOiUMkdhHMuayFeM= name=__VIEWSTATE> 
+<DIV id=SearchText align=center><INPUT id=tbSearchText 
+style="BORDER-RIGHT: 1px solid; PADDING-RIGHT: 4px; BORDER-TOP: 1px solid; PADDING-LEFT: 4px; PADDING-BOTTOM: 1px; BORDER-LEFT: 1px solid; WIDTH: 87px; PADDING-TOP: 1px; BORDER-BOTTOM: 1px solid; HEIGHT: 22px" 
+size=11 name=tbSearchText><INPUT id=btnSearch style="BORDER-RIGHT: 1px solid; PADDING-RIGHT: 1px; BORDER-TOP: 1px solid; PADDING-LEFT: 1px; PADDING-BOTTOM: 1px; BORDER-LEFT: 1px solid; WIDTH: 40px; PADDING-TOP: 1px; BORDER-BOTTOM: 1px solid; HEIGHT: 22px" type=submit value=搜索 name=btnSearch></DIV></FORM>
+<HR>
+
+<CENTER>
+<SCRIPT src=""></SCRIPT>
+</CENTER>
+<HR>
+</DIV>
+<H3>文章</H3>
+<UL>
+  <LI><A id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl1_Link 
+  href="http://blog.csdn.net/turbochen/category/9979.aspx">Java 2</A> <A 
+  id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl1_RssLink 
+  title="订阅了Java 2" 
+  href="http://blog.csdn.net/turbochen/category/9979.aspx/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl2_Link 
+  href="http://blog.csdn.net/turbochen/category/9980.aspx">Java GUI设计</A> <A 
+  id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl2_RssLink 
+  title="订阅了Java GUI设计" 
+  href="http://blog.csdn.net/turbochen/category/9980.aspx/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl3_Link 
+  href="http://blog.csdn.net/turbochen/category/33386.aspx">MSN机器人</A> <A 
+  id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl3_RssLink 
+  title=订阅了MSN机器人 
+  href="http://blog.csdn.net/turbochen/category/33386.aspx/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl4_Link 
+  href="http://blog.csdn.net/turbochen/category/27918.aspx">Web编程</A> <A 
+  id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl4_RssLink 
+  title=订阅了Web编程 
+  href="http://blog.csdn.net/turbochen/category/27918.aspx/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl5_Link 
+  href="http://blog.csdn.net/turbochen/category/27996.aspx">程序人生</A> <A 
+  id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl5_RssLink title=订阅了程序人生 
+  href="http://blog.csdn.net/turbochen/category/27996.aspx/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl6_Link 
+  href="http://blog.csdn.net/turbochen/category/35837.aspx">开源项目</A> <A 
+  id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl6_RssLink title=订阅了开源项目 
+  href="http://blog.csdn.net/turbochen/category/35837.aspx/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl7_Link 
+  href="http://blog.csdn.net/turbochen/category/9982.aspx">设计模式</A> <A 
+  id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl7_RssLink title=订阅了设计模式 
+  href="http://blog.csdn.net/turbochen/category/9982.aspx/rss">(rss)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl8_Link 
+  href="http://blog.csdn.net/turbochen/category/35539.aspx">休闲娱乐</A> <A 
+  id=SingleColumn1_Categories_CatList__ctl0_LinkList__ctl8_RssLink title=订阅了休闲娱乐 
+  href="http://blog.csdn.net/turbochen/category/35539.aspx/rss">(rss)</A> 
+</LI></UL>
+<H3>相册</H3>
+<UL>
+  <LI><A id=SingleColumn1_Categories_CatList__ctl1_LinkList__ctl1_Link 
+  href="http://blog.csdn.net/turbochen/gallery/27914.aspx">文章插图</A> </LI></UL>
+<H3>存档</H3>
+<UL>
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl1_Link 
+  href="http://blog.csdn.net/turbochen/archive/2004/12.aspx">2004年12月 (1)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl2_Link 
+  href="http://blog.csdn.net/turbochen/archive/2004/10.aspx">2004年10月 (4)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl3_Link 
+  href="http://blog.csdn.net/turbochen/archive/2004/09.aspx">2004年09月 (11)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl4_Link 
+  href="http://blog.csdn.net/turbochen/archive/2004/08.aspx">2004年08月 (16)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl5_Link 
+  href="http://blog.csdn.net/turbochen/archive/2004/07.aspx">2004年07月 (7)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl6_Link 
+  href="http://blog.csdn.net/turbochen/archive/2004/06.aspx">2004年06月 (3)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl7_Link 
+  href="http://blog.csdn.net/turbochen/archive/2004/05.aspx">2004年05月 (2)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl8_Link 
+  href="http://blog.csdn.net/turbochen/archive/2004/04.aspx">2004年04月 (1)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl9_Link 
+  href="http://blog.csdn.net/turbochen/archive/2004/02.aspx">2004年02月 (2)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl10_Link 
+  href="http://blog.csdn.net/turbochen/archive/2004/01.aspx">2004年01月 (1)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl11_Link 
+  href="http://blog.csdn.net/turbochen/archive/2003/04.aspx">2003年04月 (2)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl12_Link 
+  href="http://blog.csdn.net/turbochen/archive/2003/03.aspx">2003年03月 (2)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl13_Link 
+  href="http://blog.csdn.net/turbochen/archive/2002/09.aspx">2002年09月 (4)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl14_Link 
+  href="http://blog.csdn.net/turbochen/archive/2002/06.aspx">2002年06月 (2)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl15_Link 
+  href="http://blog.csdn.net/turbochen/archive/2002/05.aspx">2002年05月 (7)</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl2_LinkList__ctl16_Link 
+  href="http://blog.csdn.net/turbochen/archive/2002/04.aspx">2002年04月 (3)</A> 
+  </LI></UL>
+<H3>Framework</H3>
+<UL>
+  <LI><A id=SingleColumn1_Categories_CatList__ctl3_LinkList__ctl1_Link 
+  href="http://www.hibernate.org/" target=_blank>Hibernate</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl3_LinkList__ctl2_Link 
+  href="http://jakarta.apache.org/struts/" target=_blank>Struts</A> </LI></UL>
+<H3>开发工具</H3>
+<UL>
+  <LI><A id=SingleColumn1_Categories_CatList__ctl4_LinkList__ctl1_Link 
+  href="http://ant.apache.org/" target=_blank>Ant</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl4_LinkList__ctl2_Link 
+  href="http://www.eclipse.org/" target=_blank>Eclipse</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl4_LinkList__ctl3_Link 
+  href="http://www.jboss.org/" target=_blank>JBoss</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl4_LinkList__ctl4_Link 
+  href="http://jakarta.apache.org/tomcat/index.html" target=_blank>Tomcat</A> 
+  </LI></UL>
+<H3>实用组件</H3>
+<UL>
+  <LI><A id=SingleColumn1_Categories_CatList__ctl5_LinkList__ctl1_Link 
+  href="http://www.beanshell.org/" target=_blank>BeanShell</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl5_LinkList__ctl2_Link 
+  href="http://jasperreports.sourceforge.net/" target=_blank>JasperReport</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl5_LinkList__ctl3_Link 
+  href="http://www.jdom.org/" target=_blank>JDom</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl5_LinkList__ctl4_Link 
+  href="http://www.jfree.org/jfreechart/" target=_blank>JFreechart</A> </LI></UL>
+<H3>友情链接</H3>
+<UL>
+  <LI><A id=SingleColumn1_Categories_CatList__ctl6_LinkList__ctl1_Link 
+  href="http://www-900.ibm.com/developerWorks/cn/" target=_blank>IBM 
+  DeveloperWorks</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl6_LinkList__ctl2_Link 
+  href="http://www.java.net/" target=_blank>Java.net</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl6_LinkList__ctl3_Link 
+  href="http://www.javalobby.org/" target=_blank>JavaLobby</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl6_LinkList__ctl4_Link 
+  href="http://java.sun.com/javaone/index.jsp" target=_blank>JavaOne</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl6_LinkList__ctl5_Link 
+  href="http://www.javagarden.org/" target=_blank>Java憩园</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl6_LinkList__ctl6_Link 
+  href="http://www.theserverside.com/" target=_blank>TheServerSide.COM</A> 
+  <LI><A id=SingleColumn1_Categories_CatList__ctl6_LinkList__ctl7_Link 
+  href="http://www.rongshuxia.com/" target=_blank>榕树下</A> </LI></UL><BR><BR></DIV>
+<DIV id=main>
+<SCRIPT>
+function StorePage()
+{
+	d=document;
+	t=d.selection?(d.selection.type!='None'?d.selection.createRange().text:''):(d.getSelection?d.getSelection():'');
+	void(keyit=window.open('http://www.365key.com/storeit.aspx?t='+escape(d.title)+'&u='+escape(d.location.href)+'&c='+escape(t),'keyit','scrollbars=no,width=475,height=575,left=75,top=20,status=no,resizable=yes'));
+	keyit.focus();
+}
+</SCRIPT>
+
+<DIV class=post>
+<DIV class=postTitle><A id=viewpost.ascx_TitleUrl 
+href="http://blog.csdn.net/turbochen/archive/2004/05/07/8105.aspx">Java串行端口通讯技术</A> 
+</DIV>
+<DIV class=postText>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD width="21%"><IMG alt="" hspace=0 
+      src="Java串行端口通讯技术.files/CSDN_Dev_Image_2004-5-61406220.gif" border=0></TD>
+    <TD width="79%">
+      <P><B><FONT size=5>Java串行端口通讯技术</FONT></B></P>
+      <P>作者：陈先波(turbochen@163.com)</P>
+      <P>写于：2004/4/28</P>
+      <P>主页：<A href="http://www.javagarden.net/" 
+      target=_blank>JavaGarden.net</A></P></TD></TR></TBODY></TABLE>
+<P><B><FONT size=4>了解串行通讯</FONT></B></P>
+<P>&nbsp;&nbsp;&nbsp; 
+串行通讯协议有很多种，像RS232，RS485，RS422，甚至现今流行的USB等都是串行通讯协议。而串行通讯技术的应用无处不在。可能大家见的最多就是电脑的串口与Modem的通讯。记得在PC机刚开始在中国流行起来时（大约是在90年代前五年），那时甚至有人用一条串行线进行两台电脑之间的数据共享。除了这些，手机，PDA，USB鼠标、键盘等等都是以串行通讯的方式与电脑连接。而笔者工作性质的关系，所接触到的就更多了，像多串口卡，各种种类的具有串口通讯接口的检测与测量仪器，串口通讯的网络设备等。</P>
+<P>&nbsp;&nbsp;&nbsp; 
+虽然串行通讯有很多种，但笔者所知的在整个电子通讯产品方面，以RS232的通讯方式最为多见。虽然USB接口的电子产品也是层出不穷，但了解一下Java在串行通讯方面的技术还有有必要的，说不定有哪位读者还想用此技术写一个PDA与电脑之间数据共享的程序呢。</P>
+<P>&nbsp;&nbsp;&nbsp; 本文主要以RS232为主来讲解JAVA的串行通讯技术。</P>
+<P><FONT size=4><B>RS232通讯基础</B></FONT></P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;RS-232-C(又称 EIA 
+RS-232-C，以下简称RS232)是在1970年由美国电子工业协会（EIA）联合贝尔系统、调制解调器厂家及计算机终端生产厂家共同制定的用于串行通讯的标准。RS232是一个全双工的通讯协议，它可以同时进行数据接收和发送的工作。RS232的端口通常有两种：9针(DB9)和25针(DB25)。</P>
+<P>DB9和DB25的常用针脚定义</P>
+<TABLE cellSpacing=0 cellPadding=0 border=1>
+  <TBODY>
+  <TR>
+    <TD colSpan=3>
+      <P align=center><FONT color=#000000>　9针串口（DB9）</FONT></P></TD>
+    <TD colSpan=3>
+      <P align=center><FONT color=#000000>25针串口（DB25）</FONT></P></TD></TR>
+  <TR>
+    <TD height=32>
+      <P align=center><FONT color=#000000>针号</FONT></P></TD>
+    <TD align=middle height=32>
+      <P align=center><FONT color=#000000>功能说明</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>缩写</FONT></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>针号</FONT></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>功能说明</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>缩写</FONT></TD></TR>
+  <TR>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>1</FONT></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>数据载波检测</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>DCD</FONT></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>8</FONT></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>数据载波检测</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>DCD</FONT></TD></TR>
+  <TR>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>2</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>接收数据</FONT></TD>
+    <TD align=middle><FONT color=#000000>RXD</FONT></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>3</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>接收数据</FONT></TD>
+    <TD align=middle width=37 height=12><FONT color=#000000>RXD</FONT></TD></TR>
+  <TR>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>3</FONT></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>发送数据</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>TXD</FONT></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>2</FONT></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>发送数据</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>TXD</FONT></TD></TR>
+  <TR>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>4</FONT></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>数据终端准备</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>DTR</FONT></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>20</FONT></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>数据终端准备</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>DTR</FONT></TD></TR>
+  <TR>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>5</FONT></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>信号地</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>GND</FONT></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>7</FONT></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>信号地</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>GND</FONT></TD></TR>
+  <TR>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>6</FONT></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>数据设备准备好</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>DSR</FONT></TD>
+    <TD align=middle><FONT color=#000000>6</FONT> 
+      <P></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>数据准备好</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>DSR</FONT></TD></TR>
+  <TR>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>7</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>请求发送</FONT></TD>
+    <TD align=middle><FONT color=#000000>RTS</FONT></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>4</FONT></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>请求发送</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>RTS</FONT></TD></TR>
+  <TR>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>8</FONT></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>清除发送</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>CTS</FONT></TD>
+    <TD align=middle width=37 height=16>
+      <P align=center><FONT color=#000000>5</FONT></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>清除发送</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>CTS</FONT></TD></TR>
+  <TR>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>9</FONT></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>振铃指示</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>RI</FONT></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>22</FONT></P></TD>
+    <TD align=middle>
+      <P align=center><FONT color=#000000>振铃指示</FONT></P></TD>
+    <TD align=middle><FONT color=#000000>RI</FONT></TD></TR></TBODY></TABLE>
+<P>常见的边线方式</P>
+<P>常见的通讯方式是三线式，这种方式是将两个RS232设备的发送端(TXD)和接收端(RXD)及接地端(GND)互相连接，也是许多读者所知道的连接方式：</P>
+<P>（9针）</P>
+<TABLE cellSpacing=0 cellPadding=0 width=300 border=0>
+  <TBODY>
+  <TR>
+    <TD width=76><FONT color=#000000>2(RXD)</FONT></TD>
+    <TD width=138>
+      <P align=center><FONT color=#000000>---------</FONT></P></TD>
+    <TD width=80><FONT color=#000000>3(TXD</FONT></TD></TR>
+  <TR>
+    <TD width=76><FONT color=#000000>3(TXD)</FONT></TD>
+    <TD align=middle width=138>
+      <P align=center><FONT color=#000000>---------</FONT></P></TD>
+    <TD width=80><FONT color=#000000>2(TXD)</FONT></TD></TR>
+  <TR>
+    <TD width=76><FONT color=#000000>5(GND)</FONT></TD>
+    <TD width=138>
+      <P align=center><FONT color=#000000>---------</FONT></P></TD>
+    <TD width=80><FONT color=#000000>5(GND)</FONT></TD></TR></TBODY></TABLE>
+<P>(25针）</P>
+<TABLE cellSpacing=0 cellPadding=0 width=300 border=0>
+  <TBODY>
+  <TR>
+    <TD width=76><FONT color=#000000>2(RXD)</FONT></TD>
+    <TD width=138>
+      <P align=center><FONT color=#000000>---------</FONT></P></TD>
+    <TD width=80><FONT color=#000000>3(TXD</FONT></TD></TR>
+  <TR>
+    <TD width=76><FONT color=#000000>3(TXD)</FONT></TD>
+    <TD align=middle width=138>
+      <P align=center><FONT color=#000000>---------</FONT></P></TD>
+    <TD width=80><FONT color=#000000>2(RXD)</FONT></TD></TR>
+  <TR>
+    <TD width=76><FONT color=#000000>7(GND)</FONT></TD>
+    <TD width=138>
+      <P align=center><FONT color=#000000>---------</FONT></P></TD>
+    <TD width=80><FONT color=#000000>7(GND)</FONT></TD></TR></TBODY></TABLE>
+<P>&nbsp;&nbsp;&nbsp; 
+这种方式分别将两端的RS232接口的2--3,3---2,5(7)---5(7)针脚连接起来。其中2是数据接收线(RXD)，3是数据发送线(TXD)，5(7)是接地(RND)。如果有一台式PC，和一部NoteBook电脑，就可以用这种方式连线了。用三线式可以将大多数的RS232设备连接起来。但如果你认死了2--3,3--2,5(7)--5(7)对接这个理，会发现在连某些RS232设备时并不奏效。这是因为有些设备在电路内部已将2和3线调换过来了，你只要2,3,5(7)针一一对应就行了。</P>
+<TABLE cellSpacing=0 width="100%" bgColor=#ffffcc border=1>
+  <TBODY>
+  <TR>
+    <TD width="100%" 
+      bgColor=#ffffcc>小技巧：如何辨别TXD和RXD端口？<BR>　　　　搞电子的人手边应该常备一个电表，用来测测电压，电阻什么的会很有用。你只要分别测一下RS232端口的2--5或3--5针脚之间的电压，通常TXD针脚与GND之间会有3~15V左右的负电压，表示它是TXD针脚。</TD></TR></TBODY></TABLE>
+<P>&nbsp;<B><FONT size=4>&nbsp;安装Java Communications 
+API&nbsp;&nbsp;&nbsp;</FONT></B></P>
+<P>&nbsp;&nbsp;&nbsp; 
+Sun的J2SE中并没有直接提供以上提到的任何一种串行通讯协议的开发包，而是以独立的jar包形式发布在java.sun.com网站上<A 
+href="http://java.sun.com/products/javacomm/">(从这里下载)</A>----即comm.jar，称之为Java<SUP>tm</SUP> 
+Communications 
+API，它是J2SE的标准扩展。comm.jar并不是最近才有，早在1998年时，sun就已经发布了这个开发包。comm.jar分别提供了对常用的RS232串行端口和IEEE1284并行端口通讯的支持。目前sun发布的comm.jar只有Windows和Solaris平台两个版本，如果你需要Linux平台下的，可以在<A 
+href="http://www.geeksville.com/~kevinh/linuxcomm.html">http://www.geeksville.com/~kevinh/linuxcomm.html</A>找到。</P>
+<P>&nbsp;&nbsp;&nbsp; 在使用comm.jar之前，必须知道如何安装它。这也是困扰许多初学java 
+RS232通讯者的一个难题。如果我们电脑上安装了JDK, 它将同时为我们安装一份JRE(Java Runtime 
+Entironment)，通常我们运行程序时都是以JRE来运行的。所以以下的安装适用于JRE。如果你是用JDK来运行程序的，请将相应的<JRE_HOME>改成<JDK_HOME>。</P>
+<P>&nbsp;&nbsp;&nbsp; 
+下载了comm.jar开发包后，与之一起的还有两个重要的文件，win32com.dll和javax.comm.properties。 
+comm.jar提供了通讯用的java 
+API，而win32com.dll提供了供comm.jar调用的本地驱动接口。而javax.comm.properties是这个驱动的类配置文件。首先将comm.jar复制到<JRE_HOME>\lib\ext目录。再将win21com.dll复制到你的RS232应用程序运行的目录，即user.dir。然后将javax.comm.properties复制到<JRE_HOME>\lib目录。</P>
+<P><B><FONT size=4>通讯前的准备</FONT></B></P>
+<P>&nbsp;&nbsp;&nbsp; 
+如果你手头上没有现成的提供了标准RS232串口的设备，你可以将自己的电脑模拟成两台不同的串口设备。通常电脑主机后面的面板提供了两个9针的串口，请将这两个串口的2,3,5脚按前面介绍的方法连接。电子市场都有现成的连接头卖，请不要买那种封装的严严实实的接头，而要买用螺丝封装可以拆开的连接头，这样可以方便自己根据需要连接各个针脚。</P>
+<P><B><FONT size=4>Comm API基础</FONT></B></P>
+<P>&nbsp;&nbsp;&nbsp; 我无意于在此详细描述Comm API每个类和接口的用法，但我会介绍Comm 
+API的类结构和几个重要的API用法。</P>
+<P>&nbsp;&nbsp;&nbsp; 所有的comm API位于javax.comm包下面。从Comm 
+API的javadoc来看，它介绍给我们的只有区区以下13个类或接口：</P>
+<BLOCKQUOTE>
+  <P><FONT 
+  color=#000080>javax.comm.CommDriver&nbsp;<BR>javax.comm.CommPort&nbsp;<BR>javax.comm.ParallelPort&nbsp;<BR>javax.comm.SerialPort&nbsp;<BR>javax.comm.CommPortIdentifier&nbsp;<BR>javax.comm.CommPortOwnershipListener<BR>javax.comm.ParallelPortEvent&nbsp;<BR>javax.comm.SerialPortEvent&nbsp;<BR>javax.comm.ParallelPortEventListener 
+  (extends java.util.EventListener)&nbsp;<BR>javax.comm.SerialPortEventListener 
+  (extends 
+  java.util.EventListener)&nbsp;<BR>javax.comm.NoSuchPortException&nbsp;<BR>javax.comm.PortInUseException&nbsp;<BR>javax.comm.UnsupportedCommOperationException&nbsp;<BR></FONT></P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 下面讲解一下几个主要类或接口。</P>
+<P>&nbsp;&nbsp;&nbsp; 1.枚举出系统所有的RS232端口</P>
+<P>&nbsp;&nbsp;&nbsp; 
+在开始使用RS232端口通讯之前，我们想知道系统有哪些端口是可用的，以下代码列出系统中所有可用的RS232端口:</P>
+<BLOCKQUOTE>
+  <P><FONT color=#000080>Enumeration en = 
+  CommPortIdentifier.getPortIdentifiers();<BR>CommPortIdentifier 
+  portId;<BR>while (en.hasMoreElements())&nbsp;<BR>{<BR>&nbsp;&nbsp;&nbsp; 
+  portId = (CommPortIdentifier) en.nextElement();<BR>&nbsp;&nbsp;&nbsp; 
+  /*如果端口类型是串口，则打印出其端口信息*/<BR>&nbsp;&nbsp;&nbsp; if (portId.getPortType() == 
+  CommPortIdentifier.PORT_SERIAL)&nbsp;<BR>&nbsp;&nbsp;&nbsp; 
+  {<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+  System.out.println(portId.getName());<BR>&nbsp;&nbsp;&nbsp; 
+  }<BR>}<BR>在我的电脑上以上程序输出以下结果：<BR>COM1<BR>COM2</FONT></P></BLOCKQUOTE>
+<P>&nbsp;&nbsp;&nbsp; 
+CommPortIdentifier类的getPortIdentifiers方法可以找到系统所有的串口，每个串口对应一个CommPortIdentifier类的实例。</P>
+<P>&nbsp;&nbsp;&nbsp; 2.打开端口</P>
+<P>&nbsp;&nbsp;&nbsp; 如果你使用端口，必须先打开它。</P>
+<P><FONT color=#000080>&nbsp;&nbsp;&nbsp; try{<BR>&nbsp;&nbsp;&nbsp; CommPort 
+serialPort = portId.open("My App", 60);<BR>&nbsp;&nbsp;&nbsp; /* 
+从端口中读取数据*/<BR>&nbsp;&nbsp;&nbsp; InputStream input = 
+serialPort.getInputStream();<BR>&nbsp;&nbsp;&nbsp; 
+input.read(...);&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp; /* 
+往端口中写数据*/<BR>&nbsp;&nbsp;&nbsp; OutputStream output = 
+serialPort.getOutputStream();<BR>&nbsp;&nbsp;&nbsp; 
+output.write(...)<BR>&nbsp;&nbsp;&nbsp; ...<BR>&nbsp;&nbsp;&nbsp; 
+}catch(PortInUseException ex)<BR>&nbsp;&nbsp;&nbsp; { ... }</FONT></P>
+<P>&nbsp;&nbsp;&nbsp; 
+通过CommPortIdentifier的open方法可以返回一个CommPort对象。open方法有两个参数，第一个是String，通常设置为你的应用程序的名字。第二个参数是时间，即开启端口超时的毫秒数。当端口被另外的应用程序占用时，将抛出PortInUseException异常。</P>
+<P>&nbsp;&nbsp;&nbsp; 
+在这里CommPortIdentifier类和CommPort类有什么区别呢？其实它们两者是一一对应的关系。CommPortIdentifier主要负责端口的初始化和开启，以及管理它们的占有权。而CommPort则是跟实际的输入和输出功能有关的。通过CommPort的getInputStream()可以取得端口的输入流，它是java.io.InputStream接口的一个实例。我们可以用标准的InputStream的操作接口来读取流中的数据，就像通过FileInputSteam读取文件的内容一样。相应的，CommPort的getOutputStream可以获得端口的输出流，这样就可以往串口输出数据了。</P>
+<P>&nbsp;&nbsp;&nbsp; 3. 关闭端口</P>
+<P>&nbsp;&nbsp;&nbsp; 
+使用完的端口，必须记得将其关闭，这样可以让其它的程序有机会使用它，不然其它程序使用该端口时可能会抛出端口正在使用中的错误。很奇怪的是，CommPortIdentifier类只提供了开启端口的方法，而要关闭端口，则要调用CommPort类的close()方法。</P>
+<P><B><FONT size=4>通讯方式</FONT></B></P>
+<P>&nbsp;&nbsp;&nbsp; 
+CommPort的输入流的读取方式与文件的输入流有些不一样，那就是你可能永远不知这个InputStream何时结束，除非对方的OutputStream向你发送了一个特定数据表示发送结束，你收到这个特定字符后，再行关闭你的InputStream。而comm.jar提供了两种灵活的方式让你读取数据。</P>
+<P>&nbsp;&nbsp;&nbsp; 1. 轮询方式(Polling)</P>
+<P>&nbsp;&nbsp;&nbsp; 
+举个例子，你同GF相约一起出门去看电影，但你的GF好打扮，这一打扮可能就是半小时甚至一小时以上。这时你就耐不住了，每两分钟就催问一次“好了没？”，如此这样，直到你的GF说OK了才算完。这个就叫轮询(Polling)。</P>
+<P>&nbsp;&nbsp;&nbsp; 
+在程序中，轮询通常设计成一个封闭的循环，当满足某个条件时即结束循环。刚才那个例子中，你的GF说“OK了！”，这个就是结束你轮询的条件。在单线程的程序中，当循环一直执行某项任务而又无法预知它何时结束时，此时你的程序看起来可能就像死机一样。在VB程序中，这个问题可以用在循环结构中插入一个doEvent语句来解决。而Java中，最好的方式是使用线程，就像以下代码片断一样。</P>
+<P><FONT color=#000080>&nbsp;&nbsp;&nbsp; public TestPort extend 
+Thread<BR>&nbsp;&nbsp;&nbsp; {<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+...<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; InputStream input = 
+serialPort.getInputStream();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+StringBuffer buf = new 
+StringBuffer();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; boolean stopped = 
+false;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+...<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public void 
+run()<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+while( !stopped )<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int ch = 
+input.read();<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+if ( ch=='q' || ch=='Q' 
+)<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+/* 
+结束读取，关闭端口...*/<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+stopped = 
+true;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+...<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+else<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+buf.append((char)ch);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+...<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }catch 
+(InterruptedException e) { }<BR>&nbsp;&nbsp;&nbsp;</FONT>&nbsp;<FONT 
+color=#000080>&nbsp;&nbsp;&nbsp;</FONT> <FONT color=#000080>}</FONT></P>
+<P>&nbsp;&nbsp;&nbsp; }</P>
+<P>&nbsp;&nbsp;&nbsp; 2. 监听方式(listening)</P>
+<P>&nbsp;&nbsp;&nbsp;Comm API支持标准的Java 
+Bean型的事件模型。也就是说，你可以使用类似AddXXXListener这样的方法为一个串口注册自己的监听器，以监听方式进行数据读取。 </P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp; 如要对端口监听，你必须先取得CommPortIdentifier类的一个实例，<BR><FONT 
+color=#000080>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CommPort serialPort = 
+portId.open("My App", 60);</FONT> </P>
+<P>&nbsp;&nbsp;&nbsp; 从而取得SerialPort，再调用它的addEventListener方法为它添加监听器，<BR><FONT 
+color=#000080>&nbsp;&nbsp;&nbsp; serialPort.addEventListener(new 
+MyPortListener());</FONT> </P>
+<P>&nbsp;&nbsp;&nbsp; 
+SerialPort的监听器必须继承于SerialPortEventListener接口。当有任何SerialPort的事件发生时，将自动调用监听器中的serialEvent方法。Serial 
+Event有以下几种类型： </P>
+<BLOCKQUOTE>
+  <P><B>BI</B> - 通讯中断.<BR><B>CD</B> - 载波检测.<BR><B>CTS</B> - 
+  清除发送.<BR><B>DATA_AVAILABLE</B> - 有数据到达.<BR><B>DSR</B> - 数据设备准备好.<BR><B>FE</B> 
+  - 帧错误.<BR><B>OE</B> - 溢位错误.<BR><B>OUTPUT_BUFFER_EMPTY</B> - 
+  输出缓冲区已清空.<BR><B>PE</B> - 奇偶校验错.<BR><B>RI</B> - 　振铃指示.</P></BLOCKQUOTE>
+<P>下面是一个监听器的示例，<BR><FONT color=#000080>public void MyPortListener implements 
+SerialPortEventListener<BR>{&nbsp;&nbsp; </FONT></P><FONT size=2>
+<P></FONT><B><FONT color=#7f0055 size=2>public</FONT></B><FONT size=2> 
+</FONT><B><FONT color=#7f0055 size=2>void</FONT></B><FONT size=2> 
+serialEvent(SerialPortEvent evt)<BR>{<BR></FONT><FONT color=#7f0055 
+size=2><B>&nbsp;&nbsp; </B></FONT><FONT size=2></FONT><FONT color=#7f0055 
+size=2><B>switch</B></FONT><FONT size=2> 
+(evt.getEventType())<BR>&nbsp;&nbsp;&nbsp; {<BR></FONT><FONT color=#7f0055 
+size=2><B>&nbsp;&nbsp; </B></FONT><FONT size=2></FONT><B><FONT color=#7f0055 
+size=2>&nbsp;&nbsp; </FONT></B><FONT size=2></FONT><B><FONT color=#7f0055 
+size=2>case</FONT></B><FONT size=2> SerialPortEvent.CTS :</FONT><FONT 
+color=#000080><BR><FONT 
+size=3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+System.out.println("CTS event 
+occured.");<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+break;<BR></FONT></FONT><FONT color=#7f0055 size=2><B>&nbsp;&nbsp; 
+</B></FONT><FONT size=2></FONT><B><FONT color=#7f0055 size=2>&nbsp;&nbsp; 
+</FONT></B><FONT size=2></FONT><B><FONT color=#7f0055 
+size=2>case</FONT></B><FONT size=2> SerialPortEvent.CD :</FONT><FONT 
+color=#000080><BR><FONT 
+size=3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+System.out.println("</FONT></FONT><FONT size=2><FONT color=#000080>CD</FONT> 
+</FONT><FONT color=#000080 size=3>event 
+occured.");<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+break;<BR></FONT><FONT color=#7f0055 size=2><B>&nbsp;&nbsp; </B></FONT><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>&nbsp;&nbsp; </FONT></B><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>case</FONT></B><FONT size=2> 
+SerialPortEvent.BI :</FONT><FONT color=#000080><BR><FONT 
+size=3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+System.out.println("</FONT></FONT><FONT size=2><FONT color=#000080>BI</FONT> 
+</FONT><FONT color=#000080 size=3>event 
+occured.");<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+break;<BR></FONT><FONT color=#7f0055 size=2><B>&nbsp;&nbsp; </B></FONT><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>&nbsp;&nbsp; </FONT></B><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>case</FONT></B><FONT size=2> 
+SerialPortEvent.DSR :</FONT><FONT color=#000080><BR><FONT 
+size=3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+System.out.println("</FONT></FONT><FONT size=2><FONT color=#000080>DSR</FONT> 
+</FONT><FONT color=#000080 size=3>event 
+occured.");<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+break;<BR></FONT><FONT color=#7f0055 size=2><B>&nbsp;&nbsp; </B></FONT><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>&nbsp;&nbsp; </FONT></B><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>case</FONT></B><FONT size=2> 
+SerialPortEvent.FE :</FONT><FONT color=#000080><BR><FONT 
+size=3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+System.out.println("</FONT></FONT><FONT color=#000080 size=2>FE </FONT><FONT 
+color=#000080 size=3>event 
+occured.");<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+break;<BR></FONT><FONT color=#7f0055 size=2><B>&nbsp;&nbsp; </B></FONT><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>&nbsp;&nbsp; </FONT></B><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>case</FONT></B><FONT size=2> 
+SerialPortEvent.OE :</FONT><FONT color=#000080><BR><FONT 
+size=3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+System.out.println("</FONT></FONT><FONT color=#000080 size=2>OE </FONT><FONT 
+color=#000080 size=3>event 
+occured.");<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+break;<BR></FONT><FONT color=#7f0055 size=2><B>&nbsp;&nbsp; </B></FONT><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>&nbsp;&nbsp; </FONT></B><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>case</FONT></B><FONT size=2> 
+SerialPortEvent.PE :</FONT><FONT color=#000080><BR><FONT 
+size=3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+System.out.println("</FONT></FONT><FONT size=2><FONT color=#000080>PE</FONT> 
+</FONT><FONT color=#000080 size=3>event 
+occured.");<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+break;<BR></FONT><FONT color=#7f0055 size=2><B>&nbsp;&nbsp; </B></FONT><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>&nbsp;&nbsp; </FONT></B><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>case</FONT></B><FONT size=2> 
+SerialPortEvent.RI :</FONT><FONT color=#000080><BR><FONT 
+size=3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+System.out.println("</FONT></FONT><FONT size=2>RI </FONT><FONT color=#000080 
+size=3>event 
+occured.");<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+break;<BR></FONT><FONT color=#7f0055 size=2><B>&nbsp;&nbsp; </B></FONT><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>&nbsp;&nbsp; </FONT></B><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>case</FONT></B><FONT size=2> 
+SerialPortEvent.OUTPUT_BUFFER_EMPTY :</FONT><FONT color=#000080><BR><FONT 
+size=3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+System.out.println("</FONT></FONT><FONT size=2><FONT 
+color=#000080>OUTPUT_BUFFER_EMPTY</FONT> </FONT><FONT color=#000080 size=3>event 
+occured.");<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+break;<BR></FONT><FONT color=#7f0055 size=2><B>&nbsp;&nbsp; </B></FONT><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>&nbsp;&nbsp; </FONT></B><FONT 
+size=2></FONT><B><FONT color=#7f0055 size=2>case</FONT></B><FONT size=2> 
+SerialPortEvent.DATA_AVAILABLE :</FONT><FONT color=#000080><BR><FONT 
+size=3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+System.out.println("</FONT></FONT><FONT size=2><FONT 
+color=#000080>DATA_AVAILABLE</FONT> </FONT><FONT size=3><FONT 
+color=#000080>event occured.");<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int 
+ch;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StringBuffer buf = new 
+StringBuffer();<BR>&nbsp;&nbsp;&nbsp; </FONT>&nbsp;&nbsp; InputStream input = 
+</FONT><FONT size=3><FONT 
+color=#000080>serialPort.getInputStream<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while ( (ch=input.read()) &gt; 0) 
+{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+buf.append((char)ch);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+System.out.print(buf);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch (IOException e) 
+{}<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<BR><BR>&nbsp;&nbsp;&nbsp; 
+}<BR></FONT>}</FONT></P>
+<P>&nbsp;&nbsp;&nbsp; 
+这个监听器只是简单打印每个发生的事件名称。而对于大多数应用程序来说，通常关心是DATA_AVAILABLE事件，当数据从外部设备传送到端口上来时将触发此事件。此时就可以使用前面提到过的方法，<FONT 
+color=#000080>serialPort.getInputStream()</FONT>来从InputStream中读取数据了。<FONT 
+color=#000080><BR><BR></FONT><B><FONT size=4>完整的程序</FONT></B></P>
+<P>&nbsp;&nbsp;&nbsp; 为节省篇幅，本文只提供了一些代码片断来帮助读者来理解Comm API的用法。你可以从Comm 
+API的开发包中取得完整的可运行的演示程序。请先下载了comm API的开发包，解压之后有一个名为Sample的目录，里面有几个演示程序，分别是：</P>
+<BLOCKQUOTE>
+  <P>1) BlackBox: A Serial Port BlackBox application.<BR><BR>2) 
+  ParallelBlackBox: A Parallel Port BlackBox application<BR><BR>3) SerialDemo: A 
+  simpler SerialPort sample application<BR><BR>4) Simple: A very simple comm 
+  application<BR><BR>5) NullDriver: A template for driver writers. Can be used 
+  as the starting point<BR>to write a driver for the Comm API.<BR><BR>6) 
+  porting: A template CommPortIdentifier java file for people interested<BR>in 
+  porting the Comm API to a new platform.<BR></P></BLOCKQUOTE>
+<P>其中，第1),3),4)是关于rs232通讯的演示程序。而其它的，2)是并行端口的演示程序。5)和6)是开发自己的端口驱动程序的模板程序，有兴趣的读者可以自行研究。</P>
+<P>　</P>
+<P>　</P><B><BR><BR>版权声明：CSDN是本Blog托管服务提供商。如本文牵涉版权问题，CSDN不承担相关责任，请版权拥有者直接与文章作者联系解决。</B><BR><BR>[<A 
+href="javascript:StorePage()">点击此处收藏本文</A>] </DIV>
+<DIV class=postfoot>发表于 2004年05月07日 1:24 PM </DIV></DIV><LINK 
+href="http://blog.csdn.net/turbochen/Services/Pingback.aspx" rel=pingback><!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://blog.csdn.net/turbochen/archive/2004/05/07/8105.aspx"
+dc:identifier="http://blog.csdn.net/turbochen/archive/2004/05/07/8105.aspx"
+dc:title="Java串行端口通讯技术"
+trackback:ping="http://blog.csdn.net/turbochen/services/trackbacks/8105.aspx" />
+</rdf:RDF>
+--><FONT face=宋体></FONT><BR>
+<DIV id=comments>
+<H3>评论</H3>本文尚无评论。 </DIV></A>
+<DIV class=CommentForm id=commentform>
+<H3>发表评论</H3>
+<TABLE class=CommentForm>
+  <TBODY>
+  <TR>
+    <TD width=75>标题：</TD>
+    <TD><INPUT id=PostComment.ascx_tbTitle style="WIDTH: 300px" size=40 
+      value=回复：Java串行端口通讯技术 name=PostComment.ascx:tbTitle> <SPAN 
+      id=PostComment.ascx_RequiredFieldValidator1 
+      style="DISPLAY: none; COLOR: red" initialvalue="" 
+      evaluationfunction="RequiredFieldValidatorEvaluateIsValid" 
+      display="Dynamic" errormessage="<br>请输入标题" 
+      controltovalidate="PostComment.ascx_tbTitle"><BR>请输入标题</SPAN> </TD></TR>
+  <TR>
+    <TD width=75>大名：</TD>
+    <TD><INPUT id=PostComment.ascx_tbName style="WIDTH: 300px" size=40 
+      name=PostComment.ascx:tbName> <SPAN 
+      id=PostComment.ascx_RequiredFieldValidator2 
+      style="DISPLAY: none; COLOR: red" initialvalue="" 
+      evaluationfunction="RequiredFieldValidatorEvaluateIsValid" 
+      display="Dynamic" errormessage="<br>请输入尊姓大名" 
+      controltovalidate="PostComment.ascx_tbName"><BR>请输入尊姓大名</SPAN> </TD></TR>
+  <TR>
+    <TD>网址：</TD>
+    <TD><INPUT id=PostComment.ascx_tbUrl style="WIDTH: 300px" size=40 
+      name=PostComment.ascx:tbUrl> </TD></TR>
+  <TR>
+    <TD colSpan=3>评论&nbsp; <SPAN id=PostComment.ascx_RequiredFieldValidator3 
+      style="DISPLAY: none; COLOR: red" initialvalue="" 
+      evaluationfunction="RequiredFieldValidatorEvaluateIsValid" 
+      display="Dynamic" errormessage="<br>请输入评论" 
+      controltovalidate="PostComment.ascx_tbComment"><BR>请输入评论</SPAN> <BR><TEXTAREA id=PostComment.ascx_tbComment style="WIDTH: 381px; HEIGHT: 193px" name=PostComment.ascx:tbComment rows=10 cols=50></TEXTAREA> 
+    </TD></TR>
+  <TR>
+    <TD colSpan=3><INPUT language=javascript class=Button id=PostComment.ascx_btnSubmit onclick="if (typeof(Page_ClientValidate) == 'function') Page_ClientValidate(); " type=submit value=提交 name=PostComment.ascx:btnSubmit>&nbsp;&nbsp;&nbsp; 
+      <INPUT id=PostComment.ascx_chkRemember type=checkbox 
+      name=PostComment.ascx:chkRemember><LABEL 
+      for=PostComment.ascx_chkRemember>记住我？</LABEL></TD></TR>
+  <TR>
+    <TD><SPAN id=PostComment.ascx_Message 
+  style="COLOR: red"></SPAN></TD></TR></TBODY></TABLE></DIV></DIV>
+<P id=footer>Powered by: <BR><A id=Footer1_Hyperlink2 
+href="http://scottwater.com/blog" name=Hyperlink1><IMG alt="" 
+src="Java串行端口通讯技术.files/100x30_Logo.gif" border=0></A> <A id=Footer1_Hyperlink3 
+href="http://asp.net/" name=Hyperlink1><IMG alt="" 
+src="Java串行端口通讯技术.files/PoweredByAsp.Net.gif" border=0></A> <BR>Copyright © 
+turbochen </P>
+<SCRIPT language=javascript type=text/javascript>
+<!--
+	var Page_Validators =  new Array(document.all["PostComment.ascx_RequiredFieldValidator1"], document.all["PostComment.ascx_RequiredFieldValidator2"], document.all["PostComment.ascx_RequiredFieldValidator3"]);
+		// -->
+</SCRIPT>
+
+<SCRIPT language=javascript type=text/javascript>
+<!--
+var Page_ValidationActive = false;
+if (typeof(clientInformation) != "undefined" && clientInformation.appName.indexOf("Explorer") != -1) {
+    if ((typeof(Page_ValidationVer) != "undefined") && (Page_ValidationVer == "125"))
+        ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    return true;
+}
+// -->
+</SCRIPT>
+</FORM></BODY></HTML>

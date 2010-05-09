@@ -1,0 +1,8 @@
+SONY ERICSSON 不支持消息状态报告
+SONY ERICSSON SIM内第26条段消息是乱码(done!!! : long message handler )
+NOKIA 手机如何得到短信服务号码？？(done!!!)
+SONY ERICSSON 对ModifyTeleBook有BUG,是否考虑用先DELETE再ADD的方法
+写入电话簿时限制可写入的最大名字长度at+cpbw=?
+电话簿中129 和 145 的区别
+保存短消息似乎对ME无效(done!)
++号代码加入(done!)

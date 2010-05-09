@@ -1,0 +1,35 @@
+1 SerialPort: try catch struction instead of boolean value return.
+2 SerialPort: Exception log system.
+3 SerialPort: If you debug the program on bluetooth COM port in
+Eclipse, there is IOException throws from writePort() method.
+( Or run the program several times. The error will be happened
+suddenly. )
+4 Monitoring the available COM port as mobile port firstly before
+opening the third-part program to build an bluetooth connection with
+the bluetooth device. If you want to simulate bluetooth port as COM
+port.
+5 receive SMS automatically
+6 message.setDeliveryValidTime( header ); convert the sign 0x00-0xFF to minutes
+7 Can smsc number be ignored to set in Message before sending message (can)
+8 setPhoneBookMemo() need this method ( YES! )
+9 check all the old code to add new function to Mobile.java such as getPhoneBookNum() SIM card information etc.
+
+
+Property file to config I18N for wrong message from JMobile
+Property file to config Supported mobile list and factory pattern to create new Mobile instance.
+Function supported list property file for JMobile
+Add new Message arrive listener
+Complete test class for JMobile
+Begin to start SWT project
+
+Procedure for add new mobile for JMobile
+Run test class for JMobile and send result to author to view
+Analyze the result to solve the problem or the target mobile do not support some features
+Fix the problem for the target mobile in JMobile or add not support function list in property for the mobile
+Add the new mobile to supported mobile list property file, add support function list in property for the mobile, then send JMobile.jar and new property file to user for updated and release them on official website
+
+ADD TO TEST CASE IN PORT CLASS
+AT+CSCS=?
+AT+CPBS=?
+AT+CPBR=?
+AT+CNMI=?

@@ -1,0 +1,471 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0053)http://www.csdn.net/develop/Read_Article.asp?Id=19869 -->
+<HTML xmlns:o = "urn:schemas-microsoft-com:office:office"><HEAD><TITLE>CSDN_文档中心_短消息数据实例详解</TITLE>
+<META content="MSHTML 6.00.2800.1141" name=GENERATOR>
+<META http-equiv=Content-Type content="text/html; charset=gb2312"><LINK 
+href="CSDN_文档中心_短消息数据实例详解.files/csdn.css" rel=stylesheet></HEAD>
+<BODY bgColor=#ffffff leftMargin=0 topMargin=0 marginheight="0" marginwidth="0">
+<DIV align=center>
+<STYLE>.title0 {
+	FONT-WEIGHT: bold; FONT-SIZE: 17px; COLOR: #000000; FONT-FAMILY: arial; TEXT-DECORATION: none
+}
+A.title2:link {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A.title2:visited {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A.title2:active {
+	COLOR: #ff0000; TEXT-DECORATION: none
+}
+A.title2:hover {
+	COLOR: #ff0000; TEXT-DECORATION: none
+}
+</STYLE>
+
+<SCRIPT language=JavaScript>
+<!--
+function submit1(sign)
+{
+	var types=document.alogon.type.options[document.alogon.type.selectedIndex].value;				
+	if (document.alogon.name.value!="" && document.alogon.pass.value!="")
+	{
+		if (types!="1")
+			document.alogon.action="http://www.csdn.net/member/logon.asp";
+		else
+			document.alogon.action="http://expert.csdn.net/member/logon.asp";
+		if(sign)
+			document.alogon.submit();
+		//return true;
+	}
+	else
+	{
+		if (document.alogon.name.value=="")
+			alert("请输入用户名！");
+		if (document.alogon.pass.value=="")
+			alert("请输入密码");
+		return false;
+	}
+	return true;
+}
+function GetMyPass()
+{
+	if (document.alogon.name.value!="")
+	{
+		document.alogon.action="http://www.csdn.net/member/getpass.asp";
+		document.alogon.submit();
+	}
+	else
+	{
+		alert("请在姓名输入框里输入用户名或注册EMAIL！");
+	}	
+}
+// -->
+</SCRIPT>
+
+<TABLE cellSpacing=0 cellPadding=0 width=770 border=0>
+  <TBODY>
+  <TR>
+    <TD width=20 bgColor=#004d99 height=25></TD>
+    <FORM name=alogon onsubmit="return submit1(false);" action="" method=post 
+    target=_blank>
+    <TD bgColor=#004d99><FONT color=#ffffff>姓 名:</FONT> <INPUT 
+      class=FormText_1 size=7 name=name> &nbsp;&nbsp; <FONT color=#ffffff>密 码: 
+      <INPUT class=FormText_1 type=password size=7 name=pass> </FONT><SELECT 
+      class=FormText_1 name=type> <OPTION value=1 selected>我的论坛</OPTION> 
+        <OPTION value=2>我的软件</OPTION> <OPTION value=3>我的订单</OPTION> <OPTION 
+        value=4>我的文档</OPTION> <OPTION value=5>我的简历</OPTION></SELECT><INPUT 
+      type=image height=0 width=0> &nbsp;&nbsp; <A 
+      onclick="submit1(true);return false;" 
+      href="http://www.csdn.net/develop/"><FONT color=#ffff33>进 
+      入..</FONT></A>&nbsp;&nbsp; <A href="http://www.csdn.net/member/zc.asp" 
+      target=_blank><FONT color=#ffff33>[注 册]</FONT></A> &nbsp;&nbsp; <A 
+      href="javascript:GetMyPass()"><FONT color=#ffff33>忘记密码</FONT> 
+    </A></TD></FORM>
+    <TD align=right width=20 bgColor=#990000><IMG height=25 
+      src="CSDN_文档中心_短消息数据实例详解.files/top_1.gif" width=20></TD>
+    <FORM action=http://www.csdn.net/search_ok.asp method=post target=_blank>
+    <TD align=right width=250 bgColor=#009999><FONT color=#ffffff><FONT 
+      color=#ffffff><INPUT class=FormText_1 size=15 name=search> <SELECT 
+      class=FormText_1 name=type> <OPTION value=1 selected>新闻标题</OPTION> 
+        <OPTION value=2>软件名称</OPTION> <OPTION value=3>商品名称</OPTION> <OPTION 
+        value=4>文档标题</OPTION> <OPTION value=6>职位名称</OPTION></SELECT> </FONT><INPUT class=td3 type=submit value="搜 索" name=Submit>&nbsp; 
+    </FONT></TD></FORM></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width=770 border=0>
+  <TBODY>
+  <TR>
+    <TD align=middle width=150 height=70><IMG height=60 
+      src="CSDN_文档中心_短消息数据实例详解.files/csdn.gif" width=120></TD>
+    <TD align=middle width=470>
+      <SCRIPT language=javascript>
+	var rand = Math.random().toString(); 
+	var ordval = parseInt(rand.substring(2,4)); 
+	function Showad(width)
+	{
+		if(width=='468')
+		{
+				document.write("<a href='' target='_blank'><OBJECT classid='clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' codebase='http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0' WIDTH=468 HEIGHT=60><PARAM NAME=movie VALUE='/adv/homepage/IBMC2003528_468x60.swf'> <PARAM NAME=quality VALUE=high> <EMBED src='/adv/homepage/IBMC2003528_468x60.swf' quality=high border=0 WIDTH=468 HEIGHT=60 TYPE='application/x-shockwave-flash' PLUGINSPAGE='http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash'></EMBED></OBJECT></a>");
+				return;
+		}
+		if(width=='120')
+		{
+		}
+		return;
+	}
+Showad('468')</SCRIPT>
+    </TD>
+    <TD align=middle width=150>
+      <SCRIPT>Showad('120')</SCRIPT>
+    </TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width=770 border=0>
+  <TBODY>
+  <TR>
+    <TD align=middle width=770 bgColor=#000000 colSpan=2 height=1></TD></TR>
+  <TR>
+    <TD align=middle width=150 bgColor=#ffc800 height=28><FONT 
+      class=title0>csdn.net</FONT></TD>
+    <TD align=middle width=620>
+      <SCRIPT src="CSDN_文档中心_短消息数据实例详解.files/navigation1.js"></SCRIPT>
+    </TD></TR>
+  <TR>
+    <TD align=middle width=770 bgColor=#000000 colSpan=2 
+  height=1></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width=770 border=0>
+  <TBODY>
+  <TR>
+    <TD width=10 bgColor=#f3f9fc height=23></TD>
+    <TD bgColor=#f3f9fc>
+      <MARQUEE onmouseover=this.stop() onmouseout=this.start() scrollAmount=5 
+      scrollDelay=80>
+      <SCRIPT src="CSDN_文档中心_短消息数据实例详解.files/marquee.htm"></SCRIPT>
+      </MARQUEE></TD>
+    <TD align=right width=101 bgColor=#f3f9fc>
+      <SCRIPT>document.write("<img src=http://count.csdn.net/count/pageview1.asp?columnid=4&itemid=11 border=0 width=0 height=0>");</SCRIPT>
+      <B>
+      <SCRIPT language=JavaScript>
+			<!--
+			document.ns = navigator.appName == "Netscape"
+			tmpDate = new Date();
+			date = tmpDate.getDate();
+			month= tmpDate.getMonth() + 1 ; 
+			if(document.ns)
+			{
+				year1=tmpDate.getYear()
+				year= year1.toString().substr(1,2);
+			}
+			else
+				year= tmpDate.getYear();
+			
+			document.write(year);
+			document.write(".");
+			document.write(month);
+			document.write(".");
+			document.write(date);
+			// -->
+			</SCRIPT>
+      </B>&nbsp;&nbsp;</TD></TR>
+  <TR bgColor=#999999>
+    <TD colSpan=3 height=1></TD></TR></TBODY></TABLE>
+<TABLE width=770 border=0>
+  <TBODY>
+  <TR>
+    <TD class=td1 vAlign=top align=middle width=150 bgColor=#fafafa><BR><!--广告条开始//-->
+      <SCRIPT src="CSDN_文档中心_短消息数据实例详解.files/other.js"></SCRIPT>
+<!--广告条结束//--></TD>
+    <TD align=middle width=620><!--文章说明信息开始//-->
+      <TABLE cellSpacing=0 cellPadding=0 width=600 bgColor=#eeeeee border=0>
+        <TBODY>
+        <TR bgColor=#ffffff>
+          <TD align=middle width=50 height=10></TD>
+          <TD align=right><A href="http://www.csdn.net/">CSDN</A> - <A 
+            href="http://www.csdn.net/develop/">文档中心</A> - <FONT 
+            color=#003399>其他</FONT>&nbsp;&nbsp;&nbsp;&nbsp; </TD></TR>
+        <TR>
+          <TD align=middle height=5></TD>
+          <TD align=middle width=500></TD></TR>
+        <TR>
+          <TD align=middle bgColor=#003399 height=10><FONT 
+            color=#ffffff>标题</FONT></TD>
+          <TD><B>&nbsp;&nbsp;&nbsp;&nbsp;短消息数据实例详解</B>&nbsp;&nbsp;&nbsp;&nbsp;NC（原作） 
+          </TD></TR>
+        <TR>
+          <TD align=middle height=5></TD>
+          <TD align=middle width=500></TD></TR>
+        <TR>
+          <TD align=middle bgColor=#003399><FONT color=#ffffff>关键字</FONT></TD>
+          <TD width=500>&nbsp;&nbsp;&nbsp;&nbsp;短消息</TD></TR>
+        <TR>
+          <TD align=middle height=5></TD>
+          <TD align=middle width=500></TD></TR></TBODY></TABLE><!--文章说明信息结束//-->
+      <TABLE width=600 border=0>
+        <TBODY>
+        <TR>
+          <TD align=left><!--内容开始//--><BR>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            lang=EN-US><SPAN 
+            style="mso-tab-count: 3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+            </SPAN><SPAN 
+            style="mso-tab-count: 2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+            </SPAN><SPAN 
+            style="mso-tab-count: 1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+            </SPAN></SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">短消息数据实例详解</SPAN></FONT></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><SPAN 
+            lang=EN-US><FONT size=3>&nbsp;<o:p></o:p></FONT></SPAN></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><SPAN 
+            lang=EN-US><FONT size=3>&nbsp;<o:p></o:p></FONT></SPAN></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">以下是手机</SPAN><SPAN 
+            lang=EN-US>SIM</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">卡收到金融</SPAN><SPAN 
+            lang=EN-US>POS</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">查询交易短消息的原始信息</SPAN></FONT></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><SPAN 
+            lang=EN-US><FONT size=3>&nbsp;<o:p></o:p></FONT></SPAN></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><SPAN 
+            lang=EN-US><FONT 
+            size=3>0891683108200705F0040BA13108686050F3000030104261531420A080CA05000</FONT></SPAN></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><SPAN 
+            lang=EN-US><FONT size=3>0143</FONT></SPAN><SPAN lang=EN-US><FONT 
+            size=3>D00A00CE24229165028140A054B0080000010000002000000000000000000</FONT></SPAN></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><SPAN 
+            lang=EN-US><FONT 
+            size=3>000000C882B65A3046CBD186B0A291681C22040A408022291E6E8263C33120491</FONT></SPAN></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><SPAN 
+            lang=EN-US><FONT 
+            size=3>E3C40C1A110242900000060A3048A879BE0D8700C48A8470F27000800858AA701</FONT></SPAN></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><SPAN 
+            lang=EN-US><FONT 
+            size=3>58516628000010582C3EA8D0589100603B452D04000004001B050000000000C4D</FONT></SPAN></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><SPAN 
+            lang=EN-US><FONT size=3>8CC38941965</FONT></SPAN></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><SPAN 
+            lang=EN-US><FONT size=3>&nbsp;<o:p></o:p></FONT></SPAN></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'"><FONT 
+            size=3>其中：</FONT></SPAN></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            lang=EN-US>1—2 </SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节：</SPAN><SPAN 
+            lang=EN-US>08</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">代表后续的短消息服务中心号码占用了</SPAN><SPAN 
+            lang=EN-US>8</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">个字节</SPAN><SPAN 
+            lang=EN-US>(BCD</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">码</SPAN><SPAN 
+            lang=EN-US>)</SPAN></FONT></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            lang=EN-US>3—4 </SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节：</SPAN><SPAN 
+            lang=EN-US>91 </SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">代表后续号码为国际号码</SPAN></FONT></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            lang=EN-US>3—18 </SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节：</SPAN> 
+            <SPAN lang=EN-US>91683108200705F0 </SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">组成短消息中心的号码为</SPAN><SPAN 
+            lang=EN-US> 8613800270500</SPAN></FONT></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            lang=EN-US>19—20</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节：</SPAN><SPAN 
+            lang=EN-US>04</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">代表有一条或多条短消息在短信服务中心</SPAN></FONT></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            lang=EN-US>21--22</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节：</SPAN><SPAN 
+            lang=EN-US>0B </SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">代表后续的发送者号码为</SPAN><SPAN 
+            lang=EN-US>11</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节（</SPAN><SPAN 
+            lang=EN-US>ASC </SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">码）。</SPAN></FONT></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            lang=EN-US>23—24</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节：</SPAN><SPAN 
+            lang=EN-US>A1</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">代表发送者号码为国内号码。</SPAN></FONT></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            lang=EN-US>25—36</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节：</SPAN><SPAN 
+            lang=EN-US>3108686050F3</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">代表发送者号码为</SPAN><SPAN 
+            lang=EN-US>13808606053</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">，注意：前面的</SPAN><SPAN 
+            lang=EN-US>21—22</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节所指示的长度不包含</SPAN><SPAN 
+            lang=EN-US>A1</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">及</SPAN><SPAN 
+            lang=EN-US>F</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">，这与</SPAN><SPAN 
+            lang=EN-US>1—2</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节所代表的长度不同。</SPAN></FONT></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            lang=EN-US>37—38</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节：</SPAN><SPAN 
+            lang=EN-US>00</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">，代表协议号</SPAN></FONT></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            lang=EN-US>39—40</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节：</SPAN><SPAN 
+            lang=EN-US>00</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">，</SPAN><SPAN 
+            lang=EN-US>Data Coding Scheme </SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">（</SPAN><SPAN 
+            lang=EN-US>DCS</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">）</SPAN><SPAN 
+            lang=EN-US>, </SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">代表所发送的数据为七位编码的西文字母</SPAN></FONT></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            lang=EN-US>41—52</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节：</SPAN><SPAN 
+            lang=EN-US>301042615314 ,</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">代表发送的时间为</SPAN><SPAN 
+            lang=EN-US>03</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">年</SPAN><SPAN 
+            lang=EN-US>01</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">月</SPAN><SPAN 
+            lang=EN-US>24</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">日</SPAN><SPAN 
+            lang=EN-US>16</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">点</SPAN><SPAN 
+            lang=EN-US>35</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">分</SPAN><SPAN 
+            lang=EN-US>14</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">秒</SPAN></FONT></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            lang=EN-US>53—54</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节：</SPAN><SPAN 
+            lang=EN-US>20</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">，代表时区信息。</SPAN></FONT></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">以上所有数据称为</SPAN><SPAN 
+            lang=EN-US>PDU</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">报文头。</SPAN></FONT></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            lang=EN-US>54—55</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节：</SPAN><SPAN 
+            lang=EN-US>A0</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">，代表</SPAN><SPAN 
+            lang=EN-US>16</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">进制用户数据长度（</SPAN><SPAN 
+            lang=EN-US>UDL</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">）</SPAN><SPAN 
+            lang=EN-US>,</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">代表其后的用户数据长度为</SPAN><SPAN 
+            lang=EN-US>160</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节</SPAN><SPAN 
+            lang=EN-US>(</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">这即是最大长度</SPAN><SPAN 
+            lang=EN-US>)</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">。特别注意这个长度是对数据进行</SPAN><SPAN 
+            lang=EN-US>7</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">位编码前的数据长度，即么经过</SPAN><SPAN 
+            lang=EN-US>7</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">位编码后的最后数据长度为</SPAN><SPAN 
+            lang=EN-US>UDL-UDL/8</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">。</SPAN></FONT></P>
+            <P class=MsoNormal style="MARGIN: 0cm 0cm 0pt"><FONT size=3><SPAN 
+            lang=EN-US>56</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">字节及以后：是经过</SPAN><SPAN 
+            lang=EN-US>7</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">位编码后的用户数据，其长度的计算方法为</SPAN><SPAN 
+            lang=EN-US>(UDL-UDL/8)*2</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">，在这里是（</SPAN><SPAN 
+            lang=EN-US>160-160/8</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">）</SPAN><SPAN 
+            lang=EN-US>*2 = 280,</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">注意乘以</SPAN><SPAN 
+            lang=EN-US>2</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">是因为这里的用户数据是经过</SPAN><SPAN 
+            lang=EN-US>ASC</SPAN><SPAN 
+            style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">码扩展的。</SPAN></FONT></P><BR><!--内容结束//--></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR><!--文章评论开始//-->
+<TABLE cellSpacing=0 cellPadding=0 width=770 align=center bgColor=#006699 
+border=0>
+  <TBODY>
+  <TR bgColor=#006699>
+    <TD id=white align=middle bgColor=#006699><FONT 
+    color=#ffffff>对该文的评论</FONT></TD>
+    <TD align=middle><!--文章人气开始//-->
+      <SCRIPT src="CSDN_文档中心_短消息数据实例详解.files/readnum.htm"></SCRIPT>
+<!--文章人气开始//--></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=1 cellPadding=2 width=770 align=center bgColor=#666666 
+border=0>
+  <TBODY>
+  <TR>
+    <TD bgColor=#cccccc colSpan=3><SPAN style="COLOR: #cccccc"><IMG height=16 
+      hspace=1 src="CSDN_文档中心_短消息数据实例详解.files/ico_pencil.gif" width=16> 
+      </SPAN>&nbsp;&nbsp;&nbsp;&nbsp; wuyaoh <I>(2003-7-30 12:49:41)</I> </TD></TR>
+  <TR>
+    <TD width=532 bgColor=#ffffff colSpan=3><BR>mark <BR></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=1 cellPadding=2 width=770 align=center bgColor=#666666 
+border=0>
+  <TBODY>
+  <TR>
+    <TD bgColor=#cccccc colSpan=3><SPAN style="COLOR: #cccccc"><IMG height=16 
+      hspace=1 src="CSDN_文档中心_短消息数据实例详解.files/ico_pencil.gif" width=16> 
+      </SPAN>&nbsp;&nbsp;&nbsp;&nbsp; zliang2000 <I>(2003-7-28 23:46:41)</I> 
+  </TD></TR>
+  <TR>
+    <TD width=532 bgColor=#ffffff colSpan=3><BR>好东西，收藏！！！ 
+<BR></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=1 cellPadding=2 width=770 align=center bgColor=#666666 
+border=0>
+  <TBODY>
+  <TR>
+    <TD bgColor=#cccccc colSpan=3><SPAN style="COLOR: #cccccc"><IMG height=16 
+      hspace=1 src="CSDN_文档中心_短消息数据实例详解.files/ico_pencil.gif" width=16> 
+      </SPAN>&nbsp;&nbsp;&nbsp;&nbsp; cndragon <I>(2003-7-28 15:47:01)</I> 
+</TD></TR>
+  <TR>
+    <TD width=532 bgColor=#ffffff colSpan=3><BR>good <BR></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=1 cellPadding=2 width=770 align=center bgColor=#666666 
+border=0>
+  <TBODY>
+  <TR>
+    <TD bgColor=#cccccc colSpan=3><SPAN style="COLOR: #cccccc"><IMG height=16 
+      hspace=1 src="CSDN_文档中心_短消息数据实例详解.files/ico_pencil.gif" width=16> 
+      </SPAN>&nbsp;&nbsp;&nbsp;&nbsp; Solar2008 <I>(2003-7-25 15:25:47)</I> 
+  </TD></TR>
+  <TR>
+    <TD width=532 bgColor=#ffffff colSpan=3><BR>Check in 
+<BR></TD></TR></TBODY></TABLE><!--文章评论结束//--><BR>
+<DIV align=center>
+<TABLE cellSpacing=1 cellPadding=2 width=770 align=center bgColor=#cccccc 
+border=0>
+  <TBODY>
+  <TR>
+    <TH id=white bgColor=#006699><FONT 
+color=#ffffff>我要评论</FONT></TH></TR></TBODY></TABLE></DIV>� 
+<DIV align=center>
+<TABLE width=770 border=0>
+  <TBODY>
+  <TR>
+    <TD>你没有登陆，无法发表评论。 请先<A 
+      href="http://www.csdn.net/member/login.asp?from=/Develop/read_article.asp?id=19869">登陆</A> 
+      <A 
+href="http://www.csdn.net/expert/zc.asp">我要注册</A><BR></TD></TR></TBODY></TABLE></DIV><BR>
+<HR width=770 noShade SIZE=1>
+
+<TABLE cellSpacing=0 cellPadding=0 width=500 border=0>
+  <TBODY>
+  <TR align=middle>
+    <TD vAlign=bottom height=10><A 
+      href="http://www.csdn.net/intro/intro.asp?id=2">网站简介</A> - <A 
+      href="http://www.csdn.net/intro/intro.asp?id=5">广告服务</A> - <A 
+      href="http://www.csdn.net/map/map.shtm">网站地图</A> - <A 
+      href="http://www.csdn.net/help/help.asp">帮助信息</A> - <A 
+      href="http://www.csdn.net/intro/intro.asp?id=2">联系方式</A> - <A 
+      href="http://www.csdn.net/english">English</A> </TD>
+    <TD align=middle rowSpan=3><A 
+      href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010"><IMG 
+      height=48 src="CSDN_文档中心_短消息数据实例详解.files/biaoshi.gif" width=40 
+      border=0></A></TD></TR>
+  <TR align=middle>
+    <TD vAlign=top>百联美达美公司 版权所有 京ICP证020026号</TD></TR>
+  <TR align=middle>
+    <TD vAlign=top><FONT face=Verdana>Copyright &copy; CSDN.net, Inc. All rights 
+      reserved</FONT></TD></TR>
+  <TR>
+    <TD height=15></TD>
+    <TD></TD></TR></TBODY></TABLE></DIV>
+<DIV></DIV><!--结束//--></BODY></HTML>

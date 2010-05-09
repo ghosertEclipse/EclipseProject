@@ -1,0 +1,120 @@
+BODY {
+	FONT-SIZE: 12px; BACKGROUND: url(../gfx/background_body.png) #fff repeat-x center top; MARGIN-LEFT: auto; MARGIN-RIGHT: auto; PADDING-TOP: 10px; max-width: 752px
+}
+H1 {
+	FONT-SIZE: 16px; TEXT-TRANSFORM: uppercase; LETTER-SPACING: 3px
+}
+H1 A {
+	TEXT-DECORATION: none
+}
+H1 A:hover {
+	TEXT-DECORATION: underline
+}
+H2 {
+	FONT-SIZE: 15px; LETTER-SPACING: 1px
+}
+H3 {
+	FONT-SIZE: 14px; LETTER-SPACING: 1px
+}
+H4 {
+	FONT-SIZE: 13px
+}
+H5 {
+	FONT-SIZE: 12px
+}
+H6 {
+	FONT-SIZE: 12px
+}
+PRE {
+	BACKGROUND-COLOR: #f4f4f4
+}
+CODE {
+	BACKGROUND-COLOR: #f4f4f4
+}
+BLOCKQUOTE {
+	PADDING-RIGHT: 10%; PADDING-LEFT: 10%; BACKGROUND: url(/gfx/quote.gif) #fff no-repeat left top; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+UNKNOWN {
+	BORDER-TOP: #ddd 1px solid; MARGIN-TOP: -0.5em; DISPLAY: block; COLOR: #ddd; PADDING-TOP: 0.25em; content: attr(cite)
+}
+A:link {
+	COLOR: #069; BACKGROUND-COLOR: transparent
+}
+A:visited {
+	COLOR: #069; BACKGROUND-COLOR: transparent
+}
+A:hover {
+	COLOR: #668fcc; BACKGROUND-COLOR: transparent
+}
+A:active {
+	COLOR: #668fcc; BACKGROUND-COLOR: transparent
+}
+UNKNOWN {
+	PADDING-LEFT: 13px; BACKGROUND: url(../gfx/icon_external_link.gif) #fff no-repeat left center
+}
+INPUT.button {
+	COLOR: #fff; BACKGROUND-COLOR: #668fcc
+}
+.searchInfo {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 1em; COLOR: #666; PADDING-TOP: 1em
+}
+#logo {
+	BACKGROUND: url(../gfx/background_logo.png) #fff repeat-x center top; OVERFLOW: hidden; PADDING-TOP: 6px
+}
+#logo A {
+	COLOR: #000; TEXT-DECORATION: none
+}
+#photoJohann {
+	FLOAT: left
+}
+#logoJB {
+	PADDING-TOP: 4px; TEXT-ALIGN: center
+}
+#search {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 1px; PADDING-TOP: 1px; BACKGROUND-COLOR: #334766; TEXT-ALIGN: right
+}
+#search P {
+	FONT-SIZE: 10px; MARGIN: 0px; COLOR: #fff
+}
+#search INPUT {
+	BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; FONT-SIZE: 10px; BORDER-BOTTOM-WIDTH: 0px; MARGIN: 0px; BORDER-RIGHT-WIDTH: 0px
+}
+#search .button {
+	PADDING-RIGHT: 16px; PADDING-LEFT: 16px; PADDING-BOTTOM: 0px; MARGIN: 0px; COLOR: #fc0; PADDING-TOP: 0px; BACKGROUND-COLOR: #668fcc
+}
+#q {
+	PADDING-LEFT: 4px; BACKGROUND-IMAGE: url(../gfx/background_input.png)
+}
+#menu {
+	CLEAR: both; PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 2px; TEXT-TRANSFORM: uppercase; PADDING-TOP: 2px; BACKGROUND-COLOR: #eee; TEXT-ALIGN: center
+}
+#menu OL {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+#menu LI {
+	PADDING-RIGHT: 16px; DISPLAY: inline; PADDING-LEFT: 16px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+#menu A {
+	FONT-WEIGHT: bold; COLOR: #000
+}
+#menu A:hover {
+	COLOR: #668fcc
+}
+#cntnt {
+	TEXT-ALIGN: justify
+}
+#footer {
+	CLEAR: both; PADDING-RIGHT: 0px; BORDER-TOP: #ddd 1px solid; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 16px 0px; PADDING-TOP: 4px; TEXT-ALIGN: center
+}
+#footerLinks {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+}
+#footerLinks LI {
+	DISPLAY: inline; MARGIN: 0px 16px 0px 0px
+}
+#contentLink {
+	DISPLAY: none
+}
+#bottomLinks {
+	DISPLAY: none
+}

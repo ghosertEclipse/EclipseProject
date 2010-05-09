@@ -1,0 +1,9 @@
+DIV.News {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 10px; FONT-SIZE: 14px; PADDING-BOTTOM: 5px; PADDING-TOP: 5px; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif
+}
+DIV.postTitle {
+	PADDING-LEFT: 3px; FONT-WEIGHT: bolder; FONT-SIZE: 20px; PADDING-BOTTOM: 3px; PADDING-TOP: 3px; BORDER-BOTTOM: gainsboro 1px solid; BACKGROUND-COLOR: #f0f4ff
+}
+DIV.postText {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 3px; FONT-SIZE: 18px; PADDING-BOTTOM: 3px; PADDING-TOP: 3px
+}

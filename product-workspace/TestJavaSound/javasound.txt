@@ -1,0 +1,61 @@
+1 capture audio(jmf java sound etc.)
+http://blog.csdn.net/didostream/archive/2006/03/05/615910.aspx
+http://www.btonline.com.cn/viewtopic.php?p=1099
+http://blog.csdn.net/runner0592/archive/2006/03/22/632929.aspx
+
+http://www.jsresources.org/
+http://www.jsresources.org/examples/AudioRecorder.html
+http://www.jsresources.org/apps/mixer.html
+http://java.sun.com/products/java-media/sound/reference/codesamples/index.html
+
+
+本目录内的jsound.dll用于防止中文乱码放与JRE/BIN中即可
+
+MP3编码[用于WAV TO MP3, MP3音频捕捉]:
+本目录内的lametritonus.dll, lame_enc.dll放于程序运行目录
+连同lib/tritonus_share.jar, lib/tritonus_mp3.jar classpath中
+运行Mp3Encoder下实例即可
+
+
+MP3解码码[用于MP3 TO WAV, MP3音频播放, 播放原理即解码成WAV后播放WAV]:
+1. tritonus的解决方案貌似有BUG：连同lib/tritonus_share.jar, lib/tritonus_mp3.jar ,lib/javalayer.jar(jlayer的类库)放在classpath中，
+运行一下代码转换MP3 TO WAV
+
+AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(this.filename));
+AudioFormat.Encoding encoding = audioInputStream.getFormat().getEncoding();
+if (encoding.equals(Encodings.getEncoding("MPEG1L3")) || encoding.equals(Encodings.getEncoding("MPEG2L3"))) {
+// convert mp3 to pcm AudioInputStream.
+AudioFormat audioFormat =  new AudioFormat(audioInputStream.getFormat().getSampleRate(), 16,
+                                           audioInputStream.getFormat().getChannels(),
+                                           true,  // signed
+                                           false); // big endian
+audioInputStream = AudioSystem.getAudioInputStream(audioFormat, audioInputStream);
+}
+传入文件名后，非录音的MP3文件会在第一行处报错不支持格式,即使录音的，能支持的MP3文件，解码速度也很慢（是否因为以上代码有问题，有时间查之）
+Why do I get an UnsupportedAudioFileException when trying to play a mp3 file?
+ 
+ First, check your installation as described on the bottom of the Java Sound Plugins page. If your installation is correct, but the file still doesn't play, there are two common reasons: id3v2 tags or a variable bit rate (VBR) header. Both are prepended to an ordinary mp3 file. And the AudioFileReader for mp3 can't detect this situation. The Tritonus team does not plan to fix this behaviour. However, JavaZOOM provides a modified version of the AudioFileReader. (Matthias)
+
+
+2.jlayer自带方案
+Mp3Decoder目录下根据readme.txt提示运行即可
+解码使用http://www.javazoom.net/projects.html的jlayer类库，根据官方说法，
+JDK 1.5下CPU占用率仅1%, 可考虑更换jdk, 另jlayer的官网有许多现成JAVA SOUND 开源项目，可参考之增强录音程序
+
+
+
+基本表达式：
+BitSize = 8 or 16 采样位
+Channels = 1 or 2 声道数
+framesize = BitSize(8 or 16) / 8 * nChannels 一帧尺寸
+frameLength = bytes.length 解码后PCM音频数据字节长度 / frameSzie 帧长度
+frameRate = 44100, 22050, 16000, 8000 etc.
+duration = frameLength / frameRate 音频播放时间
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description url="http://www.loadtrend.com/jmobile/updates">
+      升级站点
+   </description>
+   <feature url="features/com.loadtrend.app.mobile.feature_1.0.5.jar" id="com.loadtrend.app.mobile.feature" version="1.0.5">
+      <category name="update"/>
+   </feature>
+   <category-def name="update" label="update"/>
+</site>

@@ -1,0 +1,1391 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0051)http://www.ccw.com.cn/htm/net/seminar/02_1_22_4.asp -->
+<HTML><HEAD><TITLE>计算机世界网-利用手机模块实现短消息</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<STYLE>.a1 {
+	FONT-SIZE: 1px
+}
+</STYLE>
+
+<STYLE>.a14 {
+	FONT-SIZE: 14px; TEXT-INDENT: 25px; LINE-HEIGHT: 20px
+}
+.f {
+	FONT-SIZE: 18px; COLOR: #0f3ccd
+}
+IMG {
+	BORDER-RIGHT: 0px; BORDER-TOP: 0px; BORDER-LEFT: 0px; BORDER-BOTTOM: 0px
+}
+TD {
+	FONT-SIZE: 12px; font-fammily: verdana,宋体
+}
+P {
+	FONT-SIZE: 12px; font-fammily: verdana,宋体
+}
+INPUT {
+	FONT-SIZE: 12px; font-fammily: verdana,宋体
+}
+A:link {
+	COLOR: black; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #80006f; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: black; TEXT-DECORATION: underline
+}
+</STYLE>
+
+<META content="MSHTML 6.00.2800.1141" name=GENERATOR></HEAD>
+<BODY leftMargin=0 topMargin=2>
+<CENTER>
+<STYLE>.v12 {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #ffffff
+}
+.v14 {
+	FONT-SIZE: 14px; TEXT-INDENT: 25px; LINE-HEIGHT: 20px
+}
+IMG {
+	BORDER-RIGHT: 0px; BORDER-TOP: 0px; BORDER-LEFT: 0px; BORDER-BOTTOM: 0px
+}
+TD {
+	FONT-SIZE: 12px; font-fammily: verdana,宋体
+}
+P {
+	FONT-SIZE: 12px; font-fammily: verdana,宋体
+}
+INPUT {
+	FONT-SIZE: 12px; font-fammily: verdana,宋体
+}
+SELECT {
+	FONT-SIZE: 12px; font-fammily: verdana,宋体
+}
+A:link {
+	COLOR: black; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #80006f; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: black; TEXT-DECORATION: underline
+}
+</STYLE>
+
+<STYLE>.v13 {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #ffffff
+}
+.v12 {
+	FONT-WEIGHT: bold; FONT-SIZE: 13px; COLOR: #4c029c
+}
+.v14 {
+	FONT-SIZE: 14px; TEXT-INDENT: 25px; LINE-HEIGHT: 20px
+}
+IMG {
+	BORDER-RIGHT: 0px; BORDER-TOP: 0px; BORDER-LEFT: 0px; BORDER-BOTTOM: 0px
+}
+TD {
+	FONT-SIZE: 12px; font-fammily: verdana,宋体
+}
+P {
+	FONT-SIZE: 12px; font-fammily: verdana,宋体
+}
+INPUT {
+	FONT-SIZE: 12px; font-fammily: verdana,宋体
+}
+SELECT {
+	FONT-SIZE: 12px; font-fammily: verdana,宋体
+}
+A:link {
+	COLOR: black; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #80006f; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: black; TEXT-DECORATION: underline
+}
+</STYLE>
+<!--头-->
+<TABLE cellSpacing=0 cellPadding=0 width=767 align=center border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=bottom>
+      <TABLE cellSpacing=0 cellPadding=0 border=0>
+        <TBODY>
+        <TR>
+          <TD vAlign=top><IMG 
+src="计算机世界网-利用手机模块实现短消息.files/ccwlogo.gif"></TD></TR>
+        <TR>
+          <TD vAlign=top height=27><IMG height=27 
+            src="计算机世界网-利用手机模块实现短消息.files/knowledge.gif" 
+      width=207></TD></TR></TBODY></TABLE></TD>
+    <TD vAlign=bottom width=556 bgColor=#4c029c height=96>
+      <TABLE height=96 cellSpacing=0 cellPadding=0 width=556 bgColor=#4c029c 
+      border=0>
+        <TBODY>
+        <TR>
+          <TD vAlign=bottom bgColor=#ffffff colSpan=2 height=25><IMG 
+            src="计算机世界网-利用手机模块实现短消息.files/top.gif" useMap=#F></TD></TR>
+        <TR vAlign=center>
+          <TD vAlign=center align=middle height=60><!-- <a href="/search/" target=_blank><img src="/img2/esearch.GIF" border=0 width=468 height=60></a> --><A 
+            href="http://www.ccw.com.cn/html/search/thememail/" 
+            target=_blank><IMG height=60 
+            src="计算机世界网-利用手机模块实现短消息.files/topbanner_thememail.gif" width=468 
+            border=0></A> </TD>
+          <TD align=middle width="15%">
+            <TABLE width="95%">
+              <TBODY>
+              <TR>
+                <TD><A href="mailto:center@ccw.com.cn?subject=我要投稿:" 
+                  target=_blank><FONT class=v13>我要投稿</A><BR><A 
+                  href="mailto:center@ccw.com.cn?subject=编读往来"><FONT 
+                  class=v13>编读往来</A><BR><A 
+                  href="javascript:AddBookMark('计算机世界网首页')"><FONT 
+                  class=v13>加入收藏</A></FONT></FONT></FONT></TD></TR></TBODY></TABLE></TD></TR>
+        <TR>
+          <TD bgColor=#ffffff colSpan=2 height=1></TD></TR>
+        <TR>
+          <TD bgColor=#b4aafc colSpan=2 height=2></TD></TR></TBODY></TABLE><MAP 
+      name=F><AREA shape=RECT target=_blank coords=29,3,61,18 
+        href="http://www.ccw.com.cn/"><AREA shape=RECT target=_blank 
+        coords=72,3,143,18 href="http://www.ccw.com.cn/news1/"><AREA shape=RECT 
+        target=_blank coords=155,2,216,18 
+        href="http://www.ccw.com.cn/center/"><AREA shape=RECT target=_blank 
+        coords=225,2,299,18 href="http://www.ccw.com.cn/work/"><AREA shape=RECT 
+        target=_blank coords=310,3,364,19 
+        href="http://www.ccw.com.cn/search/"><AREA shape=RECT target=_blank 
+        coords=372,2,412,19 href="http://www3.ccw.com.cn/"><AREA shape=RECT 
+        target=_blank coords=424,2,550,18 
+  href="http://www2.ccw.com.cn/"></MAP></TD></TR>
+  <TR>
+    <TD bgColor=#b4aafc colSpan=2>
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR>
+          <TD align=middle width="26%"><FONT 
+            class=v12>【2003年9月3日】&nbsp;&nbsp;&nbsp;</FONT></TD>
+          <TD class=V12><A href="http://www.ccw.com.cn/center/topic.asp">专 
+            题</A>　/</TD>
+          <TD class=V12><A href="http://www.ccw.com.cn/center/tech.asp">技 
+            术</A> /</TD>
+          <TD class=V12><A href="http://www.ccw.com.cn/center/prod.asp">产 
+            品</A>　/</TD>
+          <TD class=V12><A href="http://www.ccw.com.cn/center/app.asp">应 
+            用</A>　/</TD>
+          <TD class=V12><A href="http://www.ccw.com.cn/center/net.asp">网 
+            络</A>　/</TD>
+          <TD class=V12><A href="http://www.ccw.com.cn/center/prog.asp">编 
+            程</A>　/</TD>
+          <TD class=V12><A href="http://www.ccw.com.cn/center/skill.asp">技 
+            巧</A> </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<TABLE width=728 align=center>
+  <TBODY>
+  <TR>
+    <TD align=middle><BR>
+      <H2><FONT color=#0f3ccd>利用手机模块实现短消息</FONT></H2><BR><B>上海市粤秀路46号76楼302室 
+      童瑞华</B> </TD></TR>
+  <TR>
+    <TD align=right>02-1-22 下午 01:38:30<BR>
+      <HR width=718 color=#f46240 SIZE=1>
+    </TD></TR></TBODY></TABLE><BR>
+<TABLE width=742 align=center>
+  <TBODY>
+  <TR>
+    <TD vAlign=top width=606>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+            class=a14>全球定位系统（GPS）系统由于性能优异，在民用上应用范围很广。其可以用于空中交通管理、大地精密测量、摄影测量、监测地壳运动、火山活动、野外调查和勘探的定位、地面沉降、土地塌方，甚至于用于民用如建筑、汽车、旅行探险、狩猎等方面。但是如何将GPS定位数据传递到监控中心一直是相应系统关注的焦点。目前，移动子系统和监控中心子系统之间往往通过短消息方式传送数据。这种方式采用通常的无线GSM发送接收设备就能实现短消息的传送，实现简单，具有通信成本低、频谱利用率高、系统容量大、业务种类多、保密性能好、抗干扰能力强、通话质量高、国际自动漫游等优点，它利用信令信道传输，不用拨号建立连接，直接把要发的信息加上目的地址发送到短消息服务中心，由短消息服务中心在发给最终的信宿，是目前应用最广泛的通信方案。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+            class=a14>目前，在相关的系统中往往使用手机模块（摩托罗拉、西门子等均有相应的产品）来实现与短消息中心的联系。主要原因在于：使用手机模块利于系统集成，成本较低，而使用手机虽然也可以实现相应功能，但是需要外加数据线，成本相当高。本文主要介绍与短消息开发相关的GSM 
+            AT指令。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14></TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>1．相关的GSM AT指令</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>与SMS有关的GSM AT指令（from 
+      GSM07.05）如表1所示：</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>
+            <P align=center>表1 相关的GSM AT指令</P></TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>
+            <TABLE 
+            style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; MARGIN-LEFT: 21pt; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none; BORDER-COLLAPSE: collapse; mso-table-layout-alt: fixed; mso-border-alt: solid windowtext .5pt; mso-padding-alt: 0cm 5.4pt 0cm 5.4pt" 
+            cellSpacing=0 cellPadding=0 border=1>
+              <TBODY>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 74.4pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid" 
+                vAlign=top width=99>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>AT </SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">指令</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 270pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=360>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">功</SPAN><SPAN 
+                  lang=EN-US 
+                  style="mso-spacerun: yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                  </SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">能</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 74.4pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=99>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>AT+CMGC<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 270pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=360>
+                  <P class=MsoNormal><SPAN lang=EN-US>Send an SMS 
+                  command</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">（发出一条短消息命令）</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 74.4pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=99>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>AT+CMGD<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 270pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=360>
+                  <P class=MsoNormal><SPAN lang=EN-US>Delete SMS 
+                  message</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">（删除</SPAN><SPAN 
+                  lang=EN-US>SIM</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">卡内存的短消息）</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 74.4pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=99>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>AT+CMGF<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 270pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=360>
+                  <P class=MsoNormal><SPAN lang=EN-US>Select SMS message 
+                  formate</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">（选择短消息信息格式：</SPAN><SPAN 
+                  lang=EN-US>0-PDU;1-</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">文本）</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 74.4pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=99>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>&nbsp;<O:P> </O:P></SPAN></P>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>AT+CMGL<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 270pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=360>
+                  <P class=MsoNormal><SPAN lang=EN-US>List SMS message from 
+                  preferred store</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">（列出</SPAN><SPAN 
+                  lang=EN-US>SIM</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">卡中的短消息</SPAN><SPAN 
+                  lang=EN-US>PDU/text:<SPAN 
+                  style="mso-spacerun: yes">&nbsp;&nbsp; </SPAN>0/</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">“</SPAN><SPAN 
+                  lang=EN-US>REC UNREAD</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">”</SPAN><SPAN 
+                  lang=EN-US>-</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">未读，</SPAN><SPAN 
+                  lang=EN-US>1/</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">“</SPAN><SPAN 
+                  lang=EN-US>REC READ</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">”</SPAN><SPAN 
+                  lang=EN-US>-</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">已读，</SPAN><SPAN 
+                  lang=EN-US>2/</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">“</SPAN><SPAN 
+                  lang=EN-US>STO UNSENT</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">”</SPAN><SPAN 
+                  lang=EN-US>-</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">待发，</SPAN><SPAN 
+                  lang=EN-US>3/</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">“</SPAN><SPAN 
+                  lang=EN-US>STO SENT</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">”</SPAN><SPAN 
+                  lang=EN-US>-</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">已发，</SPAN><SPAN 
+                  lang=EN-US>4/</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">“</SPAN><SPAN 
+                  lang=EN-US>ALL</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">”</SPAN><SPAN 
+                  lang=EN-US>-</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">全部的）</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 74.4pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=99>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>AT+CMGR<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 270pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=360>
+                  <P class=MsoNormal><SPAN lang=EN-US>Read SMS 
+                  message</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">（读短消息）</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 74.4pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=99>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>AT+CMGS<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 270pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=360>
+                  <P class=MsoNormal><SPAN lang=EN-US>Send SMS 
+                  message</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">（发送短消息）</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 74.4pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=99>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>AT+CMGW<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 270pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=360>
+                  <P class=MsoNormal><SPAN lang=EN-US>Write SMS message to 
+                  memory</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">（向</SPAN><SPAN 
+                  lang=EN-US>SIM</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">内存中写入待发的短消息）</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 74.4pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=99>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>AT+CMSS<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 270pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=360>
+                  <P class=MsoNormal><SPAN lang=EN-US>Send SMS message from 
+                  storage</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">（从</SPAN><SPAN 
+                  lang=EN-US>SIN|M</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">内存中发送短消息）</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 74.4pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=99>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>AT+CNMI<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 270pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=360>
+                  <P class=MsoNormal><SPAN lang=EN-US>New SMS message 
+                  indications</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">（显示新收到的短消息）</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 74.4pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=99>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>AT+CPMS<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 270pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=360>
+                  <P class=MsoNormal><SPAN lang=EN-US>Preferred SMS message 
+                  storage</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">（选择短消息内存）</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 74.4pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=99>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>AT+CSCA<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 270pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=360>
+                  <P class=MsoNormal><SPAN lang=EN-US>SMS service center 
+                  address</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">（短消息中心地址）</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 74.4pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=99>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>AT+CSCB<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 270pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=360>
+                  <P class=MsoNormal><SPAN lang=EN-US>Select cell broadcast 
+                  messages</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">（选择蜂窝广播消息）</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 74.4pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=99>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>AT+CSMP<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 270pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=360>
+                  <P class=MsoNormal><SPAN lang=EN-US>Set SMS text mode 
+                  parameters</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">（设置短消息文本模式参数）</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 74.4pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=99>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>AT+CSMS<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 270pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=360>
+                  <P class=MsoNormal><SPAN lang=EN-US>Select Message 
+                  Service</SPAN><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">（选择短消息服务）</SPAN><SPAN 
+                  lang=EN-US><O:P> 
+        </O:P></SPAN></P></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>对短消息的控制共有三种模式：</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>
+            <UL>
+              <LI>&nbsp;Block Mode </LI></UL></TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>
+            <UL>
+              <LI>&nbsp;基于AT命令的PDU Mode </LI></UL></TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>
+            <UL>
+              <LI>&nbsp;基于AT命令的Text Mode </LI></UL></TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>使用Block模式需要手机生产厂家提供驱动支持，目前，PDU Mode 已取代 Block Mode, 
+            Text Mode比较简单，本文重点介绍模式PDU Mode，以西门子公司的产品TC35T为例。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>2．计算机与TC35T的通信</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>（1）RS232串口连接</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+            class=a14>由于TC35T自带RS232串口线，故只需将其连接到计算机串口即可。打开超级终端，选择相应的串口，将端口参数设置为：速率—4800、奇偶校验位—无、数据位—8、停止位—1、流量控制—硬件。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>（2）连接测试</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+            class=a14>输入“AT”然后回车，屏幕上返回“OK”表明计算机与TC35T已连接成功，TC35T能够正常工作。这时就可以测试各类AT命令。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+            class=a14>当测试命令“AT+CMGS=?&lt;CR&gt;”时，如果返回“OK”标明TC35T支持该指令。该指令的完整语法如下：</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>
+            <UL>
+              <LI>&nbsp;如果此时TC35T处于PDU Mode（即“AT+CMGF?&lt;CR&gt;”返回“0”） 
+          </LI></UL></TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>AT+CMGS=&lt;length&gt;&lt;CR&gt;PDU is 
+          given&lt;^Z/ESC&gt;</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>如果短消息发送成功，则返回“OK”，并显示信息号：</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>+CMGS: &lt;mr&gt;[,&lt;ackpdu&gt;]</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>如果短消息发送失败，则返回如下信息号：</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>+CMS ERROR: &lt;err&gt;</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>
+            <UL>
+              <LI>&nbsp;如果此时TC35T处于Text Mode（即“AT+CMGF?&lt;CR&gt;”返回“1”） 
+          </LI></UL></TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>AT+CMGS=&lt;da&gt;[,toda]&lt;CR&gt;text is 
+            entered&lt;^Z/ESC&gt;</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>如果短消息发送成功，则返回“OK”，并显示信息号：</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>+CMGS: &lt;mr&gt;[,&lt;scts&gt;]</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>如果短消息发送失败，则返回如下信息号：</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>+CMS ERROR: &lt;err&gt;</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+            class=a14>另外，由于使用的是TC35T，当有新的短消息到来时，需要TC35T产生提示，使用指令“AT+CNMI”。该指令的完整语法如下：</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+            class=a14>AT+CNMI=[&lt;mode&gt;][,&lt;mt&gt;][,&lt;bm&gt;][,&lt;ds&gt;][,&lt;bfr&gt;]</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>如果有新的短消息来到，则TC35T将自动返回下列提示：</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>+CMTI: “SM”, &lt;index&gt;</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+        class=a14>此时读出&lt;index&gt;，然后用“AT+CMGR”指令即可读出短消息内容。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>3．PDU数据格式分析：</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>例如，我们要将字符“Hi”字符发送到目的地“13677328099”</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>PDU字符串为：</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>08 91 683108701305F0 11 00 0D 91 3176378290F9 00 00 00 
+            02 C834</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+      class=a14>⑴08—短信息中心地址长度。指（91）+（683108701305F0）的长度。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+            class=a14>⑵91—短信息中心号码类型。91是TON/NPI遵守International/E.164标准，指在号码前需加‘+’号；此外还有其它数值，但91最常用。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>91—10010001</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>
+            <DIV align=center>
+            <TABLE 
+            style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none; BORDER-COLLAPSE: collapse; mso-table-layout-alt: fixed; mso-border-alt: solid windowtext .5pt; mso-padding-alt: 0cm 5.4pt 0cm 5.4pt" 
+            cellSpacing=0 cellPadding=0 border=1>
+              <TBODY>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 46.6pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid" 
+                vAlign=top width=62>
+                  <P class=MsoNormal><SPAN lang=EN-US>BIT No.<O:P> 
+                  </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>7<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>6<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>5<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>4<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>3<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>2<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 25.05pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=33>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>1<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 26.55pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=35>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>0<O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 46.6pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=62>
+                  <P class=MsoNormal><SPAN lang=EN-US>Name<O:P> 
+                </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>1<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 81pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=108 colSpan=3>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">数值类型</SPAN><SPAN 
+                  lang=EN-US><O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 105.6pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=141 colSpan=4>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN 
+                  style="FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">号码鉴别</SPAN><SPAN 
+                  lang=EN-US><O:P> 
+        </O:P></SPAN></P></TD></TR></TBODY></TABLE></DIV></TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>数值类型（Type of 
+        Number）：000—未知，001—国际，010—国内,111—留作扩展；</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>号码鉴别（Numbering plan 
+            identification）:0000—未知，0001—ISDN/电话号码(E.164/E.163)，1111—留作扩展；</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+            class=a14>⑶683108701305F0—短信息中心号码。由于位置上略有处理，实际号码应为：8613800731500（字母F是指长度减1）。这需要根据不同的地域作相应的修改。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>⑴、⑵、⑶通称短消息中心地址（Address of the 
+      SMSC）。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>⑷11—文件头字节。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>11&amp;h=00010001&amp;b</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>
+            <TABLE 
+            style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; MARGIN-LEFT: 14.4pt; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none; BORDER-COLLAPSE: collapse; mso-table-layout-alt: fixed; mso-border-alt: solid windowtext .5pt; mso-padding-alt: 0cm 5.4pt 0cm 5.4pt" 
+            cellSpacing=0 cellPadding=0 width=541 border=1>
+              <TBODY>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid" 
+                vAlign=top width=52>
+                  <P class=MsoNormal><SPAN lang=EN-US>BIT No.<O:P> 
+                  </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=43>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>7<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=62>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>6<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=52>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>5<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=43>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>4<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=32>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>3<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=48>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>2<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=37>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>1<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>0<O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=52>
+                  <P class=MsoNormal><SPAN lang=EN-US>Name<O:P> 
+                </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=43>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>TP-RP<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=62>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>TP-UDHI<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=52>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>TP-SPR<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=90 colSpan=2>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>TP-VFP<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=48>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>TP-RD<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=88 colSpan=2>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>TP-MTI<O:P> 
+              </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=52>
+                  <P class=MsoNormal><SPAN lang=EN-US>Value<O:P> 
+                  </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=43>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>0<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=62>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>0<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=52>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>0<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=43>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>1<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=32>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>0<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=48>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>0<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=37>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>0<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>1<O:P> 
+              </O:P></SPAN></P></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>应答路径—TP-RP（TP-Reply-Path）：0—不设置; 
+      1—设置</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+            class=a14>用户数据头标识—TP-UDHL（TP-User-Data-Header-Indicator）：0—不含任何头信息; 
+            1—含头信息</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>状态报告要求—TP-SPR（TP-Status-Report-Request）：0—需要报告; 
+          1—不需要报告</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>有效期格式—TP-VPF（TP-Validity-Period-Format）：00—不提供（Not 
+            present）; 10—整型（标准）；01—预留; 11—提供8位字节的一半（Semi-Octet 
+        Represented）</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>拒绝复制—TP-RD（TP-Reject-Duplicates）：0—接受复制; 
+        1—拒绝复制</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+            class=a14>信息类型提示—TP-MTI（TP-Message-Type-Indicator）：00—读出（Deliver）; 
+            01—提交（Submit）</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>⑸00—信息类型（TP-Message-Reference）</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>⑹0B—被叫号码长度。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>⑺91—被叫号码类型（同⑵）。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+        class=a14>⑻3176378290F9—被叫号码，经过了位移处理，实际号码为“13677328099”。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+      class=a14>⑹、⑺、⑻通称目的地址（TP-Destination-Address）。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+      class=a14>⑼00—协议标识TP-PID（TP-Protocol-Identifier）</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>
+            <DIV align=center>
+            <TABLE 
+            style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none; BORDER-COLLAPSE: collapse; mso-table-layout-alt: fixed; mso-border-alt: solid windowtext .5pt; mso-padding-alt: 0cm 5.4pt 0cm 5.4pt" 
+            cellSpacing=0 cellPadding=0 border=1>
+              <TBODY>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 52.15pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid" 
+                vAlign=top width=70>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>BIT No.<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 28.85pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=38>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>7<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>6<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>5<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>4<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>3<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>2<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>1<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>0<O:P> 
+              </O:P></SPAN></P></TD></TR></TBODY></TABLE></DIV></TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>Bit No.7与Bit No.6： 00—如下面定义的分配Bit No.0—Bit 
+            No.5；01—参见GSM03.40协议标识完全定义；10—预留；11—为服务中心（SC）特殊用途分配Bit No.0—Bit 
+          No.5。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>一般将这两位置为00。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>Bit 
+      No.5：0—不使用远程网络，只是短消息设备之间的协议；1—使用远程网络。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>Bit No.0—Bits No.4：00000—隐含；00001—电传；00010—group 3 
+            telefax；00100—语音；00101—欧洲无线信息系统（ERMES）；00110—国内系统；10001—任何基于X.400的公用信息处理系统；10010—Email。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+      class=a14>⑽00—数据编码方案TP-DCS（TP-Data-Coding-Scheme）</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>
+            <DIV align=center>
+            <TABLE 
+            style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none; BORDER-COLLAPSE: collapse; mso-table-layout-alt: fixed; mso-border-alt: solid windowtext .5pt; mso-padding-alt: 0cm 5.4pt 0cm 5.4pt" 
+            cellSpacing=0 cellPadding=0 border=1>
+              <TBODY>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 52.15pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid" 
+                vAlign=top width=70>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>BIT No.<O:P> 
+</O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 28.85pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=38>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>7<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>6<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>5<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>4<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>3<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>2<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>1<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 27pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=36>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US>0<O:P> 
+              </O:P></SPAN></P></TD></TR></TBODY></TABLE></DIV></TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>Bit No.7与Bit No.6 :一般设置为00；Bit 
+            No.5：0—文本未压缩，1—文本用GSM标准压缩算法压缩；Bit No.4：0—表示Bit No.1、Bit 
+            No.0为保留位，不含信息类型信息，1—表示Bit No.1、Bit No.0含有信息类型信息；Bit No.3与Bit 
+            No.2：00—默认的字母表，01—8bit，10—USC2（16bit），11—预留；Bit No.1与Bit 
+            No.0：00—Class 0，01—Class 1，10—Class 2（SIM卡特定信息），11—Class 
+        3。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>⑾00—有效期TP-VP（TP-Valid-Period） </TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>
+            <DIV align=center>
+            <TABLE 
+            style="BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none; BORDER-COLLAPSE: collapse; mso-table-layout-alt: fixed; mso-border-alt: solid windowtext .5pt; mso-padding-alt: 0cm 5.4pt 0cm 5.4pt" 
+            cellSpacing=0 cellPadding=0 border=1>
+              <TBODY>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 79.15pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid" 
+                vAlign=top width=106>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US style="COLOR: black">VP 
+                  value(&amp;h)<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: windowtext 0.5pt solid; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 135pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt" 
+                vAlign=top width=180>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN 
+                  style="COLOR: black; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">相应的有效期</SPAN><SPAN 
+                  lang=EN-US style="COLOR: black"><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 79.15pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=106>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US style="COLOR: black">00 to 
+                  8F<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 135pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=180>
+                  <P class=MsoNormal><SPAN lang=EN-US 
+                  style="COLOR: black">(VP+1)*5 </SPAN><SPAN 
+                  style="COLOR: black; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">分钟</SPAN><SPAN 
+                  lang=EN-US style="COLOR: black"><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 79.15pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=106>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US style="COLOR: black">90 to 
+                  A7<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 135pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=180>
+                  <P class=MsoNormal><SPAN lang=EN-US 
+                  style="COLOR: black">12</SPAN><SPAN 
+                  style="COLOR: black; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">小时</SPAN><SPAN 
+                  lang=EN-US style="COLOR: black">+(VP-143)*30</SPAN><SPAN 
+                  style="COLOR: black; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">分钟</SPAN><SPAN 
+                  lang=EN-US style="COLOR: black"><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 79.15pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=106>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US style="COLOR: black">A8 to 
+                  C4<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 135pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=180>
+                  <P class=MsoNormal><SPAN lang=EN-US 
+                  style="COLOR: black">(VP-166)*1</SPAN><SPAN 
+                  style="COLOR: black; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">天</SPAN><SPAN 
+                  lang=EN-US style="COLOR: black"><O:P> </O:P></SPAN></P></TD></TR>
+              <TR>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: windowtext 0.5pt solid; WIDTH: 79.15pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=106>
+                  <P class=MsoNormal style="TEXT-ALIGN: center" 
+                  align=center><SPAN lang=EN-US style="COLOR: black">C5 to 
+                  FF<O:P> </O:P></SPAN></P></TD>
+                <TD 
+                style="BORDER-RIGHT: windowtext 0.5pt solid; PADDING-RIGHT: 5.4pt; BORDER-TOP: medium none; PADDING-LEFT: 5.4pt; PADDING-BOTTOM: 0cm; BORDER-LEFT: medium none; WIDTH: 135pt; PADDING-TOP: 0cm; BORDER-BOTTOM: windowtext 0.5pt solid; mso-border-left-alt: solid windowtext .5pt; mso-border-top-alt: solid windowtext .5pt" 
+                vAlign=top width=180>
+                  <P class=MsoNormal><SPAN lang=EN-US 
+                  style="COLOR: black">(VP-192)*1 </SPAN><SPAN 
+                  style="COLOR: black; FONT-FAMILY: 宋体; mso-ascii-font-family: 'Times New Roman'; mso-hansi-font-family: 'Times New Roman'">周</SPAN><SPAN 
+                  lang=EN-US style="COLOR: black"><O:P> 
+              </O:P></SPAN></P></TD></TR></TBODY></TABLE></DIV></TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+      class=a14>⑿02—用户数据长度TP-UDL（TP-User-Data-Length）</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>⒀C834—用户数据TP-UD（TP-User-Data）“Hi”</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>4．短消息编码</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+            class=a14>设需要发送的短消息内容为“Hi”，使用的GSM字符集为7位编码。首先将字符转换为7位的二进制，然后，将后面字符的位调用到前面，补齐前面的差别。例如：H翻译成1001000，i翻译成1101001，显然H的二进制编码不足八位，那么就将i的最后一位补足到H的前面。那么就成了11001000（C8），i剩下六位110100，前面再补两个0，变成00110100（34），于是“Hi”就变成了两个八进制数 
+            C8 34。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>5．短消息的发送与接收案例</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>鉴于TC35（T）支持TEXT格式，我们在试验中主要测试该格式。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>（1）设置短消息中心</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>AT+CSCA="+8613800731500"(短消息中心)； </TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>（2）设置短消息发送格式</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>AT+CMGF=1 (1-TEXT; 0-PDU)； </TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>（3）发送短消息(短消息内容为“test”)</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>AT+CMGS="13508485560"(目的地址) 
+      &lt;cr&gt;</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>&gt; test ^z ； </TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>（4）设置短消息到达自动提示: 设置短消息到达提示当短消息被接收，将获取指令： 
+            +CMTI:"SM",INDEX(信息存储位置)</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>AT+CNMI=1,1,0,0,1()；</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>（5）获取短消息内容(Once more)，假设INDEX＝8。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>AT+CMGR=8</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>返回信息如下：</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>+CMGR: "REC 
+            UNREAD","+8613508485560",,"01/07/16,15:37:28+32",Once 
+        more</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>6．注意事项</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD 
+            class=a14>（1）短消息中心一般不会改动，如果短消息中心号码改动，在使用“AT+CSCA”语句时，记住TC35要重新启动，否则TC35不能正常工作（TC35T不存在此问题）。</TD></TR></TBODY></TABLE>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=a14>（2）某些SIM卡带有密码，启动时需要输入密码。</TD></TR></TBODY></TABLE><BR>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD align=right>（网页编辑：<A 
+          href="mailto:wang_fang@ccw.com.cn">风之翼</A>）</TD></TR></TBODY></TABLE></TD>
+    <TD class=a1 width=6 bgColor=#f46240>&nbsp;</TD>
+    <TD vAlign=top align=right width=110>
+      <TABLE width="98%">
+        <TBODY>
+        <TR>
+          <TD>频道全文检索</TD></TR>
+        <TR>
+          <TD><INPUT onfocus="this.value=''" size=15 value=频道内检索 
+            name=textfile> <INPUT type=image 
+            src="计算机世界网-利用手机模块实现短消息.files/jian.gif" align=absMiddle border=0 
+            name=I1> </TD></TR></TBODY></TABLE></FORM>
+      <FORM name=srch onsubmit="JavaScript:return chk()" 
+      action=/search/which.asp method=post>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD><SELECT size=1 name=func> <OPTION value=2 
+              selected>主题检索</OPTION> <OPTION value=1>周报全文检索</OPTION> <OPTION 
+              value=3>模糊词检索</OPTION></SELECT></TD></TR>
+        <TR>
+          <TD><INPUT onfocus="this.value=''" size=15 value=输入待检索的词 
+            name=SrchStr> <INPUT type=image 
+            src="计算机世界网-利用手机模块实现短消息.files/jian.gif" align=absMiddle border=0 
+            name=I1> </TD></TR></TBODY></TABLE>
+      <SCRIPT language=JavaScript>
+function chk()
+{if (!document.srch.SrchStr.value){
+alert("请输入需检索的词！");	
+document.srch.SrchStr.focus();
+return false;
+}
+else{if (document.srch.SrchStr.value.length>30){
+alert("检索的词请不要超过30个字符！");
+document.srch.SrchStr.focus();
+return false;
+}
+}
+}
+</SCRIPT>
+      </FORM>
+      <TABLE width="100%">
+        <TBODY>
+        <TR>
+          <TD class=f colSpan=2><B>相关文章</B></TD></TR>
+        <TR>
+          <TD vAlign=top><IMG src="计算机世界网-利用手机模块实现短消息.files/jiao.gif"></TD>
+          <TD><A 
+            href="http://www.ccw.com.cn/htm/news1/commu/01_12_20_8.asp">移动与联通用户有望互发短信</A></TD></TR>
+        <TR>
+          <TD vAlign=top><IMG src="计算机世界网-利用手机模块实现短消息.files/jiao.gif"></TD>
+          <TD><A 
+            href="http://www.ccw.com.cn/htm/net/viewp/01_11_13_2.asp">短消息为什么这样红？</A></TD></TR>
+        <TR>
+          <TD vAlign=top><IMG src="计算机世界网-利用手机模块实现短消息.files/jiao.gif"></TD>
+          <TD><A 
+            href="http://www.ccw.com.cn/htm/app/road/01_10_29_2.asp">中国邮政业务短消息服务处理系统</A></TD></TR>
+        <TR>
+          <TD vAlign=top><IMG src="计算机世界网-利用手机模块实现短消息.files/jiao.gif"></TD>
+          <TD><A 
+            href="http://www.ccw.com.cn/htm/news1/commu/01_8_6_15.asp">今年手机短信服务市场可达10亿元</A></TD></TR>
+        <TR>
+          <TD vAlign=top><IMG src="计算机世界网-利用手机模块实现短消息.files/jiao.gif"></TD>
+          <TD><A 
+            href="http://www.ccw.com.cn/htm/news1/commu/01_7_18_4.asp">江苏移动和联通年内实现互联互通</A></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TABLE><BR>
+<TABLE width=680 align=center>
+  <TBODY>
+  <TR>
+    <TD align=right>
+      <FORM name=mail onsubmit="JavaScript: return chkField(this)" 
+      action=/pub/subMail.asp method=post><INPUT type=hidden value=31783 
+      name=rec> 您的姓名：<INPUT size=10 name=myName>&nbsp; 您朋友的E-mail：<INPUT size=10 
+      name=friendMail>&nbsp; <INPUT type=submit value=推荐给好友> </FORM></TD></TR>
+  <TR>
+    <TD align=right><B>[<A href="javascript:window.close()">关闭窗口</A>]</B> 
+  </TD></TR></TBODY></TABLE>
+<SCRIPT language=javascript>
+function chkField(fmObj)
+{if (!fmObj.friendMail.value){
+	alert("请输入您朋友的E-mail！");
+	fmObj.friendMail.focus();
+	return false;
+}
+	return true;
+}
+</SCRIPT>
+
+<TABLE width=680 align=center>
+  <TBODY>
+  <TR>
+    <TD>
+      <HR width=660 color=#f46240 SIZE=1>
+    </TD></TR></TBODY></TABLE><BR>
+<P align=center>Copyright(C) ccw.com.cn,All rights reserved</P>
+<P align=center><B>中国计算机世界出版服务公司版权所有</B></P></CENTER></BODY></HTML>

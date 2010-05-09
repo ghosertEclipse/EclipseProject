@@ -1,0 +1,84 @@
+1. add Mobile.isConnected method for OpenMobilePortAction and CloseMobilePortAction
+2. There will be no response from port when I send a new message to target Telephone.
+   Long time waiting. click on "Send!" button on quick send view to repeat the problem.
+3. depart MobileException with MobileException and PortException
+4. change MobileFactory to singleton ( DONE )
+5. I modify the Java Communication API comm.jar, because it doesn't support to renew 
+   available COM port list. Scenario case is: Application start to monitor mobile port,
+   but nothing is found, then user open IRDA( simulate COM ) on mobile and connect with 
+   PC, if the application re-monitor the port, nothing is found yet, only the user can 
+   do is to close and re-open application to renew COM port list. so I modify the  
+   CommPortIdentifier.getPortIdentifiers() method in comm.jar to reload COM port list
+   when invoking this method every time.
+   This is not a good way, I don't know whether it will affect other part of the code.
+   The best way is to open the port with IRDA way directly, not COM simulation.
+6. NewSMSDialog class add split SMS function, this function can be used to distinguish
+   split SMS with defferent color. ( DONE )
+7. Modify SMSSearchView and SMSSendView with reasonable Layout and LayoutData to adjust
+   showing effective. ( DONE )
+8. Add reply and forward sms action ( DONE )
+9. waitformobileprocessEditor should be Animator with FormText class. ( similar to SMSDetialsView ) ( DONE! )
+10. delete action isenable can be changed by EditSMSActionGroup, how to resolve this problem. ( DONE! )
+11. telephone number is not mandatory field when the user press the save button in NEWSMSDIALOG. ( DONE! )
+12. close the mobile and simcard editorpart when close mobile port. ( DONE! )
+13. Get rid of the java file: ValidTimeConstant.java
+    And modify the validtime_en validtime_zh_CN properties with number as key. ( DONE! )
+14. Send message will be popup error window sometimes.
+15. SMSEditor column order icon add, and column name is not the same for inbox or outbox
+16. Show the content in editorpart after save the messages. ( DONE! )
+17. Bluetooth connection is not stable, afer it is stable, modify the description in Prefences Dialog to inform that
+    JMobile supports Bluetooth connection.
+18. Export & GenerateReport short message(s), Actions have been created, how to apply them. ( DONE! )
+19. Add location properties in Message class. And add location condition clause in the compare method in Message Class. ( DONE! )
+20. Global.setSMSCollectionLocation( collection, deviceParam ); test it. ( DONE! )
+21. Refresh function test.( DONE! )
+22. Whether to add sms Location column in SMSEditor? ( NO, DONE! )
+23. 9x\2000 interface of Actions is not good, fix it.
+24. replace the function of Global.getLocale; Global.getWindow; Global.getWindowConfigurer;
+Solution: // IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+          // ( (WorkbenchWindow) window ).getCoolBarManager();
+25. Change MobileConfig class to MobileConfig.getValue( MobileConfigConstant.PBNUMBER_MAXLEN_ME ); ( DONE! )
+26. The clone problem in SavePBAction ExportPBAction similar to SMS, test these two Action totally.  ( DONE! )
+27. Change the interface which is decided by mobile type. Some mobile do not support Mobile phonebook, just support
+    SIM CARD phonebook.
+28. SMS & PB in draftbox can also be export to mobile or simcard similar to localmachine  ( DONE! )
+29. replace the telephone number with name in SMSEditor if the corresponding phonebook exist. ( DONE! )
+30. add Phonebook list for NewSMSDialog. ( DONE! )
+31. add New.. to Coolbar ( DONE! )
+32. add new message arrival listener
+33. CloseMobilePortAction close editors when invoking this method. ( DONE! )
+34. When generate the report for SMS, the phone number in SMS, should be translated into phone name.
+35. For ericsson mobile, when the same phonebook name exists in mobile memory ( Not simcard memory ) is saved to
+    mobile memory once again. the older phonebook item will be replaced by the new one. This is not a bug, but
+    should inform the customer to avoid saving phonebook item with the existing phonebook name in mobile memory.
+36. eclipse.exe -nl zh_CN with these parameter to translate the plugin.xml text.
+37. add Help menu, replace File menu with Mobile menu, and its sub menu is connect & disconnect, or maybe exit.  ( DONE! )
+38. Import action has been created, how to apply it
+39. check all the PB code in *.java file ( DONE! )
+40. Hotkey & Accelerator key is not correct in actions.
+41. Users can config the MobileConfig value in Preferences dialog by themselves. ( Next Version )
+42. GeneratePBReport, GenerateSMSReport should be refactory to support VO -> target file with XML technology. ( Next Version )
+43. The application can support submit the SMS & PB to the Server, and show them in its inner Internet Explorer Editor. ( Next Version )
+44. "cmd.exe /c start mailto:ghoster_e@yahoo.com?subject=jMobile" command string should be multi-platform supported. In ContactAuthorAction.java & AboutDialog.java ( Next Version )
+45. Add toolbar items to one perspective: in ApplicationWorkbenchWindowAdvisor.java
+    You create an ActionSet and set it's visibility to false. In your PerspectiveFactory you just do an: layout.addActionSet(<YourActionSetID>);
+    And now I have to add "-perspective com.loadtrend.app.mobile.perspectives.ShortMessagePerspective" parameter when start the application, otherwise the toolbar will not be add to the specified perspective. ( Next Version )
+46. //                    if ( ( message.getStatus() == Message.READ_STATUS ) || ( message.getStatus() == Message.UNREAD_STATUS ) )
+//                    {
+//                        showResendSMSDialogAction.setEnabled( false );
+//                        if ( number > 1 )
+//                        {
+//                            showForwardSMSDialogAction.setEnabled( false );
+//                        }
+//                    }
+//                    if ( ( message.getStatus() == Message.SENT_STATUS ) || ( message.getStatus() == Message.UNSENT_STATUS ) )
+//                    {
+//                        showReplySMSDialogAction.setEnabled( false );
+//                        if ( number > 1 )
+//                        {
+//                            showForwardSMSDialogAction.setEnabled( false );
+//                            showResendSMSDialogAction.setEnabled( false );
+//                        }
+//                    }
+Add this business logic to the ActionSet & popupMenu settings in plugin.xml with object class property.
+47. How to reduce the size of jre for RCP program, refer to the rich.client.platform.designing.coding.and.packaging.java.applications.oct.2005.chm

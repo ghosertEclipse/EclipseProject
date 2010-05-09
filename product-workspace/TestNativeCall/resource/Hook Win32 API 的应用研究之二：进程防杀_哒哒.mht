@@ -1,0 +1,1862 @@
+From: <ÓÉ Windows Internet Explorer 7 ±£´æ>
+Subject: =?gb2312?B?SG9vayBXaW4zMiBBUEkgtcTTptPD0dC+v9autv6jur34s8y3wMmxX9/V39U=?=
+Date: Sat, 16 Dec 2006 15:39:36 +0800
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----=_NextPart_000_0000_01C72128.63CFA6F0"
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2962
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0000_01C72128.63CFA6F0
+Content-Type: text/html;
+	charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://hi.baidu.com/780223/blog/item/a6c724faa643ce1ea9d311de.html
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!--STATUS OK--><HTML><HEAD><TITLE>Hook Win32 API =
+=B5=C4=D3=A6=D3=C3=D1=D0=BE=BF=D6=AE=B6=FE=A3=BA=BD=F8=B3=CC=B7=C0=C9=B1_=
+=DF=D5=DF=D5</TITLE>
+<META http-equiv=3Dcontent-type content=3D"text/html; charset=3Dgb2312">
+<SCRIPT language=3DJavaScript =
+src=3D"http://hi.baidu.com/js/g_spjs.js"></SCRIPT>
+
+<SCRIPT language=3Djavascript>
+<!--
+var allkey=3D"";
+var i=3D0;
+var flag=3D0;
+function setpv(allnum)
+{
+	var num =3D allnum.split('_');
+	document.getElementById("result").innerHTML=3Dnum[0];
+}
+		=20
+function checkMail(s)=20
+{=20
+  	var pattern=3D/\w+@\w+\.[a-z]+/;=20
+  	if(pattern.test(s))=20
+    {=20
+       return true;=20
+    }=20
+  	else=20
+   {=20
+      return false;=20
+   }=20
+}=20
+
+
+function checkeandu(eanduid)
+{	var objeandu=3Ddocument.getElementById(eanduid);
+	if (objeandu) {
+		var eanduvalue=3Dobjeandu.value;
+		var len=3Dbytes(eanduid);
+		if(len>128)
+		{
+			=
+alert("=C4=FA=CA=E4=C8=EB=B5=C4=CD=F8=D6=B7=BB=F2=D3=CA=CF=E4=CC=AB=B3=A4=
+=A3=AC=C7=EB=B1=A3=B3=D6=D4=DA128=D7=D6=BD=DA=D2=D4=C4=DA.");
+			return false;
+		}
+		else
+		{=20
+			 return true;
+		}
+	}
+	=09
+}
+function cmtdel(str)
+{
+	=
+if(confirm("=C4=FA=C8=B7=B6=A8=D2=AA=B3=B9=B5=D7=C9=BE=B3=FD=B8=C3=C6=C0=C2=
+=DB=C2=F0=A3=BF"))
+	{
+		eval("document."+str).submit();
+	}
+	return false;
+}
+function checkname(strid)
+{
+	var ele=3Ddocument.getElementById(strid);
+	var len=3Dbytes(ele.value);
+	if(len>49)
+	{
+		=
+alert("=C4=FA=CA=E4=C8=EB=B5=C4=D0=D5=C3=FB=CC=AB=B3=A4=A3=AC=C7=EB=B1=A3=
+=B3=D6=D4=DA49=D7=D6=BD=DA=D2=D4=C4=DA.");
+		return false;
+	}
+	else=20
+	{	=09
+		if(len=3D=3D0)
+		{
+			document.getElementById(strid).value=3D"=C4=E4=C3=FB=CD=F8=D3=D1";
+		}
+		 return true;
+	}=09
+=09
+}
+
+function checktext(textid)
+{
+		document.getElementById(textid).value=3Dtrimlr(textid);
+		var str=3Dtrimrn(textid);
+		len=3Dstr.length;
+		if(len=3D=3D0 || ((/^[\s,=A1=A1]+$/gi).test(str)) )
+		{
+			=
+alert("=C4=FA=B1=D8=D0=EB=CA=E4=C8=EB=C6=C0=C2=DB=C4=DA=C8=DD=A3=AC=C7=EB=
+=BC=EC=B2=E9=A1=A3");
+			return false;
+		}
+		else=20
+		{
+				if(len>1000)
+				{
+					=
+alert("=C4=FA=CA=E4=C8=EB=B5=C4=C6=C0=C2=DB=C4=DA=C8=DD=CC=AB=B3=A4=A3=AC=
+=C7=EB=B1=A3=B3=D6=D4=DA500=D7=D6=D2=D4=C4=DA=A1=A3");
+					return false;
+				}
+			return true;
+		}=09
+}
+
+function cmtfull()
+{
+	var cnum=3D0;
+	if(cnum>=3D50000)
+	{
+		=
+alert("=B5=A5=C6=AA=C8=D5=D6=BE=C6=C0=C2=DB=CA=FD=D7=EE=B6=E0=CE=AA50000=CC=
+=F5.");
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+function checkcmtform()
+{
+	=
+if(checkname("spBlogCmtor")&&checkeandu("spBlogCmtURL")&&checktext("spBlo=
+gCmtText")&&cmtfull())
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function formatonlinpic()
+{
+	formatverkey();
+var picobj=3Ddocument.getElementsByName("onlinepic");
+var picnum=3Dpicobj.length;
+=09
+	for(var i=3D0;i<picnum;i++)
+	{
+		if(picobj[i].width>200)
+		{
+			picobj[i].width=3D200;
+		}
+		if(picobj[i].height>200)
+		{
+			picobj[i].height=3D200;
+		}
+	}
+
+}
+
+function formatverkey()
+{
+	if(document.getElementById("vercode"))
+	{
+
+			if(document.getElementById("spBlogCmtText").value=3D=3D"")
+	{
+		document.getElementById("vercode").style.display=3D"none";
+	}
+	}
+
+}
+function showverkey()
+{=09
+	if(document.getElementById("vercode"))
+	{
+	document.getElementById("vercode").style.display=3D"";
+	}
+}
+//-->
+</SCRIPT>
+
+<META content=3D"MSHTML 6.00.5730.11" name=3DGENERATOR></HEAD>
+<BODY onload=3Dformatonlinpic()>
+<CENTER>
+<SCRIPT language=3DJavaScript>
+<!--
+if (top.location !=3D self.location)=20
+{
+	top.location=3Dself.location;
+}
+//-->
+</SCRIPT>
+<LINK =
+href=3D"http://hi.baidu.com/780223/css/item/6c061dd163d9f2d3572c8496.css"=
+=20
+type=3Dtext/css rel=3Dstylesheet><LINK =
+href=3D"http://hi.baidu.com/space.css"=20
+type=3Dtext/css rel=3Dstylesheet>
+<STYLE type=3Dtext/css>#usrbar {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 0px; FONT-SIZE: 12px; BACKGROUND: =
+#ffffff; FILTER: alpha(opacity=3D65); PADDING-BOTTOM: 3px; WIDTH: 100%; =
+COLOR: #000000; LINE-HEIGHT: 19px; PADDING-TOP: 4px; FONT-FAMILY: Arial; =
+LETTER-SPACING: normal; HEIGHT: 19px; TEXT-ALIGN: right; -moz-opacity: =
+0.5
+}
+#usrbar A {
+	COLOR: #0000cc; TEXT-DECORATION: underline
+}
+#usrbar A:link {
+	COLOR: #0000cc; TEXT-DECORATION: underline
+}
+#usrbar A:visited {
+	COLOR: #0000cc; TEXT-DECORATION: underline
+}
+#ft {
+	CLEAR: both; FONT-SIZE: 12px; COLOR: #666666; LINE-HEIGHT: 20px; =
+FONT-FAMILY: Arial; HEIGHT: 20px; TEXT-ALIGN: center
+}
+#ft A {
+	COLOR: #7777cc; TEXT-DECORATION: underline
+}
+#ft A:link {
+	COLOR: #7777cc; TEXT-DECORATION: underline
+}
+#ft A:visited {
+	COLOR: #7777cc; TEXT-DECORATION: underline
+}
+#usrbar {
+	LETTER-SPACING: normal
+}
+#usrbar A {
+	LETTER-SPACING: normal
+}
+#usrbar A:link {
+	LETTER-SPACING: normal
+}
+#usrbar A:visited {
+	LETTER-SPACING: normal
+}
+#ft {
+	LETTER-SPACING: normal
+}
+#ft A {
+	LETTER-SPACING: normal
+}
+#ft A:link {
+	LETTER-SPACING: normal
+}
+#ft A:visited {
+	LETTER-SPACING: normal
+}
+</STYLE>
+
+<DIV id=3Dusrbar><NOBR>
+<SCRIPT> var myref =3D =
+encodeURI("http://hi.baidu.com/780223/blog/item/a6c724faa643ce1ea9d311de%=
+2Ehtml");</SCRIPT>
+<A href=3D"http://www.baidu.com/" =
+target=3D_blank>=B0=D9=B6=C8=CA=D7=D2=B3</A> | <A=20
+href=3D"http://hi.baidu.com/" =
+target=3D_blank>=B0=D9=B6=C8=BF=D5=BC=E4</A>
+<SCRIPT language=3DJavaScript>
+	document.write(" | <a =
+href=3D'http://passport.baidu.com/?login&tpl=3Dsp&tpl_reg=3Dsp&u=3D"+myre=
+f+"'>=B5=C7=C2=BC</a>");
+	document.write(" | <a =
+href=3D'http://passport.baidu.com/?reg&tpl=3Dsp&return_method=3Dget&skip_=
+ok=3D1&u=3Dhttp://hi.baidu.com/sys/reg/' =
+target=3D'_blank'>=D7=A2=B2=E1</a>");
+	</SCRIPT>
+ </NOBR></DIV>
+<DIV id=3Dmain align=3Dleft><!--[if IE]>
+<SCRIPT>
+var objmain =3D document.getElementById("main");
+function updatesize(){ var bodyw =3D window.document.body.offsetWidth; =
+if(bodyw <=3D 790) objmain.style.width=3D"772px"; else if(bodyw >=3D =
+1016) objmain.style.width=3D"996px"; else objmain.style.width=3D"100%"; =
+}
+updatesize(); window.onresize =3D updatesize;
+</SCRIPT>
+<![endif]-->
+<DIV id=3Dheader>
+<DIV class=3Dlc>
+<DIV class=3Drc></DIV></DIV>
+<DIV class=3Dtit><A class=3Dtitlink title=3D"7802223=B5=C4=BF=D5=BC=E4 =
+http://hi.baidu.com/780223"=20
+href=3D"http://hi.baidu.com/780223">=DF=D5=DF=D5</A></DIV>
+<DIV class=3Ddesc>=C2=97=CB=B5..=81F=88=FB=D3=D0=81I=D6=D6=C8=CB. =
+=D2=BB=D6=D6=CA=C7=C2=94=C3=F7=C8=CB.=D2=BB=D6=D6=CA=C7=B0=D7=B3=D5. =
+=C5=BC=B2=BB=CF=EB=B5=B1=B5=DA=B6=FE=D6=D6=96Z.=CB=F9=D2=D4=C5=BA=D2=AA=C7=
+=DA=B7=DC=8CW=CF=B0..</DIV>
+<DIV id=3Dtabline></DIV>
+<DIV id=3Dtab><A href=3D"http://hi.baidu.com/780223">=D6=F7=D2=B3</A><A =
+class=3Don=20
+href=3D"http://hi.baidu.com/780223/blog">=B2=A9=BF=CD</A><A=20
+href=3D"http://hi.baidu.com/780223/album">=CF=E0=B2=E1</A><SPAN>|</SPAN><=
+A=20
+href=3D"http://hi.baidu.com/780223/profile">=B8=F6=C8=CB=B5=B5=B0=B8</A> =
+</DIV></DIV>
+<DIV class=3Dstage>
+<DIV class=3Dstagepad>
+<DIV style=3D"WIDTH: 100%">
+<TABLE class=3Dmodth cellSpacing=3D0 cellPadding=3D0 width=3D"100%" =
+border=3D0>
+  <TBODY>
+  <TR>
+    <TD class=3Dmodtl width=3D7>&nbsp;</TD>
+    <TD class=3Dmodtc noWrap>
+      <DIV class=3Dmodhead><SPAN =
+class=3Dmodtit>=B2=E9=BF=B4=CE=C4=D5=C2</SPAN></DIV></TD>
+    <TD class=3Dmodtc noWrap align=3Dright></TD>
+    <TD class=3Dmodtr width=3D7>&nbsp;</TD></TR></TBODY></TABLE>
+<DIV class=3Dmodbox id=3Dm_blog>
+<DIV class=3Dtit>Hook Win32 API =
+=B5=C4=D3=A6=D3=C3=D1=D0=BE=BF=D6=AE=B6=FE=A3=BA=BD=F8=B3=CC=B7=C0=C9=B1<=
+/DIV>
+<DIV class=3Ddate>2006-12-07 07:49</DIV>
+<TABLE style=3D"TABLE-LAYOUT: fixed">
+  <TBODY>
+  <TR>
+    <TD>
+      <DIV=20
+      =
+class=3Dcnt>=D4=DAWINDOWS=B2=D9=D7=F7=CF=B5=CD=B3=CF=C2=A3=AC=B5=B1=CE=D2=
+=C3=C7=CE=DE=B7=A8=BD=E1=CA=F8=BB=F2=D5=DF=B2=BB=D6=AA=B5=C0=D4=F5=D1=F9=BD=
+=E1=CA=F8=D2=BB=B8=F6=B3=CC=D0=F2=B5=C4=CA=B1=BA=F2=A3=AC=BB=F2=D5=DF=CA=C7=
+=C0=C1=B5=C3=C8=A5=D5=D2=A1=B0=CD=CB=B3=F6=A1=B1=B0=B4=C5=A5=B5=C4=CA=B1=BA=
+=F2=A3=AC=CD=A8=B3=A3=BB=E1=B0=B4=A1=B0CTRL+ALT+DEL=A1=B1=BA=F4=B3=F6=C8=CE=
+=CE=F1=B9=DC=C0=ED=C6=F7=A3=AC=D5=D2=B5=BD=CF=EB=BD=E1=CA=F8=B5=C4=B3=CC=D0=
+=F2=A3=AC=B5=E3=D2=BB=CF=C2=A1=B0=BD=E1=CA=F8=C8=CE=CE=F1=A1=B1=BE=CD=C1=CB=
+=CA=C2=C1=CB=A3=AC=BA=C7=BA=C7=A3=AC=CB=E4=C8=BB=D3=D0=B5=E3=B4=D6=C2=B3=A3=
+=AC=B5=AB=B4=F3=B6=E0=CA=FD=C7=E9=BF=F6=CF=C2=B6=BC=BA=DC=D3=D0=D0=A7=A3=AC=
+=B2=BB=CA=C7=C2=F0=A3=BF=20
+      =
+<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;=C9=E8=CF=
+=EB=D2=BB=CF=C2=A3=AC=C8=E7=B9=FB=D3=D0=D5=E2=C3=B4=D2=BB=D6=D6=C8=ED=BC=FE=
+=A3=AC=CB=FC=CB=F9=D2=AA=D7=F6=B5=C4=B9=A4=D7=F7=BE=CD=CA=C7=B6=D4=C4=B3=B8=
+=F6=CA=B9=D3=C3=D5=DF=D4=DA=C4=B3=CC=A8=B5=E7=C4=D4=C9=CF=B5=C4=BB=EE=B6=AF=
+=D7=F7=D2=BB=B6=A8=B5=C4=CF=DE=D6=C6=A3=AC=B6=F8=D3=D6=B2=BB=C4=DC=B1=BB=CA=
+=B9=D3=C3=D5=DF=CD=A8=B9=FD=A1=B0=BD=E1=CA=F8=C8=CE=CE=F1=A1=B1=D5=E2=D6=D6=
+=B7=BD=CA=BD=C7=E1=D2=D7=B5=D8=BD=E2=B3=FD=CF=DE=D6=C6=A3=AC=C4=C7=B8=C3=D4=
+=F5=C3=B4=D7=F6=A3=BF=CE=DE=B7=C7=D3=D0=D5=E2=C3=B4=C8=FD=D6=D6=B7=BD=B7=A8=
+=A3=BA1.=C6=C1=B1=CE=A1=B0CTRL+ALT+DEL=A1=B1=D5=E2=B8=F6=C8=C8=BC=FC=B5=C4=
+=D7=E9=BA=CF=A3=BB2.=C8=C3=B3=CC=D0=F2=B2=BB=B3=F6=CF=D6=D4=DA=C8=CE=CE=F1=
+=B9=DC=C0=ED=C6=F7=B5=C4=C1=D0=B1=ED=D6=AE=D6=D0=A3=BB3.=C8=C3=C8=CE=CE=F1=
+=B9=DC=C0=ED=C6=F7=CE=DE=B7=A8=C9=B1=B5=F4=D5=E2=B8=F6=C8=CE=CE=F1=A1=A3=B6=
+=D4=D3=DA=B5=DA=D2=BB=D6=D6=B7=BD=B7=A8=A3=AC=D5=E2=D1=F9=CE=B4=C3=E2=D2=B2=
+=CC=AB=B2=D0=BF=E1=C1=CB=A3=AC=D3=C3=B9=DF=C1=CB=A1=B0=BD=E1=CA=F8=C8=CE=CE=
+=F1=A1=B1=D5=E2=D6=D6=B7=BD=B7=A8=B5=C4=C8=CB=BB=E1=BA=DC=B2=BB=CF=B0=B9=DF=
+=B5=C4=A3=BB=B6=D4=D3=DA=B5=DA=B6=FE=D6=D6=B7=BD=B7=A8=A3=AC=D4=DAWINDOWS=
+=20
+      =
+9X=CF=C2=BF=C9=D2=D4=BA=DC=C7=E1=D2=D7=B5=D8=CA=B9=D3=C3=D7=A2=B2=E1=B7=FE=
+=CE=F1=BD=F8=B3=CC=B5=C4=B7=BD=B7=A8=CA=B5=CF=D6=A3=AC=B5=AB=CA=C7=B6=D4=D3=
+=DAWINDOWS&nbsp;&nbsp;NT=BC=DC=B9=B9=B5=C4=B2=D9=D7=F7=CF=B5=CD=B3=C3=BB=D3=
+=D0=D5=E2=B8=F6=B7=BD=B7=A8=C1=CB=A3=AC=BD=F8=B3=CC=BA=DC=C4=D1=B2=D8=C9=ED=
+=A3=AC=CB=E4=C8=BB=C8=D4=C8=BB=BF=C9=D2=D4=CA=B5=CF=D6=D2=FE=B2=D8=A3=AC=B5=
+=AB=CA=B5=CF=D6=BB=FA=D6=C6=BD=CF=CE=AA=B8=B4=D4=D3=A3=BB=B6=D4=D3=DA=B5=DA=
+=C8=FD=D6=D6=B7=BD=B7=A8=A3=AC=CA=B5=CF=D6=C6=F0=C0=B4=B1=C8=BD=CF=BC=F2=B5=
+=A5=A3=AC=CE=D2=B5=C4=D7=F7=C6=B7=A3=BAIPGate=CD=F8=D6=B7=B9=FD=C2=CB=C6=F7=
+=20
+      =
+=BE=CD=CA=C7=B2=C9=D3=C3=B5=C4=D5=E2=D6=D6=B7=BD=CA=BD=B7=C0=C9=B1=B5=C4=A3=
+=AC=BD=D3=CF=C2=C0=B4=CE=D2=BE=CD=C0=B4=BD=E9=C9=DC=D5=E2=D6=D6=B7=BD=B7=A8=
+=A1=A3=20
+      =
+<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;=C8=CE=CE=F1=B9=DC=C0=ED=C6=F7=B5=C4=A1=B0=
+=BD=E1=CA=F8=C8=CE=CE=F1=A1=B1=CA=B5=BC=CA=C9=CF=BE=CD=CA=C7=C7=BF=D6=C6=D6=
+=D5=D6=B9=BD=F8=B3=CC=A3=AC=CB=FC=CB=F9=CA=B9=D3=C3=B5=C4=C9=B1=CA=D6=EF=B5=
+=CA=C7=D2=BB=B8=F6=BD=D0=D7=F6TerminateProcess()=B5=C4Win32=20
+      =
+API=BA=AF=CA=FD=A3=AC=CE=D2=C3=C7=C0=B4=BF=B4=BF=B4=CB=FC=B5=C4=B6=A8=D2=E5=
+=A3=BA=20
+      =
+<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;BOOL=20
+      TerminateProcess(=20
+      =
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;HANDLE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hProcess;=20
+      // =BD=AB=B1=BB=BD=E1=CA=F8=BD=F8=B3=CC=B5=C4=BE=E4=B1=FA=20
+      =
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;UINT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uExitC=
+ode;=20
+      // =D6=B8=B6=A8=BD=F8=B3=CC=B5=C4=CD=CB=B3=F6=C2=EB=20
+      =
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;);=20
+      =
+<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;=BF=B4=B5=BD=D5=E2=C0=EF=A3=AC=CA=C7=B2=BB=
+=CA=C7=BE=F5=B5=C3=B2=BB=B1=D8=CD=F9=CF=C2=BF=B4=B6=BC=D6=AA=B5=C0=BD=D3=CF=
+=C2=C0=B4=D2=AA=D7=F6=CA=B2=C3=B4=A3=BAHook=20
+      =
+TerminateProcess()=BA=AF=CA=FD=A3=AC=C3=BF=B4=CETerminateProcess()=B1=BB=B5=
+=F7=D3=C3=B5=C4=CA=B1=BA=F2=CF=C8=C5=D0=B6=CF=C6=F3=CD=BC=BD=E1=CA=F8=B5=C4=
+=BD=F8=B3=CC=CA=C7=B7=F1=CA=C7=CE=D2=B5=C4=BD=F8=B3=CC=A3=AC=C8=E7=B9=FB=CA=
+=C7=B5=C4=BB=B0=BE=CD=BC=F2=B5=A5=B5=D8=B7=B5=BB=D8=D2=BB=B8=F6=B4=ED=CE=F3=
+=C2=EB=BE=CD=BF=C9=D2=D4=C1=CB=A1=A3=D5=E6=B5=C4=CA=C7=D5=E2=C3=B4=BC=F2=B5=
+=A5=C2=F0=A3=BF=CF=C8=CC=E1=B3=F6=D2=BB=B8=F6=CE=CA=CC=E2=A3=AC=C8=E7=BA=CE=
+=B8=F9=BE=DDhProcess=C5=D0=B6=CF=CB=FC=CA=C7=B7=F1=CA=C7=CE=D2=B5=C4=BD=F8=
+=B3=CC=B5=C4=BE=E4=B1=FA=A3=BF=B4=F0=B0=B8=CA=C7=A3=BA=D4=DA=CE=D2=B5=C4=BD=
+=F8=B3=CC=B5=B1=D6=D0=CF=C8=BB=F1=B5=C3=CE=D2=B5=C4=BD=F8=B3=CC=B5=C4=BE=E4=
+=B1=FA=A3=AC=C8=BB=BA=F3=CD=A8=B9=FD=BD=F8=B3=CC=BC=E4=CD=A8=D1=B6=BB=FA=D6=
+=C6=B4=AB=B5=DD=B8=F8=B9=B3=D7=D3=BA=AF=CA=FD=A3=AC=D3=EBhProcess=BD=F8=D0=
+=D0=B1=C8=BD=CF=B2=BB=BE=CD=D0=D0=C1=CB=A3=BF=B4=ED=A3=A1=D2=F2=CE=AA=BE=E4=
+=B1=FA=CA=C7=D2=BB=B8=F6=BD=F8=B3=CC=CF=E0=B9=D8=B5=C4=D6=B5=A3=AC=B2=BB=CD=
+=AC=BD=F8=B3=CC=D6=D0=B5=C3=B5=BD=B5=C4=CE=D2=B5=C4=BD=F8=B3=CC=B5=C4=BE=E4=
+=B1=FA=B5=C4=D6=B5=D4=DA=BD=F8=B3=CC=BC=E4=BD=F8=D0=D0=B1=C8=BD=CF=CA=C7=CE=
+=DE=D2=E2=D2=E5=B5=C4=A1=A3=20
+      =
+<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;=D4=F5=C3=B4=B0=EC=A3=BF=CE=D2=C3=C7=C0=B4=
+=BF=BC=B2=EC=D2=BB=CF=C2=CE=D2=B5=C4hProcess=CB=FC=CA=C7=C8=E7=BA=CE=B5=C3=
+=B5=BD=B5=C4=A1=A3=D2=BB=B8=F6=BD=F8=B3=CC=D6=BB=D3=D0=CB=FC=B5=C4=BD=F8=B3=
+=CCID=CA=C7=B6=C0=D2=BB=CE=DE=B6=FE=B5=C4=A3=AC=B2=D9=D7=F7=CF=B5=CD=B3=CD=
+=A8=B9=FD=BD=F8=B3=CCID=C0=B4=B1=EA=CA=B6=D2=BB=B8=F6=BD=F8=B3=CC=A3=AC=B5=
+=B1=C4=B3=B8=F6=B3=CC=D0=F2=D2=AA=B6=D4=D5=E2=B8=F6=BD=F8=B3=CC=BD=F8=D0=D0=
+=B7=C3=CE=CA=B5=C4=BB=B0=A3=AC=CB=FC=CA=D7=CF=C8=B5=C3=D3=C3OpenProcess=D5=
+=E2=B8=F6=BA=AF=CA=FD=B2=A2=B4=AB=C8=EB=D2=AA=B7=C3=CE=CA=B5=C4=BD=F8=B3=CC=
+ID=C0=B4=BB=F1=B5=C3=BD=F8=B3=CC=B5=C4=BE=E4=B1=FA=A3=AC=C0=B4=BF=B4=BF=B4=
+=CB=FC=B5=C4=B2=CE=CA=FD=A3=BA=20
+      =
+<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;HANDLE=20
+      OpenProcess(=20
+      =
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;DWORD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dwDesiredAccess,=20
+      // =CF=A3=CD=FB=BB=F1=B5=C3=B5=C4=B7=C3=CE=CA=C8=A8=CF=DE=20
+      =
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;BOOL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bInheritHandle,=20
+      // =
+=D6=B8=C3=F7=CA=C7=B7=F1=CF=A3=CD=FB=CB=F9=BB=F1=B5=C3=B5=C4=BE=E4=B1=FA=BF=
+=C9=D2=D4=BC=CC=B3=D0=20
+      =
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;DWORD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dwProcessId=20
+      // =D2=AA=B7=C3=CE=CA=B5=C4=BD=F8=B3=CCID=20
+      =
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;);=20
+      =
+<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=C2=F6=C2=E7=BD=A5=BD=A5=CF=D4=CF=D6=
+=A3=BA=D4=DA=B5=F7=D3=C3TerminateProcess()=D6=AE=C7=B0=A3=AC=B1=D8=CF=C8=B5=
+=F7=D3=C3OpenProcess()=A3=AC=B6=F8OpenProcess()=B5=C4=B2=CE=CA=FD=B1=ED=D6=
+=D0=B5=C4dwProcessId=CA=C7=D4=DA=CF=B5=CD=B3=B7=B6=CE=A7=C4=DA=CE=A8=D2=BB=
+=C8=B7=B6=A8=B5=C4=A1=A3=B5=C3=B3=F6=BD=E1=C2=DB=A3=BA=D2=AAHook=B5=C4=BA=
+=AF=CA=FD=B2=BB=CA=C7TerminateProcess()=B6=F8=CA=C7OpenProcess()=A3=AC=D4=
+=DA=C3=BF=B4=CE=B5=F7=D3=C3OpenProcess()=B5=C4=CA=B1=BA=F2=A3=AC=CE=D2=C3=
+=C7=CF=C8=BC=EC=B2=E9dwProcessId=CA=C7=B7=F1=CE=AA=CE=D2=B5=C4=BD=F8=B3=CC=
+=B5=C4ID(=C0=FB=D3=C3=BD=F8=B3=CC=BC=E4=CD=A8=D1=B6=BB=FA=D6=C6)=A3=AC=C8=
+=E7=B9=FB=CA=C7=B5=C4=BB=B0=BE=CD=BC=F2=B5=A5=B5=D8=B7=B5=BB=D8=D2=BB=B8=F6=
+=B4=ED=CE=F3=C2=EB=BE=CD=BF=C9=D2=D4=C1=CB=A3=AC=C8=CE=CE=F1=B9=DC=C0=ED=C6=
+=F7=C4=C3=B2=BB=B5=BD=CE=D2=B5=C4=BD=F8=B3=CC=B5=C4=BE=E4=B1=FA=A3=AC=CB=FC=
+=C8=E7=BA=CE=BD=E1=CA=F8=CE=D2=B5=C4=BD=F8=B3=CC=C4=D8=A3=BF=20
+      =
+<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;=D6=C1=B4=CB=A3=AC=D2=C9=CD=C5=C8=AB=B2=BF=
+=BD=D2=BF=AA=C1=CB=A1=A3=D3=C9Hook TerminateProcess()=B5=BDHook=20
+      =
+OpenProcess()=B5=C4=D5=E2=B8=F6=B9=FD=B3=CC=A3=AC=CC=E5=CF=D6=C1=CB=D2=BB=
+=B8=F6=C4=E6=CF=F2=CB=BC=CE=AC=B5=C4=CB=BC=CF=EB=A1=A3=C6=E4=CA=B5=CE=D2=B5=
+=B1=B3=F5=D7=EA=BD=F8=C1=CBTerminateProcess()=B5=C4=CB=C0=BA=FA=CD=AC=C0=EF=
+=B0=EB=CC=EC=B3=F6=D2=B2=B2=BB=C0=B4=A3=AC=B5=AB=D7=EE=D6=D5=BB=B9=CA=C7=B1=
+=C4=B3=F6=C1=CB=C1=E9=B8=D0=B5=C4=BB=F0=BB=A8=A3=AC=D7=A2=D2=E2=C1=A6=D7=AA=
+=D2=C6=B5=BD=C1=CBOpenProcess()=C9=CF=C3=E6=A3=AC=CA=B5=CF=D6=C1=CB=BD=F8=
+=B3=CC=B7=C0=C9=B1=A1=A3=CF=B2=D4=C3=D6=AE=D3=E0=A3=AC=BD=AB=D5=E2=D0=C4=B5=
+=C3=CC=E5=BB=E1=C4=C3=B3=F6=C0=B4=D3=EB=B4=F3=BC=D2=B7=D6=CF=ED=A1=A3<IMG=
+=20
+      height=3D1 src=3D"http://www.wg8wg.com/down_info.asp?id=3D228" =
+width=3D1=20
+      border=3D0></DIV></TD></TR></TBODY></TABLE><BR>
+<DIV class=3Dopt><A =
+title=3D=B2=E9=BF=B4=B8=C3=B7=D6=C0=E0=D6=D0=CB=F9=D3=D0=CE=C4=D5=C2=20
+href=3D"http://hi.baidu.com/780223/blog/category/%CD%E2%B9%D2%D7%CA%C1%CF=
+">=C0=E0=B1=F0=A3=BA=CD=E2=B9=D2=D7=CA=C1=CF</A>=20
+| =E4=AF=C0=C0(<SPAN id=3Dresult></SPAN>) </DIV>
+<DIV class=3Dline></DIV>
+<SCRIPT language=3DJavaScript>
+allkey=3Dallkey+"77ab322dc3d83f34359bf780_a6c724faa643ce1ea9d311de_";
+</SCRIPT>
+
+<DIV id=3Din_comment><A name=3Dcomment></A>
+<DIV class=3Dtit>=CD=F8=D3=D1=C6=C0=C2=DB=A3=BA</DIV>
+<SCRIPT>
+function writecmt(type,id,cmtname,cmturl,cmttime){
+	var html1=3D"";
+	if(type=3D=3D1){
+		if(cmturl=3D=3D""){
+			html1=3D"<a name=3D'"+id+"'>"+cmtname+"</a> - <span =
+class=3D'date'>"+cmttime+"</span> ";
+		}else{
+			html1=3D"<a name=3D'"+id+"' href=3D'"+cmturl+"' target=3D'_blank' =
+title=3D'"+cmturl+"'>"+cmtname+"</a> - <span =
+class=3D'date'>"+cmttime+"</span> ";
+		}
+	}else{
+		if(cmtname=3D=3D"=C4=E4=C3=FB=CD=F8=D3=D1"){
+			if(cmturl=3D=3D""){
+				html1=3D"<a name=3D'"+id+"'>"+cmtname+"</a> - <span =
+class=3D'date'>"+cmttime+"</span> ";
+			}else{
+				html1=3D"<a name=3D'"+id+"' href=3D'"+cmturl+"' target=3D'_blank' =
+title=3D'"+cmturl+"'>"+cmtname+"</a> - <span =
+class=3D'date'>"+cmttime+"</span>";
+			}
+		}else{
+			if(cmturl=3D=3D""){
+				html1=3D"<div class=3D'f14' style=3D'display:inline'>=CD=F8=D3=D1:<a =
+name=3D'"+id+"'>"+cmtname+"</a> - <span =
+class=3D\"date\">"+cmttime+"</span></div>";
+			}else{
+				html1=3D"<div class=3D'f14' style=3D'display:inline'>=CD=F8=D3=D1:<a =
+name=3D'"+id+"' href=3D'"+cmturl+"' target=3D'_blank' =
+title=3D'"+cmturl+"'>"+cmtname+"</a> - <span =
+class=3D\"date\">"+cmttime+"</span></div>";
+			}
+		}
+	}
+	document.write(html1);
+}
+
+</SCRIPT>
+
+<DIV id=3Dpage></DIV></DIV>
+<DIV id=3Din_send>
+<FORM name=3Dform1 onsubmit=3D"return checkcmtform()" =
+action=3D/780223/commit=20
+method=3Dpost><INPUT type=3Dhidden value=3D8 name=3Dct> <INPUT =
+type=3Dhidden value=3D1=20
+name=3Dcm> <INPUT type=3Dhidden value=3Da6c724faa643ce1ea9d311de =
+name=3DspBlogID>
+<SCRIPT language=3DJavaScript>
+	document.write("<input type=3D'hidden' name=3D'spRefURL' =
+value=3D'"+window.location.href+"'>");
+</SCRIPT>
+=20
+<DIV class=3Dtit>=B7=A2=B1=ED=C6=C0=C2=DB=A3=BA</DIV>
+<TABLE cellSpacing=3D5 cellPadding=3D0 width=3D620 border=3D0>
+  <TBODY>
+  <TR>
+    <TD class=3Df14>=D0=D5=A1=A1=C3=FB=A3=BA</TD>
+    <TD><INPUT id=3DspBlogCmtor style=3D"WIDTH: 220px" maxLength=3D49=20
+      onchange=3D"checkname('spBlogCmtor')" name=3DspBlogCmtor>
+      <DIV id=3Dnmerror style=3D"DISPLAY: =
+none">*=D0=D5=C3=FB=D7=EE=B3=A4=CE=AA50=D7=D6=BD=DA</DIV></TD></TR>
+  <TR>
+    <TD class=3Df14>=CD=F8=D6=B7=BB=F2=D3=CA=CF=E4=A3=BA</TD>
+    <TD><INPUT id=3DspBlogCmtURL style=3D"WIDTH: 360px" maxLength=3D128=20
+      onchange=3D"checkeandu('spBlogCmtURL')" name=3DspBlogCmtURL> =
+(=D1=A1=CC=EE)</TD></TR>
+  <TR>
+    <TD class=3Df14 vAlign=3Dtop>=C4=DA=A1=A1=C8=DD=A3=BA</TD>
+    <TD><TEXTAREA id=3DspBlogCmtText style=3D"WIDTH: 520px; HEIGHT: =
+155px" onfocus=3Dshowverkey() name=3DspBlogCmtText></TEXTAREA></TD></TR>
+  <TR id=3Dvercode>
+    <TD class=3Df14 vAlign=3Dtop>=D1=E9=D6=A4=C2=EB=A3=BA</TD>
+    <TD vAlign=3Dtop><INPUT type=3Dhidden=20
+      =
+value=3DE8A8E05C5E5F29520DD954483F0E79253D4CF7B9E9A494247AF2784F4092A237F=
+B72CDD734DE255C5EC6802291F60F49357EEC8E870D7D5B37E7F58489BA50DF=20
+      name=3DspVcode> <INPUT maxLength=3D4 size=3D6 name=3DspVerifyKey=20
+      =
+autocomplete=3D"off">=C7=EB=CA=E4=C8=EB=CF=C2=CD=BC=D6=D0=B5=C4=CB=C4=CE=BB=
+=D1=E9=D6=A4=C2=EB=A3=AC=D7=D6=C4=B8=B2=BB=C7=F8=B7=D6=B4=F3=D0=A1=D0=B4=A1=
+=A3<BR>
+      <SCRIPT language=3DJavaScript>
+
+			var =
+imgsrc=3D"http://post.baidu.com/cgi-bin/genimg?E8A8E05C5E5F29520DD954483F=
+0E79253D4CF7B9E9A494247AF2784F4092A237FB72CDD734DE255C5EC6802291F60F49357=
+EEC8E870D7D5B37E7F58489BA50DF";
+			document.write("<img id=3D'verifypic' src=3D'"+imgsrc+"' =
+width=3D'120' height=3D'40'>");
+
+			function newverifypic(){
+				document.getElementById("verifypic").src =3D imgsrc +"&t=3D"+ =
+Math.random();
+			}
+		</SCRIPT>
+      <A title=3D=BF=B4=B2=BB=C7=E5=D7=F3=B1=DF=B5=C4=D7=D6=B7=FB =
+href=3D"javascript:newverifypic();">=BF=B4=B2=BB=C7=E5?</A> </TD></TR>
+  <TR>
+    <TD class=3Df14 vAlign=3Dtop>&nbsp;</TD>
+    <TD class=3Df14=20
+  vAlign=3Dtop><INPUT type=3Dsubmit value=3D=B7=A2=B1=ED=C6=C0=C2=DB =
+name=3Dbtn_ok></TD></TR></TBODY></TABLE></FORM></DIV><BR></DIV>
+<TABLE height=3D8 cellSpacing=3D0 cellPadding=3D0 width=3D"100%" =
+border=3D0>
+  <TBODY>
+  <TR>
+    <TD class=3Dmodbl width=3D7>&nbsp;</TD>
+    <TD class=3Dmodbc>&nbsp;</TD>
+    <TD class=3Dmodbr =
+width=3D7>&nbsp;</TD></TR></TBODY></TABLE></DIV></DIV></DIV></DIV>
+<SCRIPT language=3Djavascript>
+<!--
+var hstr=3D"/780223/brwstat?key1=3D1";
+document.write("<script src=3D'"+hstr+"&key2=3D"+allkey+"'><\/script>");
+//-->
+</SCRIPT>
+<BR>
+<CENTER>
+<DIV id=3Dft>&copy;2006 Baidu</DIV></CENTER>
+<SCRIPT>
+if(document.getElementById("m_blog"))
+{
+	var imgarray =3D =
+document.getElementById("m_blog").getElementsByTagName('img');
+	var imgw =3D document.getElementById("m_blog").offsetWidth;
+	imgw =3Dimgw-40;
+	for(var i=3D0; i<imgarray.length; i++){
+	if(imgarray[i].className=3D=3D"blogimg" && imgarray[i].width>=3Dimgw) =
+imgarray[i].width=3Dimgw;
+	}
+}
+</SCRIPT>
+</CENTER><IMG style=3D"DISPLAY: none" src=3D""> </BODY></HTML>
+
+------=_NextPart_000_0000_01C72128.63CFA6F0
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: 7bit
+Content-Location: http://www.wg8wg.com/down_info.asp?id=228
+
+
+------=_NextPart_000_0000_01C72128.63CFA6F0
+Content-Type: text/css;
+	charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://hi.baidu.com/780223/css/item/6c061dd163d9f2d3572c8496.css
+
+BODY {
+	BACKGROUND-COLOR: #ffffff
+}
+#header {
+	BACKGROUND: #3399cc; HEIGHT: 89px
+}
+#header DIV.lc {
+	BACKGROUND: url(http://img.baidu.com/hi/temp1/hdl.jpg) no-repeat
+}
+#header DIV.rc {
+	BACKGROUND: url(http://img.baidu.com/hi/temp1/hdr.jpg) no-repeat right =
+top
+}
+#header DIV.tit {
+	FONT-SIZE: 20px; LEFT: 20px; LINE-HEIGHT: 22px; FONT-FAMILY: =
+=BA=DA=CC=E5; TOP: 8px
+}
+#header DIV.tit A.titlink {
+	COLOR: #ffffff; TEXT-DECORATION: none
+}
+#header DIV.tit A.titlink:visited {
+	COLOR: #ffffff; TEXT-DECORATION: none
+}
+#header DIV.desc {
+	FONT-SIZE: 13px; LEFT: 20px; COLOR: #ffffff; TOP: 33px
+}
+#tabline {
+	TOP: 89px; BACKGROUND-COLOR: #ffffff
+}
+#tab {
+	BACKGROUND: url(http://img.baidu.com/hi/temp1/tabbg.gif) repeat-x; TOP: =
+67px
+}
+#tab A.on {
+	BORDER-RIGHT: #ffffff 1px solid; BORDER-TOP: #ffffff 1px solid; =
+MARGIN-TOP: 3px; FONT-SIZE: 14px; BORDER-LEFT: #ffffff 1px solid; COLOR: =
+#197cae; LINE-HEIGHT: 19px; BACKGROUND-COLOR: #f3f1f1
+}
+#tab A.on:link {
+	BORDER-RIGHT: #ffffff 1px solid; BORDER-TOP: #ffffff 1px solid; =
+MARGIN-TOP: 3px; FONT-SIZE: 14px; BORDER-LEFT: #ffffff 1px solid; COLOR: =
+#197cae; LINE-HEIGHT: 19px; BACKGROUND-COLOR: #f3f1f1
+}
+#tab A.on:visited {
+	BORDER-RIGHT: #ffffff 1px solid; BORDER-TOP: #ffffff 1px solid; =
+MARGIN-TOP: 3px; FONT-SIZE: 14px; BORDER-LEFT: #ffffff 1px solid; COLOR: =
+#197cae; LINE-HEIGHT: 19px; BACKGROUND-COLOR: #f3f1f1
+}
+#tab SPAN {
+	FONT-SIZE: 14px; COLOR: #ffffff
+}
+#tab A:link {
+	FONT-SIZE: 14px; COLOR: #ffffff; TEXT-DECORATION: none
+}
+#tab A:visited {
+	FONT-SIZE: 14px; COLOR: #ffffff; TEXT-DECORATION: none
+}
+#tab2 {
+	BACKGROUND: #dae9f5
+}
+#tab2 SPAN {
+	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #000000
+}
+#tab2 A {
+	FONT-SIZE: 12px
+}
+#tab2 A:link {
+	COLOR: #0000cc
+}
+#tab2 A:visited {
+	COLOR: #0000cc
+}
+.stage {
+	BACKGROUND: #f3f1f1
+}
+#comm_info {
+	COLOR: #333333; FONT-FAMILY: Arial; TEXT-ALIGN: left
+}
+#comm_info DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 5px; LINE-HEIGHT: 8px
+}
+#comm_info A {
+	COLOR: #3399cc
+}
+#page {
+	FONT-SIZE: 14px; FONT-FAMILY: Arial; HEIGHT: 30px; TEXT-ALIGN: center
+}
+#page SPAN {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; FONT-WEIGHT: bold; FONT-SIZE: =
+14px; PADDING-BOTTOM: 3px; COLOR: #000000; PADDING-TOP: 3px
+}
+#page A.pc {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px; COLOR: #3399cc
+}
+#page A.pc:visited {
+	COLOR: #3399cc
+}
+#page A.pi {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; FONT-SIZE: 14px; PADDING-BOTTOM: =
+3px; COLOR: #3399cc; PADDING-TOP: 3px
+}
+#page A.pi:visited {
+	COLOR: #3399cc
+}
+.mod {
+	MARGIN-BOTTOM: 10px
+}
+.modhandle {
+	CURSOR: move
+}
+.modth {
+	HEIGHT: 24px
+}
+.modhead {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 4px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 4px
+}
+.modopt {
+	PADDING-RIGHT: 4px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 4px
+}
+.modtit {
+	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #ffffff
+}
+A.modtit {
+	COLOR: #ffffff
+}
+A.modtit:visited {
+	COLOR: #ffffff
+}
+.modtitlink {
+	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #ffffff
+}
+A.modtitlink {
+	COLOR: #ffffff; TEXT-DECORATION: none
+}
+A.modtitlink:visited {
+	COLOR: #ffffff; TEXT-DECORATION: none
+}
+A.modtitlink:hover {
+	COLOR: #ff5100; TEXT-DECORATION: underline
+}
+.modact {
+	FONT-SIZE: 12px; COLOR: #ffffff
+}
+A.modact:link {
+	COLOR: #ffffff
+}
+A.modact:visited {
+	COLOR: #ffffff
+}
+.modbox {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 0px; =
+PADDING-TOP: 10px; BACKGROUND-COLOR: #ffffff
+}
+.modtl {
+	BACKGROUND: url(http://img.baidu.com/hi/temp1/ptitl.gif) no-repeat left =
+top; LINE-HEIGHT: 1px
+}
+.modtc {
+	BACKGROUND: url(http://img.baidu.com/hi/temp1/ptitc.gif) repeat-x
+}
+.modtr {
+	BACKGROUND: url(http://img.baidu.com/hi/temp1/ptitr.gif) no-repeat =
+right top; LINE-HEIGHT: 1px
+}
+.modbl {
+	LINE-HEIGHT: 1px; BACKGROUND-COLOR: #ffffff
+}
+.modbc {
+	LINE-HEIGHT: 1px; BACKGROUND-COLOR: #ffffff
+}
+.modbr {
+	LINE-HEIGHT: 1px; BACKGROUND-COLOR: #ffffff
+}
+.modlabel {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px; COLOR: #000
+}
+#m_blog DIV.tit {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px
+}
+#m_blog DIV.tit A {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px; COLOR: #333333
+}
+#m_blog DIV.tit A:visited {
+	COLOR: #333333
+}
+#m_blog DIV.date {
+	MARGIN: 5px 0px 8px; COLOR: #666666
+}
+#m_blog DIV.cnt {
+	FONT-SIZE: 14px; COLOR: #333333; LINE-HEIGHT: 20px
+}
+#m_blog DIV.cnt DIV {
+	FONT-SIZE: 14px
+}
+#m_blog DIV.more {
+	MARGIN: 14px 0px 16px
+}
+#m_blog DIV.more A {
+	FONT-SIZE: 14px; COLOR: #3399cc
+}
+#m_blog DIV.more A:visited {
+	COLOR: #3399cc
+}
+#m_blog DIV.opt {
+	FONT-SIZE: 12px; COLOR: #666666
+}
+#m_blog DIV.opt A {
+	FONT-SIZE: 12px; COLOR: #3399cc
+}
+#m_blog DIV.opt A:visited {
+	COLOR: #3399cc
+}
+#m_blog DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 17px; LINE-HEIGHT: 17px
+}
+#m_blog DIV.none {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 14px; PADDING-BOTTOM: =
+100px; COLOR: #333333; PADDING-TOP: 100px
+}
+#m_pro A {
+	COLOR: #3399cc
+}
+#m_pro A:visited {
+	COLOR: #3399cc
+}
+#m_pro DIV.image {
+	TEXT-ALIGN: center
+}
+#m_pro DIV.act {
+	MARGIN-TOP: 10px
+}
+#m_pro DIV.user {
+	MARGIN-TOP: 10px; FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #333333
+}
+#m_pro DIV.desc {
+	FONT-SIZE: 12px; COLOR: #333333
+}
+#m_pro DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 17px; LINE-HEIGHT: 17px
+}
+#m_pro TD {
+	FONT-SIZE: 14px; COLOR: #333333; LINE-HEIGHT: 24px
+}
+#m_pro .photo {
+	BORDER-RIGHT: #ddd 1px solid; BORDER-TOP: #ddd 1px solid; BACKGROUND: =
+#fff; BORDER-LEFT: #ddd 1px solid; BORDER-BOTTOM: #ddd 1px solid
+}
+#m_pro .photo TD {
+	FONT-SIZE: 12px
+}
+#m_pro .photo .image {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 10px; =
+PADDING-TOP: 20px
+}
+#m_pro .photo .line {
+	BORDER-TOP: #ddd 1px dashed; FONT-SIZE: 1px; WIDTH: 90%; LINE-HEIGHT: 0
+}
+#m_pro .ref {
+	BORDER-RIGHT: #ddd 1px solid; BORDER-TOP: #ddd 1px solid; MARGIN-TOP: =
+10px; BORDER-LEFT: #ddd 1px solid; BORDER-BOTTOM: #ddd 1px solid
+}
+#m_pro .ref .tit {
+	PADDING-LEFT: 10px; BACKGROUND: #eee; BORDER-BOTTOM: #ddd 1px solid
+}
+#m_pro .ref .cnt {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; BACKGROUND: #fff; =
+PADDING-BOTTOM: 10px; PADDING-TOP: 10px
+}
+#m_pro .basic TD {
+	FONT-SIZE: 14px; COLOR: #666
+}
+#m_pro .basic .tit {
+	FONT-WEIGHT: bold
+}
+#m_pro .basic A:hover {
+	PADDING-RIGHT: 1px; PADDING-LEFT: 1px; BACKGROUND: #261cdc; =
+PADDING-BOTTOM: 1px; COLOR: #fff; PADDING-TOP: 1px; TEXT-DECORATION: =
+none
+}
+#m_pro .basic A.nlk:hover {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; COLOR: =
+#196cca; PADDING-TOP: 0px; BACKGROUND-COLOR: #fff; TEXT-DECORATION: =
+underline
+}
+#m_pro .pline {
+	BORDER-TOP: #a6a6a6 1px dashed; MARGIN-TOP: 10px; MARGIN-LEFT: 5px; =
+LINE-HEIGHT: 10px
+}
+#m_pro .pitem {
+	FONT-SIZE: 14px; MARGIN-LEFT: 5px; LINE-HEIGHT: 22px
+}
+#m_pro .pitem .tit {
+	COLOR: #666
+}
+#m_pro .pitem A:hover {
+	PADDING-RIGHT: 1px; PADDING-LEFT: 1px; BACKGROUND: #261cdc; =
+PADDING-BOTTOM: 1px; COLOR: #fff; PADDING-TOP: 1px; TEXT-DECORATION: =
+none
+}
+#m_album DIV.image {
+	TEXT-ALIGN: center
+}
+#m_album DIV.page {
+	FONT-SIZE: 12px; COLOR: #666666; TEXT-ALIGN: center
+}
+#m_album DIV.page A {
+	FONT-SIZE: 12px; COLOR: #0000cc
+}
+#m_album DIV.page A:visited {
+	COLOR: #0000cc
+}
+#m_album .phpage {
+	MARGIN-TOP: 10px; PADDING-BOTTOM: 5px; TEXT-ALIGN: center
+}
+#m_links DIV.item {
+	FONT-SIZE: 12px; COLOR: #333333
+}
+#m_links DIV.item A {
+	FONT-SIZE: 12px; COLOR: #3399cc; TEXT-DECORATION: none
+}
+#m_links DIV.item A:visited {
+	COLOR: #3399cc
+}
+#m_links DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 5px; LINE-HEIGHT: 8px
+}
+#m_mylink1 DIV.item {
+	FONT-SIZE: 12px; COLOR: #333333
+}
+#m_mylink1 DIV.item A {
+	FONT-SIZE: 12px; COLOR: #3399cc; TEXT-DECORATION: none
+}
+#m_mylink1 DIV.item A:visited {
+	COLOR: #3399cc
+}
+#m_mylink1 DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 5px; LINE-HEIGHT: 8px
+}
+#m_mylink2 DIV.item {
+	FONT-SIZE: 12px; COLOR: #333333
+}
+#m_mylink2 DIV.item A {
+	FONT-SIZE: 12px; COLOR: #3399cc; TEXT-DECORATION: none
+}
+#m_mylink2 DIV.item A:visited {
+	COLOR: #3399cc
+}
+#m_mylink2 DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 5px; LINE-HEIGHT: 8px
+}
+#m_mylink3 DIV.item {
+	FONT-SIZE: 12px; COLOR: #333333
+}
+#m_mylink3 DIV.item A {
+	FONT-SIZE: 12px; COLOR: #3399cc; TEXT-DECORATION: none
+}
+#m_mylink3 DIV.item A:visited {
+	COLOR: #3399cc
+}
+#m_mylink3 DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 5px; LINE-HEIGHT: 8px
+}
+#m_mylink4 DIV.item {
+	FONT-SIZE: 12px; COLOR: #333333
+}
+#m_mylink4 DIV.item A {
+	FONT-SIZE: 12px; COLOR: #3399cc; TEXT-DECORATION: none
+}
+#m_mylink4 DIV.item A:visited {
+	COLOR: #3399cc
+}
+#m_mylink4 DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 5px; LINE-HEIGHT: 8px
+}
+#m_artclg DIV.item {
+	FONT-SIZE: 12px; COLOR: #666666
+}
+#m_artclg DIV.item A {
+	FONT-SIZE: 12px; COLOR: #3399cc
+}
+#m_artclg DIV.item A:visited {
+	COLOR: #3399cc
+}
+#m_artclg DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 5px; LINE-HEIGHT: 8px
+}
+#m_filed DIV.item {
+	FONT-SIZE: 12px; COLOR: #666666
+}
+#m_filed DIV.item A {
+	FONT-SIZE: 12px; COLOR: #3399cc
+}
+#m_filed DIV.item A:visited {
+	COLOR: #3399cc
+}
+#m_filed DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 5px; LINE-HEIGHT: 8px
+}
+#m_comment DIV.item {
+	FONT-SIZE: 12px; COLOR: #333333
+}
+#m_comment DIV.item A {
+	FONT-SIZE: 12px; COLOR: #3399cc
+}
+#m_comment DIV.item A:visited {
+	COLOR: #3399cc
+}
+#m_comment DIV.item A.cnt {
+	FONT-SIZE: 12px; COLOR: #333333; TEXT-DECORATION: none
+}
+#m_comment DIV.item A.cnt:visited {
+	COLOR: #333333; TEXT-DECORATION: none
+}
+#m_comment DIV.item A.cnt:hover {
+	COLOR: #333333; TEXT-DECORATION: underline
+}
+#m_comment DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 5px; LINE-HEIGHT: 8px
+}
+#m_albumlist DIV.note {
+	FONT-SIZE: 14px; COLOR: #333333
+}
+#m_albumlist DIV.desc {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; FONT-SIZE: 14px; =
+MARGIN-BOTTOM: 12px; PADDING-BOTTOM: 3px; LINE-HEIGHT: 22px; =
+PADDING-TOP: 3px; BACKGROUND-COLOR: #f2f2f2
+}
+#m_albumlist DIV.none {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 14px; PADDING-BOTTOM: =
+100px; COLOR: #333333; PADDING-TOP: 100px
+}
+#m_albumlist DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 10px; LINE-HEIGHT: 16px
+}
+#m_albumlist DIV.tit {
+	FONT-SIZE: 14px; MARGIN: 6px 0px 7px; COLOR: #333333
+}
+#m_albumlist DIV.tit A {
+	FONT-SIZE: 14px; COLOR: #3399cc
+}
+#m_albumlist DIV.tit A:visited {
+	COLOR: #3399cc
+}
+#m_albumlist SPAN.count {
+	FONT-WEIGHT: bold; FONT-SIZE: 12px; COLOR: #666666
+}
+#m_albumlist SPAN.size {
+	FONT-SIZE: 12px; COLOR: #999999; FONT-FAMILY: Arial
+}
+#m_albumlist A.act {
+	FONT-SIZE: 12px; COLOR: #3399cc
+}
+#m_albumlist A.act:visited {
+	COLOR: #3399cc
+}
+#m_albumlist A.page {
+	FONT-SIZE: 14px; COLOR: #0000cc
+}
+#m_albumlist A.page:visited {
+	COLOR: #0000cc
+}
+#m_albumlist TD.image {
+	BORDER-RIGHT: #999999 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: =
+#999999 1px solid; PADDING-LEFT: 5px; BACKGROUND: #ffffff; =
+PADDING-BOTTOM: 5px; BORDER-LEFT: #999999 1px solid; PADDING-TOP: 5px; =
+BORDER-BOTTOM: #999999 1px solid
+}
+#m_albumlist .phbox {
+	MARGIN-TOP: 15px; MARGIN-LEFT: 15px
+}
+#m_albumlist .phbox .phpage {
+	FONT-SIZE: 14px; COLOR: #636363
+}
+#m_albumlist .phbox .phinfo {
+	FONT-SIZE: 12px; MARGIN: 6px 0px 2px; COLOR: #636363
+}
+#m_albumlist .phbox .phimg {
+	MARGIN-BOTTOM: 10px
+}
+#m_friend DIV.filter {
+	PADDING-LEFT: 10px; MARGIN-BOTTOM: 10px; LINE-HEIGHT: 27px; =
+PADDING-TOP: 10px; HEIGHT: 27px
+}
+#m_friend DIV.catalog {
+	PADDING-LEFT: 10px; FONT-SIZE: 14px; MARGIN-BOTTOM: 10px; LINE-HEIGHT: =
+27px; HEIGHT: 27px; BACKGROUND-COLOR: #f2f2f2
+}
+#m_friend DIV.user {
+	MARGIN-TOP: 4px; FONT-SIZE: 12px; COLOR: #333333
+}
+#m_friend DIV.user A {
+	FONT-SIZE: 12px; COLOR: #3399cc
+}
+#m_friend DIV.user A:visited {
+	COLOR: #3399cc
+}
+#m_friend DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 10px; LINE-HEIGHT: 16px
+}
+#m_setting A {
+	COLOR: #3399cc
+}
+#m_setting A:visited {
+	COLOR: #3399cc
+}
+#m_setting {
+	FONT-SIZE: 14px; COLOR: #333333; LINE-HEIGHT: 22px
+}
+#m_setting IMG.sel {
+	BORDER-RIGHT: #ffdb7b 4px solid; BORDER-TOP: #ffdb7b 4px solid; =
+BORDER-LEFT: #ffdb7b 4px solid; BORDER-BOTTOM: #ffdb7b 4px solid
+}
+#m_setting IMG.unsel {
+	BORDER-RIGHT: #d2d2d2 1px solid; BORDER-TOP: #d2d2d2 1px solid; =
+BORDER-LEFT: #d2d2d2 1px solid; BORDER-BOTTOM: #d2d2d2 1px solid
+}
+#m_setting SPAN.tit {
+	FONT-SIZE: 14px
+}
+#m_setting SPAN.usr {
+	COLOR: #666666
+}
+#m_setting DIV.sel {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px; PADDING-TOP: 6px
+}
+#m_setting DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 20px; LINE-HEIGHT: 16px
+}
+#m_sysinfo A {
+	COLOR: #3399cc
+}
+#m_sysinfo A:visited {
+	COLOR: #3399cc
+}
+#m_sysinfo {
+	FONT-SIZE: 14px; COLOR: #333333; LINE-HEIGHT: 22px
+}
+#m_sysinfo SPAN.new {
+	FONT-SIZE: 10px; COLOR: #ff0000; FONT-FAMILY: Arial
+}
+#m_sysinfo SPAN.date {
+	FONT-SIZE: 14px; COLOR: #666666
+}
+#m_setbase {
+	FONT-SIZE: 14px; COLOR: #333333
+}
+#m_setbase TD {
+	FONT-SIZE: 14px; COLOR: #333333
+}
+#m_setbase DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 5px; LINE-HEIGHT: 8px
+}
+#in_comment {
+	WIDTH: 710px
+}
+#in_comment DIV.tit {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px; MARGIN-BOTTOM: 12px; COLOR: #333333
+}
+#in_comment DIV.user {
+	FONT-SIZE: 12px; MARGIN-BOTTOM: 6px; COLOR: #333333
+}
+#in_comment DIV.user A {
+	FONT-SIZE: 12px; COLOR: #3399cc
+}
+#in_comment DIV.user A:visited {
+	COLOR: #3399cc
+}
+#in_comment DIV.user SPAN.date {
+	FONT-SIZE: 12px; COLOR: #666666
+}
+#in_comment DIV.desc {
+	FONT-SIZE: 12px; COLOR: #333333
+}
+#in_comment DIV.line {
+	BORDER-TOP: #d2e9f4 1px solid; MARGIN-TOP: 17px; LINE-HEIGHT: 17px
+}
+#m_track {
+	FONT-SIZE: 12px; COLOR: #333333
+}
+#m_track A {
+	FONT-SIZE: 12px; COLOR: #3399cc
+}
+#m_track A:visited {
+	COLOR: #3399cc
+}
+#in_send DIV.tit {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px; MARGIN: 10px 0px; COLOR: #333333
+}
+
+------=_NextPart_000_0000_01C72128.63CFA6F0
+Content-Type: text/css;
+	charset="gb2312"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://hi.baidu.com/space.css
+
+BODY {
+	MARGIN: 0px
+}
+FORM {
+	MARGIN: 0px
+}
+BODY {
+	FILTER: none; VISIBILITY: visible! important; WORD-BREAK: break-all; =
+ZOOM: 1! important; FONT-FAMILY: Arial; WORD-WRAP: break-word; =
+-moz-opacity: 1
+}
+TD {
+	FILTER: none; VISIBILITY: visible! important; WORD-BREAK: break-all; =
+ZOOM: 1! important; FONT-FAMILY: Arial; WORD-WRAP: break-word; =
+-moz-opacity: 1
+}
+DIV {
+	FILTER: none; VISIBILITY: visible! important; WORD-BREAK: break-all; =
+ZOOM: 1! important; FONT-FAMILY: Arial; WORD-WRAP: break-word; =
+-moz-opacity: 1
+}
+TD {
+	FONT-SIZE: 12px; LINE-HEIGHT: 18px
+}
+DIV {
+	FONT-SIZE: 12px; LINE-HEIGHT: 18px
+}
+A:link {
+	COLOR: #0033cc
+}
+A:visited {
+	COLOR: #800080
+}
+HTML BODY CENTER {
+	CLEAR: both! important; BORDER-RIGHT: medium none; BORDER-TOP: medium =
+none; FONT-SIZE: 12px! important; BACKGROUND: none transparent scroll =
+repeat 0% 0%; FILTER: none! important; FLOAT: none! important; =
+VISIBILITY: visible! important; MAX-WIDTH: none! important; MARGIN: 0px; =
+WORD-SPACING: normal! important; VERTICAL-ALIGN: baseline! important; =
+OVERFLOW: visible! important; TEXT-TRANSFORM: none! important; =
+BORDER-LEFT: medium none; WIDTH: auto! important; DIRECTION: inherit! =
+important; LAYOUT-FLOW: horizontal! important; LINE-HEIGHT: normal! =
+important; BORDER-BOTTOM: medium none; ZOOM: 1! important; FONT-FAMILY: =
+Arial! important; LETTER-SPACING: normal! important; POSITION: static! =
+important; FONT-VARIANT: normal! important; TEXT-DECORATION: none! =
+important; -moz-opacity: 1; font-size-adjust: none
+}
+HTML BODY CENTER #usrbar {
+	CLEAR: both! important; BORDER-RIGHT: medium none; BORDER-TOP: medium =
+none; FONT-SIZE: 12px! important; BACKGROUND: none transparent scroll =
+repeat 0% 0%; FILTER: none! important; FLOAT: none! important; =
+VISIBILITY: visible! important; MAX-WIDTH: none! important; MARGIN: 0px; =
+WORD-SPACING: normal! important; VERTICAL-ALIGN: baseline! important; =
+OVERFLOW: visible! important; TEXT-TRANSFORM: none! important; =
+BORDER-LEFT: medium none; WIDTH: auto! important; DIRECTION: inherit! =
+important; LAYOUT-FLOW: horizontal! important; LINE-HEIGHT: normal! =
+important; BORDER-BOTTOM: medium none; ZOOM: 1! important; FONT-FAMILY: =
+Arial! important; LETTER-SPACING: normal! important; POSITION: static! =
+important; FONT-VARIANT: normal! important; TEXT-DECORATION: none! =
+important; -moz-opacity: 1; font-size-adjust: none
+}
+HTML BODY CENTER #ft {
+	CLEAR: both! important; BORDER-RIGHT: medium none; BORDER-TOP: medium =
+none; FONT-SIZE: 12px! important; BACKGROUND: none transparent scroll =
+repeat 0% 0%; FILTER: none! important; FLOAT: none! important; =
+VISIBILITY: visible! important; MAX-WIDTH: none! important; MARGIN: 0px; =
+WORD-SPACING: normal! important; VERTICAL-ALIGN: baseline! important; =
+OVERFLOW: visible! important; TEXT-TRANSFORM: none! important; =
+BORDER-LEFT: medium none; WIDTH: auto! important; DIRECTION: inherit! =
+important; LAYOUT-FLOW: horizontal! important; LINE-HEIGHT: normal! =
+important; BORDER-BOTTOM: medium none; ZOOM: 1! important; FONT-FAMILY: =
+Arial! important; LETTER-SPACING: normal! important; POSITION: static! =
+important; FONT-VARIANT: normal! important; TEXT-DECORATION: none! =
+important; -moz-opacity: 1; font-size-adjust: none
+}
+HTML BODY CENTER #usrbar NOBR {
+	CLEAR: both! important; BORDER-RIGHT: medium none; BORDER-TOP: medium =
+none; FONT-SIZE: 12px! important; BACKGROUND: none transparent scroll =
+repeat 0% 0%; FILTER: none! important; FLOAT: none! important; =
+VISIBILITY: visible! important; MAX-WIDTH: none! important; MARGIN: 0px; =
+WORD-SPACING: normal! important; VERTICAL-ALIGN: baseline! important; =
+OVERFLOW: visible! important; TEXT-TRANSFORM: none! important; =
+BORDER-LEFT: medium none; WIDTH: auto! important; DIRECTION: inherit! =
+important; LAYOUT-FLOW: horizontal! important; LINE-HEIGHT: normal! =
+important; BORDER-BOTTOM: medium none; ZOOM: 1! important; FONT-FAMILY: =
+Arial! important; LETTER-SPACING: normal! important; POSITION: static! =
+important; FONT-VARIANT: normal! important; TEXT-DECORATION: none! =
+important; -moz-opacity: 1; font-size-adjust: none
+}
+HTML BODY CENTER #usrbar STRONG {
+	CLEAR: both! important; BORDER-RIGHT: medium none; BORDER-TOP: medium =
+none; FONT-SIZE: 12px! important; BACKGROUND: none transparent scroll =
+repeat 0% 0%; FILTER: none! important; FLOAT: none! important; =
+VISIBILITY: visible! important; MAX-WIDTH: none! important; MARGIN: 0px; =
+WORD-SPACING: normal! important; VERTICAL-ALIGN: baseline! important; =
+OVERFLOW: visible! important; TEXT-TRANSFORM: none! important; =
+BORDER-LEFT: medium none; WIDTH: auto! important; DIRECTION: inherit! =
+important; LAYOUT-FLOW: horizontal! important; LINE-HEIGHT: normal! =
+important; BORDER-BOTTOM: medium none; ZOOM: 1! important; FONT-FAMILY: =
+Arial! important; LETTER-SPACING: normal! important; POSITION: static! =
+important; FONT-VARIANT: normal! important; TEXT-DECORATION: none! =
+important; -moz-opacity: 1; font-size-adjust: none
+}
+HTML BODY CENTER #usrbar A {
+	CLEAR: both! important; BORDER-RIGHT: medium none; BORDER-TOP: medium =
+none; FONT-SIZE: 12px! important; BACKGROUND: none transparent scroll =
+repeat 0% 0%; FILTER: none! important; FLOAT: none! important; =
+VISIBILITY: visible! important; MAX-WIDTH: none! important; MARGIN: 0px; =
+WORD-SPACING: normal! important; VERTICAL-ALIGN: baseline! important; =
+OVERFLOW: visible! important; TEXT-TRANSFORM: none! important; =
+BORDER-LEFT: medium none; WIDTH: auto! important; DIRECTION: inherit! =
+important; LAYOUT-FLOW: horizontal! important; LINE-HEIGHT: normal! =
+important; BORDER-BOTTOM: medium none; ZOOM: 1! important; FONT-FAMILY: =
+Arial! important; LETTER-SPACING: normal! important; POSITION: static! =
+important; FONT-VARIANT: normal! important; TEXT-DECORATION: none! =
+important; -moz-opacity: 1; font-size-adjust: none
+}
+HTML BODY CENTER #usrbar A:link {
+	CLEAR: both! important; BORDER-RIGHT: medium none; BORDER-TOP: medium =
+none; FONT-SIZE: 12px! important; BACKGROUND: none transparent scroll =
+repeat 0% 0%; FILTER: none! important; FLOAT: none! important; =
+VISIBILITY: visible! important; MAX-WIDTH: none! important; MARGIN: 0px; =
+WORD-SPACING: normal! important; VERTICAL-ALIGN: baseline! important; =
+OVERFLOW: visible! important; TEXT-TRANSFORM: none! important; =
+BORDER-LEFT: medium none; WIDTH: auto! important; DIRECTION: inherit! =
+important; LAYOUT-FLOW: horizontal! important; LINE-HEIGHT: normal! =
+important; BORDER-BOTTOM: medium none; ZOOM: 1! important; FONT-FAMILY: =
+Arial! important; LETTER-SPACING: normal! important; POSITION: static! =
+important; FONT-VARIANT: normal! important; TEXT-DECORATION: none! =
+important; -moz-opacity: 1; font-size-adjust: none
+}
+HTML BODY CENTER #usrbar A:visited {
+	CLEAR: both! important; BORDER-RIGHT: medium none; BORDER-TOP: medium =
+none; FONT-SIZE: 12px! important; BACKGROUND: none transparent scroll =
+repeat 0% 0%; FILTER: none! important; FLOAT: none! important; =
+VISIBILITY: visible! important; MAX-WIDTH: none! important; MARGIN: 0px; =
+WORD-SPACING: normal! important; VERTICAL-ALIGN: baseline! important; =
+OVERFLOW: visible! important; TEXT-TRANSFORM: none! important; =
+BORDER-LEFT: medium none; WIDTH: auto! important; DIRECTION: inherit! =
+important; LAYOUT-FLOW: horizontal! important; LINE-HEIGHT: normal! =
+important; BORDER-BOTTOM: medium none; ZOOM: 1! important; FONT-FAMILY: =
+Arial! important; LETTER-SPACING: normal! important; POSITION: static! =
+important; FONT-VARIANT: normal! important; TEXT-DECORATION: none! =
+important; -moz-opacity: 1; font-size-adjust: none
+}
+HTML BODY CENTER #ft A {
+	CLEAR: both! important; BORDER-RIGHT: medium none; BORDER-TOP: medium =
+none; FONT-SIZE: 12px! important; BACKGROUND: none transparent scroll =
+repeat 0% 0%; FILTER: none! important; FLOAT: none! important; =
+VISIBILITY: visible! important; MAX-WIDTH: none! important; MARGIN: 0px; =
+WORD-SPACING: normal! important; VERTICAL-ALIGN: baseline! important; =
+OVERFLOW: visible! important; TEXT-TRANSFORM: none! important; =
+BORDER-LEFT: medium none; WIDTH: auto! important; DIRECTION: inherit! =
+important; LAYOUT-FLOW: horizontal! important; LINE-HEIGHT: normal! =
+important; BORDER-BOTTOM: medium none; ZOOM: 1! important; FONT-FAMILY: =
+Arial! important; LETTER-SPACING: normal! important; POSITION: static! =
+important; FONT-VARIANT: normal! important; TEXT-DECORATION: none! =
+important; -moz-opacity: 1; font-size-adjust: none
+}
+HTML BODY CENTER #ft A:link {
+	CLEAR: both! important; BORDER-RIGHT: medium none; BORDER-TOP: medium =
+none; FONT-SIZE: 12px! important; BACKGROUND: none transparent scroll =
+repeat 0% 0%; FILTER: none! important; FLOAT: none! important; =
+VISIBILITY: visible! important; MAX-WIDTH: none! important; MARGIN: 0px; =
+WORD-SPACING: normal! important; VERTICAL-ALIGN: baseline! important; =
+OVERFLOW: visible! important; TEXT-TRANSFORM: none! important; =
+BORDER-LEFT: medium none; WIDTH: auto! important; DIRECTION: inherit! =
+important; LAYOUT-FLOW: horizontal! important; LINE-HEIGHT: normal! =
+important; BORDER-BOTTOM: medium none; ZOOM: 1! important; FONT-FAMILY: =
+Arial! important; LETTER-SPACING: normal! important; POSITION: static! =
+important; FONT-VARIANT: normal! important; TEXT-DECORATION: none! =
+important; -moz-opacity: 1; font-size-adjust: none
+}
+HTML BODY CENTER #ft A:visited {
+	CLEAR: both! important; BORDER-RIGHT: medium none; BORDER-TOP: medium =
+none; FONT-SIZE: 12px! important; BACKGROUND: none transparent scroll =
+repeat 0% 0%; FILTER: none! important; FLOAT: none! important; =
+VISIBILITY: visible! important; MAX-WIDTH: none! important; MARGIN: 0px; =
+WORD-SPACING: normal! important; VERTICAL-ALIGN: baseline! important; =
+OVERFLOW: visible! important; TEXT-TRANSFORM: none! important; =
+BORDER-LEFT: medium none; WIDTH: auto! important; DIRECTION: inherit! =
+important; LAYOUT-FLOW: horizontal! important; LINE-HEIGHT: normal! =
+important; BORDER-BOTTOM: medium none; ZOOM: 1! important; FONT-FAMILY: =
+Arial! important; LETTER-SPACING: normal! important; POSITION: static! =
+important; FONT-VARIANT: normal! important; TEXT-DECORATION: none! =
+important; -moz-opacity: 1; font-size-adjust: none
+}
+HTML BODY CENTER #usrbar {
+	DISPLAY: block! important; LINE-HEIGHT: 19px! important; HEIGHT: 19px! =
+important
+}
+HTML BODY CENTER #ft {
+	DISPLAY: block! important; LINE-HEIGHT: 19px! important; HEIGHT: 19px! =
+important
+}
+HTML BODY CENTER #usrbar NOBR {
+	DISPLAY: block! important; LINE-HEIGHT: 19px! important; HEIGHT: 19px! =
+important
+}
+HTML BODY CENTER #usrbar STRONG {
+	DISPLAY: inline! important; HEIGHT: auto! important; TEXT-DECORATION: =
+underline! important
+}
+HTML BODY CENTER #usrbar A {
+	DISPLAY: inline! important; HEIGHT: auto! important; TEXT-DECORATION: =
+underline! important
+}
+HTML BODY CENTER #usrbar A:link {
+	DISPLAY: inline! important; HEIGHT: auto! important; TEXT-DECORATION: =
+underline! important
+}
+HTML BODY CENTER #usrbar A:visited {
+	DISPLAY: inline! important; HEIGHT: auto! important; TEXT-DECORATION: =
+underline! important
+}
+HTML BODY CENTER #ft A {
+	DISPLAY: inline! important; HEIGHT: auto! important; TEXT-DECORATION: =
+underline! important
+}
+HTML BODY CENTER #ft A:link {
+	DISPLAY: inline! important; HEIGHT: auto! important; TEXT-DECORATION: =
+underline! important
+}
+HTML BODY CENTER #ft A:visited {
+	DISPLAY: inline! important; HEIGHT: auto! important; TEXT-DECORATION: =
+underline! important
+}
+HTML BODY CENTER #usrbar STRONG {
+	COLOR: #000000! important; TEXT-ALIGN: left! important; =
+TEXT-DECORATION: none! important
+}
+HTML BODY CENTER {
+	DISPLAY: block! important
+}
+HTML BODY CENTER #main {
+	RIGHT: auto! important; LEFT: auto! important; BOTTOM: auto! important; =
+POSITION: relative! important; TOP: auto! important
+}
+HTML BODY CENTER #usrbar {
+	RIGHT: auto! important; LEFT: auto! important; BOTTOM: auto! important; =
+POSITION: relative! important; TOP: auto! important
+}
+HTML BODY CENTER #ft {
+	RIGHT: auto! important; LEFT: auto! important; BOTTOM: auto! important; =
+POSITION: relative! important; TOP: auto! important
+}
+HTML BODY CENTER #usrbar NOBR {
+	COLOR: #000000! important; TEXT-ALIGN: right! important
+}
+HTML BODY CENTER #usrbar {
+	PADDING-RIGHT: 10px! important; PADDING-LEFT: 0px! important; Z-INDEX: =
+65535! important; BACKGROUND: #ffffff; FILTER: alpha(opacity=3D65)! =
+important; PADDING-BOTTOM: 3px! important; WIDTH: auto! important; =
+COLOR: #000000! important; PADDING-TOP: 4px! important; TEXT-ALIGN: =
+right! important; -moz-opacity: 0.5
+}
+HTML BODY CENTER #usrbar A {
+	COLOR: #0000cc! important
+}
+HTML BODY CENTER #usrbar A:link {
+	COLOR: #0000cc! important
+}
+HTML BODY CENTER #usrbar A:visited {
+	COLOR: #0000cc! important
+}
+HTML BODY CENTER #ft {
+	Z-INDEX: 65534! important; COLOR: #666666! important; TEXT-ALIGN: =
+center! important
+}
+HTML BODY CENTER #ft A {
+	COLOR: #7777cc! important
+}
+HTML BODY CENTER #ft A:link {
+	COLOR: #7777cc! important
+}
+HTML BODY CENTER #ft A:visited {
+	COLOR: #7777cc! important
+}
+HTML BODY CENTER #main {
+	PADDING-RIGHT: 10px; MIN-WIDTH: 756px; PADDING-LEFT: 10px; Z-INDEX: =
+10000! important; MAX-WIDTH: 1000px; PADDING-BOTTOM: 0px; PADDING-TOP: =
+0px
+}
+#header {
+	POSITION: relative
+}
+#header DIV.lc {
+	FONT-SIZE: 0px; POSITION: relative; HEIGHT: 100%
+}
+#header DIV.rc {
+	FONT-SIZE: 0px; RIGHT: 0px; POSITION: relative; HEIGHT: 100%
+}
+#header DIV.tit {
+	POSITION: absolute
+}
+#header DIV.desc {
+	POSITION: absolute
+}
+#tabline {
+	FONT-SIZE: 0px; WIDTH: 100%; LINE-HEIGHT: 1px; POSITION: absolute; =
+HEIGHT: 1px
+}
+#tab {
+	PADDING-LEFT: 10px; WIDTH: 100%; LINE-HEIGHT: 22px; POSITION: absolute; =
+HEIGHT: 22px
+}
+#tab A.on {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 12px; FONT-WEIGHT: bold; FONT-SIZE: =
+13px; FLOAT: left; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+#tab SPAN {
+	FONT-SIZE: 13px; FLOAT: left
+}
+#tab A {
+	PADDING-RIGHT: 14px; PADDING-LEFT: 14px; FONT-SIZE: 13px; FLOAT: left; =
+PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+#tab2 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 348px; FONT-SIZE: 12px; =
+PADDING-BOTTOM: 0px; LINE-HEIGHT: 23px; PADDING-TOP: 1px; HEIGHT: 23px
+}
+#tab2 SPAN {
+	CURSOR: default
+}
+.stage {
+	WIDTH: 100%; PADDING-TOP: 10px; HEIGHT: auto
+}
+.stagepad {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; =
+PADDING-TOP: 0px
+}
+.applytmp {
+	BACKGROUND: #ffffe1; BORDER-BOTTOM: #ce0f0f 2px solid; HEIGHT: 43px
+}
+#set_cs {
+	Z-INDEX: 65533; POSITION: relative
+}
+#set_cs TABLE.actbar {
+	BORDER-RIGHT: #e10602 1px solid; BORDER-TOP: #e10602 1px solid; =
+BACKGROUND: #ffffe1; MARGIN-BOTTOM: 10px; BORDER-LEFT: #e10602 1px =
+solid; BORDER-BOTTOM: #e10602 1px solid; HEIGHT: 70px
+}
+#set_cs DIV.panel {
+	WIDTH: 100%; POSITION: absolute; TOP: 71px
+}
+#cscnt {
+	BORDER-RIGHT: #ec4847 2px solid; PADDING-RIGHT: 15px; BORDER-TOP: =
+#ec4847 2px solid; PADDING-LEFT: 15px; BACKGROUND: #ffffff; =
+PADDING-BOTTOM: 15px; BORDER-LEFT: #ec4847 2px solid; PADDING-TOP: 15px; =
+BORDER-BOTTOM: #ec4847 2px solid; TEXT-ALIGN: left
+}
+#cslayout {
+	BORDER-RIGHT: #ec4847 2px solid; PADDING-RIGHT: 15px; BORDER-TOP: =
+#ec4847 2px solid; PADDING-LEFT: 15px; BACKGROUND: #ffffff; =
+PADDING-BOTTOM: 15px; BORDER-LEFT: #ec4847 2px solid; PADDING-TOP: 15px; =
+BORDER-BOTTOM: #ec4847 2px solid; TEXT-ALIGN: left
+}
+#csbg {
+	BORDER-RIGHT: #ec4847 2px solid; PADDING-RIGHT: 15px; BORDER-TOP: =
+#ec4847 2px solid; PADDING-LEFT: 15px; BACKGROUND: #ffffff; =
+PADDING-BOTTOM: 15px; BORDER-LEFT: #ec4847 2px solid; PADDING-TOP: 15px; =
+BORDER-BOTTOM: #ec4847 2px solid; TEXT-ALIGN: left
+}
+#cscnt {
+	WIDTH: 800px
+}
+#cslayout {
+	WIDTH: 620px
+}
+#csbg {
+	WIDTH: 520px
+}
+.f12 {
+	FONT-SIZE: 12px
+}
+.f14 {
+	FONT-SIZE: 14px
+}
+#layout {
+	TABLE-LAYOUT: fixed
+}
+#m_blog DIV.cnt {
+	OVERFLOW: hidden
+}
+#m_albumlist DIV.desc {
+	OVERFLOW: hidden
+}
+#m_blog DIV.tit {
+	OVERFLOW: hidden
+}
+#m_artclg DIV.item {
+	OVERFLOW: hidden
+}
+#m_comment DIV.item {
+	OVERFLOW: hidden
+}
+#m_album DIV.image {
+	OVERFLOW: hidden
+}
+#m_links DIV.item {
+	OVERFLOW: hidden
+}
+#in_comment DIV.desc {
+	OVERFLOW: hidden
+}
+#m_blog DIV.cnt {
+	OVERFLOW: hidden; POSITION: static
+}
+#m_blog DIV.cnt FONT {
+	LINE-HEIGHT: normal
+}
+#m_blog DIV.cnt * {
+	LINE-HEIGHT: normal
+}
+#m_blog TABLE {
+	TABLE-LAYOUT: auto
+}
+#in_comment DIV.tit {
+	TEXT-ALIGN: left
+}
+#in_send DIV.tit {
+	TEXT-ALIGN: left
+}
+
+------=_NextPart_000_0000_01C72128.63CFA6F0
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://hi.baidu.com/js/g_spjs.js
+
+=0A=
+//=D1=E9=BF=D5=B5=C4=BA=AF=CA=FD=0A=
+function checkblank(id)=0A=
+{=0A=
+	ele=3Ddocument.getElementById(id);=0A=
+	len=3Dbytes(ele.value);=0A=
+	if(len=3D=3D0)=0A=
+	{=0A=
+		showerror("msg_blank");=0A=
+		return false;}=0A=
+		else=0A=
+		{	hideerror("msg_blank");=0A=
+			return true;=0A=
+			}=0A=
+	}=0A=
+//=D1=E9=D7=D6=BD=DA=CA=FD=B6=E0=D3=DA=0A=
+function checkbytem(id,smax)=0A=
+{=0A=
+	ele=3Ddocument.getElementById(id);=0A=
+	len=3Dbytes(ele.value);=0A=
+	if(len>smax)=0A=
+	{=0A=
+		showerror("msg_maxthan");=0A=
+		return false;=0A=
+		}=0A=
+		else=0A=
+		{	hideerror("msg_maxthan");=0A=
+			return true;=0A=
+			}=0A=
+	=0A=
+	}=0A=
+//=D1=E9=D6=A4=D7=D6=BD=DA=CA=FD=C9=D9=D3=DA=0A=
+function checkbytes(id,smin)=0A=
+{=0A=
+	ele=3Ddocument.getElementById(id);=0A=
+	len=3Dbytes(ele.value);=0A=
+	if(len<smin)=0A=
+	{=0A=
+		showerror("msg_minthan");=0A=
+				return false;=0A=
+		}=0A=
+		else=0A=
+		{=0A=
+		hideerror("msg_minthan");=0A=
+		return true;}=0A=
+	}=0A=
+//=D1=E9=D6=A4=D7=D6=BD=DA=CA=FD=B6=E0=D3=DA=BA=CD=C9=D9=D3=DA=0A=
+function checkbyteall(id,smin,smax)=0A=
+{=0A=
+	ele=3Ddocument.getElementById(id);=0A=
+	len=3Dbytes(ele.value);=0A=
+	if((len<smin)||(len>smax))=0A=
+	{=0A=
+		showerror("msg_than");=0A=
+				return false;=0A=
+		}=0A=
+		else{=0A=
+		hideerror("msg_than");=0A=
+		return true;}=0A=
+	}=0A=
+//=BB=F1=C8=A1=D7=D6=BD=DA=CA=FD=C4=BF=D5=EB=B6=D4=D6=D0=D3=A2=CE=C4=BA=CD=
+=CA=FD=D7=D6=0A=
+function bytes(str)=0A=
+{if(typeof(str)!=3D'string'){=0A=
+		str =3D str.value;=0A=
+	}=0A=
+	var len =3D 0;=0A=
+	for(var i =3D 0; i < str.length; i++){=0A=
+		if(str.charCodeAt(i) > 127){=0A=
+			len++;=0A=
+		}=0A=
+		len++;=0A=
+	}=0A=
+	return len;=0A=
+	}=0A=
+//=C8=A5=B3=FD=D7=F3=D3=D2=BF=D5=B8=F1=0A=
+function trimlr(id)=0A=
+{=0A=
+	var str=3Ddocument.getElementById(id).value;=0A=
+	for(i=3D0;str.charAt(i)=3D=3D" "|| str.charAt(i)=3D=3D"=A1=A1";i++)=0A=
+{=0A=
+}=0A=
+str=3Dstr.substring(i,str.length);=0A=
+for(i=3Dstr.length-1;str.charAt(i)=3D=3D" "|| =
+str.charAt(i)=3D=3D"=A1=A1";i--)=0A=
+{=0A=
+}=0A=
+str=3Dstr.substring(0,i+1);=0A=
+return str;=0A=
+	}=0A=
+//=B6=E0=B8=F6=BF=D5=B8=F1=BA=CD=BB=BB=D0=D0=B5=B1=D7=F6=D2=BB=B8=F6=CA=B9=
+=D3=C3=0A=
+function trimrn(id)=0A=
+{=0A=
+var el=3Ddocument.getElementById(id);=0A=
+var s=3Del.value;=0A=
+var len =3D s.length;=0A=
+i=3D0;=0A=
+flag=3D0;=0A=
+flagn=3D0;=0A=
+var result=3D"";=0A=
+while(i<len)=0A=
+{=0A=
+	ch=3Ds.charAt(i);=0A=
+	if(ch=3D=3D"\n"||ch=3D=3D"\r")=0A=
+	{=0A=
+		if((flagn=3D=3D1)&&(ch=3D=3D"\n")){=0A=
+			flag++;=0A=
+			flagn=3D0;=0A=
+		}else if(ch=3D=3D"\r"){=0A=
+			flagn=3D1;=0A=
+		}=0A=
+		=0A=
+	=0A=
+			i++;=0A=
+			if(flag=3D=3D1)=0A=
+			{=0A=
+			result=3Dresult+ch;=0A=
+			}=0A=
+	=0A=
+	}else{=0A=
+		flag=3D0;=0A=
+		flagn=3D0;=0A=
+		result=3Dresult+ch;=0A=
+		i++;=0A=
+	}=0A=
+}=0A=
+	return result;=0A=
+}=0A=
+//=CD=B3=D2=BB=B4=A6=C0=ED=B4=ED=CE=F3=CE=CA=CC=E2=0A=
+function showerror(msg)=0A=
+{if(msg)=0A=
+	ob=3Ddocument.getElementById(msg);=0A=
+	ob.style.display=3D"block";=0A=
+	}=0A=
+function hideerror(msg)=0A=
+{=0A=
+	if(msg)=0A=
+	ob=3Ddocument.getElementById(msg);=0A=
+	ob.style.display=3D"none";=0A=
+}=0A=
+function setvalue(id)=0A=
+{=0A=
+document.getElementById(id).value=3Dtrimrn(id);=0A=
+alert(document.getElementById(id).value);=0A=
+}=0A=
+function cutSpace(id)=0A=
+{=0A=
+el=3Ddocument.getElementById(id);=0A=
+s=3Del.value;=0A=
+    var len =3D s.length;=0A=
+    var i;=0A=
+    var ch;=0A=
+    var result =3D "";=0A=
+=0A=
+    i =3D 0;=0A=
+    while (i < len)=0A=
+    {=0A=
+        ch =3D s.charAt(i++);=0A=
+        result +=3D ch;=0A=
+        if (ch !=3D ' ' && ch !=3D'=A1=A1')=0A=
+        {=0A=
+            continue;=0A=
+        }=0A=
+=0A=
+        while (i < len && (ch =3D s.charAt(i)) =3D=3D ' ')=0A=
+        {=0A=
+           i++;=0A=
+        }=0A=
+    }=0A=
+=0A=
+return result;=0A=
+}=0A=
+//=B4=D3=CA=E4=C8=EB=CF=EE=B5=BD=D1=A1=D6=D0=0A=
+function getselect(id,selectname)=0A=
+{=0A=
+=0A=
+         var ele =3D document.getElementById(id);=0A=
+=0A=
+         ele.selectedIndex =3D selectname;=0A=
+=0A=
+ =0A=
+=0A=
+}=0A=
+=0A=
+
+------=_NextPart_000_0000_01C72128.63CFA6F0--

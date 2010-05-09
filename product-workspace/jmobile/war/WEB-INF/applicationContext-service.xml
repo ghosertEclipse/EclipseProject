@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+    <bean id="txProxyTemplate" abstract="true"
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager" ref="transactionManager"/>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="save*">PROPAGATION_REQUIRED</prop>
+                <prop key="remove*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+            </props>
+        </property>
+    </bean>
+    
+	<bean id="jMobileManager" parent="txProxyTemplate" >
+        <property name="target">
+            <bean class="com.loadtrend.web.mobile.service.impl.JMobileManagerImpl">
+                <property name="itemDAO" ref="itemDAO"/>
+                <property name="productDAO" ref="productDAO"/>
+                <property name="orderDAO" ref="orderDAO"/>
+                <property name="userRecorderDAO" ref="userRecorderDAO"/>
+            </bean>
+        </property>
+    </bean>
+    
+</beans>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/activation.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/antlr-2.7.5H3.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/aopalliance.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/cglib-nodep-2.1_3.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-beanutils.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-collections.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-dbcp.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-email-1.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-lang.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-pool.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/dom4j-1.6.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/ehcache-1.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate3.jar" sourcepath="E:/Project/Eclipse/TestWorkspace/SHARED_LIB/hibernate-3.1/src"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/itext-1.3.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jstl.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jta.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.11.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/mail.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/mysqldriver.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/poi-2.5.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring.jar" sourcepath="E:/Project/Eclipse/TestWorkspace/spring-framework-1.2.6/src"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/standard.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/xml-apis.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/J2EE Tomcat System Library"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-codec-1.3.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-httpclient-3.0.1.jar"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="var" path="JUNIT_HOME/junit.jar" sourcepath="ECLIPSE_HOME/plugins/org.eclipse.jdt.source_3.1.0/src/org.junit_3.8.1/junitsrc.zip"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-fileupload-1.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/servlet-api.jar"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+</classpath>

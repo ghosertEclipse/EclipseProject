@@ -1,0 +1,101 @@
+ NativeCall
+
+ Timestamp is 44472064 (Thu Apr 20 07:47:16 2006)
+
+ Preferred load address is 10000000
+
+ Start         Length     Name                   Class
+ 0001:00000000 00000028H .idata$5                CODE
+ 0001:00000030 00000d1eH .text                   CODE
+ 0001:00000d50 00000014H .idata$2                CODE
+ 0001:00000d64 00000014H .idata$3                CODE
+ 0001:00000d78 00000028H .idata$4                CODE
+ 0001:00000da0 00000096H .idata$6                CODE
+ 0001:00000e40 00000212H .edata                  CODE
+ 0002:00000000 00000004H .CRT$XCA                DATA
+ 0002:00000004 00000004H .CRT$XCZ                DATA
+ 0002:00000010 00000130H .data                   DATA
+ 0002:00000140 0000004cH .bss                    DATA
+ 0003:00000000 00000058H .rsrc$01                DATA
+ 0003:00000060 000002b0H .rsrc$02                DATA
+
+  Address         Publics by Value              Rva+Base     Lib:Object
+
+ 0001:00000000       __imp__FormatMessageA@28   10001000     kernel32:KERNEL32.dll
+ 0001:00000004       __imp__FreeLibrary@4       10001004     kernel32:KERNEL32.dll
+ 0001:00000008       __imp__GetProcAddress@8    10001008     kernel32:KERNEL32.dll
+ 0001:0000000c       __imp__LoadLibraryA@4      1000100c     kernel32:KERNEL32.dll
+ 0001:00000010       __imp__LocalFree@4         10001010     kernel32:KERNEL32.dll
+ 0001:00000014       __imp__GetLastError@0      10001014     kernel32:KERNEL32.dll
+ 0001:00000018       __imp__HeapAlloc@12        10001018     kernel32:KERNEL32.dll
+ 0001:0000001c       __imp__GetProcessHeap@0    1000101c     kernel32:KERNEL32.dll
+ 0001:00000020       __imp__HeapFree@12         10001020     kernel32:KERNEL32.dll
+ 0001:00000024       \177KERNEL32_NULL_THUNK_DATA 10001024     kernel32:KERNEL32.dll
+ 0001:00000030       _Java_com_eaio_nativecall_IntCall_executeCall@8 10001030 f   IntCall.obj
+ 0001:00000074       _Java_com_eaio_nativecall_IntCall_executeCall0@12 10001074 f   IntCall.obj
+ 0001:0000045e       ?NewObject@JNIEnv_@@QAAPAV_jobject@@PAV_jclass@@PAU_jmethodID@@ZZ 1000145e f i IntCall.obj
+ 0001:00000476       ?CallBooleanMethod@JNIEnv_@@QAAEPAV_jobject@@PAU_jmethodID@@ZZ 10001476 f i IntCall.obj
+ 0001:00000491       ?CallIntMethod@JNIEnv_@@QAAJPAV_jobject@@PAU_jmethodID@@ZZ 10001491 f i IntCall.obj
+ 0001:000004ac       _Java_com_eaio_nativecall_NativeCall_initIDs@8 100014ac f   NativeCall.obj
+ 0001:00000648       _Java_com_eaio_nativecall_NativeCall_initHandles@8 10001648 f   NativeCall.obj
+ 0001:00000735       _Java_com_eaio_nativecall_NativeCall_getLastError@8 10001735 f   NativeCall.obj
+ 0001:0000078d       _Java_com_eaio_nativecall_NativeCall_destroy@8 1000178d f   NativeCall.obj
+ 0001:000007f6       _Java_com_eaio_nativecall_VoidCall_executeCall@8 100017f6 f   VoidCall.obj
+ 0001:00000833       _Java_com_eaio_nativecall_VoidCall_executeCall0@12 10001833 f   VoidCall.obj
+ 0001:00000c15       ??2@YAPAXI@Z               10001c15 f   libctiny:NEWDEL.OBJ
+ 0001:00000c29       ??3@YAXPAX@Z               10001c29 f   libctiny:NEWDEL.OBJ
+ 0001:00000c3d       __DllMainCRTStartup@12     10001c3d f   libctiny:DLLCRT0.OBJ
+ 0001:00000c7f       ?_initterm@@YAXPAP6AXXZ0@Z 10001c7f f   libctiny:INITTERM.OBJ
+ 0001:00000c99       ?_atexit_init@@YAXXZ       10001c99 f   libctiny:INITTERM.OBJ
+ 0001:00000cb1       ?_DoExit@@YAXXZ            10001cb1 f   libctiny:INITTERM.OBJ
+ 0001:00000ccd       _calloc                    10001ccd f   libctiny:ALLOC2.OBJ
+ 0001:00000cf0       _memset                    10001cf0 f   libcmt:memset.obj
+ 0001:00000d48       _DllMain@12                10001d48 f   libcmt:dllmain.obj
+ 0001:00000d50       __IMPORT_DESCRIPTOR_KERNEL32 10001d50     kernel32:KERNEL32.dll
+ 0001:00000d64       __NULL_IMPORT_DESCRIPTOR   10001d64     kernel32:KERNEL32.dll
+ 0002:00000000       ?__xc_a@@3PAP6AXXZA        10003000     libctiny:INITTERM.OBJ
+ 0002:00000004       ?__xc_z@@3PAP6AXXZA        10003004     libctiny:INITTERM.OBJ
+ 0002:00000010       ??_C@_0BL@NKOM@java?1lang?1OutOfMemoryError?$AA@ 10003010     IntCall.obj
+ 0002:0000002c       ??_C@_04JFOE@?$CIZ?$CJV?$AA@ 1000302c     NativeCall.obj
+ 0002:00000034       ??_C@_04ECLF@?$CII?$CJV?$AA@ 10003034     NativeCall.obj
+ 0002:0000003c       ??_C@_06KILP@?$DMinit?$DO?$AA@ 1000303c     NativeCall.obj
+ 0002:00000044       ??_C@_08JCMA@intValue?$AA@ 10003044     NativeCall.obj
+ 0002:00000050       ??_C@_03PPCD@?$CI?$CJI?$AA@ 10003050     NativeCall.obj
+ 0002:00000054       ??_C@_0N@KEBP@booleanValue?$AA@ 10003054     NativeCall.obj
+ 0002:00000064       ??_C@_03KJOK@?$CI?$CJZ?$AA@ 10003064     NativeCall.obj
+ 0002:00000068       ??_C@_02BENO@?$FLC?$AA@    10003068     NativeCall.obj
+ 0002:0000006c       ??_C@_02LOEJ@?$FLB?$AA@    1000306c     NativeCall.obj
+ 0002:00000070       ??_C@_0BB@LLFN@java?1lang?1String?$AA@ 10003070     NativeCall.obj
+ 0002:00000084       ??_C@_0BC@FBKL@java?1lang?1Integer?$AA@ 10003084     NativeCall.obj
+ 0002:00000098       ??_C@_0BC@IGNJ@java?1lang?1Boolean?$AA@ 10003098     NativeCall.obj
+ 0002:000000ac       ??_C@_01PGHN@o?$AA@        100030ac     NativeCall.obj
+ 0002:000000b0       ??_C@_0BD@GEDI@Ljava?1lang?1Object?$DL?$AA@ 100030b0     NativeCall.obj
+ 0002:000000c4       ??_C@_0BL@DALH@com?1eaio?1nativecall?1Holder?$AA@ 100030c4     NativeCall.obj
+ 0002:000000e0       ??_C@_0O@OMHL@lastErrorCode?$AA@ 100030e0     NativeCall.obj
+ 0002:000000f0       ??_C@_0N@EFAA@moduleHandle?$AA@ 100030f0     NativeCall.obj
+ 0002:00000100       ??_C@_0P@LKIL@functionHandle?$AA@ 10003100     NativeCall.obj
+ 0002:00000110       ??_C@_01FLOP@I?$AA@        10003110     NativeCall.obj
+ 0002:00000114       ??_C@_06CODG@module?$AA@   10003114     NativeCall.obj
+ 0002:0000011c       ??_C@_08JJOG@function?$AA@ 1000311c     NativeCall.obj
+ 0002:00000128       ??_C@_0BD@DFD@Ljava?1lang?1String?$DL?$AA@ 10003128     NativeCall.obj
+ 0002:00000140       ?classString@@3PAV_jclass@@A 10003140     NativeCall.obj
+ 0002:00000144       ?fieldFunctionHandle@@3PAU_jfieldID@@A 10003144     NativeCall.obj
+ 0002:00000148       ?newIntegerInt@@3PAU_jmethodID@@A 10003148     NativeCall.obj
+ 0002:0000014c       ?classCharArray@@3PAV_jclass@@A 1000314c     NativeCall.obj
+ 0002:00000150       ?fieldFunction@@3PAU_jfieldID@@A 10003150     NativeCall.obj
+ 0002:00000154       ?classInteger@@3PAV_jclass@@A 10003154     NativeCall.obj
+ 0002:00000158       ?newBooleanBoolean@@3PAU_jmethodID@@A 10003158     NativeCall.obj
+ 0002:0000015c       ?classBoolean@@3PAV_jclass@@A 1000315c     NativeCall.obj
+ 0002:00000160       ?fieldModule@@3PAU_jfieldID@@A 10003160     NativeCall.obj
+ 0002:00000164       ?fieldModuleHandle@@3PAU_jfieldID@@A 10003164     NativeCall.obj
+ 0002:00000168       ?classHolder@@3PAV_jclass@@A 10003168     NativeCall.obj
+ 0002:0000016c       ?fieldLastErrorCode@@3PAU_jfieldID@@A 1000316c     NativeCall.obj
+ 0002:00000170       ?classByteArray@@3PAV_jclass@@A 10003170     NativeCall.obj
+ 0002:00000174       ?fieldHolderO@@3PAU_jfieldID@@A 10003174     NativeCall.obj
+ 0002:00000178       ?methodBooleanValue@@3PAU_jmethodID@@A 10003178     NativeCall.obj
+ 0002:0000017c       ?methodIntValue@@3PAU_jmethodID@@A 1000317c     NativeCall.obj
+
+ entry point at        0001:00000c3d
+
+ Static symbols
+

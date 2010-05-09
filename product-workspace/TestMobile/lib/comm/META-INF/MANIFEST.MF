@@ -1,0 +1,122 @@
+Manifest-Version: 1.0
+
+Name: javax/comm/CommApiVersion.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: CSOMI+C9ISEONZBjmFTZIlf8WtU=
+MD5-Digest: blPX0ZKb/B5m4c1Mhdm9zg==
+
+Name: javax/comm/CommPort.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: CZ174fF9GP8jYA5Ky/IVJpOQJoA=
+MD5-Digest: qbiZCI9rBFvZBKyVPvG3+A==
+
+Name: javax/comm/UnsupportedCommOperationException.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: gSjNRfsrAWg8yGAUk826tBWoVUo=
+MD5-Digest: q/MR4GH3yZE/dBGAFe8yiA==
+
+Name: javax/comm/CommPortIdentifier.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: l6w355OtTFoT07OxOdZB4iQI5S8=
+MD5-Digest: Tz7Z3AmL4lCSUbve85hSCA==
+
+Name: javax/comm/CommPortEnumerator.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: Q9eNg+V5PFJ0JHLr36rc3dBDqIc=
+MD5-Digest: 03zK8dD9TMsD5EVykc//yA==
+
+Name: javax/comm/OwnershipEventThread.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: oXXE5xNTNao3xK8EiM6MIEgshAg=
+MD5-Digest: afdaGmh3wgVsB90Nk7cH+w==
+
+Name: javax/comm/CpoListEntry.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: v7V6QI3mhGptIZLW9/yQl/6Kbko=
+MD5-Digest: iLHSfyYhSZf2EqicdNjZVA==
+
+Name: javax/comm/CpoList.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: W8+5dB64uDptF0BkHeW0l+eVkDg=
+MD5-Digest: EoFwQK1MLCeKeXASh17qeQ==
+
+Name: javax/comm/NoSuchPortException.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: Gg6ceMWxZyK2FpCQtU42b3Sj2B4=
+MD5-Digest: Dugx+nCP07hhdLlgab3cGg==
+
+Name: javax/comm/PortInUseException.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: 3fzYbJoluTRq0BaFMZG8iz0OhUY=
+MD5-Digest: +WVbywrCiMbvkNNUEPWeUA==
+
+Name: javax/comm/CommDriver.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: hIw+XhvpqZgqQ9qDPhyQCQ0HvKU=
+MD5-Digest: 2WJtEmYYOdeyKN2h/sT8wg==
+
+Name: javax/comm/CommPortOwnershipListener.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: X7HUXg0sasFO583TuTwaEMUfkpc=
+MD5-Digest: yni36Ax+THZBwMCDOuKrbQ==
+
+Name: javax/comm/ParallelPort.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: 6E0PX0T8u2CTs/ys8EvN913ducA=
+MD5-Digest: o1HbGwzDeo3xlN3dxAlyXA==
+
+Name: javax/comm/ParallelPortEventListener.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: pJQrKJJ9P9Edyd16tRw08BDBpY0=
+MD5-Digest: rp61COGXhkeykV3qqXr3XQ==
+
+Name: javax/comm/ParallelPortEvent.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: hTzxyl0Lna6+cq7nGOpzlLg89to=
+MD5-Digest: vBOhMtnFKF/PbwQGXEcpMA==
+
+Name: javax/comm/SerialPort.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: 82Z6dQjCbJCah4XjGKMDu0US154=
+MD5-Digest: EkvH7uzyDZKzWVZDDZNoiA==
+
+Name: javax/comm/SerialPortEventListener.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: XX7cVoEfi3sKI6Q2sF96vp6oiO0=
+MD5-Digest: Fr5RvX1m+vjyw4Yu/7rL/Q==
+
+Name: javax/comm/SerialPortEvent.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: gc29eSz7kebzyWyLCoVRa3JS23s=
+MD5-Digest: cBAu9/WhWqne7o9TD2aTUQ==
+
+Name: com/sun/comm/Win32ParallelPort.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: NC9kBLn1uBRB1KbRoohldYDEo5Q=
+MD5-Digest: 1ifoDVImvM+ahLure6rOEA==
+
+Name: com/sun/comm/Win32SerialPort.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: zBKgH10BlWeX7I1lHrzBYjNSB4o=
+MD5-Digest: 933f/iK3Le5kgHcbmI4Vuw==
+
+Name: com/sun/comm/NotificationThread.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: vrtVqPfwxc4E6jYm/cu1fqZ2Rec=
+MD5-Digest: oHcuoSje6czs7DfYsF9BNQ==
+
+Name: com/sun/comm/Win32SerialOutputStream.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: vxPZidVSHauSm7IvKCsr+Mow0qE=
+MD5-Digest: JMGWTm9Wpy/Wgv9YXwsVwA==
+
+Name: com/sun/comm/Win32SerialInputStream.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: E5JZzbbXFQpyHU8VOLQbe4m3FQ0=
+MD5-Digest: kNOFMsUR2tWTEJ7F/Jx2gw==
+
+Name: com/sun/comm/Win32Driver.class
+Digest-Algorithms: SHA MD5 
+SHA-Digest: psB0SnlOV9BGbI20kan/89hPBzM=
+MD5-Digest: EpFegd7B6ZzjmLSe+Fzo9A==
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry path="src" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry path="lib/tritonus_mp3.jar" kind="lib"/>
+	<classpathentry path="lib/tritonus_share.jar" kind="lib"/>
+	<classpathentry path="lib/nativecall-0.4.1.jar" kind="lib"/>
+	<classpathentry path="lib/nativeloader-200505172341.jar" kind="lib"/>
+	<classpathentry sourcepath="D:/eclipse/plugins/org.eclipse.platform.source_3.1.0/src/org.eclipse.ui.forms_3.1.0/src.zip" path="lib/forms.jar" kind="lib"/>
+	<classpathentry sourcepath="lib/src.zip" path="lib/swt.jar" kind="lib"/>
+	<classpathentry sourcepath="/TestJavaSound/Mp3Decoder/src" path="lib/jl1.0.jar" kind="lib"/>
+	<classpathentry sourcepath="E:/VimProject/VistaDeviceJava" path="lib/audio_device.jar" kind="lib"/>
+	<classpathentry path="bin" kind="output"/>
+</classpath>

@@ -1,0 +1,171 @@
+<!--============================================================-->
+<!-- common targets for all jsresources apps                    -->
+<!-- this file is included by the apps/*/build.xml files        -->
+<!--============================================================-->
+
+
+<!-- Target init-common-properties is defined in ../buid_common.xml. -->
+<target name="init" depends="init-common-properties,init-base-properties,init-overridable-properties"/>
+
+
+<target name="init-base-properties">
+  <property name="src" value="src" />
+  <property name="build" value=".build" />
+  <property name="dist"  value=".dist" />
+  <property name="doc"  value="doc" />
+  <property name="javadoc"  value="${doc}/apidoc" />
+  <property name="src.dir" value="${basedir}/${src}" />
+  <property name="build.dir" value="${basedir}/${build}" />
+  <property name="dist.dir"  value="${basedir}/${dist}" />
+  <property name="doc.dir"  value="${basedir}/${doc}" />
+  <property name="javadoc.dir"  value="${basedir}/${javadoc}" />
+  <property name="upload.base.postfix" value="/apps/" />
+  <loadfile property="version"
+	    srcFile="version" />
+</target>
+
+<target name="init-overridable-properties" depends="init-base-properties,init-basename,init-manifest-file,init-jar-file,init-dist-file,init-extra-compile-excludes,init-extra-jar-includes,init-extra-dist-includes,init-debug,init-extra-upload-files,init-source-version">
+</target>
+
+<target name="init-basename" unless="basename">
+  <property name="basename" value="${ant.project.name}" />
+</target>
+
+<target name="init-manifest-file" unless="manifest.file">
+  <property name="manifest.file" value="${basedir}/manifest.mf" />
+</target>
+
+<target name="init-jar-file">
+  <property name="versioned.jar.file" value="${dist.dir}/${basename}-${version}.jar" />
+  <property name="unversioned.jar.file" value="${dist.dir}/${basename}.jar" />
+</target>
+
+<target name="init-dist-file">
+  <property name="dist.base" value="${basename}-src-${version}" />
+  <property name="dist.file" value="${dist.dir}/${dist.base}.zip" />
+  <property name="dist.file.relative" value="${dist.base}.zip" />
+</target>
+
+<target name="init-extra-compile-excludes" unless="extra.compile.excludes">
+  <property name="extra.compile.excludes" value="---" />
+</target>
+
+<target name="init-extra-jar-includes" unless="extra.jar.includes">
+  <property name="extra.jar.includes" value="---" />
+</target>
+
+<target name="init-extra-dist-includes" unless="extra.dist.includes">
+  <property name="extra.dist.includes" value="---" />
+</target>
+
+<target name="init-debug" unless="debug">
+  <property name="debug" value="on" />
+</target>
+
+<target name="init-extra-upload-files" unless="extra.upload.files">
+  <property name="extra.upload.files" value="" />
+</target>
+
+<target name="init-source-version" unless="source.version">
+  <property name="source.version" value="1.5" />
+</target>
+
+
+<target name="prepare" depends="init">
+  <mkdir dir="${build.dir}" />
+  <mkdir dir="${dist.dir}" />
+</target>
+
+<target name="compile" depends="prepare"
+		description="Compile everything">
+  <javac srcdir="${src.dir}"
+		 destdir="${build.dir}"
+		 excludes="${extra.compile.excludes}"
+		 debug="${debug}"
+		 source="${source.version}"
+		 classpath="${classpath}:../jmvp/.dist/jmvp.jar">
+	<compilerarg  value="-Xlint:unchecked"/>
+	<!--compilerarg  value="-Xlint:unchecked"/-->
+	<compilerarg  value="-Xlint:deprecation"/>
+  </javac>
+</target>
+
+
+<target name="dist" depends="compile"
+	description="Package everything">
+  <jar jarfile="${versioned.jar.file}"
+       manifest="${manifest.file}" >
+    <fileset dir="${build.dir}" />
+    <fileset dir="${basedir}" includes="${extra.jar.includes}" />
+  </jar>
+  <copy file="${versioned.jar.file}" tofile="${unversioned.jar.file}" />
+
+  <zip zipfile="${dist.file}" >
+    <zipfileset dir="${basedir}" prefix = "${dist.base}"
+		includes="${src}/,build.xml,manifest.mf" />
+    <zipfileset dir="${basedir}/.." prefix = ""
+		includes="build_common.xml" />
+    <zipfileset dir="${basedir}"  prefix = "${dist.base}"
+		includes="${extra.dist.includes}" />
+  </zip>
+</target>
+
+
+<target name="release" depends="dist">
+  <exec executable="ftp-upload">
+    <arg line="--passive --host upload.sourceforge.net --user anonymous --dir incoming ${versioned.jar.file} ${dist.file}"/>
+  </exec>
+</target>
+
+
+<target name="all-upload-files" depends="init,dist">
+  <property name="upload.files" value="${unversioned.jar.file} ${extra.upload.files}" />
+  <echo message="upload.files: ${upload.files}"/>
+</target>
+
+
+<target name="clean" depends="init"
+	description="Purge all created files">
+  <delete dir="${build.dir}" />
+  <delete dir="${dist.dir}" />
+</target>
+
+
+<!-- TODO: check if it is working correctely -->
+<target name="veryclean" depends="clean">
+  <delete>
+    <fileset dir="src">
+      <patternset>
+	<include name="**/*.java~" />
+      </patternset>
+    </fileset>
+  </delete>
+</target>
+
+
+<!-- documentation -->
+<target name="javadoc" depends="init"
+	description="Create documentation with javadoc">
+  <mkdir dir="${javadoc.dir}"/>
+  <javadoc
+	   package="true" sourcepath="${src.dir}" destdir="${javadoc.dir}"
+	   packagenames="org.jsresources.apps.*"
+	   excludepackagenames="---" >
+  </javadoc>
+</target>
+
+
+<target name="tags" depends="init"
+	description="Create TAGS file for emacs">
+  <fileset dir="${src.dir}" id="src.files">
+    <include name="**/*.java"/>
+  </fileset>
+  <pathconvert pathsep=" " property="src.files.expanded" refid="src.files"/>
+  <!--echo message = "files: ${src.files.expanded}" /-->
+  <exec executable="etags">
+    <arg line="-o ${src.dir}/org/jsresources/apps/${basename}/TAGS ${src.files.expanded}" />
+  </exec>
+</target>
+
+
+<!-- end -->

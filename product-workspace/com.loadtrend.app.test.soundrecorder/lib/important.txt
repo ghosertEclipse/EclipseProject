@@ -1,0 +1,10 @@
+merge swt 3.1 and swt 3.3 to solve the problems:
+
+1 get the DateTime control in 3.3
+
+2 "target=_blank" to popup new ie window cause Windows Audio Recorder dead in swt 3.3. problem solution:
+  replace all the class in the package org.eclipse.swt.browser with 3.1 version
+
+Now I get a new swt 3.3 version to meet all the requirements above.
+
+Later: I wait for the swt team to solve this problem totaly in next release of swt 3.3

@@ -1,0 +1,1 @@
+c:\Progra~1\Java\jre1.5.0_11\bin\java.exe -cp .;tritonus_share-0.3.6.jar;tritonus_mp3.jar;javalayer.jar;radio-2005-06-05.jar org.jsresources.apps.radio.Radio

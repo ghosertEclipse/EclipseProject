@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry exported="true" kind="lib" path="commons-logging.jar"/>
+	<classpathentry exported="true" kind="lib" path="hibernate3.jar"/>
+	<classpathentry exported="true" kind="lib" path="remote.jar"/>
+	<classpathentry exported="true" kind="lib" path="spring-aop.jar"/>
+	<classpathentry exported="true" kind="lib" path="spring-beans.jar"/>
+	<classpathentry exported="true" kind="lib" path="spring-core.jar"/>
+	<classpathentry exported="true" kind="lib" path="spring-remoting.jar"/>
+	<classpathentry exported="true" kind="lib" path="cglib-2.1.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="asm.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

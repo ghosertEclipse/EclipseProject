@@ -1,0 +1,1 @@
+D:\J2SEv14204\bin\native2ascii.exe -encoding UTF-8 orig.plugin_zh_CN.properties plugin_zh_CN.properties

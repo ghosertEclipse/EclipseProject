@@ -1,0 +1,22 @@
+# $Id: changes.txt,v 1.3 2006/04/19 20:54:58 grnull Exp $
+
+This is the changelog for NativeCall (<http://nativecall.sourceforge.net>).
+
+Version 0.4.1 to 0.4.0:
+	* NativeCall could not create multiple pointers correctly (thanks to
+	  Dave Kipfer for the report).
+	* Javadoc for Win32Verifier#verifyModuleName(String) was corrected.
+	* Using new Holder(null) now means new Holder(new Integer(0)).
+	* Constructor method IDs are now cached.
+	* int hashCode() methods have been optimized.
+
+Version 0.4.0 to 0.3.3:
+	* Struct has been removed. Simply use java.io.ByteArrayOutputStream. Don't
+	  forget endianness.
+	* Holder now throws a ClassCastException instead of an
+	  IllegalArgumentException if you pass a Holder instance to it's
+	  constructor (which was never allowed anyway).
+	* NativeCall now throws a ClassCastException instead of an
+	  IllegalArgumentException if you use unsupported types as arguments.
+	* More tests.
+	* Code coverage report (thanks to EMMA: <http://emma.sourceforge.net>).

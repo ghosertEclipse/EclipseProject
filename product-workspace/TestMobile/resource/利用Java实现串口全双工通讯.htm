@@ -1,0 +1,629 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0066)http://www-900.ibm.com/developerWorks/cn/java/joy-comm/index.shtml -->
+<HTML xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>利用Java实现串口全双工通讯</TITLE><!-- Java technology -->
+<META content=利用Java实现串口全双工通讯 name=TITLE>
+<META 
+content="threads, threading, java threads, java threading, active object, thread pool" 
+name=KEYWORDS>
+<META 
+content="java tutorials,java 教程, java training, java help, java standards, java 标准, java code, java resources, java 资源, java programming, java 编程, java how to, components,组件,构件, beans, java beans, jdk, jugs, java user groups" 
+name=KEYWORDS>
+<META http-equiv=Content-Type content="text/html; charset=GB2312">
+<META content="快乐 Java 大家谈，developerWorks, 水木清华，SMTH, " name=KEYWORDS>
+<META 
+content=一个嵌入式系统通常需要通过串口与其主控系统进行全双工通讯，譬如一个流水线控制系统需要不断的接受从主控系统发送来的查询和控制信息，并将执行结果或查询结果发送回主控系统。本文介绍了一个简单的通过串口实现全双工通讯的Java类库，该类库大大的简化了对串口进行操作的过程。 
+name=ABSTRACT>
+<META 
+content=一个嵌入式系统通常需要通过串口与其主控系统进行全双工通讯，譬如一个流水线控制系统需要不断的接受从主控系统发送来的查询和控制信息，并将执行结果或查询结果发送回主控系统。本文介绍了一个简单的通过串口实现全双工通讯的Java类库，该类库大大的简化了对串口进行操作的过程。 
+name=DESCRIPTION>
+<META content=papers_html name=dWCategory>
+<META content=Java name=zone>
+<META 
+content="快乐 Java 大家谈是有水木清华 Java 版与 IBM developerWorks 中国站点共同举办的一次 Java 爱好者技术交流活动。活动将收集 Java 技术相关的稿件并结集成书免费赠送给大家...." 
+name=ABSTRACT>
+<META content=/developerWorks/cn/cncontent.nsf/cn_dW_feedback name=OWNER>
+<META content="2001**** initials" name=LASTUPDATE>
+<META content=Public name=SECURITY>
+<META content=text/xhtml name=FORMAT>
+<META content="Copyright (c) 2000 by IBM Corporation" name=COPYRIGHT>
+<META content=index,follow name=ROBOTS>
+<META content=cn name=IBM.COUNTRY>
+<META name=DOCUMENTCOUNTRYCODE value="us">
+<META name=DOCUMENTLANGUAGECODE value="en">
+<META http-equiv=PICS-Label 
+content='(PICS-1.1 "http://www.rsac.org/ratingsv01.html" l gen true comment "RSACi North America Server" by "webmaster@mail.software.ibm.com" for "http://www.ibm.com/software" on "1997.08.13T17:59-0800" r (n 0 s 0 v 0 l 0))'>
+<META http-equiv=Expires content=0>
+<SCRIPT language=JavaScript src="利用Java实现串口全双工通讯.files/style.js" 
+type=text/javascript>
+</SCRIPT>
+
+<SCRIPT language=JavaScript src="利用Java实现串口全双工通讯.files/spinbox.js" 
+type=text/javascript>
+</SCRIPT>
+
+<META content="MSHTML 6.00.2900.2604" name=GENERATOR></HEAD>
+<BODY bgColor=#ffffff leftMargin=2 topMargin=2 marginwidth="2" marginheight="2"><!-- MASTHEAD -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD class=tbgc width=160><A 
+      href="http://www-900.ibm.com/developerWorks/cn/cgi-bin/click.cgi?url=www.ibm.com/cn/&amp;origin=dwheader"><IMG 
+      height=47 alt=IBM src="利用Java实现串口全双工通讯.files/ibm-logo.gif" width=160 
+      border=0></A></TD>
+    <TD class=tbg width=70><FONT color=#99ccff size=2><B>China</B></FONT><A 
+      href="http://www-900.ibm.com/developerWorks/cn/java/joy-comm/index.shtml#main"><IMG 
+      height=1 alt="Skip to main content" src="利用Java实现串口全双工通讯.files/c.gif" 
+      width=70 border=0></A></TD>
+    <TD class=tbgc vAlign=top align=right width="100%">
+      <TABLE cellSpacing=0 cellPadding=0 border=0>
+        <FORM id=form1 name=form1 
+        action=http://www-128.ibm.com/developerworks/search/searchResults.jsp 
+        method=get>
+        <TBODY>
+        <TR>
+          <TD colSpan=7><IMG height=4 alt="" src="利用Java实现串口全双工通讯.files/c.gif" 
+            width=390 border=0></TD></TR>
+        <TR vAlign=center>
+          <TD class=dwsearch><NOBR><FONT 
+            color=#ffffff><B>搜索:</B></FONT></NOBR>&nbsp;&nbsp;</TD>
+          <TD><INPUT class=dwsearch maxLength=100 size=23 name=query></TD>
+          <TD class=dwsearch vAlign=center>&nbsp;<FONT 
+            color=#ffffff><B>在</B></FONT>&nbsp;</TD>
+          <TD class=dwsearch><SELECT class=dwsearch2 
+              name=searchScope>&nbsp;&nbsp; <OPTION value=dW selected>dW 
+              全部内容</OPTION> <OPTION value=javaZ>&nbsp;Java 技术</OPTION> <OPTION 
+              value=linuxZ>&nbsp;Linux</OPTION> <OPTION 
+              value=opensrcZ>&nbsp;开放源码</OPTION> <OPTION 
+              value=securityZ>&nbsp;安全</OPTION> <OPTION value=webservZ>&nbsp;Web 
+              服务</OPTION> <OPTION value=xmlZ>&nbsp;XML</OPTION> <OPTION 
+              value=dW>.................</OPTION> <OPTION 
+              value=dmdd>&nbsp;DB2</OPTION> <OPTION 
+              value=wsdd>&nbsp;WebSphere</OPTION> <OPTION 
+              value=lotusdd>&nbsp;Lotus 专题</OPTION> <OPTION 
+              value=tivolidd>&nbsp;Tivoli 专题</OPTION> <OPTION 
+              value=dW>.................</OPTION> <OPTION value=all>IBM 
+              全部内容</OPTION></SELECT></TD>
+          <TD><IMG height=1 alt="" src="利用Java实现串口全双工通讯.files/c.gif" width=5 
+            border=0></TD>
+          <TD><INPUT type=image height=23 alt="Search button" width=64 
+            src="利用Java实现串口全双工通讯.files/search.gif" value=Search border=0 
+            name=Search></TD>
+          <TD vAlign=top><IMG height=1 alt="" 
+            src="利用Java实现串口全双工通讯.files/c.gif" width=30 border=0></TD></TR>
+        <TR vAlign=top>
+          <TD>&nbsp;</TD>
+          <TD class=dwsearch>&nbsp;<FONT color=#ffffff>只用 + - "&nbsp;" 
+            (&nbsp;)</FONT>
+          <TD>&nbsp;</TD>
+          <TD>&nbsp;</TD>
+          <TD>&nbsp;</TD>
+          <TD>&nbsp;</TD>
+          <TD>&nbsp;</TD></TR><INPUT type=hidden value=1 name=searchType> <INPUT 
+        type=hidden value=dWChina name=searchSite> <INPUT type=hidden value=zh 
+        name=pageLang> <INPUT type=hidden value=gb2312 name=langEncoding> 
+        </FORM></TBODY></TABLE></TD></TR><A id=main name=main>
+  <TR>
+    <TD class=hbg width=160 height=21>&nbsp;</TD>
+    <TD class=bbg vAlign=top colSpan=2 height=21>&nbsp;&nbsp;&nbsp; <A 
+      class=mainlink 
+      href="http://www-900.ibm.com/developerWorks/cn/cgi-bin/click.cgi?url=www-900.ibm.com/cn/&amp;origin=dwhead">IBM 
+      主页</A> <SPAN class=divider>&nbsp;&nbsp;|&nbsp;&nbsp;</SPAN> <A 
+      class=mainlink 
+      href="http://www-900.ibm.com/developerWorks/cn/cgi-bin/click.cgi?url=www-900.ibm.com/cn/products/index.shtml&amp;origin=dwhead">产品与服务</A> 
+      <SPAN class=divider>&nbsp;&nbsp;|&nbsp;&nbsp;</SPAN> <A class=mainlink 
+      href="http://www-900.ibm.com/developerWorks/cn/cgi-bin/click.cgi?url=www-900.ibm.com/cn/support/index.shtml&amp;origin=dwhead">支持与下载</A> 
+      <SPAN class=divider>&nbsp;&nbsp;|&nbsp;&nbsp;</SPAN> <A class=mainlink 
+      href="http://www-900.ibm.com/developerWorks/cn/cgi-bin/click.cgi?url=www-900.ibm.com/cn/account/index.shtml&amp;origin=dwhead">个性化服务</A></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR class=hil>
+    <TD width="100%" height=1><IMG height=1 alt="" 
+      src="利用Java实现串口全双工通讯.files/c.gif" width=592></TD></TR>
+  <TR class=dwr1>
+    <TD width="100%" height=2><IMG height=2 alt="" 
+      src="利用Java实现串口全双工通讯.files/c.gif" width=592></TD></TR>
+  <TR class=dwg3>
+    <TD width="100%" height=1><IMG height=1 alt="" 
+      src="利用Java实现串口全双工通讯.files/c.gif" width=592></TD></TR>
+  <TR class=bbg>
+    <TD width="100%" height=1><IMG height=1 alt="" 
+      src="利用Java实现串口全双工通讯.files/c.gif" width=592></TD></TR>
+  <TR class=hil>
+    <TD width="100%" height=1><IMG height=1 alt="" 
+      src="利用Java实现串口全双工通讯.files/c.gif" width=592></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR vAlign=top>
+    <TD width=5><IMG height=1 alt="" src="利用Java实现串口全双工通讯.files/c.gif" width=5 
+      border=0></TD>
+    <TD width="100%">
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR vAlign=top>
+          <TD width="100%"><IMG height=4 alt="" 
+            src="利用Java实现串口全双工通讯.files/c.gif" width=2 border=0><BR><B><A 
+            href="http://www-900.ibm.com/developerWorks/cn/index.shtml">developerWorks 
+            中国网站</A> : <A 
+            href="http://www-900.ibm.com/developerWorks/cn/java/index.shtml">Java</A> 
+            : <A 
+            href="http://www-900.ibm.com/developerWorks/cn/cnpapers.nsf/java-papers-bynewest?OpenView&amp;count=10">所有的文章 
+            </A></B></TD>
+          <TD align=right width=136><A 
+            href="http://www-900.ibm.com/developerWorks/cn/index.shtml"><IMG 
+            height=24 alt="developerWorks 中国网站" 
+            src="利用Java实现串口全双工通讯.files/dwlogo-small.gif" width=136 
+          border=0></A></TD>
+          <TD width=5><IMG height=1 alt="" src="利用Java实现串口全双工通讯.files/c.gif" 
+            width=5 border=0></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><!-- Title Area -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR vAlign=top>
+    <TD colSpan=5><IMG height=15 alt="" src="利用Java实现串口全双工通讯.files/c.gif" 
+      width=5 border=0></TD></TR>
+  <TR vAlign=top>
+    <TD width=2><IMG height=1 alt="" src="利用Java实现串口全双工通讯.files/c.gif" width=2 
+      border=0></TD>
+    <TD><SPAN class=atitle>利用Java实现串口全双工通讯</SPAN></TD>
+    <TD width=8><IMG height=1 alt="" src="利用Java实现串口全双工通讯.files/c.gif" width=8 
+      border=0></TD>
+    <TD align=right></TD>
+    <TD width=6><IMG height=1 alt="" src="利用Java实现串口全双工通讯.files/c.gif" width=6 
+      border=0></TD></TR><!-- Black line separator -->
+  <TR vAlign=top>
+    <TD bgColor=#000000 colSpan=5><IMG height=1 alt="" 
+      src="利用Java实现串口全双工通讯.files/c.gif" width=100 border=0></TD></TR>
+  <TR vAlign=top>
+    <TD bgColor=#ffffff colSpan=5><IMG height=8 alt="" 
+      src="利用Java实现串口全双工通讯.files/c.gif" width=100 border=0></TD></TR></TBODY></TABLE><!-- END HEADER AREA --><!-- START BODY AREA -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR vAlign=top>
+    <TD width=5><IMG height=1 alt="" src="利用Java实现串口全双工通讯.files/c.gif" width=5 
+      border=0></TD>
+    <TD width="100%">
+      <TABLE cellSpacing=0 cellPadding=0 width=168 align=right border=0>
+        <TBODY>
+        <TR><!-- Sidebar Gutter -->
+          <TD width=8><IMG height=21 alt="" src="利用Java实现串口全双工通讯.files/c.gif" 
+            width=5></TD>
+          <TD width=160><!-- Start TOC -->
+            <TABLE cellSpacing=0 cellPadding=0 width=160 border=0>
+              <TBODY>
+              <TR>
+                <TD width=160 bgColor=#000000 height=1><IMG height=1 alt="" 
+                  src="利用Java实现串口全双工通讯.files/c.gif" width=160></TD></TR>
+              <TR>
+                <TD align=middle background=利用Java实现串口全双工通讯.files/bg-gold.gif 
+                height=5><B>内容：</B></TD></TR>
+              <TR>
+                <TD width=160 bgColor=#666666 height=1><IMG height=1 alt="" 
+                  src="利用Java实现串口全双工通讯.files/c.gif" width=160></TD></TR>
+              <TR>
+                <TD align=right>
+                  <TABLE cellSpacing=0 cellPadding=3 width="98%" border=0>
+                    <TBODY>
+                    <TR>
+                      <TD><A 
+                        href="http://www-900.ibm.com/developerWorks/cn/java/joy-comm/index.shtml#1">1. 
+                        SerialBean</A></TD></TR>
+                    <TR>
+                      <TD><A 
+                        href="http://www-900.ibm.com/developerWorks/cn/java/joy-comm/index.shtml#2">2. 
+                        SerialBuffer</A></TD></TR>
+                    <TR>
+                      <TD><A 
+                        href="http://www-900.ibm.com/developerWorks/cn/java/joy-comm/index.shtml#3">3. 
+                        ReadSerial</A></TD></TR>
+                    <TR>
+                      <TD><A 
+                        href="http://www-900.ibm.com/developerWorks/cn/java/joy-comm/index.shtml#4">4. 
+                        SerialExample</A></TD></TR>
+                    <TR>
+                      <TD><A 
+                        href="http://www-900.ibm.com/developerWorks/cn/java/joy-comm/index.shtml#author1">关于作者</A></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><!-- End TOC -->
+            <TABLE cellSpacing=0 cellPadding=0 width=160 border=0>
+              <TBODY>
+              <TR>
+                <TD width=150 bgColor=#000000 colSpan=2 height=2><IMG height=2 
+                  alt="" src="利用Java实现串口全双工通讯.files/c.gif" width=160></TD></TR>
+              <TR>
+                <TD width=150 bgColor=#ffffff colSpan=2 height=2><IMG height=2 
+                  alt="" src="利用Java实现串口全双工通讯.files/c.gif" 
+              width=160></TD></TR></TBODY></TABLE><!-- END STANDARD SIDEBAR AREA --></TD></TR></TBODY></TABLE><!-- START SUBTITLE AND CONTENT -->
+      <P><A 
+      href="http://www-900.ibm.com/developerWorks/cn/java/joy-comm/index.shtml#author1">蒋清野</A> 
+      (<A href="mailto:qjiang@tsinghua.edu">qjiang@tsinghua.edu</A>)<BR><!-- <a href="#author2">Author name</a> (<a href="mailto:userid@us.ibm.com">email address</a>)<br />-->软件工程专家<BR>2001 
+      年 5 月</P>
+      <BLOCKQUOTE>一个嵌入式系统通常需要通过串口与其主控系统进行全双工通讯，譬如一个流水线控制系统需要不断的接受从主控系统发送来的查询和控制信息，并将执行结果或查询结果发送回主控系统。本文介绍了一个简单的通过串口实现全双工通讯的Java类库，该类库大大的简化了对串口进行操作的过程。</BLOCKQUOTE>
+      <P>本类库主要包括：SerialBean.java (与其他应用程序的接口), SerialBuffer.java 
+      (用来保存从串口所接收数据的缓冲区), ReadSerial.java 
+      (从串口读取数据的程序)。另外本类库还提供了一个例程SerialExample.java 
+      作为示范。在下面的内容中将逐一对这几个部分进行详细介绍。</P>
+      <P><A id=1 name=1><SPAN class=atitle2>1. 
+      SerialBean</SPAN></A><BR>SerialBean是本类库与其他应用程序的接口。该类库中定义了SerialBean的构造方法以及初始化串口，从串口读取数据，往串口写入数据以及关闭串口的函数。具体介绍如下：</P>
+      <BLOCKQUOTE>public SerialBean(int 
+        PortID)<BR>本函数构造一个指向特定串口的SerialBean，该串口由参数PortID所指定。PortID = 1 
+        表示COM1，PortID = 2 表示COM2，由此类推。<BR><BR>public int 
+        Initialize()<BR>本函数初始化所指定的串口并返回初始化结果。如果初始化成功返回1，否则返回-1。初始化的结果是该串口被SerialBean独占性使用，其参数被设置为9600, 
+        N, 8, 1。如果串口被成功初始化，则打开一个进程读取从串口传入的数据并将其保存在缓冲区中。<BR><BR>public String 
+        ReadPort(int 
+        Length)<BR>本函数从串口(缓冲区)中读取指定长度的一个字符串。参数Length指定所返回字符串的长度。<BR><BR>public 
+        void WritePort(String 
+        Msg)<BR>本函数向串口发送一个字符串。参数Msg是需要发送的字符串。<BR><BR>public void 
+        ClosePort()<BR>本函数停止串口检测进程并关闭串口。</BLOCKQUOTE>
+      <P>SerialBean的源代码如下：</P>
+      <TABLE cellSpacing=0 cellPadding=5 width="90%" align=center 
+      bgColor=#cccccc border=1>
+        <TBODY>
+        <TR>
+          <TD><PRE><CODE>   package serial;
+    import java.io.*;
+    import java.util.*;
+    import javax.comm.*;
+    /**
+     *
+     * This bean provides some basic functions to implement full dulplex
+     * information exchange through the srial port.
+     *
+     */
+    public class SerialBean
+    {
+        static String PortName;
+        CommPortIdentifier portId;
+        SerialPort serialPort;
+        static OutputStream out;
+        static InputStream  in;
+        SerialBuffer SB;
+        ReadSerial   RT;
+            /**
+             *
+             * Constructor
+             *
+             * @param PortID the ID of the serial to be used. 1 for COM1,
+             * 2 for COM2, etc.
+             *
+             */
+            public SerialBean(int PortID)
+            {
+                PortName = "COM" + PortID;
+            }
+            /**
+             *
+             * This function initialize the serial port for communication. It startss a
+             * thread which consistently monitors the serial port. Any signal capturred
+             * from the serial port is stored into a buffer area.
+             *
+             */
+            public int Initialize()
+            {
+                int InitSuccess = 1;
+                int InitFail    = -1;
+            try
+            {
+                portId = CommPortIdentifier.getPortIdentifier(PortName);
+                try
+                {
+                    serialPort = (SerialPort)
+                    portId.open("Serial_Communication", 2000);
+                } catch (PortInUseException e)
+                {
+                    return InitFail;
+                }
+                //Use InputStream in to read from the serial port, and OutputStream
+                //out to write to the serial port.
+                try
+                {
+                    in  = serialPort.getInputStream();
+                    out = serialPort.getOutputStream();
+                } catch (IOException e)
+                {
+                    return InitFail;
+                }
+                //Initialize the communication parameters to 9600, 8, 1, none.
+                try
+                {
+                     serialPort.setSerialPortParams(9600,
+                                SerialPort.DATABITS_8,
+                                SerialPort.STOPBITS_1,
+                                SerialPort.PARITY_NONE);
+                } catch (UnsupportedCommOperationException e)
+                {
+                    return InitFail;
+                }
+            } catch (NoSuchPortException e)
+            {
+                return InitFail;
+            }
+            // when successfully open the serial port,  create a new serial buffer,
+            // then create a thread that consistently accepts incoming signals from
+            // the serial port. Incoming signals are stored in the serial buffer.
+            SB = new SerialBuffer();
+            RT = new ReadSerial(SB, in);
+            RT.start();
+            // return success information
+            return InitSuccess;
+            }
+            /**
+             *
+             * This function returns a string with a certain length from the incomin
+             * messages.
+             *
+             * @param Length The length of the string to be returned.
+             *
+             */
+            public String ReadPort(int Length)
+            {
+                String Msg;
+                Msg = SB.GetMsg(Length);
+                return Msg;
+            }
+            /**
+             *
+             * This function sends a message through the serial port.
+             *
+             * @param Msg The string to be sent.
+             *
+             */
+            public void WritePort(String Msg)
+            {
+                int c;
+                try
+                {
+                    for (int i = 0; i &lt; Msg.length(); i++)
+                        out.write(Msg.charAt(i));
+                } catch (IOException e)  {}
+            }
+            /**
+             *
+             * This function closes the serial port in use.
+             *
+             */
+            public void ClosePort()
+            {
+                RT.stop();
+                serialPort.close();
+            }
+    }
+   </CODE>
+</PRE></TD></TR></TBODY></TABLE>
+      <P><A id=2 name=2><SPAN class=atitle2>2. SerialBuffer</SPAN></A></P>
+      <P>SerialBuffer是本类库中所定义的串口缓冲区，它定义了往该缓冲区中写入数据和从该缓冲区中读取数据所需要的函数。</P>
+      <BLOCKQUOTE>public synchronized String GetMsg(int 
+        Length)<BR>本函数从串口(缓冲区)中读取指定长度的一个字符串。参数Length指定所返回字符串的长度。<BR><BR>public 
+        synchronized void PutChar(int c)<BR>本函数望串口缓冲区中写入一个字符，参数c 
+        是需要写入的字符。<BR><BR>在往缓冲区写入数据或者是从缓冲区读取数据的时候，必须保证数据的同步，因此GetMsg和PutChar函数均被声明为synchronized并在具体实现中采取措施实现的数据的同步。</BLOCKQUOTE>
+      <P>SerialBuffer的源代码如下：</P>
+      <TABLE cellSpacing=0 cellPadding=5 width="90%" align=center 
+      bgColor=#cccccc border=1>
+        <TBODY>
+        <TR>
+          <TD><PRE><CODE>   package serial;
+    /**
+     *
+     * This class implements the buffer area to store incoming data from the serial
+     * port.
+     *
+     */
+    public class SerialBuffer
+    {
+        private String Content = "";
+        private String CurrentMsg, TempContent;
+        private boolean available = false;
+        private int LengthNeeded = 1;
+            /**
+             *
+             * This function returns a string with a certain length from the incomin
+             * messages.
+             *
+             * @param Length The length of the string to be returned.
+             *
+             */
+        public synchronized String GetMsg(int Length)
+        {
+            LengthNeeded = Length;
+            notifyAll();
+            if (LengthNeeded &gt; Content.length())
+            {
+                available = false;
+                while (available == false)
+                {
+                    try
+                    {
+                        wait();
+                    } catch (InterruptedException e) { }
+                }
+            }
+            CurrentMsg  = Content.substring(0, LengthNeeded);
+            TempContent = Content.substring(LengthNeeded);
+            Content = TempContent;
+            LengthNeeded = 1;
+            notifyAll();
+            return CurrentMsg;
+        }
+            /**
+             *
+             * This function stores a character captured from the serial port to the
+             * buffer area.
+             *
+             * @param t The char value of the character to be stored.
+             *
+             */
+        public synchronized void PutChar(int c)
+        {
+            Character d = new Character((char) c);
+            Content = Content.concat(d.toString());
+            if (LengthNeeded &lt; Content.length())
+            {
+                available = true;
+            }
+            notifyAll();
+        }
+    }
+   </CODE>
+</PRE></TD></TR></TBODY></TABLE>
+      <P><A id=3 name=3><SPAN class=atitle2>3. 
+      ReadSerial</SPAN></A><BR>ReadSerial是一个进程，它不断的从指定的串口读取数据并将其存放到缓冲区中。</P>
+      <BLOCKQUOTE>public ReadSerial(SerialBuffer SB, InputStream 
+        Port)<BR>本函数构造一个ReadSerial进程，参数SB指定存放传入数据的缓冲区，参数Port指定从串口所接收的数据流。<BR><BR>public 
+        void run()<BR>ReadSerial进程的主函数，它不断的从指定的串口读取数据并将其存放到缓冲区中。</BLOCKQUOTE>
+      <P>ReadSerial的源代码如下：</P>
+      <TABLE cellSpacing=0 cellPadding=5 width="90%" align=center 
+      bgColor=#cccccc border=1>
+        <TBODY>
+        <TR>
+          <TD><PRE><CODE>   package serial;
+    import java.io.*;
+    /**
+     *
+     * This class reads message from the specific serial port and save
+     * the message to the serial buffer.
+     *
+     */
+    public class ReadSerial extends Thread
+    {
+        private SerialBuffer ComBuffer;
+        private InputStream ComPort;
+            /**
+             *
+             * Constructor
+             *
+             * @param SB The buffer to save the incoming messages.
+             * @param Port The InputStream from the specific serial port.
+             *
+             */
+        public ReadSerial(SerialBuffer SB, InputStream Port)
+        {
+            ComBuffer = SB;
+            ComPort = Port;
+        }
+        public void run()
+        {
+            int c;
+            try
+            {
+                while (true)
+                {
+                    c = ComPort.read();
+                    ComBuffer.PutChar(c);
+                }
+            } catch (IOException e) {}
+        }
+    }
+</CODE>
+</PRE></TD></TR></TBODY></TABLE>
+      <P><A id=4 name=4><SPAN class=atitle2>4. 
+      SerialExample</SPAN></A><BR>SerialExample是本类库所提供的一个例程。它所实现的功能是打开串口COM1，对其进行初始化，从串口读取信息对其进行处理后将处理结果发送到串口。</P>
+      <TABLE cellSpacing=0 cellPadding=5 width="90%" align=center 
+      bgColor=#cccccc border=1>
+        <TBODY>
+        <TR>
+          <TD><PRE><CODE>   import serial.*;
+    import java.io.*;
+    /**
+     *
+     * This is an example of how to use the SerialBean. It opens COM1 and reads
+     * six messages with different length form the serial port.
+     *
+     */
+    class SerialExample
+    {
+        public static void main(String[] args)
+        {
+            //TO DO: Add your JAVA codes here
+            SerialBean SB = new SerialBean(1);
+            String Msg;
+            SB.Initialize();
+            for (int i = 5; i &lt;= 10; i++)
+            {
+                Msg = SB.ReadPort(i);
+                SB.WritePort("Reply: " + Msg);
+            }
+            SB.ClosePort();
+        }
+    }
+</CODE>
+</PRE></TD></TR></TBODY></TABLE>
+      <P><A id=5 name=5><SPAN class=atitle2>5. 编译与调试</SPAN></A></P>
+      <P>本类库中使用了Java Communication API (javax.comm)。这是一个Java扩展类库，并不包括在标准的Java 
+      SDK当中。如果你尚未安装这个扩展类库的话，你应该从Sun公司的Java站点下载这个类库并将其安装在你的系统上。在所下载的包里面包括一个安装说明，如果你没有正确安装这个类库及其运行环境的话，运行这个程序的时候你会找不到串口。</P>
+      <P>正确安装Java Communication 
+      API并将上述程序编译通过以后，你可以按如下方法测试这个程序。如果你只有一台机器，你可以利用一条RS-232电缆将COM1和COM2连接起来，在COM1上运行SerialExample，在COM2上运行Windows提供的超级终端程序。如果你有两台机器的话，你可以利用一条RS-232电缆将两台机器的COM1(或者是COM2)连接起来，在一端运行例程，另外一端运行Windows提供的超级终端程序。如果有必要的话，可以对SerialExample中所声明的串口进行相应改动。</P>
+      <P><B>本程序在Windows 2000 + Java SDK 1.3环境下编译通过并成功运行。</B> <!-- AUTHOR BIOS --><!-- Make author heading singular or plural as needed --></P>
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR>
+          <TD><A id=author1 name=author1><SPAN class=atitle2>关于作者</SPAN></A> 
+            <BR><B>蒋清野</B>，软件工程专家。1999年7月获得清华大学学士学位，2001年1月获得伊里诺大学(Univ. of 
+            Illinois at Urbana-Champaign)硕士学位，目前是美国导航与控制公司(American GNC 
+            Corporation)工程专家。主要研究领域包括遥感图像信息处理，GPS应用，惯性导航，无线通讯和高速网络技术。</TD></TR></TBODY></TABLE><BR 
+      clear=all><IMG height=5 alt="" src="利用Java实现串口全双工通讯.files/c.gif" width=100 
+      border=0> <!-- END PAPER BODY --><BR clear=all><IMG height=10 alt="" 
+      src="利用Java实现串口全双工通讯.files/c.gif" width=100 border=0><BR><!-- REPEAT ICON LINKS AT BOTTOM OF PAGE -->
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR vAlign=top><!-- Icon Links : Comment out Discuss, Zip, and PDF as appropriate; enter file sizes  -->
+          <TD align=right width="100%"></TD>
+          <TD width=5><IMG height=1 alt="" src="利用Java实现串口全双工通讯.files/c.gif" 
+            width=5 border=0></TD></TR><!-- Black Line Separator -->
+        <TR vAlign=top>
+          <TD bgColor=#000000 colSpan=2><IMG height=1 alt="" 
+            src="利用Java实现串口全双工通讯.files/c.gif" width=100 border=0></TD></TR>
+        <TR vAlign=top>
+          <TD bgColor=#ffffff colSpan=2><IMG height=8 alt="" 
+            src="利用Java实现串口全双工通讯.files/c.gif" width=100 
+      border=0></TD></TR></TBODY></TABLE><!-- RATE ARTICLE FORM --><!--   NOTES to local content team :::::::
+Please modify rate article form with Japanese coding -->
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR vAlign=top>
+          <TD>
+            <FORM 
+            action=/developerWorks/cn/cnratings.nsf/RateArticle?CreateDocument 
+            method=post><!-- paste title here --><INPUT type=hidden 
+            value=利用Java实现串口全双工通讯 name=ArticleTitle> 
+            <!-- paste zone here --><INPUT type=hidden value=Java name=Zone> 
+            <INPUT type=hidden 
+            value=/developerWorks/cn/thankyou/feedback-java.html 
+            name=RedirectURL> <A id=rating name=rating><B>您对这篇文章的看法如何？</B></A> 
+            <TABLE cellSpacing=0 cellPadding=0 width=600 border=0>
+              <TBODY>
+              <TR>
+                <TD colSpan=5><IMG height=8 alt="" 
+                  src="利用Java实现串口全双工通讯.files/c.gif" width=100 border=0></TD></TR>
+              <TR vAlign=top>
+                <TD width="16%"><INPUT type=radio value=5 
+name=Rating>真棒！(5)</TD>
+                <TD width="20%"><INPUT type=radio value=4 name=Rating>好材料 
+                (4)</TD>
+                <TD width="24%"><INPUT type=radio value=3 name=Rating>一般；尚可 
+                (3)</TD>
+                <TD width="22%"><INPUT type=radio value=2 name=Rating>需提高 
+                (2)</TD>
+                <TD width="18%"><INPUT type=radio value=1 name=Rating>太差！ 
+                (1)</TD></TR></TBODY></TABLE><BR><B>建议？</B><BR><TEXTAREA name=Comments rows=5 wrap=virtual cols=60></TEXTAREA><BR><BR><INPUT type=submit value=提交反馈意见></FORM></TD></TR>
+        <TR vAlign=top>
+          <TD bgColor=#ffffff><IMG height=8 alt="" 
+            src="利用Java实现串口全双工通讯.files/c.gif" width=100 
+      border=0></TD></TR></TBODY></TABLE><!-- END CENTER COLUMN --></TD><!-- RIGHT GUTTER -->
+    <TD width=1><IMG height=1 alt="" src="利用Java实现串口全双工通讯.files/c.gif" width=1 
+      border=0></TD></TR></TBODY></TABLE><!-- END BODY AREA --><!--FOOTER--><!-- Do not changes this include -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD align=right>(c) Copyright IBM Corp. 2001, (c) Copyright IBM China 
+      2001, All Right Reserved</TD></TR>
+  <TR vAlign=top>
+    <TD class=bbg height=21>&nbsp;&nbsp;<A class=mainlink 
+      href="http://www-900.ibm.com/developerWorks/cn/cgi-bin/click.cgi?url=www-900.ibm.com/cn/ibm/index.shtml&amp;origin=dwhead">关于 
+      IBM</A><SPAN class=divider>&nbsp;&nbsp;|&nbsp;&nbsp;</SPAN><A 
+      class=mainlink 
+      href="http://www-900.ibm.com/developerWorks/cn/cgi-bin/click.cgi?url=www-900.ibm.com/cn/ibm/privacy/index.shtml&amp;origin=dwhead">隐私条约</A><SPAN 
+      class=divider>&nbsp;&nbsp;|&nbsp;&nbsp;</SPAN><A class=mainlink 
+      href="http://www-900.ibm.com/developerWorks/cn/cgi-bin/click.cgi?url=www-900.ibm.com/cn/ibm/legal/index.shtml&amp;origin=dwhead">使用条款</A><SPAN 
+      class=divider>&nbsp;&nbsp;|&nbsp;&nbsp;</SPAN><A class=mainlink 
+      href="http://www-900.ibm.com/developerWorks/cn/cgi-bin/click.cgi?url=www-900.ibm.com/cn/ibm/contact/index.shtml&amp;origin=dwhead">联系 
+      IBM</A></TD></TR></TBODY></TABLE>
+<SCRIPT language=JavaScript1.2 src="利用Java实现串口全双工通讯.files/stats.js" 
+type=text/javascript></SCRIPT>
+<NOSCRIPT><IMG height=1 alt="" src="F:\利用Java实现串口全双工通讯.files\c(1).gif" width=1 
+border=0></NOSCRIPT> </A></BODY></HTML>

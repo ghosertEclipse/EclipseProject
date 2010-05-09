@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- If you get an error message because project.dtd is not present,
+     use 'ant -f build-dtd.xml' in the top-level directory of jsresources
+     to generate it.
+ -->
+<!DOCTYPE project SYSTEM "../../project.dtd"[
+<!ENTITY common SYSTEM "../build_common.xml">
+<!ENTITY morecommon SYSTEM "../../build_common.xml">
+]>
+
+<project name="radio" default="dist" basedir=".">
+  <property name="extra.upload.files" value="RadioApplet.html radio.jnlp 9159_TimeTurner.pdf" />
+  <property name="source.version" value="1.5" />
+
+  &morecommon;
+  &common;
+
+</project>

@@ -1,0 +1,45 @@
+# $Id: project_description.txt,v 1.3 2006/01/05 19:54:52 grnull Exp $
+
+Project NativeCall description
+------------------------------
+
+NativeCall lets you call operating system methods from Java through an easy
+object-oriented API.
+
+Targeted Audience/Use
+---------------------
+
+-Developers who do not wish to write JNI code
+-Developers who only want to call a small number of operating system
+ functions
+-Developers without C++ experience
+-Scripting the operating system through Java
+
+Features
+--------
+
+NativeCall supports structs, as well as out parameters. NativeCall
+looks up method through the operating system's query methods.
+
+NativeCall supports Microsoft Windows. Support for Linux, MacOSX is
+planned (help is appreciated of course).
+
+Scope
+-----
+
+-Supports structs
+-Supports Strings
+-Supports out parameters
+
+Planned
+-------
+
+-Support for more than Microsoft Windows
+-Compact API, low memory footprint
+
+Out of scope
+------------
+
+-Any binary verification of modules -- users of NativeCall must know
+ about function parameters
+-Graphical user interface of any sort -- NativeCall is a low-level API

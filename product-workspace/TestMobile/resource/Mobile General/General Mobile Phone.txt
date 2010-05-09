@@ -1,0 +1,246 @@
+General Mobile Phone 程序接口文档
+
+
+0 设置手机牌子参数
+
+void SetMobileType(int Type);
+
+参数：1-西门子; 2-索尼爱立信; 3-诺基亚;
+
+返回:无
+
+
+1 检测手机所在端口号和波特率
+
+bool MonitorPhone(char Comm[10], int& BaudRate);
+
+参数：需要填充变量：端口号，波特率
+
+返回：成功为真，否则为假
+
+
+2 检测本机所有端口号
+
+int MonitorComm(char Comm[10]);
+
+参数：端口号
+
+返回：1-可用 2-不存在 3-占用 其它值-未知错误
+
+
+3 打开/关闭指定手机所在端口
+
+bool OpenComms(char Comm[10], int BaudRate);
+
+bool CloseComms();
+
+参数：端口号，波特率
+
+返回：成功为真，否则为假
+
+
+4 发送短消息
+
+bool SendShortMessage（char SMSContent[161], char TargetNum[20], bool ReportStatus, int  ValidTime, bool HandFree);
+
+参数：短消息内容（中文七十字，英文一百六十字），目标号码（不带国家区号），状态报告，有效期(0-5分钟 1-一小时 2-十二小时 3-一天 4-一周 5-最大值)，免提
+
+返回：成功为真，否则为假
+
+
+5 本机信息
+
+bool GetMobileInfo(char NameOfManu[20], char NameOfTele[20], char VerOfSW[40], char IMEI[20], char BatteryCharge[5], char SignalQuality[5], char OwnTeleNum[20]);
+
+参数：填充变量：生产厂商，手机型号，软件版本，序列号(IMEI)，电池，信号，本机号码
+
+返回：成功为真，否则为假
+
+
+6 SIM卡信息
+
+bool GetSIMInfo(char NumOfSIM[25], char IMSI[20], char SMSCNum[20]);
+
+参数：填充变量：SIM卡卡号，IMSI(//8250;8210不支持)，短消息服务中心号码
+
+返回：成功为真，否则为假
+
+
+7 读手机时间(//8250;8210不支持)
+
+bool GetMETime(char Time[25]);
+
+参数：填充变量：时间格式（西门子"94/05/06,22:10:00"）（爱立信"03/11/05,09:38:20+32"）
+
+返回：成功为真，否则为假
+
+
+8 写手机时间(//8250;8210不支持)
+
+bool SetMETime(char Time[25]);
+
+参数：时间格式（"94/05/06,22:10:00"）（爱立信"03/11/05,09:38:20+32"）
+
+返回：成功为真，否则为假
+
+
+短消息操作
+///////////////////////////////////////////////////////////////////////////////////////////
+9 设置记忆体并返回该记忆体中短消息条数
+
+int SetSMSMemoGetSMSNum(char Type[5]);
+
+参数: 选择记忆体。SIM卡-"SM"，手机-"ME"，手机相关存储体-"MT" （引号不要漏掉）一般MT的容量为SM+ME
+
+返回: 成功-短消息条数 失败- -1 (i=0不代表失败，请自行处理）
+
+
+10 读取所有短消息(配合SetSMSMemoGetSMSNum可选择不同的记忆体）
+
+typedef struct {               //待填充结构
+	int Index;             //索引号：未必顺序排列
+	int Status;            //消息状态：0-未读，1-已读，2-未发，3-已发
+	char TeleNum[20];      //发送方号码
+	char Time[20];         //服务时间戳(Status=0,1时需要填充）
+        bool ReportStatus;     //状态报告(Status=2,3时需要填充）
+        int ValidTime;         //有效期(Status=2,3时需要填充）(0-5分钟 1-一小时 2-十二小时 3-一天 4-一周 5-最大值) 
+        bool HandFree;         //免提(Status=2,3时需要填充）
+	char Message[161];     //一百六十一字符的短消息内容
+        unsigned char MessageSign[7];  //连锁短消息标志
+} RECSMS;
+
+bool ListShortMessage(RECSMS *pSMS, int i);
+
+参数：RECSMS结构指针。短消息数目（见8）。
+
+返回：成功为真，否则为假。
+
+
+11 读取指定索引号的短消息//未经优化，读取效率不佳，未写入DLL
+
+bool GetShortMessage(int Index, int& Status, char TeleNum[], char Time[20], char Message[]);
+
+参数：Index: 索引号。Status:消息状态,0-未读，1-已读，2-未发，3-已发，未知。TeleNum：发送方号码。Time:服务时间戳。Message：一百六十一个字符的短消息内容。
+
+返回：成功为真，否则为假
+
+
+12 向手机写入短消息(配合SetSMSMemoGetSMSNum可选择不同的记忆体）
+
+int SaveShortMessage（char SMSContent[161], char TargetNum[20], bool ReportStatus, int  ValidTime, bool HandFree, int Status);
+
+参数：短消息内容（中文七十字，英文一百六十字），目标号码（带国家区号如:86，而非（086）），状态报告，有效期(0-5分钟 1-一小时 2-十二小时 3-一天 4-一周 5-最大值)，免提，消息状态：2-未发，3-已发）
+
+返回：存入手机的该条消息的索引号，不成功返回-1, 容量已满返回0
+
+
+13 发送手机中的未发送或已发送消息(配合SetSMSMemoGetSMSNum可选择不同的记忆体）
+
+bool SendUnSent( int Index );
+
+参数：索引号（未发送或已发送消息的索引号Static=2,3）
+
+返回：成功为真，否则为假
+
+
+14 获取SMS在各类记忆体中的容量
+
+int GetSMSSpace( char Type[5] );
+
+参数：SIM卡-"SM"，手机-"ME"，手机相关存储体-"MT" （引号不要漏掉）一般MT的容量为SM+ME
+
+返回：成功：容量。失败：-1
+
+
+15 删除指定索引号的消息(配合SetSMSMemoGetSMSNum可选择不同的记忆体）
+
+bool DeleteShortMessage( int Index );
+
+参数：短消息索引号
+
+返回：成功为真，否则为假
+
+
+电话簿操作
+///////////////////////////////////////////////////////////////////////////////////////////
+16 设置手机内部编码（GSM，UCS2（中英文读取）,UTF-8（中英文读取）,HEX（中英文读取））
+
+bool SetMobileEncodeFormat( char Type[20]);
+
+参数："GSM"(英文编码）"UCS2"（中英文编码,西门子专用）,"UTF-8"（中英文读取，爱立信专用）,"HEX"（中英文读取，诺基亚专用）
+
+返回：成功为真，否则为假
+
+
+17 设置电话簿记忆体
+
+bool SetTeleBookMemo(char Type[5]);
+
+参数：SIM卡-"SM"，手机-"ME"
+
+返回：成功为真，否则为假
+
+
+18 获取有效的电话簿数量（配合17使用）
+
+int GetTeleBookNum();
+
+返回：有效数目，失败:-1
+
+
+19 获取SIM卡，手机电话簿容量（配合17使用）
+
+int GetTeleBookSpace();
+
+返回：记忆体中电话簿的容量，失败：-1
+
+
+20 读取指定电话簿记录（配合16,17使用）
+
+bool ReadTeleBook( int Index, char TeleNum[20], char Name[14], int& Vip );
+
+参数：索引号。需要填充值：电话号码，名字，是否为Vip-0：不是 1：是(只在西门子手机中有VIP概念）
+
+返回：成功为真，否则为假
+
+
+21 增加电话簿记录（配合16,17使用）(先读后写原则)
+
+bool WriteTeleBook( char TeleNum[20], char Name[14], int Vip);
+
+参数：电话号码(带引号）。名字。是否为Vip-0：不是 1：是(只在西门子手机中有VIP概念）
+
+注：8210/8250手机 SIM中名字不超过四个汉字，手机中名字不超过八个汉字
+
+返回：成功为真，否则为假
+
+
+22 删除电话簿记录（配合16,17使用）
+
+bool DeleteTeleBook( int Index );
+
+参数：索引号
+
+返回：成功为真，否则为假
+
+
+23 修改电话簿记录（配合16,17使用）
+
+bool ModifyTeleBook( int Index, char TeleNum[20], char Name[14], int Vip);
+
+参数：索引号，电话号码，名字，是否为Vip(只在西门子手机中有VIP概念）
+
+返回：成功为真，否则为假
+
+
+24 设置获取最大电话簿索引号
+
+void SetMaxTeleIndex(int Index);
+
+参数：索引号 返回：无
+
+int GetMaxTeleIndex();
+
+参数：无 返回：最大索引号
+
+

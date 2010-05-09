@@ -1,0 +1,163 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0044)http://johannburkard.de/software/nativecall/ -->
+<HTML lang=en xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>NativeCall. Johann Burkard</TITLE><!-- #BeginTemplate "/Templates/default.dwt" -->
+<META http-equiv=Content-Type content="text/html; charset=UTF-8">
+<META http-equiv=Content-Script-Type content=text/javascript><!-- #BeginEditable "title" --><!-- #EndEditable -->
+<META content=index,follow name=robots>
+<META content="Johann Burkard" name=DC.Creator>
+<META content=johann@johannburkard.de name=DC.Creator.Address>
+<META content=Text.Homepage.Personal name=DC.Type>
+<META content="(SCHEME=IMT) text/html" name=DC.Format>
+<META content="(SCHEME=ISO639-1) en" name=DC.Language>
+<META content="(SCHEME=URL) http://johannburkard.de/help/copyright.html" 
+name=DC.Rights><LINK href="http://purl.org/metadata/dublin_core_elements" 
+rel=SCHEMA.dc><LINK href="http://sunsite.auc.dk/RFC/rfc/rfc2046.html" 
+rel=SCHEMA.imt><LINK title="Home page" href="/" rel=top><LINK title=Search 
+href="/search/" rel=search><LINK title=Contact href="/help/contact.jsp" 
+rel=author><LINK href="mailto:johann@johannburkard.de" rel=made><LINK 
+title="Copyright information" href="/help/copyright.html" rel=copyright><LINK 
+title="Site map" href="/help/sitemap.html" rel=index><LINK 
+title="News feed (RSS 0.92 format)" href="/blablog/?flavor=rss" 
+type=application/rss+xml rel=alternate><LINK href="/favicon.ico" 
+type=image/x-icon rel="shortcut icon"><LINK media=all 
+href="NativeCall_ Johann Burkard.files/common.css" type=text/css 
+rel=stylesheet><LINK media=handheld 
+href="NativeCall_ Johann Burkard.files/handheld.css" type=text/css 
+rel=stylesheet>
+<STYLE type=text/css>@import url( url("/misc/handheld.css") handheld );
+</STYLE>
+<LINK media=screen,tv,projection 
+href="NativeCall_ Johann Burkard.files/screen.css" type=text/css 
+rel=stylesheet><LINK media=print 
+href="NativeCall_ Johann Burkard.files/print.css" type=text/css 
+rel=stylesheet><LINK title="News feed (RSS 2.0 format)" 
+href="/blablog/?flavor=rss2" type=application/rss+xml rel=alternate><LINK 
+title="News feed (Atom format)" href="/blablog/?flavor=atom" 
+type=application/atom+xml rel=alternate><!-- #BeginEditable "head" --><!-- #EndEditable -->
+<SCRIPT src="NativeCall_ Johann Burkard.files/style.js" 
+type=text/javascript></SCRIPT>
+
+<META content="MSHTML 6.00.2800.1578" name=GENERATOR></HEAD>
+<BODY id=johannburkard-de>
+<P id=contentLink><A 
+href="http://johannburkard.de/software/nativecall/#content">Content</A> <A 
+name=top>&nbsp;</A></P>
+<DIV id=logo><!-- #BeginLibraryItem "/Library/logo.lbi" -->
+<DIV id=photoJohann><A title="Home page" tabIndex=1 
+href="http://johannburkard.de/"><IMG height=137 alt="" 
+src="NativeCall_ Johann Burkard.files/photo_jb.jpg" width=376></A></DIV>
+<H1 id=logoJB><SPAN></SPAN>Johann Burkard</H1><!-- #EndLibraryItem --></DIV>
+<DIV id=menu><!-- #BeginLibraryItem "/Library/menu.lbi" -->
+<OL>
+  <LI><A accessKey=1 tabIndex=4 
+  href="http://johannburkard.de/software/">Software</A> 
+  <LI><A accessKey=2 tabIndex=5 href="http://johannburkard.de/grabbag/">Grab 
+  bag</A> 
+  <LI><A accessKey=3 tabIndex=6 href="http://johannburkard.de/blablog/">Bla<ABBR 
+  title="weB LOG">Blog</ABBR></A> 
+  <LI><A accessKey=3 tabIndex=7 href="http://johannburkard.de/about/">About</A> 
+  <LI><A accessKey=4 tabIndex=8 
+  href="http://johannburkard.de/documents/links.html">Links</A> </LI></OL><!-- #EndLibraryItem --></DIV>
+<DIV id=search><!-- #BeginLibraryItem "/Library/search.lbi" -->
+<FORM 
+onsubmit="var v = this.elements['q'].value; if (v == '' || v == 'Search term') return false;" 
+action=/search/search.jsp method=get>
+<P><LABEL for=q>Search for</LABEL> <INPUT id=q title="Search term" 
+onfocus="if (typeof searchInit == 'undefined') { searchInit=true; this.value=''; }" 
+tabIndex=2 alt="Search term" value="Search term" name=q><INPUT class=button title=Find tabIndex=3 type=submit value=" Find » "> 
+</P></FORM><!-- #EndLibraryItem --></DIV>
+<DIV id=cntnt><A name=content>&nbsp;</A> <!-- #BeginEditable "content" -->
+<H1>NativeCall</H1>
+<H2>Call native methods from Java without <ACRONYM 
+title="Java Native Interface">JNI</ACRONYM></H2>
+<P>NativeCall is a Java toolkit that lets you call native methods from Java 
+without <ACRONYM title="Java Native Interface">JNI</ACRONYM> code. The current 
+version 0.4.1 supports <CODE>struct</CODE>s, Strings, primitive types 
+(<CODE>int</CODE> and <CODE>boolean</CODE>), <CODE>byte</CODE> and 
+<CODE>char</CODE> arrays and output parameters. NativeCall is implemented for 
+the Windows platform.</P>
+<P>NativeCall 0.4.1 fixes a bug when using multiple pointers.</P>
+<H2>Quick start</H2>
+<OL>
+  <LI><A 
+  href="http://prdownloads.sourceforge.net/nativecall/nativecall-0.4.1.zip?download">Download 
+  NativeCall 0.4.1</A>. 
+  <LI>Extract <CODE>nativecall-0.4.1.jar</CODE> and 
+  <CODE>nativeloader-200505172341.jar</CODE>. 
+  <LI>Make sure both <ACRONYM title="Java ARchive">JAR</ACRONYM> files are in 
+  your <DFN 
+  title="The list of paths searched by the Java Virtual Machines for class definitions.">classpath</DFN>. 
+
+  <LI>Extract the native library (<CODE>NativeCall.dll</CODE>). 
+  <LI><A 
+  href="http://johannburkard.de/software/nativecall/apidoc/index.html">Read the 
+  Apidocs</A>. 
+  <LI>Try the examples below. </LI></OL>
+<H2>Example code</H2>
+<H3>Copying a file to a new one using the Windows <ACRONYM 
+title="Application Programmer Interface">API</ACRONYM></H3><PRE>import com.eaio.nativecall.*;
+     
+NativeCall.init();
+IntCall ic = new IntCall("CopyFileA");
+ic.executeCall(new Object[] { "test.txt", "test_copy.txt", Boolean.FALSE });
+ic.destroy();</PRE>
+<H3>Setting a file’s attributes to be hidden</H3><PRE>import com.eaio.nativecall.*;
+     
+NativeCall.init();
+IntCall setFileAttributesA = new IntCall("SetFileAttributesA");
+boolean success = setFileAttributesA.executeBooleanCall(new Object[]
+ "documents/test.txt", new Integer(2) });
+setFileAttributesA.destroy();</PRE>
+<H3>Working with structs to create a file, obtain the file handle and close the 
+handle</H3><PRE>import java.io.*;
+import com.eaio.nativecall.*;
+
+NativeCall.init();
+
+IntCall createFileA = new IntCall("CreateFileA");
+IntCall closeHandle = new IntCall("CloseHandle");
+
+byte[] securityAttributes = new byte[12];
+securityAttributes[0] = (byte) 12;
+
+int fileHandle = createFileA.executeCall(new Object[]
+ "documents/file_management_test.txt", new Integer(0x80000000 | 0x40000000 |
+0x00010000), null, securityAttributes, new Integer(2), null, null });
+
+boolean closed = closeHandle.executeBooleanCall(new Integer(fileHandle));
+
+createFileA.destroy();
+closeHandle.destroy();</PRE>
+<H2>Other resources</H2>
+<UL>
+  <LI>
+  <P><A href="http://sourceforge.net/project/showfiles.php?group_id=118871">File 
+  releases</A></P>
+  <LI>
+  <P><A 
+  href="http://johannburkard.de/software/nativecall/apidoc/index.html">View 
+  Apidocs</A></P>
+  <LI>
+  <P><A href="http://johannburkard.de/software/nativecall/changes.txt">The 
+  change log</A></P>
+  <LI>
+  <P><A href="http://sourceforge.net/projects/nativecall">Project homepage on 
+  SourceForge.net</A></P>
+  <LI><A 
+  href="http://lists.sourceforge.net/lists/listinfo/nativecall-developers">The 
+  NativeCall developers mailing list</A> </LI></UL>
+<P><A href="http://sourceforge.net/"><IMG height=37 alt="SourceForge.net Logo" 
+src="NativeCall_ Johann Burkard.files/sflogo.png" width=125></A><BR>Services 
+provided by <A href="http://sourceforge.net/">SourceForge.net</A>.</P><!-- #EndEditable --></DIV>
+<DIV id=footer>
+<UL id=footerLinks>
+  <LI id=footerSitemap><A href="http://johannburkard.de/help/sitemap.html">Site 
+  map</A> 
+  <LI id=footerContact><A 
+  href="http://johannburkard.de/help/contact.jsp">Contact</A> 
+  <LI id=footerPrivacy><A 
+  href="http://johannburkard.de/help/privacy.jsp">Privacy policy</A> 
+  <LI id=footerCopyright><A href="http://johannburkard.de/help/copyright.html">© 
+  2002–2006 Johann Burkard</A> </LI></UL>
+<P id=bottomLinks><A href="http://johannburkard.de/software/nativecall/#top">Top 
+of the page</A>, <A href="http://johannburkard.de/">Home page</A></P></DIV><!-- #EndTemplate --></BODY></HTML>

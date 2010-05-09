@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.loadtrend.web.mobile.dao.model.Item" table="items" catalog="jmobile">
+        
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="native"/>
+        </id>
+        
+        <property name="name" type="string">
+            <column name="name" length="50" />
+        </property>
+        
+        <property name="author" type="string">
+            <column name="author" length="20" />
+        </property>
+        
+        <property name="url" type="string">
+            <column name="url" length="512" />
+        </property>
+        
+        <property name="uploader" type="string">
+            <column name="uploader" length="20" />
+        </property>
+        
+        <property name="weekpaytimes" type="integer">
+            <column name="weekpaytimes" />
+        </property>
+        
+        <property name="paytimes" type="integer">
+            <column name="paytimes" />
+        </property>
+        
+        <property name="isValid" type="string">
+            <column name="isValid" length="2" />
+        </property>
+        
+        <property name="uploadtime" type="timestamp">
+            <column name="uploadtime" />
+        </property>
+        
+        <property name="itemType" type="string">
+            <column name="itemType" length="2" />
+        </property>
+        
+        <many-to-one name="product" class="com.loadtrend.web.mobile.dao.model.Product" column="productid" cascade="none">
+        </many-to-one>
+        
+        <!-- Setting cascade="save-update" and inverse="false", 
+             if you want to delete item but not wish to delete orders which belong it, set the orders null value.
+             -->
+        <set name="orders" table="orders" cascade="save-update" inverse="false">
+            <key column="itemid">
+            </key>
+            <one-to-many class="com.loadtrend.web.mobile.dao.model.Order"/>
+        </set>
+    
+    </class>
+</hibernate-mapping>
