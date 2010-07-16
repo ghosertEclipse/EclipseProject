@@ -1,6 +1,9 @@
-# ignore the .metadata in all workspaces
-*.metadata*
+# ignore the .metadata in all workspaces.
+# ignore the bin folder in current/sub folders.
+.metadata/
+bin/
 *.class
 *.pyc
-*.[oa] # for c language
-*.swp # for vi
+*.[oa]
+*.so
+*.swp
