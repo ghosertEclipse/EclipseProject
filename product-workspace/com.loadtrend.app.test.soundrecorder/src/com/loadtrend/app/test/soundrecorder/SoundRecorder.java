@@ -128,7 +128,7 @@ public class SoundRecorder
     	Rectangle rectangle = display.getClientArea();
     	this.shell =  new Shell( display, SWT.TITLE | SWT.MIN | SWT.CLOSE );
     	// this.shell =  new Shell( new Display(), SWT.MODELESS | SWT.BORDER);
-        this.shell.setText("Windows Audio Recorder Professional 4.54");
+        this.shell.setText("Windows Audio Recorder Professional 4.56");
         // this.shell.setText("Windows Audio Recorder 3.45");
         this.shell.setImage(ImageUtil.getImage(PreferenceUtil.APP_IMAGE));
     	this.shell.setLayout(new FillLayout());
