@@ -47,10 +47,10 @@ public class RecordingAboutItem {
 //		"<tr height=\"20\"><td><font face=\"verdana\" size=\"1\">You are using the trial version which is limited to 60 seconds and save-disabled after editing sound. <br><br>Press the button below to get the full version.</font></td></tr>" +
 //		"<tr height=\"40\" align=\"center\" valign=\"bottom\"><td><br><a href=\"http://www.recordsound.net/buynow.htm\" target=\"_blank\"><IMG SRC=\"" + purchaseImage + "\" BORDER=\"0\"></a></td></tr>" +
 
-		"<tr height=\"20\"><td><font face=\"verdana\" size=\"1\"><br>Version Info:  4.56</font></td></tr>" +
+		"<tr height=\"20\"><td><font face=\"verdana\" size=\"1\"><br>Version Info:  5.00</font></td></tr>" +
 		"<tr height=\"20\"><td><font face=\"verdana\" size=\"1\"><br>Support Email: <a href=\"mailto:ghosert@gmail.com\">ghosert@gmail.com</a></font></td></tr>" +
 		"<tr height=\"20\"><td><font face=\"verdana\" size=\"1\"><br>Official Site: <a href=\"http://www.recordsound.net\" target=\"_blank\">http://www.recordsound.net</a></font></td></tr>" +
-		"<tr height=\"20\"><td><font face=\"verdana\" size=\"1\"><br>2001-2007 Windows Audio Recorder designed by arbiter, all rights reserved.</font></td></tr>" +
+		"<tr height=\"20\"><td><font face=\"verdana\" size=\"1\"><br>2001-2011 Windows Audio Recorder designed by arbiter, all rights reserved.</font></td></tr>" +
 		"</table></td></tr>" +
 		"</table></body></head></html>";
 	}
