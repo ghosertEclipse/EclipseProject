@@ -1,10 +1,37 @@
 #!/usr/bin/python
 # encoding: utf-8
 
+import os
 import sys
+
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from PyQt4.QtWebKit import *
+from PyQt4.QtNetwork import *
+
+class CookieJar(QNetworkCookieJar):
+    
+    CookiePath = '/home/jiawzhang/Templates/cookies'
+    
+    def __init__(self, parent = None):
+        QNetworkCookieJar.__init__(self, parent)
+    
+    def saveAllCookies(self):
+        allCookies = QNetworkCookieJar.allCookies(self)
+        with open(CookieJar.CookiePath, 'w') as f:
+            lines = ''
+            for cookie in allCookies:
+                lines = lines + cookie.toRawForm() + '\r\n'
+            f.writelines(lines)
+    
+    def loadAllCookies(self):
+        if os.path.exists(CookieJar.CookiePath):
+            with open(CookieJar.CookiePath, 'r') as f:
+                lines = ''
+                for line in f:
+                    lines = lines + line
+                allCookies = QNetworkCookie.parseCookies(lines)
+                QNetworkCookieJar.setAllCookies(self, allCookies)
 
 class WebView(QWebView):
     def __init__(self, mainContainer = None):
@@ -20,19 +47,26 @@ class MainContainer(QMainWindow):
         
         self.tabWidget = QTabWidget(self)
         self.tabWidget.setTabsClosable(True)
+        self.connect(self.tabWidget, SIGNAL('tabCloseRequested(int)'), self.tabWidget.removeTab)
         self.setCentralWidget(self.tabWidget)
         
+        self.cookieJar = CookieJar()
+        self.cookieJar.loadAllCookies()
         view = self.createWebView()
         view.load(QUrl("http://www.taobao.com"))
         
     def createWebView(self):
         view = WebView(self)
+        networkAccessManager = view.page().networkAccessManager()
+        networkAccessManager.setCookieJar(self.cookieJar)
+        
         self.tabWidget.setCurrentIndex(self.tabWidget.addTab(view, 'loading'))
-        self.tabWidget.connect(view, SIGNAL('loadFinished(bool)'), self.load_finished)
-        self.tabWidget.connect(view, SIGNAL('loadProgress(int)'), self.load_progress)
+        self.connect(view, SIGNAL('loadFinished(bool)'), self.load_finished)
+        self.connect(view, SIGNAL('loadProgress(int)'), self.load_progress)
         return view
     
     def load_finished(self, status):
+        self.cookieJar.saveAllCookies()
         self.tabWidget.setTabText(self.tabWidget.currentIndex(), self.sender().title())
         # element = self.frame.findFirstElement("input.lst")
         # self.frame.evaluateJavaScript("q = document.getElementsByName('q')[0]; q.value = 'jiawei'; b = document.getElementsByName('btnG')[0]; b.click();")
@@ -50,6 +84,7 @@ if __name__ == '__main__':
     # Enable plugins here will make activex turn on, it's important to taobao security activex control
     # jiawzhang TODO: may be disable QWebSettings.AutoLoadImages for speeding up page loading later ?
     QWebSettings.globalSettings().setAttribute(QWebSettings.PluginsEnabled, True)
+    QWebSettings.globalSettings().enablePersistentStorage("/home/jiawzhang/Templates")
         
     main.show()
     app.exec_()
