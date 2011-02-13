@@ -67,14 +67,14 @@ class MainContainer(QMainWindow):
     
     def load_finished(self, status):
         self.cookieJar.saveAllCookies()
-        self.tabWidget.setTabText(self.tabWidget.currentIndex(), self.sender().title())
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.sender()), self.sender().title())
         # element = self.frame.findFirstElement("input.lst")
         # self.frame.evaluateJavaScript("q = document.getElementsByName('q')[0]; q.value = 'jiawei'; b = document.getElementsByName('btnG')[0]; b.click();")
         # element.setAttribute("value", "jiawzhang")
         # print element.attribute("class")
     
     def load_progress(self, progress):
-        self.tabWidget.setTabText(self.tabWidget.currentIndex(), str(progress) + "%")
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.sender()), str(progress) + "%")
         
 
 if __name__ == '__main__':
