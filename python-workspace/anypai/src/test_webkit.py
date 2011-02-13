@@ -82,8 +82,8 @@ if __name__ == '__main__':
     main = MainContainer()
     
     # Enable plugins here will make activex turn on, it's important to taobao security activex control
-    # jiawzhang TODO: may be disable QWebSettings.AutoLoadImages for speeding up page loading later ?
     QWebSettings.globalSettings().setAttribute(QWebSettings.PluginsEnabled, True)
+    QWebSettings.globalSettings().setAttribute(QWebSettings.AutoLoadImages, False)
     QWebSettings.globalSettings().enablePersistentStorage("/home/jiawzhang/Templates")
         
     main.show()
