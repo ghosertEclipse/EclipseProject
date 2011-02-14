@@ -15,6 +15,7 @@ class CookieJar(QNetworkCookieJar):
     
     def __init__(self, parent = None):
         QNetworkCookieJar.__init__(self, parent)
+        self.loadAllCookies()
     
     def saveAllCookies(self):
         allCookies = QNetworkCookieJar.allCookies(self)
@@ -33,14 +34,68 @@ class CookieJar(QNetworkCookieJar):
                 allCookies = QNetworkCookie.parseCookies(lines)
                 QNetworkCookieJar.setAllCookies(self, allCookies)
 
+import re
+
+class AutoAction:
+    
+    def __init__(self, keyword):
+        self.keyword = keyword
+    
+    def setKeyword(self, keyword):
+        self.keyword = keyword
+    
+    def home(self, frame):
+        searchBox = frame.findFirstElement('input#q')
+        if not searchBox: return False
+        searchBox.setAttribute('value', self.keyword)
+        searchButton = frame.findFirstElement('button.tsearch-submit')
+        if not searchButton: return False
+        searchButton.evaluateJavaScript('this.click()')
+        return True
+    
+    def perform(self, frame, url):
+        if (re.search(r'^http://www\.taobao\.com/$', url)):
+            return self.home(frame)
+        elif (re.search(r'^http://s\.taobao\.com/search\?q=', url)):
+            wwonline = frame.findFirstElement('input#filterServiceWWOnline')
+            if wwonline.attribute('checked', 'not_found_value') == 'not_found_value':
+                wwonline.evaluateJavaScript('this.click()')
+                confirmButton = frame.findFirstElement('button#J_SubmitBtn')
+                confirmButton.evaluateJavaScript('this.click()')
+            return True
+        else:
+            return False
+        
 class WebView(QWebView):
-    def __init__(self, mainContainer = None):
-        QWebView.__init__(self, mainContainer.tabWidget)
-        self.mainContainer = mainContainer
+    
+    cookieJar = CookieJar()
+    autoAction = AutoAction(u'捷易通加款1元')
+    
+    def __init__(self, tabWidget = None):
+        QWebView.__init__(self, tabWidget)
+        networkAccessManager = self.page().networkAccessManager()
+        networkAccessManager.setCookieJar(self.__class__.cookieJar)
+        tabWidget.setCurrentIndex(tabWidget.addTab(self, 'loading'))
+        tabWidget.connect(self, SIGNAL('loadStarted()'), self.load_started)
+        tabWidget.connect(self, SIGNAL('loadFinished(bool)'), self.load_finished)
+        tabWidget.connect(self, SIGNAL('loadProgress(int)'), self.load_progress)
+        self.tabWidget = tabWidget
+        self.frame = self.page().currentFrame()
         
     def createWindow(self, webWindowType):
-        return self.mainContainer.createWebView()
-
+        return WebView(self.tabWidget)
+    
+    def load_started(self):
+        pass
+        
+    def load_finished(self, status):
+        self.__class__.cookieJar.saveAllCookies()
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.sender()), self.sender().title())
+        self.__class__.autoAction.perform(self.frame, self.url().toString())
+    
+    def load_progress(self, progress):
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.sender()), str(progress) + "%")
+        
 class MainContainer(QMainWindow):
     def __init__(self, parent = None):
         QMainWindow.__init__(self, parent)
@@ -50,31 +105,8 @@ class MainContainer(QMainWindow):
         self.connect(self.tabWidget, SIGNAL('tabCloseRequested(int)'), self.tabWidget.removeTab)
         self.setCentralWidget(self.tabWidget)
         
-        self.cookieJar = CookieJar()
-        self.cookieJar.loadAllCookies()
-        view = self.createWebView()
-        view.load(QUrl("http://www.taobao.com"))
-        
-    def createWebView(self):
-        view = WebView(self)
-        networkAccessManager = view.page().networkAccessManager()
-        networkAccessManager.setCookieJar(self.cookieJar)
-        
-        self.tabWidget.setCurrentIndex(self.tabWidget.addTab(view, 'loading'))
-        self.connect(view, SIGNAL('loadFinished(bool)'), self.load_finished)
-        self.connect(view, SIGNAL('loadProgress(int)'), self.load_progress)
-        return view
-    
-    def load_finished(self, status):
-        self.cookieJar.saveAllCookies()
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.sender()), self.sender().title())
-        # element = self.frame.findFirstElement("input.lst")
-        # self.frame.evaluateJavaScript("q = document.getElementsByName('q')[0]; q.value = 'jiawei'; b = document.getElementsByName('btnG')[0]; b.click();")
-        # element.setAttribute("value", "jiawzhang")
-        # print element.attribute("class")
-    
-    def load_progress(self, progress):
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.sender()), str(progress) + "%")
+        view = WebView(self.tabWidget)
+        view.load(QUrl("http://www.taobao.com/"))
         
 
 if __name__ == '__main__':
