@@ -35,6 +35,23 @@ class CookieJar(QNetworkCookieJar):
                 QNetworkCookieJar.setAllCookies(self, allCookies)
 
 import re
+import time
+from datetime import datetime
+
+class UserInfo:
+    Status_Not_Processing = 1
+    Status_Processing = 2
+    Status_NotTo_Buy = 3
+    Status_Unknown_Buy = 4
+    Status_Will_Buy = 5
+    Status_Complete_Buy = 6
+    Status_Confirm_Order = 7
+    def __init__(self, taobaoId, itemLink, wangwangLink):
+        self.taobaoId = taobaoId
+        self.itemLink = itemLink
+        self.wangwangLink = wangwangLink
+        self.status = UserInfo.Status_Not_Processing
+        self.last_status_time = datetime.now()
 
 class AutoAction:
     
@@ -46,15 +63,22 @@ class AutoAction:
             clickOnString = 'this.click();'
         return element.evaluateJavaScript(clickOnString)
     
+    def __setValueOn(self, element, value):
+        "Since the value could be Chinese, make sure it passed in as unicode based."
+        # We can also use element.setAttribute('value', value) instead, but this clause fail to work in some cases, it's safer to use javascript based set-value function.
+        # When invoking string1.format(string2), make sure both string1 & string2 are unicode based like below.
+        return element.evaluateJavaScript(u'this.value="{0}";'.format(value))
+    
     def __keyupOn(self, element):
         "This is major for input box."
         keyupOnString = "var evObj = document.createEvent('UIEvents');evObj.initEvent( 'keyup', true, true );this.dispatchEvent(evObj);"
         return element.evaluateJavaScript(keyupOnString)
     
-    def __init__(self, keyword, username, password):
+    def __init__(self, keyword, username, password, max_price):
         self.keyword = keyword
         self.username = username
         self.password = password
+        self.max_price = max_price
     
     def setKeyword(self, keyword):
         self.keyword = keyword
@@ -66,10 +90,10 @@ class AutoAction:
     def home(self, frame):
         searchBox = frame.findFirstElement('input#q')
         if not searchBox: return False
-        searchBox.setAttribute('value', self.keyword)
+        self.__setValueOn(searchBox, self.keyword)
         searchButton = frame.findFirstElement('button.tsearch-submit')
         if not searchButton: return False
-        searchButton.evaluateJavaScript('this.click()')
+        self.__clickOn(searchButton)
         return True
     
     def search(self, frame):
@@ -80,27 +104,26 @@ class AutoAction:
             self.__clickOn(isLogin)
             return True
                 
-        # check wang wang online option.
+        # check wang wang online option, check it if it's not checked.
         wwonline = frame.findFirstElement('input#filterServiceWWOnline')
         if wwonline.attribute('checked', 'not_found_value') == 'not_found_value':
-            wwonline.evaluateJavaScript('this.click()')
+            self.__clickOn(wwonline)
             confirmButton = frame.findFirstElement('button#J_SubmitBtn')
-            confirmButton.evaluateJavaScript('this.click()')
+            self.__clickOn(confirmButton)
             return True
         else:
+            userInfo = UserInfo(u'代理梦想家80后', u'http://item.taobao.com/item.htm?id=9190349629',
+            QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='))
+            # jiawzhang TODO: continue here.
             return True
     
     def login(self, frame):
         username = frame.findFirstElement('input#TPL_username_1')
         password = frame.findFirstElement('span#J_StandardPwd input.login-text')
-
-        # jiawzhang TODO: why setAttribute doesn't work but javascript works below.
-        username.setAttribute('value', self.username)
-        # username.evaluateJavaScript('this.value="' + self.username + '";')
-
-        password.setAttribute('value', self.password)
+        self.__setValueOn(username, self.username)
+        self.__setValueOn(password, self.password)
         loginButton = frame.findFirstElement('button.J_Submit')
-        loginButton.evaluateJavaScript('this.click()')
+        self.__clickOn(loginButton)
         return True
     
     def perform(self, frame, url):
@@ -116,7 +139,8 @@ class AutoAction:
 class WebView(QWebView):
     
     cookieJar = CookieJar()
-    autoAction = AutoAction(u'捷易通加款1元', 'ghosert', '011849')
+    # Make sure fill in unicode characters.
+    autoAction = AutoAction(u'捷易通加款1元', u'ghosert', u'011849', 0.90)
     
     def __init__(self, tabWidget = None):
         QWebView.__init__(self, tabWidget)
