@@ -50,8 +50,6 @@ class AutoAction:
         "This is major for input box."
         keyupOnString = "var evObj = document.createEvent('UIEvents');evObj.initEvent( 'keyup', true, true );this.dispatchEvent(evObj);"
         return element.evaluateJavaScript(keyupOnString)
-        # element.evaluateJavaScript(keyupOnString)
-        # element.evaluateJavaScript('alert(this.value);')
     
     def __init__(self, keyword, username, password):
         self.keyword = keyword
@@ -95,8 +93,11 @@ class AutoAction:
     def login(self, frame):
         username = frame.findFirstElement('input#TPL_username_1')
         password = frame.findFirstElement('span#J_StandardPwd input.login-text')
+
+        # jiawzhang TODO: why setAttribute doesn't work but javascript works below.
         username.setAttribute('value', self.username)
-        self.__keyupOn(username) # This step is necessary, since taobao is using 'keyup' js code to login when typing on user name input box.
+        # username.evaluateJavaScript('this.value="' + self.username + '";')
+
         password.setAttribute('value', self.password)
         loginButton = frame.findFirstElement('button.J_Submit')
         loginButton.evaluateJavaScript('this.click()')
