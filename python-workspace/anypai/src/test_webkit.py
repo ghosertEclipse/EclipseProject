@@ -38,11 +38,32 @@ import re
 
 class AutoAction:
     
-    def __init__(self, keyword):
+    def __clickOn(self, element):
+        clickOnString = None
+        if element.tagName() == 'A': # <a> has a different implementation javascript for simulating clicking on it.
+            clickOnString = "var evObj = document.createEvent('MouseEvents');evObj.initEvent( 'click', true, true );this.dispatchEvent(evObj);"
+        else:
+            clickOnString = 'this.click();'
+        return element.evaluateJavaScript(clickOnString)
+    
+    def __keyupOn(self, element):
+        "This is major for input box."
+        keyupOnString = "var evObj = document.createEvent('UIEvents');evObj.initEvent( 'keyup', true, true );this.dispatchEvent(evObj);"
+        return element.evaluateJavaScript(keyupOnString)
+        # element.evaluateJavaScript(keyupOnString)
+        # element.evaluateJavaScript('alert(this.value);')
+    
+    def __init__(self, keyword, username, password):
         self.keyword = keyword
+        self.username = username
+        self.password = password
     
     def setKeyword(self, keyword):
         self.keyword = keyword
+    
+    def setUserInfo(self, username, password):
+        self.username = username
+        self.password = password
     
     def home(self, frame):
         searchBox = frame.findFirstElement('input#q')
@@ -53,23 +74,48 @@ class AutoAction:
         searchButton.evaluateJavaScript('this.click()')
         return True
     
+    def search(self, frame):
+        # See whether the current user login or not.
+        p_login_info = frame.findFirstElement('p.login-info')
+        isLogin = p_login_info.findFirst('a')
+        if not isLogin.hasClass('user-nick'):
+            self.__clickOn(isLogin)
+            return True
+                
+        # check wang wang online option.
+        wwonline = frame.findFirstElement('input#filterServiceWWOnline')
+        if wwonline.attribute('checked', 'not_found_value') == 'not_found_value':
+            wwonline.evaluateJavaScript('this.click()')
+            confirmButton = frame.findFirstElement('button#J_SubmitBtn')
+            confirmButton.evaluateJavaScript('this.click()')
+            return True
+        else:
+            return True
+    
+    def login(self, frame):
+        username = frame.findFirstElement('input#TPL_username_1')
+        password = frame.findFirstElement('span#J_StandardPwd input.login-text')
+        username.setAttribute('value', self.username)
+        self.__keyupOn(username) # This step is necessary, since taobao is using 'keyup' js code to login when typing on user name input box.
+        password.setAttribute('value', self.password)
+        loginButton = frame.findFirstElement('button.J_Submit')
+        loginButton.evaluateJavaScript('this.click()')
+        return True
+    
     def perform(self, frame, url):
-        if (re.search(r'^http://www\.taobao\.com/$', url)):
+        if (re.search(r'^http://www\.taobao\.com', url)):
             return self.home(frame)
         elif (re.search(r'^http://s\.taobao\.com/search\?q=', url)):
-            wwonline = frame.findFirstElement('input#filterServiceWWOnline')
-            if wwonline.attribute('checked', 'not_found_value') == 'not_found_value':
-                wwonline.evaluateJavaScript('this.click()')
-                confirmButton = frame.findFirstElement('button#J_SubmitBtn')
-                confirmButton.evaluateJavaScript('this.click()')
-            return True
+            return self.search(frame)
+        elif (re.search(r'^https://login\.taobao\.com/member/login\.jhtml', url)):
+            return self.login(frame)
         else:
             return False
         
 class WebView(QWebView):
     
     cookieJar = CookieJar()
-    autoAction = AutoAction(u'捷易通加款1元')
+    autoAction = AutoAction(u'捷易通加款1元', 'ghosert', '011849')
     
     def __init__(self, tabWidget = None):
         QWebView.__init__(self, tabWidget)
