@@ -33,7 +33,7 @@ class CookieJar(QNetworkCookieJar):
                     lines = lines + line
                 allCookies = QNetworkCookie.parseCookies(lines)
                 QNetworkCookieJar.setAllCookies(self, allCookies)
-
+                
 import re
 import time
 from datetime import datetime
@@ -46,14 +46,37 @@ class UserInfo:
     Status_Will_Buy = 5
     Status_Complete_Buy = 6
     Status_Confirm_Order = 7
-    def __init__(self, taobaoId, itemLink, wangwangLink):
+    def __init__(self, taobaoId, itemLink, wangwangLink, buyer_payment, max_acceptable_price, seller_payment):
         self.taobaoId = taobaoId
         self.itemLink = itemLink
         self.wangwangLink = wangwangLink
+        self.buyer_payment = buyer_payment
+        self.max_acceptable_price = max_acceptable_price
+        self.seller_payment = seller_payment
         self.status = UserInfo.Status_Not_Processing
         self.last_status_time = datetime.now()
 
+class UserInfoManager:
+    userMap = {}
+    def addUserInfo(self, userInfo):
+        # If the userInfo exists in map, only confirmed order and its last status time more than 31 days will allow to continue.
+        # Otherwise just return, don't add userInfo anymore.
+        if UserInfoManager.userMap.has_key(userInfo.taobaoId):
+            if userInfo.status == UserInfo.Status_Confirm_Order:
+                if (datetime.now() - userInfo.last_status_time).days < 31:
+                    return
+            else:
+                return
+                    
+        if userInfo.buyer_payment <= userInfo.max_acceptable_price:
+            UserInfoManager.userMap[userInfo.taobaoId] = userInfo
+            
+    def getUserInfoMap(self):
+        return UserInfoManager.userMap
+
 class AutoAction:
+    
+    userInfoManager = UserInfoManager()
     
     def __clickOn(self, element):
         clickOnString = None
@@ -74,18 +97,12 @@ class AutoAction:
         keyupOnString = "var evObj = document.createEvent('UIEvents');evObj.initEvent( 'keyup', true, true );this.dispatchEvent(evObj);"
         return element.evaluateJavaScript(keyupOnString)
     
-    def __init__(self, keyword, username, password, max_price):
+    def __init__(self, keyword, username, password, max_acceptable_price, seller_payment):
         self.keyword = keyword
         self.username = username
         self.password = password
-        self.max_price = max_price
-    
-    def setKeyword(self, keyword):
-        self.keyword = keyword
-    
-    def setUserInfo(self, username, password):
-        self.username = username
-        self.password = password
+        self.max_acceptable_price = max_acceptable_price
+        self.seller_payment = seller_payment
     
     def home(self, frame):
         searchBox = frame.findFirstElement('input#q')
@@ -113,9 +130,38 @@ class AutoAction:
             return True
         else:
             userInfo = UserInfo(u'代理梦想家80后', u'http://item.taobao.com/item.htm?id=9190349629',
-            QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='))
+            QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
+            0.80, 0.90, 1.00)
+            AutoAction.userInfoManager.addUserInfo(userInfo)
+            
             # jiawzhang TODO: continue here.
+            
+            userInfoMap = AutoAction.userInfoManager.getUserInfoMap()
+            for taobaoId, userInfo in userInfoMap.iteritems():
+                # jiawzhang TODO: send query message to taobaoId in wangwang.
+                # jiawzhang TODO: if yes flow
+                tabWidget = frame.page().view().tabWidget
+                view = WebView(tabWidget)
+                view.load(QUrl(userInfo.itemLink))
+            
             return True
+    
+    def item(self, frame):
+        # jiawzhang TODO: change it to 61 on production.
+        time.sleep(5)
+        # test whether there is a username/password div pop up after clicking on buy now link.
+        username = frame.findFirstElement('input#TPL_username_1')
+        if username:
+            self.login(frame)
+            return True
+        buynow = frame.findFirstElement('a#J_LinkBuy')
+        if buynow:
+            self.__clickOn(buynow)
+        else:
+            # jiawzhang TODO: xia jia handler.
+            pass
+        
+        return True
     
     def login(self, frame):
         username = frame.findFirstElement('input#TPL_username_1')
@@ -133,6 +179,8 @@ class AutoAction:
             return self.search(frame)
         elif (re.search(r'^https://login\.taobao\.com/member/login\.jhtml', url)):
             return self.login(frame)
+        elif (re.search(r'^http://item\.taobao\.com/item\.htm\?id=', url)):
+            return self.item(frame)
         else:
             return False
         
@@ -140,7 +188,7 @@ class WebView(QWebView):
     
     cookieJar = CookieJar()
     # Make sure fill in unicode characters.
-    autoAction = AutoAction(u'捷易通加款1元', u'ghosert', u'011849', 0.90)
+    autoAction = AutoAction(u'捷易通加款1元', u'ghosert', u'011849', 0.90, 1.00)
     
     def __init__(self, tabWidget = None):
         QWebView.__init__(self, tabWidget)
