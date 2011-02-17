@@ -101,6 +101,14 @@ class AutoAction:
         # We can also use element.setAttribute('value', value) instead, but this clause fail to work in some cases, it's safer to use javascript based set-value function.
         # When invoking string1.format(string2), make sure both string1 & string2 are unicode based like below.
         return element.evaluateJavaScript(u'this.value="{0}";'.format(value))
+
+    def __isCheckedOn(self, element):
+        "Check whether 'input' tag with 'checkbox' type is checked or not."
+        checked = element.evaluateJavaScript('this.checked;').toString()
+        if checked == 'true':
+            return True
+        else:
+            return False
     
     def __keyupOn(self, element):
         "This is major for input box."
@@ -132,7 +140,7 @@ class AutoAction:
                 
         # check wang wang online option, check it if it's not checked.
         wwonline = frame.findFirstElement('input#filterServiceWWOnline')
-        if wwonline.attribute('checked', 'not_found_value') == 'not_found_value':
+        if not self.__isCheckedOn(wwonline):
             self.__clickOn(wwonline)
             confirmButton = frame.findFirstElement('button#J_SubmitBtn')
             self.__clickOn(confirmButton)
@@ -162,6 +170,13 @@ class AutoAction:
             return
     
     def login(self, frame):
+
+        # Uncheck the safeLoginCheckbox to simplify the process, otherwise, I have to care activex seurity inputbox on the page.
+        safeLoginCheckbox = frame.findFirstElement('input#J_SafeLoginCheck')
+        if (self.__isCheckedOn(safeLoginCheckbox)):
+            # if safeLoginChecked, uncheck it first.
+            self.__clickOn(safeLoginCheckbox)
+
         username = frame.findFirstElement('input#TPL_username_1')
         password = frame.findFirstElement('span#J_StandardPwd input.login-text')
         self.__setValueOn(username, self.username)
