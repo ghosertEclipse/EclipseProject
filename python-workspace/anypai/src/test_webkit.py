@@ -43,8 +43,9 @@ class UserInfo:
     Status_Processing = 2
     Status_NotTo_Buy = 3
     Status_Will_Buy = 4
-    Status_Completed_Buy = 5
-    Status_Confirm_Order = 6
+    Status_Confirmed_Buy = 5
+    Status_Completed_Buy = 6
+    Status_Confirmed_Order = 7
     def __init__(self, taobaoId, itemLink, wangwangLink, buyer_payment, max_acceptable_price, seller_payment):
         self.taobaoId = taobaoId
         self.itemLink = itemLink
@@ -54,6 +55,7 @@ class UserInfo:
         self.seller_payment = seller_payment
         self.status = UserInfo.Status_Not_Processing
         self.last_status_time = datetime.now()
+        self.alipayLink = None
 
 class UserInfoManager:
     userMap = {}
@@ -61,7 +63,7 @@ class UserInfoManager:
         # If the userInfo exists in map, only confirmed order and its last status time more than 31 days will allow to continue.
         # Otherwise just return, don't add userInfo anymore.
         if UserInfoManager.userMap.has_key(userInfo.taobaoId):
-            if userInfo.status == UserInfo.Status_Completed_Buy or userInfo.status == UserInfo.Status_Confirm_Order:
+            if userInfo.status == UserInfo.Status_Completed_Buy or userInfo.status == UserInfo.Status_Confirmed_Order:
                 if (datetime.now() - userInfo.last_status_time).days <= 31:
                     return
             elif userInfo.status == UserInfo.Status_NotTo_Buy:
@@ -76,8 +78,10 @@ class UserInfoManager:
     def getUserInfoMap(self):
         return UserInfoManager.userMap
     
-    def setUserInfoStatus(self, userInfo, status):
+    def setUserInfoStatus(self, userInfo, status, alipayLink = None):
         userInfo.status = status
+        if (status == UserInfo.Status_Confirmed_Buy) and alipayLink:
+            userInfo.alipayLink = alipayLink
         userInfo.last_status_time = datetime.now()
 
 class AutoAction:
@@ -103,10 +107,11 @@ class AutoAction:
         keyupOnString = "var evObj = document.createEvent('UIEvents');evObj.initEvent( 'keyup', true, true );this.dispatchEvent(evObj);"
         return element.evaluateJavaScript(keyupOnString)
     
-    def __init__(self, keyword, username, password, max_acceptable_price, seller_payment, message_to_seller):
+    def __init__(self, keyword, username, password, alipayPassword, max_acceptable_price, seller_payment, message_to_seller):
         self.keyword = keyword
         self.username = username
         self.password = password
+        self.alipayPassword = alipayPassword
         self.max_acceptable_price = max_acceptable_price
         self.seller_payment = seller_payment
         self.message_to_seller = message_to_seller
@@ -138,7 +143,7 @@ class AutoAction:
             0.80, 0.90, 1.00)
             AutoAction.userInfoManager.addUserInfo(userInfo)
             
-            # jiawzhang TODO: continue here.
+            # jiawzhang TODO: should handle the legacy userInfos first, then search new users from search page.
             
             userInfoMap = AutoAction.userInfoManager.getUserInfoMap()
             
@@ -146,6 +151,7 @@ class AutoAction:
                 # UserInfo.Status_Not_Processing
                 # UserInfo.Status_Processing
                 # UserInfo.Status_Will_Buy # make sure change WillBuy to Not Processing if the last status time is more than 1 day from since.
+                # UserInfo.Status_Confirmed_Buy # caculate the time and decided whether to go alipay, if yes, load userInfo.alipayLink
             for taobaoId, userInfo in userInfoMap.iteritems():
                 # jiawzhang TODO: send query message to taobaoId in wangwang.
                 # jiawzhang TODO: if yes flow
@@ -187,9 +193,11 @@ class AutoAction:
         self.__clickOn(confirmButton)
         
     def alipay(self, frame, userInfo):
+        # Set status to confirmed buy and save the alipay link.
+        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Confirmed_Buy, frame.url().toString())
         payPassword = frame.findFirstElement('embed#payPassword_noie')
         # jiawzhang TODO: can't alipay.
-        self.__setValueOn(payPassword, self.password)
+        self.__setValueOn(payPassword, self.alipayPassword)
         confirmButton = frame.findFirstElement('input.J_ForAliControl.ui-btn-text')
         self.__clickOn(confirmButton)
         
@@ -213,7 +221,7 @@ class WebView(QWebView):
     
     cookieJar = CookieJar()
     # Make sure fill in unicode characters.
-    autoAction = AutoAction(u'捷易通加款1元', u'ghosert', u'011849', 0.90, 1.00, u'捷易通ID: ghosert')
+    autoAction = AutoAction(u'捷易通加款1元', u'ghosert', u'011849', u'011849', 0.90, 1.00, u'捷易通ID: ghosert')
     
     def __init__(self, tabWidget = None, userInfo = None):
         QWebView.__init__(self, tabWidget)
