@@ -7,9 +7,14 @@ return
 
 MButton::
 ;main()
-google()
+;google()
+alipay_security()
 return
 
+alipay_security()
+{
+	ControlSend, Edit1, 011849, python
+}
 
 google()
 {
