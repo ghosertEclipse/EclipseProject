@@ -90,17 +90,21 @@ class AutoAction:
     
     def __clickOn(self, element):
         clickOnString = None
-        if element.tagName() == 'A': # <a> has a different implementation javascript for simulating clicking on it.
+        # <a> has a different implementation javascript for simulating clicking on it.
+        if element.tagName() == 'A':
             clickOnString = "var evObj = document.createEvent('MouseEvents');evObj.initEvent( 'click', true, true );this.dispatchEvent(evObj);"
         else:
             clickOnString = 'this.click();'
         return element.evaluateJavaScript(clickOnString)
     
     def __setValueOn(self, element, value):
-        "Since the value could be Chinese, make sure it passed in as unicode based."
+        "Support most 'input' tag  with 'textarea' tag either, since the value could be Chinese, make sure it passed in as unicode based."
         # We can also use element.setAttribute('value', value) instead, but this clause fail to work in some cases, it's safer to use javascript based set-value function.
         # When invoking string1.format(string2), make sure both string1 & string2 are unicode based like below.
-        return element.evaluateJavaScript(u'this.value="{0}";'.format(value))
+        if element.tagName() == 'TEXTAREA':
+            return element.evaluateJavaScript(u'this.innerHTML="{0}";'.format(value))
+        else:
+            return element.evaluateJavaScript(u'this.value="{0}";'.format(value))
 
     def __isCheckedOn(self, element):
         "Check whether 'input' tag with 'checkbox' type is checked or not."
