@@ -102,6 +102,8 @@ class AutoAction:
         # We can also use element.setAttribute('value', value) instead, but this clause fail to work in some cases, it's safer to use javascript based set-value function.
         # When invoking string1.format(string2), make sure both string1 & string2 are unicode based like below.
         if element.tagName() == 'TEXTAREA':
+            # textarea element should be focus first, then set innerHTML.
+            element.setFocus()
             return element.evaluateJavaScript(u'this.innerHTML="{0}";'.format(value))
         else:
             return element.evaluateJavaScript(u'this.value="{0}";'.format(value))
@@ -205,9 +207,7 @@ class AutoAction:
     
     def buy(self, frame, userInfo):
         message_box = frame.findFirstElement('textarea#J_msgtosaler')
-        # jiawzhang TODO: can't set value to textarea.
         self.__setValueOn(message_box, self.message_to_seller)
-        # message_box.setInnerXml(self.message_to_seller)
         confirmButton = frame.findFirstElement('input#performSubmit')
         self.__clickOn(confirmButton)
         
