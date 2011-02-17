@@ -22,7 +22,7 @@ google()
 main()
 {
 	;taobao_user = likecider
-	taobao_user = ä»£ç†æ¢¦æƒ³å®¶80åŽ 
+	taobao_user = ´úÀíÃÎÏë¼Ò80ºó 
 
 	wangwang_title = %taobao_user% - ghosert
 	IfWinExist %wangwang_title%
@@ -31,12 +31,12 @@ main()
 	} else {
 		;For likecider
 		;Run http://www.taobao.com/webww/?ver=1&&touid=cntaobao%taobao_user%&siteid=cntaobao&status=2&portalId=&gid=9090079799&itemsId=
-		;For ä»£ç†æ¢¦æƒ³å®¶80åŽ 
+		;For ´úÀíÃÎÏë¼Ò80ºó 
 		Run http://www.taobao.com/webww/?ver=1&&touid=cntaobao%taobao_user%&siteid=cntaobao&status=2&portalId=&gid=9190349629&itemsId=
 		WinWait %wangwang_title%
 		WinActivate
 	}
-	SendU("æœ‰è´§å—ï¼Ÿ")
+	SendU("ÓÐ»õÂð£¿")
 	;WinExist("A") uses the active window
 	;MsgBox % "AHKSCRIPT:" . IE_InjectJS(WinExist("A"), "javascript:ahkvar1='It really Does';ahkvar2='!!!';alert('JAVASCRIPT:Hey, it Works!');", "ahkvar1,ahkvar2")
 	jiawei := IE_InjectJS(WinExist(wangwang_title), "javascript:var html = document.body.innerHTML", "html")
@@ -107,29 +107,29 @@ Ansi2Unicode(ByRef sString, ByRef wString, CP = 0)
 ;For any target application which accept ascii like Notepad
 SendA(Keys)
 {
-    Len := StrLen(Keys) ; å¾—åˆ°å­—ç¬¦ä¸²çš„é•¿åº¦ï¼Œæ³¨æ„ä¸€ä¸ªä¸­æ–‡å­—ç¬¦çš„é•¿åº¦æ˜¯2
-    KeysInUnicode := ""     ; å°†è¦å‘é€çš„å­—ç¬¦åºåˆ—
-    Char1 := ""                 ; æš‚å­˜å­—ç¬¦1
-    Code1 := 0                  ; å­—ç¬¦1çš„ASCIIç ï¼Œå€¼ä»‹äºŽ 0x0-0xFF (å³1~255)
-    Char2 := ""                 ; æš‚å­˜å­—ç¬¦2
-    Index := 1                  ; ç”¨äºŽå¾ªçŽ¯
+    Len := StrLen(Keys) ; µÃµ½×Ö·û´®µÄ³¤¶È£¬×¢ÒâÒ»¸öÖÐÎÄ×Ö·ûµÄ³¤¶ÈÊÇ2
+    KeysInUnicode := ""     ; ½«Òª·¢ËÍµÄ×Ö·ûÐòÁÐ
+    Char1 := ""                 ; ÔÝ´æ×Ö·û1
+    Code1 := 0                  ; ×Ö·û1µÄASCIIÂë£¬Öµ½éÓÚ 0x0-0xFF (¼´1~255)
+    Char2 := ""                 ; ÔÝ´æ×Ö·û2
+    Index := 1                  ; ÓÃÓÚÑ­»·
     Loop
     {
-        Code2 := 0                                              ; å­—ç¬¦2çš„ASCIIç 
-        Char1 := SubStr(Keys, Index, 1)             ; ç¬¬ä¸€ä¸ªå­—ç¬¦
-        Code1 := Asc(Char1)                             ; å¾—åˆ°å…¶ASCIIå€¼
-        if(Code1 >= 129 And Code1 <= 254 And Index < Len)   ; åˆ¤æ–­æ˜¯å¦ä¸­æ–‡å­—ç¬¦çš„ç¬¬ä¸€ä¸ªå­—ç¬¦
+        Code2 := 0                                              ; ×Ö·û2µÄASCIIÂë
+        Char1 := SubStr(Keys, Index, 1)             ; µÚÒ»¸ö×Ö·û
+        Code1 := Asc(Char1)                             ; µÃµ½ÆäASCIIÖµ
+        if(Code1 >= 129 And Code1 <= 254 And Index < Len)   ; ÅÐ¶ÏÊÇ·ñÖÐÎÄ×Ö·ûµÄµÚÒ»¸ö×Ö·û
         {
-            Char2 := SubStr(Keys, Index+1, 1)       ; ç¬¬äºŒä¸ªå­—ç¬¦
-            Code2 := Asc(Char2)                         ; å¾—åˆ°å…¶ASCIIå€¼
-            if(Code2 >= 64 And Code2 <= 254)        ; è‹¥æ¡ä»¶æˆç«‹åˆ™è¯´æ˜Žæ˜¯ä¸­æ–‡å­—ç¬¦
+            Char2 := SubStr(Keys, Index+1, 1)       ; µÚ¶þ¸ö×Ö·û
+            Code2 := Asc(Char2)                         ; µÃµ½ÆäASCIIÖµ
+            if(Code2 >= 64 And Code2 <= 254)        ; ÈôÌõ¼þ³ÉÁ¢ÔòËµÃ÷ÊÇÖÐÎÄ×Ö·û
             {
-                Code1 <<= 8                                 ; ç¬¬ä¸€ä¸ªå­—ç¬¦åº”æ”¾åˆ°é«˜8ä½ä¸Š
-                Code1 += Code2                              ; ç¬¬äºŒä¸ªå­—ç¬¦æ”¾åœ¨ä½Ž8ä½ä¸Š
+                Code1 <<= 8                                 ; µÚÒ»¸ö×Ö·ûÓ¦·Åµ½¸ß8Î»ÉÏ
+                Code1 += Code2                              ; µÚ¶þ¸ö×Ö·û·ÅÔÚµÍ8Î»ÉÏ
             }
             Index++
         }
-        if(Code1 <= 255)                                    ; å¦‚æžœæ­¤å€¼ä»<=255åˆ™è¯´æ˜Žæ˜¯éžä¸­æ–‡å­—ç¬¦ï¼Œå¦åˆ™ç»è¿‡ä¸Šé¢çš„å¤„ç†å¿…ç„¶å¤§äºŽ255
+        if(Code1 <= 255)                                    ; Èç¹û´ËÖµÈÔ<=255ÔòËµÃ÷ÊÇ·ÇÖÐÎÄ×Ö·û£¬·ñÔò¾­¹ýÉÏÃæµÄ´¦Àí±ØÈ»´óÓÚ255
             Code1 := "0" . Code1
         KeysInUnicode .= "{ASC " . Code1 . "}"
         if(Code2 > 0 And Code2 < 64)
