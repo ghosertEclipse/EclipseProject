@@ -9,6 +9,8 @@ from PyQt4.QtCore import *
 from PyQt4.QtWebKit import *
 from PyQt4.QtNetwork import *
 
+import ahkpython
+
 class CookieJar(QNetworkCookieJar):
     
     CookiePath = '/home/jiawzhang/Templates/cookies'
@@ -216,7 +218,8 @@ class AutoAction:
         AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Confirmed_Buy, frame.url().toString())
         payPassword = frame.findFirstElement('embed#payPassword_noie')
         # jiawzhang TODO: can't alipay.
-        self.__setValueOn(payPassword, self.alipayPassword)
+        # self.__setValueOn(payPassword, self.alipayPassword)
+        ahkpython.sendAlipayPassword(self.alipayPassword)
         confirmButton = frame.findFirstElement('input.J_ForAliControl.ui-btn-text')
         self.__clickOn(confirmButton)
         
@@ -291,6 +294,7 @@ if __name__ == '__main__':
     # QWebSettings.globalSettings().setAttribute(QWebSettings.AutoLoadImages, False)
     QWebSettings.globalSettings().enablePersistentStorage("/home/jiawzhang/Templates")
         
+    main.setWindowTitle(u'淘宝随意拍')
     main.show()
     app.exec_()
     
