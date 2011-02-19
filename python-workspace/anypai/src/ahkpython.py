@@ -1,4 +1,4 @@
-﻿# encoding: utf-8
+# encoding: utf-8
 from ctypes import *
 
 ahk = cdll.AutoHotkey
@@ -13,6 +13,12 @@ sendAlipayPassword(alipayPassword){
 aString := UTF82Ansi("淘宝随意拍")
 ControlSend, Edit1, %alipayPassword%, %aString%
 ;return "test你好"
+}
+
+sendTaobaoPassword(password){
+;The last parameter is the windows title of the python application.
+aString := UTF82Ansi("淘宝随意拍")
+ControlSend, Edit2, %password%, %aString%
 }
 
 Ansi2UTF8(sString)
@@ -79,6 +85,11 @@ ahk.addScript(script)
 
 def sendAlipayPassword(alipayPassword):
     return_value = cast(ahk.ahkFunction(create_string_buffer("sendAlipayPassword"), create_string_buffer(alipayPassword)), c_char_p).value
+    # jiawzhang XXX Remember to change code page in windows cmd to 'gbk', otherwise, the line below will throw error.
+    return return_value.decode('utf-8')
+
+def sendTaobaoPassword(password):
+    return_value = cast(ahk.ahkFunction(create_string_buffer("sendTaobaoPassword"), create_string_buffer(password)), c_char_p).value
     # jiawzhang XXX Remember to change code page in windows cmd to 'gbk', otherwise, the line below will throw error.
     return return_value.decode('utf-8')
 

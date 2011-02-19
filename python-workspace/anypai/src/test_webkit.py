@@ -38,6 +38,7 @@ class CookieJar(QNetworkCookieJar):
                 
 import re
 import time
+import threading
 from datetime import datetime
 
 class UserInfo:
@@ -86,7 +87,7 @@ class UserInfoManager:
             userInfo.alipayLink = alipayLink
         userInfo.last_status_time = datetime.now()
 
-class AutoAction:
+class AutoAction(QObject):
     
     userInfoManager = UserInfoManager()
     
@@ -118,12 +119,18 @@ class AutoAction:
         else:
             return False
     
+    def __submitForm(self, element):
+        "Submit the form directly."
+        return element.evaluateJavaScript('this.submit();')
+    
     def __keyupOn(self, element):
         "This is major for input box."
         keyupOnString = "var evObj = document.createEvent('UIEvents');evObj.initEvent( 'keyup', true, true );this.dispatchEvent(evObj);"
         return element.evaluateJavaScript(keyupOnString)
     
     def __init__(self, keyword, username, password, alipayPassword, max_acceptable_price, seller_payment, message_to_seller):
+        QObject.__init__(self)
+        self.connect(self, SIGNAL('asynClickOn'), self.__clickOn)
         self.keyword = keyword
         self.username = username
         self.password = password
@@ -184,14 +191,14 @@ class AutoAction:
         if (self.__isCheckedOn(safeLoginCheckbox)):
             # if safeLoginChecked, uncheck it first.
             self.__clickOn(safeLoginCheckbox)
-
+                
         username = frame.findFirstElement('input#TPL_username_1')
         password = frame.findFirstElement('span#J_StandardPwd input.login-text')
         self.__setValueOn(username, self.username)
         self.__setValueOn(password, self.password)
         loginButton = frame.findFirstElement('button.J_Submit')
         self.__clickOn(loginButton)
-    
+        
     def item(self, frame, userInfo):
         # jiawzhang TODO: change it to 61 on production.
         time.sleep(5)
@@ -216,13 +223,29 @@ class AutoAction:
     def alipay(self, frame, userInfo):
         # Set status to confirmed buy and save the alipay link.
         AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Confirmed_Buy, frame.url().toString())
-        payPassword = frame.findFirstElement('embed#payPassword_noie')
-        # jiawzhang TODO: can't alipay.
-        # self.__setValueOn(payPassword, self.alipayPassword)
-        ahkpython.sendAlipayPassword(self.alipayPassword)
-        confirmButton = frame.findFirstElement('input.J_ForAliControl.ui-btn-text')
-        self.__clickOn(confirmButton)
         
+        confirmButton = frame.findFirstElement('input.J_ForAliControl')
+        if not confirmButton.isNull():
+            ahkpython.sendAlipayPassword(self.alipayPassword)
+            # jiawzhang XXX: Should Have a Async Click On Confirm Button for Security ActiveX Inputbox
+            # Other wise, you will always get button clicked first, then fill the password into the Security ActiveX Inputbox, which lead to issues.
+            autoAction = self
+            class AsynCall(threading.Thread):
+                def run(self):
+                    time.sleep(2)
+                    autoAction.emit(SIGNAL('asynClickOn'), confirmButton)
+            AsynCall().start()
+        else:
+            # jiawzhang TODO: Set status to fail to buy.
+            # AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_)
+            pass
+    
+    # jiawzhang TODO: There should be a pay_fail method either.
+    def pay_success(self, frame, userInfo):
+        # Set status to completed buy.
+        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Completed_Buy)
+        print 'jiawzhang TODO: close current tab.'
+            
     def perform(self, frame, url, userInfo):
         if (re.search(r'^http://www\.taobao\.com', url)):
             self.home(frame)
@@ -236,6 +259,8 @@ class AutoAction:
             self.buy(frame, userInfo)
         elif (re.search(r'^https://cashier\.alipay\.com/standard/payment/cashier\.htm', url)):
             self.alipay(frame, userInfo)
+        elif (re.search(r'^http://trade\.taobao\.com/trade/pay_success.htm', url)):
+            self.pay_success(frame, userInfo)
         else:
             return
         
@@ -283,7 +308,6 @@ class MainContainer(QMainWindow):
         view = WebView(self.tabWidget)
         view.load(QUrl("http://www.taobao.com/"))
         # view.load(QUrl("http://item.taobao.com/item.htm?id=9248227645"))
-        
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
