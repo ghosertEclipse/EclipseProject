@@ -47,8 +47,9 @@ class UserInfo:
     Status_NotTo_Buy = 3
     Status_Will_Buy = 4
     Status_Confirmed_Buy = 5
-    Status_Completed_Buy = 6
-    Status_Confirmed_Order = 7
+    Status_Failed_Buy = 6
+    Status_Succeed_Buy = 7
+    Status_Confirmed_Order = 8
     def __init__(self, taobaoId, itemLink, wangwangLink, buyer_payment, max_acceptable_price, seller_payment):
         self.taobaoId = taobaoId
         self.itemLink = itemLink
@@ -63,14 +64,19 @@ class UserInfo:
 class UserInfoManager:
     userMap = {}
     def addUserInfo(self, userInfo):
-        # If the userInfo exists in map, only confirmed order and its last status time more than 31 days will allow to continue.
-        # Otherwise just return, don't add userInfo anymore.
+        # If the userInfo exists in map, below is the logic which allow to continue. Otherwise just return, don't add userInfo anymore.
         if UserInfoManager.userMap.has_key(userInfo.taobaoId):
-            if userInfo.status == UserInfo.Status_Completed_Buy or userInfo.status == UserInfo.Status_Confirmed_Order:
+            # Succeed buy/Confirmed order and the last status time more than 31 days will allow to continue.
+            if userInfo.status == UserInfo.Status_Succeed_Buy or userInfo.status == UserInfo.Status_Confirmed_Order:
                 if (datetime.now() - userInfo.last_status_time).days <= 31:
                     return
+            # NotTo buy and the last status time more than 6 days will allow to continue.
             elif userInfo.status == UserInfo.Status_NotTo_Buy:
                 if (datetime.now() - userInfo.last_status_time).days <= 6:
+                    return
+            # Failed buy and the last status time more than 3 days will allow to continue.
+            elif userInfo.status == UserInfo.Status_Failed_Buy:
+                if (datetime.now() - userInfo.last_status_time).days <= 3:
                     return
             else:
                 return
@@ -171,13 +177,16 @@ class AutoAction(QObject):
             userInfoMap = AutoAction.userInfoManager.getUserInfoMap()
             
             # for taobaoId, userInfo in userInfoMap.iteritems():
-                # UserInfo.Status_Not_Processing
                 # UserInfo.Status_Processing
                 # UserInfo.Status_Will_Buy # make sure change WillBuy to Not Processing if the last status time is more than 1 day from since.
                 # UserInfo.Status_Confirmed_Buy # caculate the time and decided whether to go alipay, if yes, load userInfo.alipayLink
             for taobaoId, userInfo in userInfoMap.iteritems():
-                # jiawzhang TODO: send query message to taobaoId in wangwang.
-                # jiawzhang TODO: if yes flow
+                if userInfo.status == UserInfo.Status_Not_Processing:
+                    # jiawzhang TODO: send query message to taobaoId in wangwang.
+                    # jiawzhang TODO: after sending queries, change status to processing
+                    pass
+                # jiawzhang TODO: set not to buy and will buy status here.
+                # jiawzhang TODO: will buy flow:
                 tabWidget = frame.page().view().tabWidget
                 view = WebView(tabWidget, userInfo)
                 view.load(QUrl(userInfo.itemLink))
@@ -209,8 +218,8 @@ class AutoAction(QObject):
             return
         buynow = frame.findFirstElement('a#J_LinkBuy')
         if buynow.isNull():
-            # Set status to not_to_buy if the item is offline.
-            AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_NotTo_Buy)
+            # Set status to failed buy if the item is offline.
+            AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
         else:
             self.__clickOn(buynow)
     
@@ -236,16 +245,19 @@ class AutoAction(QObject):
                     autoAction.emit(SIGNAL('asynClickOn'), confirmButton)
             AsynCall().start()
         else:
-            # jiawzhang TODO: Set status to fail to buy.
-            # AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_)
-            pass
+            # Set status to fail to buy if there is no comfirmed button for alipay page.
+            AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
     
-    # jiawzhang TODO: There should be a pay_fail method either.
     def pay_success(self, frame, userInfo):
         # Set status to completed buy.
-        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Completed_Buy)
+        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Succeed_Buy)
         print 'jiawzhang TODO: close current tab.'
             
+    def pay_fail(self, frame, userInfo):
+        # Set status to fail to buy.
+        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
+        print 'jiawzhang TODO: close current tab.'
+        
     def perform(self, frame, url, userInfo):
         if (re.search(r'^http://www\.taobao\.com', url)):
             self.home(frame)
@@ -259,8 +271,10 @@ class AutoAction(QObject):
             self.buy(frame, userInfo)
         elif (re.search(r'^https://cashier\.alipay\.com/standard/payment/cashier\.htm', url)):
             self.alipay(frame, userInfo)
-        elif (re.search(r'^http://trade\.taobao\.com/trade/pay_success.htm', url)):
+        elif (re.search(r'^http://trade\.taobao\.com/trade/pay_success\.htm', url)):
             self.pay_success(frame, userInfo)
+        elif (re.search(r'^https://cashier\.alipay\.com/home/error\.htm', url)):
+            self.pay_fail(frame, userInfo)
         else:
             return
         
