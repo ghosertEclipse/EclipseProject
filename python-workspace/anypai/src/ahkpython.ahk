@@ -1,1 +1,2 @@
 #Persistent
+#NoTrayIcon
