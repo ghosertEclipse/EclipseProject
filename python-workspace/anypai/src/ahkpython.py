@@ -268,8 +268,8 @@ def enumerateWangWang():
     return return_value.decode('utf-8')
 
 if __name__ == '__main__':
-    print sendAlipayPassword('011849')
-    sendMessageToWangwang(u"代理梦想家80后", u"http://www.taobao.com/webww/?ver=1&&touid=cntaobao代理梦想家80后&siteid=cntaobao&status=2&portalId=&gid=9190349629&itemsId=", u"有货吗？")
+    # print sendAlipayPassword('011849')
+    # sendMessageToWangwang(u"代理梦想家80后", u"http://www.taobao.com/webww/?ver=1&&touid=cntaobao代理梦想家80后&siteid=cntaobao&status=2&portalId=&gid=9190349629&itemsId=", u"有货吗？")
     # jiawzhang TODO: IE_InjectJS function above is not working for python invoking
     enumerateWangWang()
 
