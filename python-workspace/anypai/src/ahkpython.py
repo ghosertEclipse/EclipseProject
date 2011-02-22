@@ -2,15 +2,20 @@
 from ctypes import *
 
 ahk = cdll.AutoHotkey
-pyclient = create_string_buffer("ahkpython.ahk")   # no unicode in ahk
-ahk.ahkdll(pyclient)
+
+# Option 1: You can either create a file named 'ahkpython.ahk' and put "#Persistent #NoTrayIcon" in it then load it from ahk.ahkdll(filename)
+# pyclient = create_string_buffer("ahkpython.ahk")   # no unicode in ahk
+# ahk.ahkdll(pyclient)
+
+# Option 2: Or forget the external file, just put "#Persistent #NoTrayIcon" into ahk.ahktextdll(ahk_script_string)
+ahk.ahktextdll("""
+#Persistent
+#NoTrayIcon
+""")
 
 # Any String in autohokey script must be converted from utf-8 to Ansi, Since py file is utf-8, but autohotkey is ansi based.
 # And only utf-8 characters are allowed to return to python side.
 script = create_string_buffer("""
-#Include acc.ahk
-#Include com.ahk
-
 ;To resovle the Chinese character issue
 ;For any target application which accept unicode like Word, wangwang
 SendU(string)
@@ -73,67 +78,6 @@ SendA(Keys)
             Break
     }
     Send % KeysInUnicode
-}
-
-; Function Name: IE_InjectJS
-; Parameters:
-; hWnd_MainWindow    - REQUIRED   - the hWnd of the main window containing the "Internet Explorer_Server" control : EXAMPLE (using active window) - WinExist("A")
-; JS_to_Inject          - REQUIRED   - Javascript to execute in the browser window : EXAMPLE - "javascript:ahkvar1='It really Does';ahkvar2='!!!';alert('Hey, it Works!');"
-; VarNames_to_Return    - OPTIONAL   - Comma delimited list of global javascript variables to return : EXAMPLE - "ahkvar1,ahkvar2"
-;
-; Return:
-; Returns a comma delimited list of the variables contents (In the order passed to the function)
-; Calling Example:
-; IE_InjectJS(WinExist("A"), "javascript:ahkvar1='It really Does';ahkvar2='!!!';alert('Hey, it Works!');", "ahkvar1,ahkvar2")
-;
-IE_InjectJS(hWnd_MainWindow, JS_to_Inject, VarNames_to_Return="")
-{
-   ;Get a list of the hWnd's owned by the window specified
-   WinGet, ActiveControlList, ControlListhWnd, ahk_id %hWnd_MainWindow%
-   ;Go throught the list 1 at a time to determine if it is the correct control
-   ;This will allow the script to find the current tab in IE7
-   Loop, Parse, ActiveControlList, `n
-      {
-      ;Get the classname of the current control
-      WinGetClass, ThisWinClass, ahk_id %A_LoopField%
-      ;If the classname is correct and it is visible, it is the correct tab
-      If (ThisWinClass = "Internet Explorer_Server") and (DllCall("IsWindowVisible", UInt, A_LoopField))
-          {
-           hIESvr := A_LoopField
-           break ;Added by jiawzhang and dedicated for ali wangwang
-          }
-      }
-   ;If a control was not found, give a message and return, doing nothing   
-   If !hIESvr
-      {
-      ;Commented by jiawzhang
-      ;MsgBox, Control "Internet Explorer_Server" not found.
-      Return
-      }
-   ;Initialize the COM interface. code modified from SEAN
-   IID_IHTMLWindow2 := "{332C4427-26CB-11D0-B483-00C04FD90119}"
-   ACC_Init()
-   pacc := ACC_AccessibleObjectFromWindow(hIESvr)
-   pwin := COM_QueryService(pacc,IID_IHTMLWindow2,IID_IHTMLWindow2)
-   COM_Release(pacc)
-   ;Execute the Javascript (if there is any). Thanks LEXIKOS.
-   If JS_to_Inject
-      COM_Invoke(pwin, "execscript", JS_to_Inject)
-   ;Get the value of the variables, if any.
-   If VarNames_to_Return {
-      ;Split the passed variable names into a psuedo array of ahk variables
-      StringSplit, Vars_, VarNames_to_Return, `,
-      ;Get the value of each javascript variable in the order it was passed
-      Loop, %Vars_0%
-         Ret .= COM_Invoke(pwin,Vars_%A_Index%) . ","
-      ;Remove the trailing comma
-      StringTrimRight, Ret, Ret, 1
-      }
-   ; Cleanup
-   COM_Release(pwin)
-   ACC_Term()
-   ;Return a comma seperated list of variables in the order they were passed
-   Return Ret
 }
 
 Ansi2UTF8(sString)
@@ -228,19 +172,9 @@ sendMessageToWangwang(taobaoId, wangwangUrl, message)
     ControlSend, RichEditComponent1, {Enter}, %wangwang_title%
 }
 
-enumerateWangWang()
+exitApp()
 {
-	;Enumerate all the windows which the title is end with "- ghosert" and ahk_class is StandardFrame
-	SetTitleMatchMode RegEx
-	WinGet,list,list,- ghosert$ ahk_class StandardFrame
-	MsgBox %list%
-	Loop % list
-	{
-	   MsgBox % list%A_Index%
-	   jiawei := IE_InjectJS(WinExist("ahk_id" . list%A_Index%), "javascript:var html = document.body.innerHTML", "html")
-	   ;MsgBox %jiawei%
-	}
-	SetTitleMatchMode 1
+    ExitApp
 }
 
 """)
@@ -249,27 +183,26 @@ ahk.addScript(script)
 def sendAlipayPassword(alipayPassword):
     return_value = cast(ahk.ahkFunction(create_string_buffer("sendAlipayPassword"), create_string_buffer(alipayPassword)), c_char_p).value
     # jiawzhang XXX Remember to change code page in windows cmd to 'gbk', otherwise, the line below will throw error.
-    return return_value.decode('utf-8')
+    return return_value.decode('utf-8') if return_value is not None else None
 
 def sendTaobaoPassword(password):
     return_value = cast(ahk.ahkFunction(create_string_buffer("sendTaobaoPassword"), create_string_buffer(password)), c_char_p).value
-    return return_value.decode('utf-8')
+    return return_value.decode('utf-8') if return_value is not None else None
 
 def sendMessageToWangwang(wangwangId, wangwangUrl, message):
     "Make sure pass in the unicode based characters"
     # jiawzhang XXX This is the way how I pass in unicode characters.
     return_value = cast(ahk.ahkFunction(create_string_buffer("sendMessageToWangwang"), create_string_buffer(wangwangId.encode('utf-8')), create_string_buffer(wangwangUrl.encode('utf-8')), 
                                         create_string_buffer(message.encode('utf-8'))), c_char_p).value
-    return return_value.decode('utf-8')
+    return return_value.decode('utf-8') if return_value is not None else None
 
-def enumerateWangWang():
-    return_value = cast(ahk.ahkFunction(create_string_buffer("enumerateWangWang")), c_char_p).value
-    # jiawzhang XXX Remember to change code page in windows cmd to 'gbk', otherwise, the line below will throw error.
-    return return_value.decode('utf-8')
+def exitApp():
+    "jiawzhang TODO: Since the #Persistent on the top of this file, invoke this exitApp when quiting the whole app to make sure this ahk quits."
+    return_value = cast(ahk.ahkFunction(create_string_buffer("exitApp")), c_char_p).value
+    return return_value.decode('utf-8') if return_value is not None else None
 
 if __name__ == '__main__':
     # print sendAlipayPassword('011849')
-    # sendMessageToWangwang(u"代理梦想家80后", u"http://www.taobao.com/webww/?ver=1&&touid=cntaobao代理梦想家80后&siteid=cntaobao&status=2&portalId=&gid=9190349629&itemsId=", u"有货吗？")
-    # jiawzhang TODO: IE_InjectJS function above is not working for python invoking
-    enumerateWangWang()
+    # exitApp()
+    sendMessageToWangwang(u"代理梦想家80后", u"http://www.taobao.com/webww/?ver=1&&touid=cntaobao代理梦想家80后&siteid=cntaobao&status=2&portalId=&gid=9190349629&itemsId=", u"有货吗？")
 
