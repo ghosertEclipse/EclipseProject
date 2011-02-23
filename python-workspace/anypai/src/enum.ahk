@@ -64,23 +64,14 @@ IE_InjectJS(hWnd_MainWindow, JS_to_Inject, VarNames_to_Return="")
    Return Ret
 }
 
-enumerateWangWang()
+Loop, %0%  ; For each parameter:
 {
-	;Enumerate all the windows which the title is end with "- ghosert" and ahk_class is StandardFrame
-	SetTitleMatchMode RegEx
-	WinGet,list,list,- ghosert$ ahk_class StandardFrame
-	MsgBox %list%
-	Loop % list
-	{
-	   MsgBox % list%A_Index%
-	   jiawei := IE_InjectJS(WinExist("ahk_id" . list%A_Index%), "javascript:var html = document.body.innerHTML", "html")
-	   ;MsgBox %jiawei%
-	   ;FileDelete test.txt
-	   ;FileAppend, Another Line`n, test.txt
-	}
-	SetTitleMatchMode 1
+    param := %A_Index%  ; Fetch the contents of the variable whose name is contained in A_Index.
+    ;Enumerate the windows which the title like "likecider - ghosert" and ahk_class is StandardFrame
+    WinGet,id,id,%param% ahk_class StandardFrame
+    jiawei := IE_InjectJS(WinExist("ahk_id" . id), "javascript:var html = document.body.innerHTML", "html")
+    MsgBox %jiawei%
+    ;FileDelete test.txt
+    ;FileAppend, Another Line`n, test.txt
 }
-
-enumerateWangWang()
-
 

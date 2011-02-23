@@ -172,6 +172,13 @@ sendMessageToWangwang(taobaoId, wangwangUrl, message)
     ControlSend, RichEditComponent1, {Enter}, %wangwang_title%
 }
 
+enumerateWangWang(stringIds)
+{
+    stringIds := UTF82Ansi(stringIds)
+
+    RunWait, enum.exe /force /ErrorStdOut %stringIds%
+}
+
 exitApp()
 {
     ExitApp
@@ -196,6 +203,16 @@ def sendMessageToWangwang(wangwangId, wangwangUrl, message):
                                         create_string_buffer(message.encode('utf-8'))), c_char_p).value
     return return_value.decode('utf-8') if return_value is not None else None
 
+def enumerateWangWang(taobaoIds, myTaobaoId):
+    "taobaoIds should be a list and each item is something like 'likecider'"
+    if not taobaoIds:
+        return None
+    stringIds = ""
+    for taobaoId in taobaoIds:
+        stringIds = stringIds + u"\"{0} - {1}\" ".format(taobaoId, myTaobaoId)
+    return_value = cast(ahk.ahkFunction(create_string_buffer("enumerateWangWang"), create_string_buffer(stringIds.encode('utf-8'))), c_char_p).value
+    return return_value.decode('utf-8') if return_value is not None else None
+
 def exitApp():
     "jiawzhang TODO: Since the #Persistent on the top of this file, invoke this exitApp when quiting the whole app to make sure this ahk quits."
     return_value = cast(ahk.ahkFunction(create_string_buffer("exitApp")), c_char_p).value
@@ -204,5 +221,6 @@ def exitApp():
 if __name__ == '__main__':
     # print sendAlipayPassword('011849')
     # exitApp()
-    sendMessageToWangwang(u"代理梦想家80后", u"http://www.taobao.com/webww/?ver=1&&touid=cntaobao代理梦想家80后&siteid=cntaobao&status=2&portalId=&gid=9190349629&itemsId=", u"有货吗？")
+    # sendMessageToWangwang(u"代理梦想家80后", u"http://www.taobao.com/webww/?ver=1&&touid=cntaobao代理梦想家80后&siteid=cntaobao&status=2&portalId=&gid=9190349629&itemsId=", u"有货吗？")
+    enumerateWangWang([u"代理梦想家80后", u"likecider"], u"ghosert")
 
