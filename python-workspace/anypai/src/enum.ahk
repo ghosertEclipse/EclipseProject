@@ -1,4 +1,4 @@
-#NoTrayIcon
+;#NoTrayIcon
 
 #Include acc.ahk
 #Include com.ahk
@@ -64,14 +64,25 @@ IE_InjectJS(hWnd_MainWindow, JS_to_Inject, VarNames_to_Return="")
    Return Ret
 }
 
-Loop, %0%  ; For each parameter:
-{
-    param := %A_Index%  ; Fetch the contents of the variable whose name is contained in A_Index.
-    ;Enumerate the windows which the title like "likecider - ghosert" and ahk_class is StandardFrame
-    WinGet,id,id,%param% ahk_class StandardFrame
-    jiawei := IE_InjectJS(WinExist("ahk_id" . id), "javascript:var html = document.body.innerHTML", "html")
-    MsgBox %jiawei%
-    ;FileDelete test.txt
-    ;FileAppend, Another Line`n, test.txt
-}
 
+; The star '*' below will cause a standard output, and then you can capture it from python side.
+; FileAppend, This method is sample for console windows, *
+isContinue := true
+while (isContinue)
+{
+	Sleep, 1000
+	Loop, %0%  ; For each parameter:
+	{
+		param := %A_Index%  ; Fetch the contents of the variable whose name is contained in A_Index.
+		;Enumerate the windows which the title like "likecider - ghosert" and ahk_class is StandardFrame
+		WinGet,id,id,%param% ahk_class StandardFrame
+		jiawei := IE_InjectJS(WinExist("ahk_id" . id), "javascript:REPLACE_WITH_ENUM_JS var html = main();", "html")
+		if (jiawei == "") {
+			isContinue := false
+			FileAppend, %param%`tfalse`n, *
+		} else {
+			MsgBox %jiawei%
+			FileAppend, %jiawei%`n, *
+		}
+	}
+}

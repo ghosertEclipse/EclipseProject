@@ -172,13 +172,6 @@ sendMessageToWangwang(taobaoId, wangwangUrl, message)
     ControlSend, RichEditComponent1, {Enter}, %wangwang_title%
 }
 
-enumerateWangWang(stringIds)
-{
-    stringIds := UTF82Ansi(stringIds)
-
-    RunWait, enum.exe /force /ErrorStdOut %stringIds%
-}
-
 exitApp()
 {
     ExitApp
@@ -203,15 +196,29 @@ def sendMessageToWangwang(wangwangId, wangwangUrl, message):
                                         create_string_buffer(message.encode('utf-8'))), c_char_p).value
     return return_value.decode('utf-8') if return_value is not None else None
 
+import subprocess as sub
+
 def enumerateWangWang(taobaoIds, myTaobaoId):
-    "taobaoIds should be a list and each item is something like 'likecider'"
+    """
+    taobaoIds should be a list and each item is something like 'likecider', invoking sample:
+    enumerateWangWang([u"代理梦想家80后", u"likecider"], u"ghosert")
+    """
     if not taobaoIds:
         return None
     stringIds = ""
     for taobaoId in taobaoIds:
         stringIds = stringIds + u"\"{0} - {1}\" ".format(taobaoId, myTaobaoId)
-    return_value = cast(ahk.ahkFunction(create_string_buffer("enumerateWangWang"), create_string_buffer(stringIds.encode('utf-8'))), c_char_p).value
-    return return_value.decode('utf-8') if return_value is not None else None
+
+    consoleString = u'new_enum.exe /force /ErrorStdOut {0}'.format(stringIds)
+
+    p = sub.Popen(consoleString.encode('cp936'), stdout=sub.PIPE, stderr=sub.PIPE)
+    output, errors = p.communicate()
+    if errors:
+        return None
+    # jiawzhang TODO: Begin to parse output.
+    if output:
+        print output
+        return
 
 def exitApp():
     "jiawzhang TODO: Since the #Persistent on the top of this file, invoke this exitApp when quiting the whole app to make sure this ahk quits."
