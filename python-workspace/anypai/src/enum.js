@@ -7,7 +7,7 @@ function main()
 	var divs = content.getElementsByTagName('div');
 	var last4Msg = new Array();
 	for (var i = divs.length - 1; i >= 0; i--) {
-		value = divs[i].getAttribute('SendID');
+		var value = divs[i].getAttribute('SendID');
 		if (value) {
     		value = divs[i].getAttribute('id');
 			if (value == 'MsgElement') {
@@ -19,7 +19,11 @@ function main()
 	if (last4Msg.length == 0) return 'false';
 	
 	for (msg in last4Msg) {
-		alert(last4Msg[msg].getAttribute('SendID'));
+		var msgObj = parseMsg(last4Msg[msg]);
+		alert('sendName', msgObj.sendName);
+		alert('time', msgObj.time);
+		alert('count', msgObj.count);
+		alert('content', msgObj.content);
 	}
 	
 	return 'true';
@@ -27,18 +31,43 @@ function main()
 
 function parseMsg(msgElement)
 {
-	msgHead = msgElement.getElementById('MsgHead');
-	msgContent = msgElement.getElementById('MsgContent');
-	
-	senderName = msgHead.getElementById('SenderName').innerHTML;
-	time = msgHead.getElementById('MsgTime').innerHTML;
-	
-	innerMsgs = msgContent.getElementsByTagName('div');
-	count = innerMsgs.length;
-	content = ''
-	for (msg in innerMsgs) {
-		content = content + innerMsgs[msg].firstChild.innerHTML;
+	var msgHead = null;
+	var msgContent = null;
+	for (index in msgElement.childNodes) {
+		var childNode = msgElement.childNodes[index];
+		if (childNode.id == 'MsgHead') {
+			msgHead = childNode;
+		} else if (childNode.id == 'MsgContent') {
+			msgContent = childNode;
+		}
 	}
 	
-	return {senderName: senderName, time: time, count: count, content: content}
+	var senderName = null;
+	var time = null;
+	for (index in msgHead.childNodes) {
+		var childNode = msgHead.childNodes[index];
+		if (childNode.id == 'SenderName') {
+			senderName = childNode.innerHTML;
+		} else if (childNode.id == 'MsgHeadRight') {
+			time = childNode.firstChild.innerHTML
+		}
+	}
+	
+	var innerMsgs = msgContent.childNodes;
+	var count = innerMsgs.length;
+	var content = '';
+	for (index in innerMsgs) {
+		alert(innerMsgs[index]);
+		content = content + innerMsgs[index].firstChild.innerHTML;
+	}
+	
+	return new Msg(senderName, time, count, content);
 }
+
+function Msg(senderName, time, count, content) {
+	this.senderName = senderName;
+	this.time = time;
+	this.count = count;
+	this.content = content;
+}
+
