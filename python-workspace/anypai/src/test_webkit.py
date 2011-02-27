@@ -282,7 +282,7 @@ class WebView(QWebView):
     
     cookieJar = CookieJar()
     # Make sure fill in unicode characters.
-    autoAction = AutoAction(u'捷易通加款1元', u'ghosert', u'011849', u'011849', 0.90, 1.00, u'捷易通ID: ghosert')
+    autoAction = AutoAction(u'捷易通充值平台加款卡1元自动转帐', u'ghosert', u'011849', u'011849', 0.90, 1.00, u'捷易通ID: ghosert')
     
     def __init__(self, tabWidget = None, userInfo = None):
         QWebView.__init__(self, tabWidget)
