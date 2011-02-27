@@ -9,8 +9,6 @@ from PyQt4.QtCore import *
 from PyQt4.QtWebKit import *
 from PyQt4.QtNetwork import *
 
-import ahkpython
-
 class CookieJar(QNetworkCookieJar):
     
     CookiePath = '/home/jiawzhang/Templates/cookies'
@@ -167,29 +165,50 @@ class AutoAction(QObject):
             self.__clickOn(confirmButton)
             return
         else:
+            # import ahkpython
+
             userInfo = UserInfo(u'代理梦想家80后', u'http://item.taobao.com/item.htm?id=9248227645',
             QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
             0.80, 0.90, 1.00)
             AutoAction.userInfoManager.addUserInfo(userInfo)
             
-            # jiawzhang TODO: should handle the legacy userInfos first, then search new users from search page.
+            items = frame.findFirstElement('ul.list-view').findAll('li.list-item').toList()
+            for item in items:
+                itemLink = unicode(item.findFirst('h3.summary a').attribute('href', ''))
+                buyer_payment = float(item.findFirst('ul.attribute li.price em').toPlainText())
+                taobaoId = unicode(item.findFirst('p.seller a').toPlainText())
+                # wangwangLink is not present always, reload the page if it fail to get wangwangLink.
+                wangwangLink = item.findFirst('a.ww-inline').attribute('href', '')
+                if (wangwangLink == ''):
+                    frame.page().action(QWebPage.Reload).trigger()
+                    return
+                print QUrl.fromPercentEncoding(unicode(wangwangLink))
+                AutoAction.userInfoManager.addUserInfo(UserInfo(taobaoId, itemLink, wangwangLink, buyer_payment, 0.90, 1.00))
             
-            userInfoMap = AutoAction.userInfoManager.getUserInfoMap()
-            
-            # for taobaoId, userInfo in userInfoMap.iteritems():
+            # jiawzhang TODO: handle purchase.
+#            userInfoMap = AutoAction.userInfoManager.getUserInfoMap()
+#            for taobaoId, userInfo in userInfoMap.iteritems():
+                # legacy userInfos to be handle below.
                 # UserInfo.Status_Processing
                 # UserInfo.Status_Will_Buy # make sure change WillBuy to Not Processing if the last status time is more than 1 day from since.
                 # UserInfo.Status_Confirmed_Buy # caculate the time and decided whether to go alipay, if yes, load userInfo.alipayLink
-            for taobaoId, userInfo in userInfoMap.iteritems():
-                if userInfo.status == UserInfo.Status_Not_Processing:
-                    # jiawzhang TODO: send query message to taobaoId in wangwang.
-                    # jiawzhang TODO: after sending queries, change status to processing
-                    pass
-                # jiawzhang TODO: set not to buy and will buy status here.
-                # jiawzhang TODO: will buy flow:
-                tabWidget = frame.page().view().tabWidget
-                view = WebView(tabWidget, userInfo)
-                view.load(QUrl(userInfo.itemLink))
+                
+#                if userInfo.status == UserInfo.Status_Not_Processing:
+#                    # jiawzhang TODO: send query message to taobaoId in wangwang.
+#                    # jiawzhang TODO: after sending queries, change status to processing
+#                    pass
+#                # jiawzhang TODO: set not to buy and will buy status here.
+#                # jiawzhang TODO: will buy flow:
+#                tabWidget = frame.page().view().tabWidget
+#                view = WebView(tabWidget, userInfo)
+#                view.load(QUrl(userInfo.itemLink))
+            
+            nextPage = frame.findFirstElement('div.page-bottom a.page-next')
+            if not nextPage.isNull():
+                self.__clickOn(nextPage)
+            else:
+                # jiawzhang TODO: add something to prompt it stopped here.
+                pass
             
             return
     
