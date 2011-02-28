@@ -39,14 +39,26 @@ import time
 import threading
 from datetime import datetime
 
+import thread_util
+
 class UserInfo:
+    # set UserInfo retry will make that UserInfo re-process if our search mechanism pickup the same user once again.
+    Status_RETRY = 0
+    # initial status.
     Status_Not_Processing = 1
+    # status after sending wangwang message, not implemented, jiawzhang TODO.
     Status_Processing = 2
+    # status after getting NO response from wangwang, not implemented, jiawzhang TODO.
     Status_NotTo_Buy = 3
+    # status after prepare to buy item.
     Status_Will_Buy = 4
+    # status after confirming to buy the item.
     Status_Confirmed_Buy = 5
+    # status after failing to payment.
     Status_Failed_Buy = 6
+    # status after succeeding to payment.
     Status_Succeed_Buy = 7
+    # status after confirming order.
     Status_Confirmed_Order = 8
     def __init__(self, taobaoId, itemLink, wangwangLink, buyer_payment, max_acceptable_price, seller_payment):
         self.taobaoId = taobaoId
@@ -76,6 +88,8 @@ class UserInfoManager:
             elif userInfo.status == UserInfo.Status_Failed_Buy:
                 if (datetime.now() - userInfo.last_status_time).days <= 3:
                     return
+            elif userInfo.status == UserInfo.Status_RETRY:
+                pass
             else:
                 return
                     
@@ -94,6 +108,20 @@ class UserInfoManager:
 class AutoAction(QObject):
     
     userInfoManager = UserInfoManager()
+    
+    channel = thread_util.Channel(2)
+    
+    def __init__(self, keyword, username, password, alipayPassword, max_acceptable_price, seller_payment, message_to_seller):
+        QObject.__init__(self)
+        self.connect(self, SIGNAL('asynClickOn'), self.__clickOn)
+        self.keyword = keyword
+        self.username = username
+        self.password = password
+        self.alipayPassword = alipayPassword
+        self.max_acceptable_price = max_acceptable_price
+        self.seller_payment = seller_payment
+        self.message_to_seller = message_to_seller
+        AutoAction.channel.startConsumer(2)
     
     def __clickOn(self, element):
         clickOnString = None
@@ -132,17 +160,6 @@ class AutoAction(QObject):
         keyupOnString = "var evObj = document.createEvent('UIEvents');evObj.initEvent( 'keyup', true, true );this.dispatchEvent(evObj);"
         return element.evaluateJavaScript(keyupOnString)
     
-    def __init__(self, keyword, username, password, alipayPassword, max_acceptable_price, seller_payment, message_to_seller):
-        QObject.__init__(self)
-        self.connect(self, SIGNAL('asynClickOn'), self.__clickOn)
-        self.keyword = keyword
-        self.username = username
-        self.password = password
-        self.alipayPassword = alipayPassword
-        self.max_acceptable_price = max_acceptable_price
-        self.seller_payment = seller_payment
-        self.message_to_seller = message_to_seller
-    
     def home(self, frame):
         searchBox = frame.findFirstElement('input#q')
         self.__setValueOn(searchBox, self.keyword)
@@ -171,6 +188,9 @@ class AutoAction(QObject):
             QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
             0.80, 0.90, 1.00)
             AutoAction.userInfoManager.addUserInfo(userInfo)
+
+            # handle legacy userInfos here.
+            self.__handle_userInfoMap(frame)
             
             items = frame.findFirstElement('ul.list-view').findAll('li.list-item').toList()
             for item in items:
@@ -185,24 +205,10 @@ class AutoAction(QObject):
                 print QUrl.fromPercentEncoding(unicode(wangwangLink))
                 AutoAction.userInfoManager.addUserInfo(UserInfo(taobaoId, itemLink, wangwangLink, buyer_payment, 0.90, 1.00))
             
-            # jiawzhang TODO: handle purchase.
-#            userInfoMap = AutoAction.userInfoManager.getUserInfoMap()
-#            for taobaoId, userInfo in userInfoMap.iteritems():
-                # legacy userInfos to be handle below.
-                # UserInfo.Status_Processing
-                # UserInfo.Status_Will_Buy # make sure change WillBuy to Not Processing if the last status time is more than 1 day from since.
-                # UserInfo.Status_Confirmed_Buy # caculate the time and decided whether to go alipay, if yes, load userInfo.alipayLink
-                
-#                if userInfo.status == UserInfo.Status_Not_Processing:
-#                    # jiawzhang TODO: send query message to taobaoId in wangwang.
-#                    # jiawzhang TODO: after sending queries, change status to processing
-#                    pass
-#                # jiawzhang TODO: set not to buy and will buy status here.
-#                # jiawzhang TODO: will buy flow:
-#                tabWidget = frame.page().view().tabWidget
-#                view = WebView(tabWidget, userInfo)
-#                view.load(QUrl(userInfo.itemLink))
+            # handle new userInfos from search page here.
+            self.__handle_userInfoMap(frame)
             
+            # click on next page on search page for capturing new taobao items.
             nextPage = frame.findFirstElement('div.page-bottom a.page-next')
             if not nextPage.isNull():
                 self.__clickOn(nextPage)
@@ -211,6 +217,44 @@ class AutoAction(QObject):
                 pass
             
             return
+
+    # jiawzhang TODO: handle userInfo Map here.
+    def __handle_userInfoMap(self, frame):
+        userInfoMap = AutoAction.userInfoManager.getUserInfoMap()
+        for taobaoId, userInfo in userInfoMap.iteritems():
+            
+            channel.putRequest(request)
+            
+            # this method need to handle one of the four status below:
+            if (userInfo.status != UserInfo.Status_NOT_Processing and userInfo.status != UserInfo.Status_Processing and
+                userInfo.status != UserInfo.Status_Will_Buy and userInfo.status != UserInfo.Status_Confirmed_Buy):
+                continue
+            
+            if (datetime.now() - userInfo.last_status_time).days > 1:
+                if userInfo.status == UserInfo.Status_Confirmed_Buy:
+                    AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
+                else:
+                    AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
+                continue
+            
+            # jiawzhang TODO: wangwang message version:
+            # if status == NOT_Processing:
+            # send query message to taobaoId in wangwang.
+            # after sending queries, change status to processing.
+            # set not to buy and will buy status here based on wangwang response message.
+            
+            # Instance purchase version:
+            if userInfo.status == UserInfo.Status_Not_Processing or userInfo.status == UserInfo.Status_Processing:
+                AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Will_Buy)
+            
+            if userInfo.status == UserInfo.Status_Will_Buy:
+                tabWidget = frame.page().view().tabWidget
+                view = WebView(tabWidget, userInfo)
+                view.load(QUrl(userInfo.itemLink))
+            elif userInfo.status == UserInfo.Status_Confirmed_Buy:
+                tabWidget = frame.page().view().tabWidget
+                view = WebView(tabWidget, userInfo)
+                view.load(QUrl(userInfo.alipayLink))
     
     def login(self, frame):
 
@@ -276,6 +320,11 @@ class AutoAction(QObject):
         # Set status to fail to buy.
         AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
         print 'jiawzhang TODO: close current tab.'
+    
+    def process_incomplete(self, frame, userInfo):
+        # Set status to retry.
+        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
+        print 'jiawzhang TODO: close current tab.'
         
     def perform(self, frame, url, userInfo):
         if (re.search(r'^http://www\.taobao\.com', url)):
@@ -295,7 +344,7 @@ class AutoAction(QObject):
         elif (re.search(r'^https://cashier\.alipay\.com/home/error\.htm', url)):
             self.pay_fail(frame, userInfo)
         else:
-            return
+            self.process_incomplete(frame, userInfo)
         
 class WebView(QWebView):
     
