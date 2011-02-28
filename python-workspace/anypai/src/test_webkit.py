@@ -109,11 +109,12 @@ class AutoAction(QObject):
     
     userInfoManager = UserInfoManager()
     
-    channel = thread_util.Channel(2)
+    channel = thread_util.Channel(1)
     
     def __init__(self, keyword, username, password, alipayPassword, max_acceptable_price, seller_payment, message_to_seller):
         QObject.__init__(self)
         self.connect(self, SIGNAL('asynClickOn'), self.__clickOn)
+        self.connect(self, SIGNAL('new_webview'), self.__new_webview, Qt.BlockingQueuedConnection)
         self.keyword = keyword
         self.username = username
         self.password = password
@@ -121,6 +122,7 @@ class AutoAction(QObject):
         self.max_acceptable_price = max_acceptable_price
         self.seller_payment = seller_payment
         self.message_to_seller = message_to_seller
+        # jiawzhang TODO: this number should be configurable later.
         AutoAction.channel.startConsumer(2)
     
     def __clickOn(self, element):
@@ -191,30 +193,32 @@ class AutoAction(QObject):
 
             # handle legacy userInfos here.
             self.__handle_userInfoMap(frame)
+            print 'jiawzhang TODO: this whole function may be in a sub thread, otherwise, GUI will be hung.'
             
-            items = frame.findFirstElement('ul.list-view').findAll('li.list-item').toList()
-            for item in items:
-                itemLink = unicode(item.findFirst('h3.summary a').attribute('href', ''))
-                buyer_payment = float(item.findFirst('ul.attribute li.price em').toPlainText())
-                taobaoId = unicode(item.findFirst('p.seller a').toPlainText())
-                # wangwangLink is not present always, reload the page if it fail to get wangwangLink.
-                wangwangLink = item.findFirst('a.ww-inline').attribute('href', '')
-                if (wangwangLink == ''):
-                    frame.page().action(QWebPage.Reload).trigger()
-                    return
-                print QUrl.fromPercentEncoding(unicode(wangwangLink))
-                AutoAction.userInfoManager.addUserInfo(UserInfo(taobaoId, itemLink, wangwangLink, buyer_payment, 0.90, 1.00))
-            
-            # handle new userInfos from search page here.
-            self.__handle_userInfoMap(frame)
-            
-            # click on next page on search page for capturing new taobao items.
-            nextPage = frame.findFirstElement('div.page-bottom a.page-next')
-            if not nextPage.isNull():
-                self.__clickOn(nextPage)
-            else:
-                # jiawzhang TODO: add something to prompt it stopped here.
-                pass
+            # jiawzhang TODO DEBUG: uncomment these lines later.
+#            items = frame.findFirstElement('ul.list-view').findAll('li.list-item').toList()
+#            for item in items:
+#                itemLink = unicode(item.findFirst('h3.summary a').attribute('href', ''))
+#                buyer_payment = float(item.findFirst('ul.attribute li.price em').toPlainText())
+#                taobaoId = unicode(item.findFirst('p.seller a').toPlainText())
+#                # wangwangLink is not present always, reload the page if it fail to get wangwangLink.
+#                wangwangLink = item.findFirst('a.ww-inline').attribute('href', '')
+#                if (wangwangLink == ''):
+#                    frame.page().action(QWebPage.Reload).trigger()
+#                    return
+#                wangwangLink = QUrl.fromPercentEncoding(unicode(wangwangLink))
+#                AutoAction.userInfoManager.addUserInfo(UserInfo(taobaoId, itemLink, wangwangLink, buyer_payment, 0.90, 1.00))
+#            
+#            # handle new userInfos from search page here.
+#            self.__handle_userInfoMap(frame)
+#            
+#            # click on next page on search page for capturing new taobao items.
+#            nextPage = frame.findFirstElement('div.page-bottom a.page-next')
+#            if not nextPage.isNull():
+#                self.__clickOn(nextPage)
+#            else:
+#                # jiawzhang TODO: add something to prompt it stopped here.
+#                pass
             
             return
 
@@ -223,38 +227,51 @@ class AutoAction(QObject):
         userInfoMap = AutoAction.userInfoManager.getUserInfoMap()
         for taobaoId, userInfo in userInfoMap.iteritems():
             
-            channel.putRequest(request)
-            
-            # this method need to handle one of the four status below:
-            if (userInfo.status != UserInfo.Status_NOT_Processing and userInfo.status != UserInfo.Status_Processing and
-                userInfo.status != UserInfo.Status_Will_Buy and userInfo.status != UserInfo.Status_Confirmed_Buy):
-                continue
-            
-            if (datetime.now() - userInfo.last_status_time).days > 1:
-                if userInfo.status == UserInfo.Status_Confirmed_Buy:
-                    AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
-                else:
-                    AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
-                continue
-            
-            # jiawzhang TODO: wangwang message version:
-            # if status == NOT_Processing:
-            # send query message to taobaoId in wangwang.
-            # after sending queries, change status to processing.
-            # set not to buy and will buy status here based on wangwang response message.
-            
-            # Instance purchase version:
-            if userInfo.status == UserInfo.Status_Not_Processing or userInfo.status == UserInfo.Status_Processing:
-                AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Will_Buy)
-            
-            if userInfo.status == UserInfo.Status_Will_Buy:
-                tabWidget = frame.page().view().tabWidget
-                view = WebView(tabWidget, userInfo)
-                view.load(QUrl(userInfo.itemLink))
-            elif userInfo.status == UserInfo.Status_Confirmed_Buy:
-                tabWidget = frame.page().view().tabWidget
-                view = WebView(tabWidget, userInfo)
-                view.load(QUrl(userInfo.alipayLink))
+            autoAction = self
+            class MyRequest(thread_util.Request):
+                def doAction(self):
+                    # this method need to handle one of the four status below:
+                    if (userInfo.status != UserInfo.Status_Not_Processing and userInfo.status != UserInfo.Status_Processing and
+                        userInfo.status != UserInfo.Status_Will_Buy and userInfo.status != UserInfo.Status_Confirmed_Buy):
+                        return
+                    
+                    if (datetime.now() - userInfo.last_status_time).days > 1:
+                        if userInfo.status == UserInfo.Status_Confirmed_Buy:
+                            AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
+                        else:
+                            AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
+                        return
+                    
+                    # jiawzhang TODO: wangwang message version:
+                    # if status == Not_Processing:
+                    # send query message to taobaoId in wangwang.
+                    # after sending queries, change status to processing.
+                    # set not to buy and will buy status here based on wangwang response message.
+                    
+                    # Instance purchase version:
+                    if userInfo.status == UserInfo.Status_Not_Processing or userInfo.status == UserInfo.Status_Processing:
+                        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Will_Buy)
+                    
+                    link = None
+                    if userInfo.status == UserInfo.Status_Will_Buy:
+                        link = userInfo.itemLink
+                    elif userInfo.status == UserInfo.Status_Confirmed_Buy:
+                        link = userInfo.alipayLink
+                        
+                    if link:
+                        self.new_view = None
+                        autoAction.emit(SIGNAL('new_webview'), frame, userInfo, link, self)
+                        tabWidget = self.new_view.tabWidget
+                        while tabWidget.indexOf(self.new_view) != -1:
+                            time.sleep(2)
+                        
+            AutoAction.channel.putRequest(MyRequest())
+    
+    def __new_webview(self, frame, userInfo, link, request):
+        tabWidget = frame.page().view().tabWidget
+        view = WebView(tabWidget, userInfo)
+        view.load(QUrl(link))
+        request.new_view = view
     
     def login(self, frame):
 
@@ -272,8 +289,13 @@ class AutoAction(QObject):
         self.__clickOn(loginButton)
         
     def item(self, frame, userInfo):
-        # jiawzhang TODO: change it to 61 on production.
-        time.sleep(5)
+        
+        # jiawzhang TODO DEBUG: remove the return below later, to simulate the pay_xxx function below in this item function.
+        time.sleep(10)
+        self.__closeCurrentTab(frame)
+        print 'item begin'
+        return
+        
         # test whether there is a username/password div pop up after clicking on buy now link.
         username = frame.findFirstElement('input#TPL_username_1')
         if not username.isNull():
@@ -284,7 +306,8 @@ class AutoAction(QObject):
             # Set status to failed buy if the item is offline.
             AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
         else:
-            self.__clickOn(buynow)
+            # jiawzhang TODO: change this to 61 seconds when on production.
+            self.__asyncall(10, buynow)
     
     def buy(self, frame, userInfo):
         message_box = frame.findFirstElement('textarea#J_msgtosaler')
@@ -301,30 +324,41 @@ class AutoAction(QObject):
             ahkpython.sendAlipayPassword(self.alipayPassword)
             # jiawzhang XXX: Should Have a Async Click On Confirm Button for Security ActiveX Inputbox
             # Other wise, you will always get button clicked first, then fill the password into the Security ActiveX Inputbox, which lead to issues.
-            autoAction = self
-            class AsynCall(threading.Thread):
-                def run(self):
-                    time.sleep(2)
-                    autoAction.emit(SIGNAL('asynClickOn'), confirmButton)
-            AsynCall().start()
+            self.__asyncall(2, confirmButton)
         else:
             # Set status to fail to buy if there is no comfirmed button for alipay page.
             AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
     
+    def __asyncall(self, seconds, clickableElement):
+        autoAction = self
+        class AsynCall(threading.Thread):
+            def run(self):
+                time.sleep(seconds)
+                autoAction.emit(SIGNAL('asynClickOn'), clickableElement)
+        asyncCall = AsynCall()
+        asyncCall.setDaemon(True)
+        asyncCall.start()
+        
     def pay_success(self, frame, userInfo):
         # Set status to completed buy.
         AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Succeed_Buy)
-        print 'jiawzhang TODO: close current tab.'
+        self.__closeCurrentTab(frame)
             
     def pay_fail(self, frame, userInfo):
         # Set status to fail to buy.
         AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
-        print 'jiawzhang TODO: close current tab.'
+        self.__closeCurrentTab(frame)
     
     def process_incomplete(self, frame, userInfo):
         # Set status to retry.
         AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
-        print 'jiawzhang TODO: close current tab.'
+        self.__closeCurrentTab(frame)
+    
+    def __closeCurrentTab(self, frame):
+        tabWidget = frame.page().view().tabWidget
+        view = frame.page().view()
+        view.close()
+        tabWidget.removeTab(tabWidget.indexOf(view))
         
     def perform(self, frame, url, userInfo):
         if (re.search(r'^http://www\.taobao\.com', url)):

@@ -164,10 +164,11 @@ class Channel:
     def size(self):
         return self.__queue.qsize()
     
-    def startConsumer(self, maxsize, block = True, timeout = None):
+    def startConsumer(self, maxsize, daemon = True, block = True, timeout = None):
         "Set block = False, if you want to stop consumers once there is no more request. But invoke putRequest() above first if this is the case."
         self.__consumers = [ConsumerThread(self.__queue, block, timeout) for i in xrange(maxsize)]
         for consumerThread in self.__consumers:
+            consumerThread.setDaemon(daemon)
             consumerThread.start()
             
     def stopConsumer(self):
@@ -178,10 +179,11 @@ class Channel:
         for consumerThread in self.__consumers:
             consumerThread.join()
     
-    def startProducer(self, producers):
+    def startProducer(self, producers, daemon = True):
         "producers: must be the list of thread_util.Producer's subclass. The size of producers will decide the number of producer threads."
         self.__producers = [ProducerThread(self.__queue, self, producer) for producer in producers]
         for producerThread in self.__producers:
+            producerThread.setDaemon(daemon)
             producerThread.start()
     
     def stopProducer(self):
@@ -246,4 +248,21 @@ if __name__ == '__main__':
     channel.stopProducer()
     channel.waitingForProducerExist()
     print 'finish to test 4th part.\n'
+    
+    print 'begin to test 5th part.'
+    channel = Channel(1)
+    channel.startConsumer(1)
+    class MyRequest2(Request):
+        def doAction(self):
+            print '1st test case.'
+            time.sleep(5)
+    print 'put first request.'
+    channel.putRequest(MyRequest2())
+    print 'put second request.'
+    channel.putRequest(MyRequest2())
+    print 'put third request.'
+    channel.putRequest(MyRequest2())
+    channel.stopConsumer()
+    channel.waitingForConsumerExist()
+    print 'finish to test 5th part.\n'
     

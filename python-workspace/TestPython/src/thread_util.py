@@ -247,3 +247,20 @@ if __name__ == '__main__':
     channel.waitingForProducerExist()
     print 'finish to test 4th part.\n'
     
+    print 'begin to test 5th part.'
+    channel = Channel(1)
+    channel.startConsumer(1)
+    class MyRequest2(Request):
+        def doAction(self):
+            print '1st test case.'
+            time.sleep(5)
+    print 'put first request.'
+    channel.putRequest(MyRequest2())
+    print 'put second request.'
+    channel.putRequest(MyRequest2())
+    print 'put third request.'
+    channel.putRequest(MyRequest2())
+    channel.stopConsumer()
+    channel.waitingForConsumerExist()
+    print 'finish to test 5th part.\n'
+    
