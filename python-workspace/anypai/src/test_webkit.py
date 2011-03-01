@@ -41,6 +41,10 @@ from datetime import datetime
 
 import thread_util
 
+import platform
+if platform.system() == 'Windows':
+    import ahkpython
+
 class UserInfo:
     # set UserInfo retry will make that UserInfo re-process if our search mechanism pickup the same user once again.
     Status_RETRY = 0
@@ -58,8 +62,10 @@ class UserInfo:
     Status_Failed_Buy = 6
     # status after succeeding to payment.
     Status_Succeed_Buy = 7
-    # status after confirming order.
-    Status_Confirmed_Order = 8
+    # status after confirming payment.
+    Status_Confirmed_Payment = 8
+    # status after refunding payment.
+    Status_Refunded_Payment = 9
     def __init__(self, taobaoId, itemLink, wangwangLink, buyer_payment, max_acceptable_price, seller_payment):
         self.taobaoId = taobaoId
         self.itemLink = itemLink
@@ -77,7 +83,8 @@ class UserInfoManager:
         # If the userInfo exists in map, below is the logic which allow to continue. Otherwise just return, don't add userInfo anymore.
         if UserInfoManager.userMap.has_key(userInfo.taobaoId):
             # Succeed buy/Confirmed order and the last status time more than 31 days will allow to continue.
-            if userInfo.status == UserInfo.Status_Succeed_Buy or userInfo.status == UserInfo.Status_Confirmed_Order:
+            if (userInfo.status == UserInfo.Status_Succeed_Buy or userInfo.status == UserInfo.Status_Confirmed_Payment or
+                userInfo.status == UserInfo.Status_Refunded_Payment):
                 if (datetime.now() - userInfo.last_status_time).days <= 31:
                     return
             # NotTo buy and the last status time more than 6 days will allow to continue.
@@ -184,46 +191,61 @@ class AutoAction(QObject):
             self.__clickOn(confirmButton)
             return
         else:
-            # import ahkpython
-
-            userInfo = UserInfo(u'代理梦想家80后', u'http://item.taobao.com/item.htm?id=9248227645',
-            QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
-            0.80, 0.90, 1.00)
-            AutoAction.userInfoManager.addUserInfo(userInfo)
-
-            # handle legacy userInfos here.
-            self.__handle_userInfoMap(frame)
-            print 'jiawzhang TODO: this whole function may be in a sub thread, otherwise, GUI will be hung.'
+            autoAction = self
+            class AsynHandler(threading.Thread):
+                def run(self):
+                    userInfo = UserInfo(u'代理梦想家80后', u'http://item.taobao.com/item.htm?id=9248227645',
+                    QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
+                    0.80, 0.90, 1.00)
+                    AutoAction.userInfoManager.addUserInfo(userInfo)
+                    userInfo = UserInfo(u'jiawei', u'http://item.taobao.com/item.htm?id=9248227645',
+                    QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
+                    0.80, 0.90, 1.00)
+                    AutoAction.userInfoManager.addUserInfo(userInfo)
+                    userInfo = UserInfo(u'jingli', u'http://item.taobao.com/item.htm?id=9248227645',
+                    QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
+                    0.80, 0.90, 1.00)
+                    AutoAction.userInfoManager.addUserInfo(userInfo)
+                    userInfo = UserInfo(u'leyuan', u'http://item.taobao.com/item.htm?id=9248227645',
+                    QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
+                    0.80, 0.90, 1.00)
+                    AutoAction.userInfoManager.addUserInfo(userInfo)
+        
+                    # handle legacy userInfos here.
+                    autoAction.handle_userInfoMap(frame)
+                    
+                    # jiawzhang TODO DEBUG: uncomment these lines later.
+        #            items = frame.findFirstElement('ul.list-view').findAll('li.list-item').toList()
+        #            for item in items:
+        #                itemLink = unicode(item.findFirst('h3.summary a').attribute('href', ''))
+        #                buyer_payment = float(item.findFirst('ul.attribute li.price em').toPlainText())
+        #                taobaoId = unicode(item.findFirst('p.seller a').toPlainText())
+        #                # wangwangLink is not present always, reload the page if it fail to get wangwangLink.
+        #                wangwangLink = item.findFirst('a.ww-inline').attribute('href', '')
+        #                if (wangwangLink == ''):
+        #                    frame.page().action(QWebPage.Reload).trigger()
+        #                    return
+        #                wangwangLink = QUrl.fromPercentEncoding(unicode(wangwangLink))
+        #                AutoAction.userInfoManager.addUserInfo(UserInfo(taobaoId, itemLink, wangwangLink, buyer_payment, 0.90, 1.00))
+        #            
+        #            # handle new userInfos from search page here.
+        #            autoAction.handle_userInfoMap(frame)
+        #            
+        #            # click on next page on search page for capturing new taobao items.
+        #            nextPage = frame.findFirstElement('div.page-bottom a.page-next')
+        #            if not nextPage.isNull():
+        #                autoAction.emit(SIGNAL('asynClickOn'), nextPage)
+        #            else:
+        #                # jiawzhang TODO: add something to prompt it stopped here.
+        #                pass
             
-            # jiawzhang TODO DEBUG: uncomment these lines later.
-#            items = frame.findFirstElement('ul.list-view').findAll('li.list-item').toList()
-#            for item in items:
-#                itemLink = unicode(item.findFirst('h3.summary a').attribute('href', ''))
-#                buyer_payment = float(item.findFirst('ul.attribute li.price em').toPlainText())
-#                taobaoId = unicode(item.findFirst('p.seller a').toPlainText())
-#                # wangwangLink is not present always, reload the page if it fail to get wangwangLink.
-#                wangwangLink = item.findFirst('a.ww-inline').attribute('href', '')
-#                if (wangwangLink == ''):
-#                    frame.page().action(QWebPage.Reload).trigger()
-#                    return
-#                wangwangLink = QUrl.fromPercentEncoding(unicode(wangwangLink))
-#                AutoAction.userInfoManager.addUserInfo(UserInfo(taobaoId, itemLink, wangwangLink, buyer_payment, 0.90, 1.00))
-#            
-#            # handle new userInfos from search page here.
-#            self.__handle_userInfoMap(frame)
-#            
-#            # click on next page on search page for capturing new taobao items.
-#            nextPage = frame.findFirstElement('div.page-bottom a.page-next')
-#            if not nextPage.isNull():
-#                self.__clickOn(nextPage)
-#            else:
-#                # jiawzhang TODO: add something to prompt it stopped here.
-#                pass
-            
+            asyncHandler = AsynHandler()
+            asyncHandler.setDaemon(True)
+            asyncHandler.start()
             return
 
     # jiawzhang TODO: handle userInfo Map here.
-    def __handle_userInfoMap(self, frame):
+    def handle_userInfoMap(self, frame):
         userInfoMap = AutoAction.userInfoManager.getUserInfoMap()
         for taobaoId, userInfo in userInfoMap.iteritems():
             
@@ -262,6 +284,8 @@ class AutoAction(QObject):
                         self.new_view = None
                         autoAction.emit(SIGNAL('new_webview'), frame, userInfo, link, self)
                         tabWidget = self.new_view.tabWidget
+                        # waiting here, until the new webview is closed means the whole buy flow completed.
+                        # there are three final states will make the code below jump out the loop: pay_success, pay_fail and process_incomplete. See below.
                         while tabWidget.indexOf(self.new_view) != -1:
                             time.sleep(2)
                         
