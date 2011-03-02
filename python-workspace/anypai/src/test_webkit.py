@@ -9,9 +9,11 @@ from PyQt4.QtCore import *
 from PyQt4.QtWebKit import *
 from PyQt4.QtNetwork import *
 
+StoragePath = './storage/'
+
 class CookieJar(QNetworkCookieJar):
     
-    CookiePath = '/home/jiawzhang/Templates/cookies'
+    CookiePath = StoragePath + 'cookies'
     
     def __init__(self, parent = None):
         QNetworkCookieJar.__init__(self, parent)
@@ -126,6 +128,7 @@ class AutoAction(QObject):
         QObject.__init__(self)
         self.connect(self, SIGNAL('asynClickOn'), self.__clickOn)
         self.connect(self, SIGNAL('new_webview'), self.__new_webview, Qt.BlockingQueuedConnection)
+        self.connect(self, SIGNAL('stop_webview'), self.__stop_webview, Qt.BlockingQueuedConnection)
         self.keyword = keyword
         self.username = username
         self.password = password
@@ -134,9 +137,7 @@ class AutoAction(QObject):
         self.seller_payment = seller_payment
         self.message_to_seller = message_to_seller
         # jiawzhang TODO: this number should be configurable later.
-        consumer = 2
-        AutoAction.channel.startConsumer(consumer)
-        self.queue = Queue(consumer)
+        self.queue = Queue(5)
     
     def __clickOn(self, element):
         clickOnString = None
@@ -299,15 +300,20 @@ class AutoAction(QObject):
                 if link:
                     view = self.autoAction.queue.get()
                     view.userInfo = self.userInfo
-                    # jiawzhang TODO: i saw the taobaoid is not unique here.
-                    print view.userInfo.taobaoId
                     self.autoAction.emit(SIGNAL('new_webview'), view, link)
                         
                     # waiting here, until view.userInfo is not None, means the whole buy flow completed.
                     # There are three final states will make the code below jump out the loop: pay_success, pay_fail and process_incomplete. see below.
-                    # jiawzhang TODO: set time out here, maybe one minutes, force stop the view and try again.
+                    waitingInterval = 0
                     while view.userInfo != None:
                         time.sleep(2)
+                        waitingInterval = waitingInterval + 2
+                        if waitingInterval > 30:
+                            # jiawzhang TODO: set time out here, the number should be configurable, force stop the view and try again, this will trigger WebView.load_finished
+                            # Test the situation If buy now page is blocked because of security picture verification.
+                            print 'try stopping current page.'
+                            self.autoAction.emit(SIGNAL('stop_webview'), view)
+                            waitingInterval = 0
                             
                     # push back the view for reusing.
                     self.autoAction.queue.put(view)
@@ -315,28 +321,15 @@ class AutoAction(QObject):
         userInfoMap = AutoAction.userInfoManager.getUserInfoMap()
         if userInfoMap:
             for userInfo in userInfoMap.itervalues():
-                # jiawzhang TODO: is there any way to know whether all the requests are all handled ? We should move on next step only when all the requests are handled.
                 AutoAction.channel.putRequest(MyRequest(self, userInfo))
-                
-            class CompletedSignRequest(thread_util.Request):
-                def __init__(self):
-                    self.isAllRequestsHandled = False
-                def doAction(self):
-                    self.isAllRequestsHandled = True
-            completedSignRequest = CompletedSignRequest()
-            AutoAction.channel.putRequest(completedSignRequest)
+            AutoAction.channel.startConsumer(self.queue.maxsize, True, False)
+            AutoAction.channel.waitingForConsumerExist()
             
-            while completedSignRequest.isAllRequestsHandled == False:
-                print 'i am sleeping ...'
-                time.sleep(2)
-            
-            print 'i am leaving ...'
-            
-    
     def __new_webview(self, view, link):
-        # jiawzhang TODO: I saw the taobaoId is not unique here.
-        print "I'm handling: " + view.userInfo.taobaoId + " " + str(view.userInfo.buyer_payment) + " " + str(view.userInfo.status) + " " + str(view.userInfo.last_status_time)
         view.load(QUrl(link))
+        
+    def __stop_webview(self, view):
+        view.stop()
     
     def login(self, frame):
         # Uncheck the safeLoginCheckbox to simplify the process, otherwise, I have to care activex seurity inputbox on the page.
@@ -359,7 +352,7 @@ class AutoAction(QObject):
         AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Succeed_Buy)
         self.__closeCurrentTab(frame)
         AutoAction.debug_num = AutoAction.debug_num + 1
-        print 'item complete: ' + str(AutoAction.debug_num) + ' ' + userInfo.taobaoId
+        print 'item completed: ' + str(AutoAction.debug_num) + ' ' + userInfo.taobaoId + ' ' + str(userInfo.last_status_time)
         return
     
         # test whether there is a username/password div pop up after clicking on buy now link.
@@ -421,7 +414,6 @@ class AutoAction(QObject):
         self.__closeCurrentTab(frame)
     
     def __closeCurrentTab(self, frame):
-        # jiawzhang TODO: How to release the memory after close the tab ?
         frame.page().view().userInfo = None
         
     def perform(self, frame, url, userInfo):
@@ -507,7 +499,7 @@ if __name__ == '__main__':
     # Enable plugins here will make activex turn on, it's important to taobao security activex control
     QWebSettings.globalSettings().setAttribute(QWebSettings.PluginsEnabled, True)
     # QWebSettings.globalSettings().setAttribute(QWebSettings.AutoLoadImages, False)
-    QWebSettings.globalSettings().enablePersistentStorage("/home/jiawzhang/Templates")
+    QWebSettings.globalSettings().enablePersistentStorage(StoragePath)
         
     main.setWindowTitle(u'淘宝随意拍')
     main.show()
