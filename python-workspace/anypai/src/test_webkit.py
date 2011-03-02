@@ -117,7 +117,7 @@ class AutoAction(QObject):
     
     userInfoManager = UserInfoManager()
     
-    channel = thread_util.Channel(1)
+    channel = thread_util.Channel()
     
     # jiawzhang TODO: remove this later.
     debug_num = 0
@@ -261,62 +261,77 @@ class AutoAction(QObject):
             return
 
     def handle_userInfoMap(self):
-        userInfoMap = AutoAction.userInfoManager.getUserInfoMap()
-        for taobaoId, userInfo in userInfoMap.iteritems():
-            
-            autoAction = self
-            # jiawzhang XXX: for channel.putRequest in a loop, make sure you always pass in variable like userInfo by constructor,
-            # Otherwise, you may get duplicated userInfo in your Request class, not sure whether this is a pyqt bug.
-            class MyRequest(thread_util.Request):
-                def __init__(self, userInfo):
-                    self.userInfo = userInfo
-                def doAction(self):
-                    # this method need to handle one of the four status below:
-                    if (self.userInfo.status != UserInfo.Status_Not_Processing and self.userInfo.status != UserInfo.Status_Processing and
-                        self.userInfo.status != UserInfo.Status_Will_Buy and self.userInfo.status != UserInfo.Status_Confirmed_Buy):
-                        return
+        # jiawzhang XXX: for channel.putRequest in a loop, make sure you always pass in variable like userInfo by constructor,
+        # Otherwise, you may get duplicated userInfo in your Request class, not sure whether this is a pyqt bug.
+        class MyRequest(thread_util.Request):
+            def __init__(self, autoAction, userInfo):
+                self.userInfo = userInfo
+                self.autoAction = autoAction
+            def doAction(self):
+                # this method need to handle one of the four status below:
+                if (self.userInfo.status != UserInfo.Status_Not_Processing and self.userInfo.status != UserInfo.Status_Processing and
+                    self.userInfo.status != UserInfo.Status_Will_Buy and self.userInfo.status != UserInfo.Status_Confirmed_Buy):
+                    return
                     
-                    if (datetime.now() - self.userInfo.last_status_time).days > 1:
-                        if self.userInfo.status == UserInfo.Status_Confirmed_Buy:
-                            AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Failed_Buy)
-                        else:
-                            AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_RETRY)
-                        return
+                if (datetime.now() - self.userInfo.last_status_time).days > 1:
+                    if self.userInfo.status == UserInfo.Status_Confirmed_Buy:
+                        AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Failed_Buy)
+                    else:
+                        AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_RETRY)
+                    return
                     
-                    # jiawzhang TODO: wangwang message version:
-                    # if status == Not_Processing:
-                    # send query message to taobaoId in wangwang.
-                    # after sending queries, change status to processing.
-                    # set not to buy and will buy status here based on wangwang response message.
+                # jiawzhang TODO: wangwang message version:
+                # if status == Not_Processing:
+                # send query message to taobaoId in wangwang.
+                # after sending queries, change status to processing.
+                # set not to buy and will buy status here based on wangwang response message.
                     
-                    # Instance purchase version:
-                    if self.userInfo.status == UserInfo.Status_Not_Processing or self.userInfo.status == UserInfo.Status_Processing:
-                        AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Will_Buy)
+                # Instance purchase version:
+                if self.userInfo.status == UserInfo.Status_Not_Processing or self.userInfo.status == UserInfo.Status_Processing:
+                    AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Will_Buy)
                     
-                    link = None
-                    if self.userInfo.status == UserInfo.Status_Will_Buy:
-                        link = self.userInfo.itemLink
-                    elif self.userInfo.status == UserInfo.Status_Confirmed_Buy:
-                        link = self.userInfo.alipayLink
+                link = None
+                if self.userInfo.status == UserInfo.Status_Will_Buy:
+                    link = self.userInfo.itemLink
+                elif self.userInfo.status == UserInfo.Status_Confirmed_Buy:
+                    link = self.userInfo.alipayLink
                         
-                    if link:
-                        view = autoAction.queue.get()
-                        view.userInfo = self.userInfo
-                        # jiawzhang TODO: i saw the taobaoid is not unique here.
-                        print view.userInfo.taobaoId
-                        autoAction.emit(SIGNAL('new_webview'), view, link)
+                if link:
+                    view = self.autoAction.queue.get()
+                    view.userInfo = self.userInfo
+                    # jiawzhang TODO: i saw the taobaoid is not unique here.
+                    print view.userInfo.taobaoId
+                    self.autoAction.emit(SIGNAL('new_webview'), view, link)
                         
-                        # waiting here, until view.userInfo is not None, means the whole buy flow completed.
-                        # There are three final states will make the code below jump out the loop: pay_success, pay_fail and process_incomplete. see below.
-                        # jiawzhang TODO: set time out here, maybe one minutes, force stop the view and try again.
-                        while view.userInfo != None:
-                            time.sleep(2)
+                    # waiting here, until view.userInfo is not None, means the whole buy flow completed.
+                    # There are three final states will make the code below jump out the loop: pay_success, pay_fail and process_incomplete. see below.
+                    # jiawzhang TODO: set time out here, maybe one minutes, force stop the view and try again.
+                    while view.userInfo != None:
+                        time.sleep(2)
                             
-                        # push back the view for reusing.
-                        autoAction.queue.put(view)
+                    # push back the view for reusing.
+                    self.autoAction.queue.put(view)
                         
-            # jiawzhang TODO: is there any way to know whether all the requests are all handled ? We should move on next step only when all the requests are handled.
-            AutoAction.channel.putRequest(MyRequest(userInfo))
+        userInfoMap = AutoAction.userInfoManager.getUserInfoMap()
+        if userInfoMap:
+            for userInfo in userInfoMap.itervalues():
+                # jiawzhang TODO: is there any way to know whether all the requests are all handled ? We should move on next step only when all the requests are handled.
+                AutoAction.channel.putRequest(MyRequest(self, userInfo))
+                
+            class CompletedSignRequest(thread_util.Request):
+                def __init__(self):
+                    self.isAllRequestsHandled = False
+                def doAction(self):
+                    self.isAllRequestsHandled = True
+            completedSignRequest = CompletedSignRequest()
+            AutoAction.channel.putRequest(completedSignRequest)
+            
+            while completedSignRequest.isAllRequestsHandled == False:
+                print 'i am sleeping ...'
+                time.sleep(2)
+            
+            print 'i am leaving ...'
+            
     
     def __new_webview(self, view, link):
         # jiawzhang TODO: I saw the taobaoId is not unique here.
