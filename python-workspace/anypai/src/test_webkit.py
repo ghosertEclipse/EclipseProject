@@ -48,41 +48,18 @@ import platform
 if platform.system() == 'Windows':
     import ahkpython
 
-class UserInfo:
-    # set UserInfo retry will make that UserInfo re-process if our search mechanism pickup the same user once again.
-    Status_RETRY = 0
-    # initial status.
-    Status_Not_Processing = 1
-    # status after sending wangwang message, not implemented, jiawzhang TODO.
-    Status_Processing = 2
-    # status after getting NO response from wangwang, not implemented, jiawzhang TODO.
-    Status_NotTo_Buy = 3
-    # status after prepare to buy item.
-    Status_Will_Buy = 4
-    # status after confirming to buy the item.
-    Status_Confirmed_Buy = 5
-    # status after failing to payment.
-    Status_Failed_Buy = 6
-    # status after succeeding to payment.
-    Status_Succeed_Buy = 7
-    # status after confirming payment.
-    Status_Confirmed_Payment = 8
-    # status after refunding payment.
-    Status_Refunded_Payment = 9
-    def __init__(self, taobaoId, itemLink, wangwangLink, buyer_payment, max_acceptable_price, seller_payment):
-        self.taobaoId = taobaoId
-        self.itemLink = itemLink
-        self.wangwangLink = wangwangLink
-        self.buyer_payment = buyer_payment
-        self.max_acceptable_price = max_acceptable_price
-        self.seller_payment = seller_payment
-        self.status = UserInfo.Status_Not_Processing
-        self.last_status_time = datetime.now()
-        self.alipayLink = None
+from database import UserInfo
 
 class UserInfoManager:
     userMap = {}
+    def __init__(self, ownerTaobaoId, max_acceptable_price):
+        self.ownerTaobaoId = ownerTaobaoId
+        self.max_acceptable_price = max_acceptable_price
+
     def addUserInfo(self, userInfo):
+        # Don't buy the item from yourself.
+        if self.ownerTaobaoId == userInfo.taobaoId:
+            return
         # If the userInfo exists in map, below is the logic which allow to continue. Otherwise just return, don't add userInfo anymore.
         if UserInfoManager.userMap.has_key(userInfo.taobaoId):
             # Succeed buy/Confirmed order and the last status time more than 31 days will allow to continue.
@@ -103,7 +80,7 @@ class UserInfoManager:
             else:
                 return
                     
-        if userInfo.buyer_payment <= userInfo.max_acceptable_price:
+        if userInfo.buyer_payment <= self.max_acceptable_price:
             UserInfoManager.userMap[userInfo.taobaoId] = userInfo
             
     def getUserInfoMap(self):
@@ -116,8 +93,6 @@ class UserInfoManager:
         userInfo.last_status_time = datetime.now()
 
 class AutoAction(QObject):
-    
-    userInfoManager = UserInfoManager()
     
     channel = thread_util.Channel()
     
@@ -138,6 +113,8 @@ class AutoAction(QObject):
         self.message_to_seller = message_to_seller
         # jiawzhang TODO: this number should be configurable later.
         self.queue = Queue(5)
+        self.userInfoManager = UserInfoManager(username, max_acceptable_price)
+    
     
     def __clickOn(self, element):
         clickOnString = None
@@ -209,13 +186,13 @@ class AutoAction(QObject):
                 buyer_payment = float(item.findFirst('ul.attribute li.price em').toPlainText())
                 taobaoId = unicode(item.findFirst('p.seller a').toPlainText())
                 # wangwangLink is not present always, reload the page if it fail to get wangwangLink.
-                wangwangLink = item.findFirst('a.ww-inline').attribute('href', '')
+                wangwangLink = unicode(item.findFirst('a.ww-inline').attribute('href', ''))
                 # jiawzhang XXX: uncomment the three line below, since if wangwangLink always '', the performance is poor, we don't need wangwangLink at this moment.
 #                if (wangwangLink == ''):
 #                    frame.page().action(QWebPage.Reload).trigger()
 #                    return
-                wangwangLink = QUrl.fromPercentEncoding(unicode(wangwangLink))
-                items[index] = UserInfo(taobaoId, itemLink, wangwangLink, buyer_payment, 0.90, 1.00)
+                wangwangLink = unicode(QUrl.fromPercentEncoding(wangwangLink))
+                items[index] = UserInfo(taobaoId, itemLink, wangwangLink, buyer_payment, self.seller_payment)
             nextPage = frame.findFirstElement('div.page-bottom a.page-next')
             
             autoAction = self
@@ -223,26 +200,26 @@ class AutoAction(QObject):
                 def run(self):
 #                    userInfo = UserInfo(u'代理梦想家80后', u'http://item.taobao.com/item.htm?id=9248227645',
 #                    QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
-#                    0.80, 0.90, 1.00)
-#                    AutoAction.userInfoManager.addUserInfo(userInfo)
+#                    0.80, 1.00)
+#                    autoAction.userInfoManager.addUserInfo(userInfo)
 #                    userInfo = UserInfo(u'jiawei', u'http://item.taobao.com/item.htm?id=9248227645',
 #                    QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
-#                    0.80, 0.90, 1.00)
-#                    AutoAction.userInfoManager.addUserInfo(userInfo)
+#                    0.80, 1.00)
+#                    autoAction.userInfoManager.addUserInfo(userInfo)
 #                    userInfo = UserInfo(u'jingli', u'http://item.taobao.com/item.htm?id=9248227645',
 #                    QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
-#                    0.80, 0.90, 1.00)
-#                    AutoAction.userInfoManager.addUserInfo(userInfo)
+#                    0.80, 1.00)
+#                    autoAction.userInfoManager.addUserInfo(userInfo)
 #                    userInfo = UserInfo(u'leyuan', u'http://item.taobao.com/item.htm?id=9248227645',
 #                    QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
-#                    0.80, 0.90, 1.00)
-#                    AutoAction.userInfoManager.addUserInfo(userInfo)
+#                    0.80, 1.00)
+#                    autoAction.userInfoManager.addUserInfo(userInfo)
         
                     # handle legacy userInfos here.
                     autoAction.handle_userInfoMap()
                     
                     for item in items:
-                        AutoAction.userInfoManager.addUserInfo(item)
+                        autoAction.userInfoManager.addUserInfo(item)
                     
                     # handle new userInfos from search page here.
                     autoAction.handle_userInfoMap()
@@ -276,9 +253,9 @@ class AutoAction(QObject):
                     
                 if (datetime.now() - self.userInfo.last_status_time).days > 1:
                     if self.userInfo.status == UserInfo.Status_Confirmed_Buy:
-                        AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Failed_Buy)
+                        self.autoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Failed_Buy)
                     else:
-                        AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_RETRY)
+                        self.autoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_RETRY)
                     return
                     
                 # jiawzhang TODO: wangwang message version:
@@ -289,7 +266,7 @@ class AutoAction(QObject):
                     
                 # Instance purchase version:
                 if self.userInfo.status == UserInfo.Status_Not_Processing or self.userInfo.status == UserInfo.Status_Processing:
-                    AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Will_Buy)
+                    self.autoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Will_Buy)
                     
                 link = None
                 if self.userInfo.status == UserInfo.Status_Will_Buy:
@@ -318,7 +295,7 @@ class AutoAction(QObject):
                     # push back the view for reusing.
                     self.autoAction.queue.put(view)
                         
-        userInfoMap = AutoAction.userInfoManager.getUserInfoMap()
+        userInfoMap = self.userInfoManager.getUserInfoMap()
         if userInfoMap:
             for userInfo in userInfoMap.itervalues():
                 AutoAction.channel.putRequest(MyRequest(self, userInfo))
@@ -349,10 +326,10 @@ class AutoAction(QObject):
         
         # jiawzhang TODO DEBUG: remove the return below later, to simulate the pay_xxx function below in this item function.
         time.sleep(2)
-        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Succeed_Buy)
+        self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Succeed_Buy)
         self.__closeCurrentTab(frame)
         AutoAction.debug_num = AutoAction.debug_num + 1
-        print 'item completed: ' + str(AutoAction.debug_num) + ' ' + userInfo.taobaoId + ' ' + str(userInfo.last_status_time)
+        print 'item completed: ' + str(AutoAction.debug_num) + ' ' + userInfo.taobaoId + ' ' + str(userInfo.buyer_payment) + ' ' + str(userInfo.last_status_time)
         return
     
         # test whether there is a username/password div pop up after clicking on buy now link.
@@ -363,7 +340,7 @@ class AutoAction(QObject):
         buynow = frame.findFirstElement('a#J_LinkBuy')
         if buynow.isNull():
             # Set status to failed buy if the item is offline.
-            AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
+            self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
         else:
             # jiawzhang TODO: change this to 61 seconds when on production.
             self.__asyncall(10, buynow)
@@ -376,7 +353,7 @@ class AutoAction(QObject):
         
     def alipay(self, frame, userInfo):
         # Set status to confirmed buy and save the alipay link.
-        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Confirmed_Buy, frame.url().toString())
+        self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Confirmed_Buy, frame.url().toString())
         
         confirmButton = frame.findFirstElement('input.J_ForAliControl')
         if not confirmButton.isNull():
@@ -386,7 +363,7 @@ class AutoAction(QObject):
             self.__asyncall(2, confirmButton)
         else:
             # Set status to fail to buy if there is no comfirmed button for alipay page.
-            AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
+            self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
     
     def __asyncall(self, seconds, clickableElement):
         autoAction = self
@@ -400,17 +377,17 @@ class AutoAction(QObject):
         
     def pay_success(self, frame, userInfo):
         # Set status to completed buy.
-        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Succeed_Buy)
+        self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Succeed_Buy)
         self.__closeCurrentTab(frame)
             
     def pay_fail(self, frame, userInfo):
         # Set status to fail to buy.
-        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
+        self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
         self.__closeCurrentTab(frame)
     
     def process_incomplete(self, frame, userInfo):
         # Set status to retry.
-        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
+        self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
         self.__closeCurrentTab(frame)
     
     def __closeCurrentTab(self, frame):
