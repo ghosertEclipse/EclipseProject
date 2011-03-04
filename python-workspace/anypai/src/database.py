@@ -3,6 +3,7 @@
 import sqlite3
 
 from datetime import datetime
+from datetime import timedelta
 
 from PyQt4.QtCore import QUrl
 
@@ -30,7 +31,7 @@ class UserInfo:
     # status after refunding payment.
     Status_Refunded_Payment = 9
     # jiawzhang XXX: convert any string in this class to unicode, otherwise, it reports error when storing to sqlite3.
-    def __init__(self, taobaoId, itemLink, wangwangLink, buyer_payment, seller_payment):
+    def __init__(self, taobaoId = None, itemLink = None, wangwangLink = None, buyer_payment = None, seller_payment = None):
         """convert any string in this class to unicode before passing them into constructor, otherwise, it reports error when storing to sqlite3."""
         self.id = None
         self.taobaoId = taobaoId
@@ -42,6 +43,9 @@ class UserInfo:
         self.last_status_time = datetime.now()
         self.alipayLink = None
         self.active = 1
+    def __str__(self):
+        return '{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}'.format(self.id, self.taobaoId, self.itemLink, self.wangwangLink, self.buyer_payment, self.seller_payment,
+                                                         self.status, self.last_status_time, self.alipayLink, self.active)
 
 def create_table():
     conn = sqlite3.connect(db_location, detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
@@ -70,25 +74,53 @@ def save_user(userInfo):
               userInfo.last_status_time, userInfo.active))
     conn.close()
 
-def get_user():
+def get_users():
+    users = getObjects(UserInfo, 'select * from user_info')
+    return users
+
+def get_users_monthly():
+    "Get the users within 31 days"
+    users = getObjects(UserInfo, 'select * from user_info where last_status_time >= ?', datetime.now() - timedelta(31))
+    return users
+
+def getObjects(class_type, select_sql, *params):
     conn = sqlite3.connect(db_location, detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
-    c = conn.cursor()
-    c.execute("select * from user_info")
-    for row in c:
-        print row
-    c.close()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    
+    objects = []
+    if params:
+        cursor.execute(select_sql, params)
+    else:
+        cursor.execute(select_sql)
+    for row in cursor:
+        object = class_type()
+        for key in row.keys():
+            setattr(object, key, row[key])
+        objects.append(object)
+        
+    cursor.close()
     conn.close()
+    
+    return objects
+    
     
 if __name__ == '__main__':
     db_location = './storage/database_test'
     import os
-    os.system('rm {0}'.format(db_location))
+    if os.path.exists(db_location):
+        os.remove(db_location)
     create_table()
     userInfo = UserInfo(u'代理梦想家80后', u'http://item.taobao.com/item.htm?id=9248227645',
     unicode(QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId=')),
     0.80, 1.00)
     save_user(userInfo)
     save_user(userInfo)
+    print userInfo.last_status_time
+    userInfo.last_status_time = datetime.now() - timedelta(31)
+    print userInfo.last_status_time
     save_user(userInfo)
-    get_user()
+    users = get_users_monthly()
+    for user in users:
+        print user
     

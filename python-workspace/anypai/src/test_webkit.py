@@ -184,6 +184,7 @@ class AutoAction(QObject):
             for index, item in enumerate(items):
                 itemLink = unicode(item.findFirst('h3.summary a').attribute('href', ''))
                 buyer_payment = float(item.findFirst('ul.attribute li.price em').toPlainText())
+                # jiawzhang TODO: should take ship fee into account here.
                 taobaoId = unicode(item.findFirst('p.seller a').toPlainText())
                 # wangwangLink is not present always, reload the page if it fail to get wangwangLink.
                 wangwangLink = unicode(item.findFirst('a.ww-inline').attribute('href', ''))
