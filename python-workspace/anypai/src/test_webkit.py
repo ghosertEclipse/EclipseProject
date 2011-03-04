@@ -48,20 +48,25 @@ import platform
 if platform.system() == 'Windows':
     import ahkpython
 
+import database
 from database import UserInfo
 
 class UserInfoManager:
-    userMap = {}
     def __init__(self, ownerTaobaoId, max_acceptable_price):
         self.ownerTaobaoId = ownerTaobaoId
         self.max_acceptable_price = max_acceptable_price
 
-    def addUserInfo(self, userInfo):
+    def addUserInfo(self, newUserInfo):
         # Don't buy the item from yourself.
-        if self.ownerTaobaoId == userInfo.taobaoId:
+        if self.ownerTaobaoId == newUserInfo.taobaoId:
             return
-        # If the userInfo exists in map, below is the logic which allow to continue. Otherwise just return, don't add userInfo anymore.
-        if UserInfoManager.userMap.has_key(userInfo.taobaoId):
+        
+        if newUserInfo.buyer_payment > self.max_acceptable_price:
+            return
+        
+        # If the userInfo exists, below is the logic which allow to continue. Otherwise just return, don't add userInfo anymore.
+        userInfo = database.getActiveUserByTaobaoId(newUserInfo.taobaoId)
+        if userInfo:
             # Succeed buy/Confirmed order and the last status time more than 31 days will allow to continue.
             if (userInfo.status == UserInfo.Status_Succeed_Buy or userInfo.status == UserInfo.Status_Confirmed_Payment or
                 userInfo.status == UserInfo.Status_Refunded_Payment):
@@ -79,18 +84,18 @@ class UserInfoManager:
                 pass
             else:
                 return
-                    
-        if userInfo.buyer_payment <= self.max_acceptable_price:
-            UserInfoManager.userMap[userInfo.taobaoId] = userInfo
+            database.updateUser(userInfo, active = 0)
+        database.saveUser(newUserInfo)
             
-    def getUserInfoMap(self):
-        return UserInfoManager.userMap
+    def getUnhandledUserInfoList(self):
+        return database.getUnhandledUserInfoList()
     
     def setUserInfoStatus(self, userInfo, status, alipayLink = None):
-        userInfo.status = status
         if (status == UserInfo.Status_Confirmed_Buy) and alipayLink:
-            userInfo.alipayLink = alipayLink
-        userInfo.last_status_time = datetime.now()
+            pass
+        else:
+            alipayLink = None
+        database.updateUser(userInfo, status = status, alipayLink = alipayLink, last_status_time = datetime.now())
 
 class AutoAction(QObject):
     
@@ -217,13 +222,13 @@ class AutoAction(QObject):
 #                    autoAction.userInfoManager.addUserInfo(userInfo)
         
                     # handle legacy userInfos here.
-                    autoAction.handle_userInfoMap()
+                    autoAction.handleUserInfoList()
                     
                     for item in items:
                         autoAction.userInfoManager.addUserInfo(item)
                     
                     # handle new userInfos from search page here.
-                    autoAction.handle_userInfoMap()
+                    autoAction.handleUserInfoList()
                     
                     # click on next page on search page for capturing new taobao items.
                     if not nextPage.isNull():
@@ -239,7 +244,7 @@ class AutoAction(QObject):
             asyncHandler.start()
             return
 
-    def handle_userInfoMap(self):
+    def handleUserInfoList(self):
         # jiawzhang XXX: for channel.putRequest in a loop, make sure you always pass in variable like userInfo by constructor,
         # Otherwise, you may get duplicated userInfo in your Request class, not sure whether this is a pyqt bug.
         class MyRequest(thread_util.Request):
@@ -247,11 +252,6 @@ class AutoAction(QObject):
                 self.userInfo = userInfo
                 self.autoAction = autoAction
             def doAction(self):
-                # this method need to handle one of the four status below:
-                if (self.userInfo.status != UserInfo.Status_Not_Processing and self.userInfo.status != UserInfo.Status_Processing and
-                    self.userInfo.status != UserInfo.Status_Will_Buy and self.userInfo.status != UserInfo.Status_Confirmed_Buy):
-                    return
-                    
                 if (datetime.now() - self.userInfo.last_status_time).days > 1:
                     if self.userInfo.status == UserInfo.Status_Confirmed_Buy:
                         self.autoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Failed_Buy)
@@ -296,9 +296,9 @@ class AutoAction(QObject):
                     # push back the view for reusing.
                     self.autoAction.queue.put(view)
                         
-        userInfoMap = self.userInfoManager.getUserInfoMap()
-        if userInfoMap:
-            for userInfo in userInfoMap.itervalues():
+        userInfoList = self.userInfoManager.getUnhandledUserInfoList()
+        if userInfoList:
+            for userInfo in userInfoList:
                 AutoAction.channel.putRequest(MyRequest(self, userInfo))
             AutoAction.channel.startConsumer(self.queue.maxsize, True, False)
             AutoAction.channel.waitingForConsumerExist()
