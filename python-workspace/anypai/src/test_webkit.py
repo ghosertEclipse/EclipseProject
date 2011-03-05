@@ -117,7 +117,7 @@ class AutoAction(QObject):
         self.seller_payment = seller_payment
         self.message_to_seller = message_to_seller
         # jiawzhang TODO: this number should be configurable later.
-        self.queue = Queue(5)
+        self.queue = Queue(1)
         self.userInfoManager = UserInfoManager(username, max_acceptable_price)
     
     
@@ -189,7 +189,8 @@ class AutoAction(QObject):
             for index, item in enumerate(items):
                 itemLink = unicode(item.findFirst('h3.summary a').attribute('href', ''))
                 buyer_payment = float(item.findFirst('ul.attribute li.price em').toPlainText())
-                # jiawzhang TODO: should take ship fee into account here.
+                shipping_fee = float(item.findFirst('ul.attribute li.price span.shipping').toPlainText()[3:])
+                buyer_payment = buyer_payment + shipping_fee
                 taobaoId = unicode(item.findFirst('p.seller a').toPlainText())
                 # wangwangLink is not present always, reload the page if it fail to get wangwangLink.
                 wangwangLink = unicode(item.findFirst('a.ww-inline').attribute('href', ''))
@@ -281,7 +282,9 @@ class AutoAction(QObject):
                     self.autoAction.emit(SIGNAL('new_webview'), view, link)
                         
                     # waiting here, until view.userInfo is not None, means the whole buy flow completed.
-                    # There are three final states will make the code below jump out the loop: pay_success, pay_fail and process_incomplete. see below.
+                    # Any following flows which will be terminated should:
+                    # 1. Set user status
+                    # 2. Invoke self.__terminateCurrentFlow(frame) to make sure the corresponding worker thread can jump out of the while below and pick up the next request.
                     waitingInterval = 0
                     while view.userInfo != None:
                         time.sleep(2)
@@ -295,6 +298,10 @@ class AutoAction(QObject):
                             
                     # push back the view for reusing.
                     self.autoAction.queue.put(view)
+                    
+                    # debug info here.
+                    AutoAction.debug_num = AutoAction.debug_num + 1
+                    print 'item completed: ' + str(AutoAction.debug_num) + ' ' + userInfo.taobaoId + ' ' + str(userInfo.buyer_payment) + ' ' + str(userInfo.last_status_time)
                         
         userInfoList = self.userInfoManager.getUnhandledUserInfoList()
         if userInfoList:
@@ -324,15 +331,6 @@ class AutoAction(QObject):
         self.__clickOn(loginButton)
         
     def item(self, frame, userInfo):
-        
-        # jiawzhang TODO DEBUG: remove the return below later, to simulate the pay_xxx function below in this item function.
-        time.sleep(2)
-        self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Succeed_Buy)
-        self.__closeCurrentTab(frame)
-        AutoAction.debug_num = AutoAction.debug_num + 1
-        print 'item completed: ' + str(AutoAction.debug_num) + ' ' + userInfo.taobaoId + ' ' + str(userInfo.buyer_payment) + ' ' + str(userInfo.last_status_time)
-        return
-    
         # test whether there is a username/password div pop up after clicking on buy now link.
         username = frame.findFirstElement('input#TPL_username_1')
         if not username.isNull():
@@ -342,15 +340,27 @@ class AutoAction(QObject):
         if buynow.isNull():
             # Set status to failed buy if the item is offline.
             self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
+            self.__terminateCurrentFlow(frame)
         else:
             # jiawzhang TODO: change this to 61 seconds when on production.
             self.__asyncall(10, buynow)
     
     def buy(self, frame, userInfo):
+        shippingFirstOption = frame.findFirstElement('table#trade-info tbody tr#J_Post input#shipping1')
+        if not shippingFirstOption.isNull():
+            self.__clickOn(shippingFirstOption)
         message_box = frame.findFirstElement('textarea#J_msgtosaler')
         self.__setValueOn(message_box, self.message_to_seller)
-        confirmButton = frame.findFirstElement('input#performSubmit')
-        self.__clickOn(confirmButton)
+        
+        # Verify buyer_payment here with actual price including shipping fee here.
+        actualPrice = float(frame.findFirstElement('span.actual-price strong#J_ActualFee').toPlainText())
+        if (userInfo.buyer_payment == actualPrice):
+            confirmButton = frame.findFirstElement('input#performSubmit')
+            self.__clickOn(confirmButton)
+        else:
+            # Set status to retry if the price of item is changed.
+            self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
+            self.__terminateCurrentFlow(frame)
         
     def alipay(self, frame, userInfo):
         # Set status to confirmed buy and save the alipay link.
@@ -358,6 +368,7 @@ class AutoAction(QObject):
         
         confirmButton = frame.findFirstElement('input.J_ForAliControl')
         if not confirmButton.isNull():
+            # jiawzhang TODO: Think over a way to synchronize the code block below.
             ahkpython.sendAlipayPassword(self.alipayPassword)
             # jiawzhang XXX: Should Have a Async Click On Confirm Button for Security ActiveX Inputbox
             # Other wise, you will always get button clicked first, then fill the password into the Security ActiveX Inputbox, which lead to issues.
@@ -365,6 +376,7 @@ class AutoAction(QObject):
         else:
             # Set status to fail to buy if there is no comfirmed button for alipay page.
             self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
+            self.__terminateCurrentFlow(frame)
     
     def __asyncall(self, seconds, clickableElement):
         autoAction = self
@@ -379,19 +391,20 @@ class AutoAction(QObject):
     def pay_success(self, frame, userInfo):
         # Set status to completed buy.
         self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Succeed_Buy)
-        self.__closeCurrentTab(frame)
+        self.__terminateCurrentFlow(frame)
             
     def pay_fail(self, frame, userInfo):
         # Set status to fail to buy.
         self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
-        self.__closeCurrentTab(frame)
+        self.__terminateCurrentFlow(frame)
     
     def process_incomplete(self, frame, userInfo):
         # Set status to retry.
         self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
-        self.__closeCurrentTab(frame)
+        self.__terminateCurrentFlow(frame)
     
-    def __closeCurrentTab(self, frame):
+    def __terminateCurrentFlow(self, frame):
+        "Invoking on this method will make sure the worker thread pick up next request or to be stopped if no requests."
         frame.page().view().userInfo = None
         
     def perform(self, frame, url, userInfo):
@@ -478,6 +491,10 @@ if __name__ == '__main__':
     QWebSettings.globalSettings().setAttribute(QWebSettings.PluginsEnabled, True)
     # QWebSettings.globalSettings().setAttribute(QWebSettings.AutoLoadImages, False)
     QWebSettings.globalSettings().enablePersistentStorage(StoragePath)
+    
+    # create table if there is no table.
+    if not os.path.exists(database.db_location):
+        database.createTable()
         
     main.setWindowTitle(u'淘宝随意拍')
     main.show()
