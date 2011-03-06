@@ -102,6 +102,7 @@ class AutoAction(QObject):
     channel = thread_util.Channel()
     
     alipayChannel = thread_util.Channel()
+    # allow only one alipay page at a time.
     alipayChannel.startConsumer(1)
     
     # jiawzhang TODO: remove this later.
@@ -109,7 +110,10 @@ class AutoAction(QObject):
     
     def __init__(self, keyword, username, password, alipayPassword, max_acceptable_price, seller_payment, message_to_seller):
         QObject.__init__(self)
-        self.connect(self, SIGNAL('asynClickOn'), self.__clickOn)
+        # jiawzhang XXX: if your signal is sent from sub-thread, set Qt.BlockingQueuedConnection will make sure:
+        # after emit signal, the sub-thread will be blocked until the corresponding slot is completed.
+        # If the signal is sent from the same thread, the default behavior is already similar like above.
+        self.connect(self, SIGNAL('asynClickOn'), self.__clickOn, Qt.BlockingQueuedConnection)
         self.connect(self, SIGNAL('new_webview'), self.__new_webview, Qt.BlockingQueuedConnection)
         self.connect(self, SIGNAL('stop_webview'), self.__stop_webview, Qt.BlockingQueuedConnection)
         self.keyword = keyword
@@ -186,6 +190,30 @@ class AutoAction(QObject):
             self.__clickOn(confirmButton)
             return
         else:
+            class AsynHandler(threading.Thread):
+                def __init__(self, autoAction, items, nextPage):
+                    threading.Thread.__init__(self)
+                    self.autoAction = autoAction
+                    self.items = items
+                    self.nextPage = nextPage
+                def run(self):
+                    # handle legacy userInfos here.
+                    self.autoAction.handleUserInfoList()
+                    
+                    for item in self.items:
+                        self.autoAction.userInfoManager.addUserInfo(item)
+                    
+                    # handle new userInfos from search page here.
+                    self.autoAction.handleUserInfoList()
+                    
+                    # click on next page on search page for capturing new taobao items.
+                    if not self.nextPage.isNull():
+                        print 'call next page here.'
+                        self.autoAction.emit(SIGNAL('asynClickOn'), self.nextPage)
+                    else:
+                        # jiawzhang TODO: add something to prompt it stopped here.
+                        print 'all the search pages are handled.'
+            
             # We can't have frame.findXXXX functions in sub-thread, so I promote the code snip on parsing frame here.
             items = frame.findFirstElement('ul.list-view').findAll('li.list-item').toList()
             for index, item in enumerate(items):
@@ -204,45 +232,8 @@ class AutoAction(QObject):
                 items[index] = UserInfo(taobaoId, itemLink, wangwangLink, buyer_payment, self.seller_payment)
             nextPage = frame.findFirstElement('div.page-bottom a.page-next')
             
-            autoAction = self
-            class AsynHandler(threading.Thread):
-                def run(self):
-#                    userInfo = UserInfo(u'代理梦想家80后', u'http://item.taobao.com/item.htm?id=9248227645',
-#                    QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
-#                    0.80, 1.00)
-#                    autoAction.userInfoManager.addUserInfo(userInfo)
-#                    userInfo = UserInfo(u'jiawei', u'http://item.taobao.com/item.htm?id=9248227645',
-#                    QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
-#                    0.80, 1.00)
-#                    autoAction.userInfoManager.addUserInfo(userInfo)
-#                    userInfo = UserInfo(u'jingli', u'http://item.taobao.com/item.htm?id=9248227645',
-#                    QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
-#                    0.80, 1.00)
-#                    autoAction.userInfoManager.addUserInfo(userInfo)
-#                    userInfo = UserInfo(u'leyuan', u'http://item.taobao.com/item.htm?id=9248227645',
-#                    QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId='),
-#                    0.80, 1.00)
-#                    autoAction.userInfoManager.addUserInfo(userInfo)
-        
-                    # handle legacy userInfos here.
-                    autoAction.handleUserInfoList()
-                    
-                    for item in items:
-                        autoAction.userInfoManager.addUserInfo(item)
-                    
-                    # handle new userInfos from search page here.
-                    autoAction.handleUserInfoList()
-                    
-                    # click on next page on search page for capturing new taobao items.
-                    if not nextPage.isNull():
-                        print 'call next page here.'
-                        autoAction.emit(SIGNAL('asynClickOn'), nextPage)
-                    else:
-                        # jiawzhang TODO: add something to prompt it stopped here.
-                        pass
-            
             # jiawzhang TODO: make sure we clear all the sub-threads we made when we exit app or press stop button on the GUI.
-            asyncHandler = AsynHandler()
+            asyncHandler = AsynHandler(self, items, nextPage)
             asyncHandler.setDaemon(True)
             asyncHandler.start()
             return
@@ -333,14 +324,6 @@ class AutoAction(QObject):
         self.__clickOn(loginButton)
         
     def item(self, frame, userInfo):
-        
-        
-        # jiawzhang TODO: remove this later.
-        self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
-        self.__terminateCurrentFlow(frame)
-        return
-        
-        
         # test whether there is a username/password div pop up after clicking on buy now link.
         username = frame.findFirstElement('input#TPL_username_1')
         if not username.isNull():
@@ -353,7 +336,7 @@ class AutoAction(QObject):
             self.__terminateCurrentFlow(frame)
         else:
             # jiawzhang TODO: change this to 61 seconds when on production.
-            self.__asyncall(10, buynow)
+            self.__asyncall(61, buynow)
     
     def buy(self, frame, userInfo):
         shippingFirstOption = frame.findFirstElement('table#trade-info tbody tr#J_Post input#shipping1')
@@ -366,7 +349,20 @@ class AutoAction(QObject):
         actualPrice = float(frame.findFirstElement('span.actual-price strong#J_ActualFee').toPlainText())
         if (userInfo.buyer_payment == actualPrice):
             confirmButton = frame.findFirstElement('input#performSubmit')
-            self.__clickOn(confirmButton)
+            
+            # Add this multiple thread so that I make sure only one alipay page will be handled at a time.
+            class AlipayRequest(thread_util.Request):
+                def __init__(self, autoAction, confirmButton, frame):
+                    self.autoAction = autoAction
+                    self.confirmButton = confirmButton
+                    self.frame = frame
+                def doAction(self):
+                    self.autoAction.emit(SIGNAL('asynClickOn'), self.confirmButton)
+                    view = self.frame.page().view()
+                    while view.userInfo != None:
+                        time.sleep(2)
+            AutoAction.alipayChannel.putRequest(AlipayRequest(self, confirmButton, frame))
+            
         else:
             # Set status to retry if the price of item is changed.
             self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
@@ -378,7 +374,6 @@ class AutoAction(QObject):
         
         confirmButton = frame.findFirstElement('input.J_ForAliControl')
         if not confirmButton.isNull():
-            # jiawzhang TODO: Think over a way to synchronize the code block below.
             ahkpython.sendAlipayPassword(self.alipayPassword)
             # jiawzhang XXX: Should Have a Async Click On Confirm Button for Security ActiveX Inputbox
             # Other wise, you will always get button clicked first, then fill the password into the Security ActiveX Inputbox, which lead to issues.
@@ -479,7 +474,7 @@ class MainContainer(QMainWindow):
         self.connect(self.tabWidget, SIGNAL('tabCloseRequested(int)'), self.closeTab)
         self.setCentralWidget(self.tabWidget)
         
-        # jiawzhang TODO: If running tons of view.load, I saw "Segmentation fault" and then PyQt exits, not sure Windows has the same issue, google it !
+        # jiawzhang TODO: If running tons of view.load, I saw "Segmentation fault" and then PyQt exits, not sure Windows has the same issue, google it 'Segmentation fault Qt webkit'!
         
         # Make sure fill in unicode characters.
         autoAction = AutoAction(u'捷易通充值平台加款卡1元自动转帐', u'ghosert', u'011849', u'011849', 0.90, 1.00, u'捷易通ID: ghosert')
