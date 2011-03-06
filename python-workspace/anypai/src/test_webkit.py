@@ -282,12 +282,15 @@ class AutoAction(QObject):
                     while view.userInfo != None:
                         time.sleep(2)
                         waitingInterval = waitingInterval + 2
-                        if waitingInterval > 30:
+                        if waitingInterval % 30 == 0:
                             # jiawzhang TODO: set time out here, the number should be configurable, force stop the view and try again, this will trigger WebView.load_finished
                             # Test the situation If buy now page is blocked because of security picture verification.
-                            print 'try stopping current page.'
-                            self.autoAction.emit(SIGNAL('stop_webview'), view)
-                            waitingInterval = 0
+                            url = view.url().toString()
+                            if (re.search(r'^http://www\.taobao\.com', url) or re.search(r'^http://s\.taobao\.com/search\?q=', url) or
+                                re.search(r'^https://login\.taobao\.com/member/login\.jhtml', url) or re.search(r'^http://item\.taobao\.com/item\.htm\?id=', url)):
+                                print 'try stopping home, search, login, item page.'
+                                self.autoAction.emit(SIGNAL('stop_webview'), view)
+                            print 'This url takes long time more than 30s: ' + url
                             
                     # push back the view for reusing.
                     self.autoAction.queue.put(view)
@@ -346,7 +349,9 @@ class AutoAction(QObject):
         self.__setValueOn(message_box, self.message_to_seller)
         
         # Verify buyer_payment here with actual price including shipping fee here.
-        actualPrice = float(frame.findFirstElement('span.actual-price strong#J_ActualFee').toPlainText())
+        actualPriceString = frame.findFirstElement('span.actual-price strong#J_ActualFee').toPlainText()
+        print 'Actual Price String: ' + actualPriceString
+        actualPrice = -10000.0 if actualPriceString == '' else float(actualPriceString)
         if (userInfo.buyer_payment == actualPrice):
             confirmButton = frame.findFirstElement('input#performSubmit')
             
@@ -357,10 +362,12 @@ class AutoAction(QObject):
                     self.confirmButton = confirmButton
                     self.frame = frame
                 def doAction(self):
+                    print 'Begin Alipay Request ...'
                     self.autoAction.emit(SIGNAL('asynClickOn'), self.confirmButton)
                     view = self.frame.page().view()
                     while view.userInfo != None:
                         time.sleep(2)
+                    print 'End Alipay Request ...'
             AutoAction.alipayChannel.putRequest(AlipayRequest(self, confirmButton, frame))
             
         else:
@@ -370,7 +377,8 @@ class AutoAction(QObject):
         
     def alipay(self, frame, userInfo):
         # Set status to confirmed buy and save the alipay link.
-        self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Confirmed_Buy, frame.url().toString())
+        # jiawzhang XXX: The string to be saved to sqlite must be unicode first, otherwise, error happens.
+        self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Confirmed_Buy, unicode(frame.url().toString()))
         
         confirmButton = frame.findFirstElement('input.J_ForAliControl')
         if not confirmButton.isNull():
@@ -430,7 +438,8 @@ class AutoAction(QObject):
         elif (re.search(r'^https://cashier\.alipay\.com/home/error\.htm', url)):
             self.pay_fail(frame, userInfo)
         else:
-            self.process_incomplete(frame, userInfo)
+            print 'find unexpected url: ' + url
+            # self.process_incomplete(frame, userInfo)
         
 class WebView(QWebView):
     

@@ -103,6 +103,13 @@ def getUnhandledUserInfoList():
     users = getObjects(UserInfo, 'select * from user_info where status in (?, ?, ?, ?) and active = 1',
                        UserInfo.Status_Not_Processing, UserInfo.Status_Processing, UserInfo.Status_Will_Buy, UserInfo.Status_Confirmed_Buy)
     return users
+
+def getHandledUserInfoList():
+    "Get all the handled userInfos."
+    users = getObjects(UserInfo, 'select * from user_info where status in (?, ?, ?, ?, ?, ?)',
+                       UserInfo.Status_RETRY, UserInfo.Status_NotTo_Buy, UserInfo.Status_Failed_Buy,
+                       UserInfo.Status_Succeed_Buy, UserInfo.Status_Confirmed_Payment, UserInfo.Status_Refunded_Payment)
+    return users
     
 def getObjects(class_type, select_sql, *params):
     "A general function for get objects directly from db table. detect_types here is necessary for datetime default adapter from python, see python sqlite3 doc."
@@ -131,13 +138,13 @@ def __getUsersMonthly():
     users = getObjects(UserInfo, 'select * from user_info where last_status_time >= ?', datetime.now() - timedelta(31))
     return users
 
-    
-if __name__ == '__main__':
+def __test():
     db_location = './storage/database_test'
     import os
     if os.path.exists(db_location):
         os.remove(db_location)
     createTable()
+    # jiawzhang XXX: The string to be saved to sqlite must be unicode first, otherwise, error happens.
     userInfo = UserInfo(u'代理梦想家80后', u'http://item.taobao.com/item.htm?id=9248227645',
     unicode(QUrl.fromPercentEncoding(u'http://www.taobao.com/webww/?ver=1&&touid=cntaobao%E4%BB%A3%E7%90%86%E6%A2%A6%E6%83%B3%E5%AE%B680%E5%90%8E&siteid=cntaobao&status=1&portalId=&gid=9190349629&itemsId=')),
     0.80, 1.00)
@@ -172,3 +179,21 @@ if __name__ == '__main__':
     for userInfo in userInfos:
         print userInfo
     
+def __queryProduction():
+    users = getObjects(UserInfo, 'select * from user_info where id = 7 and active = 1')
+    users[0]
+    updateUser(users[0], status = UserInfo.Status_Succeed_Buy)
+    print 'getUnhandledUserInfoList'
+    userInfos = getUnhandledUserInfoList()
+    for userInfo in userInfos:
+        print userInfo
+    print 'getHandledUserInfoList'
+    userInfos = getHandledUserInfoList()
+    for userInfo in userInfos:
+        print userInfo
+        
+if __name__ == '__main__':
+    # __test()
+    __queryProduction()
+    
+        
