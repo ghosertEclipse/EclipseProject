@@ -101,6 +101,9 @@ class AutoAction(QObject):
     
     channel = thread_util.Channel()
     
+    alipayChannel = thread_util.Channel()
+    alipayChannel.startConsumer(1)
+    
     # jiawzhang TODO: remove this later.
     debug_num = 0
     
@@ -116,11 +119,10 @@ class AutoAction(QObject):
         self.max_acceptable_price = max_acceptable_price
         self.seller_payment = seller_payment
         self.message_to_seller = message_to_seller
-        # jiawzhang TODO: this number should be configurable later.
-        self.queue = Queue(1)
         self.userInfoManager = UserInfoManager(username, max_acceptable_price)
-    
-    
+        # jiawzhang TODO: this number should be configurable later.
+        self.queue = Queue(5)
+        
     def __clickOn(self, element):
         clickOnString = None
         # <a> has a different implementation javascript for simulating clicking on it.
@@ -161,7 +163,7 @@ class AutoAction(QObject):
     def home(self, frame):
         # When visiting the home, begin to create view and put them to the queue, sub-threads will leverage them later.
         for i in range(self.queue.maxsize):
-            view = WebView(frame.page().view().tabWidget)
+            view = WebView(frame.page().view().tabWidget, self)
             self.queue.put(view)
         searchBox = frame.findFirstElement('input#q')
         self.__setValueOn(searchBox, self.keyword)
@@ -301,7 +303,7 @@ class AutoAction(QObject):
                     
                     # debug info here.
                     AutoAction.debug_num = AutoAction.debug_num + 1
-                    print 'item completed: ' + str(AutoAction.debug_num) + ' ' + userInfo.taobaoId + ' ' + str(userInfo.buyer_payment) + ' ' + str(userInfo.last_status_time)
+                    print 'item completed: ' + str(AutoAction.debug_num) + ' ' + self.userInfo.taobaoId + ' ' + str(self.userInfo.buyer_payment) + ' ' + str(self.userInfo.last_status_time)
                         
         userInfoList = self.userInfoManager.getUnhandledUserInfoList()
         if userInfoList:
@@ -331,6 +333,14 @@ class AutoAction(QObject):
         self.__clickOn(loginButton)
         
     def item(self, frame, userInfo):
+        
+        
+        # jiawzhang TODO: remove this later.
+        self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
+        self.__terminateCurrentFlow(frame)
+        return
+        
+        
         # test whether there is a username/password div pop up after clicking on buy now link.
         username = frame.findFirstElement('input#TPL_username_1')
         if not username.isNull():
@@ -431,10 +441,7 @@ class WebView(QWebView):
     
     cookieJar = CookieJar()
     
-    # Make sure fill in unicode characters.
-    autoAction = AutoAction(u'捷易通充值平台加款卡1元自动转帐', u'ghosert', u'011849', u'011849', 0.90, 1.00, u'捷易通ID: ghosert')
-    
-    def __init__(self, tabWidget = None, userInfo = None):
+    def __init__(self, tabWidget, autoAction):
         QWebView.__init__(self, tabWidget)
         networkAccessManager = self.page().networkAccessManager()
         networkAccessManager.setCookieJar(self.__class__.cookieJar)
@@ -446,10 +453,11 @@ class WebView(QWebView):
         tabWidget.connect(self, SIGNAL('loadProgress(int)'), self.load_progress)
         self.tabWidget = tabWidget
         self.frame = self.page().currentFrame()
-        self.userInfo = userInfo
+        self.userInfo = None
+        self.autoAction = autoAction
     
     def createWindow(self, webWindowType):
-        return WebView(self.tabWidget)
+        return WebView(self.tabWidget, self.autoAction)
     
     def load_started(self):
         pass
@@ -457,7 +465,7 @@ class WebView(QWebView):
     def load_finished(self, status):
         self.__class__.cookieJar.saveAllCookies()
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.sender()), self.sender().title())
-        self.__class__.autoAction.perform(self.frame, self.url().toString(), self.userInfo)
+        self.autoAction.perform(self.frame, self.url().toString(), self.userInfo)
     
     def load_progress(self, progress):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.sender()), str(progress) + "%")
@@ -471,7 +479,12 @@ class MainContainer(QMainWindow):
         self.connect(self.tabWidget, SIGNAL('tabCloseRequested(int)'), self.closeTab)
         self.setCentralWidget(self.tabWidget)
         
-        view = WebView(self.tabWidget)
+        # jiawzhang TODO: If running tons of view.load, I saw "Segmentation fault" and then PyQt exits, not sure Windows has the same issue, google it !
+        
+        # Make sure fill in unicode characters.
+        autoAction = AutoAction(u'捷易通充值平台加款卡1元自动转帐', u'ghosert', u'011849', u'011849', 0.90, 1.00, u'捷易通ID: ghosert')
+    
+        view = WebView(self.tabWidget, autoAction)
         view.load(QUrl("http://www.taobao.com/"))
         # view.load(QUrl("http://item.taobao.com/item.htm?id=9248227645"))
     
