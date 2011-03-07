@@ -339,7 +339,7 @@ class AutoAction(QObject):
             self.__terminateCurrentFlow(frame)
         else:
             # jiawzhang TODO: change this to 61 seconds when on production.
-            self.__asyncall(61, buynow)
+            self.__asyncall(1, buynow)
     
     def buy(self, frame, userInfo):
         shippingFirstOption = frame.findFirstElement('table#trade-info tbody tr#J_Post input#shipping1')
@@ -508,6 +508,9 @@ if __name__ == '__main__':
     QWebSettings.globalSettings().setAttribute(QWebSettings.PluginsEnabled, True)
     # QWebSettings.globalSettings().setAttribute(QWebSettings.AutoLoadImages, False)
     QWebSettings.globalSettings().enablePersistentStorage(StoragePath)
+    
+    # Uncomment thhis line for test purpose only.
+    # database.db_location = './storage/database_test'
     
     # create table if there is no table.
     if not os.path.exists(database.db_location):
