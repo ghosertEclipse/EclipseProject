@@ -65,8 +65,9 @@ IE_InjectJS(hWnd_MainWindow, JS_to_Inject, VarNames_to_Return="")
 }
 
 
-; The star '*' below will cause a standard output, and then you can capture it from python side.
+; The star '*' below will cause a standard output, and then you can capture it from python side(but you can't see it from console unless you redirect to other output by ">" ).
 ; FileAppend, This method is sample for console windows, *
-WinGet,id,id,æ·æ˜“é€šä¼šå‘˜ç®¡ç†ç³»ç»Ÿ
+WinGet,id,id,½İÒ×Í¨»áÔ±¹ÜÀíÏµÍ³
 jiawei := IE_InjectJS(WinExist("ahk_id" . id), "javascript:REPLACE_WITH_ENUM_JS var html = main();", "html")
+MsgBox % jiawei
 FileAppend, %jiawei%`n, *

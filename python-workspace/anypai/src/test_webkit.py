@@ -491,6 +491,9 @@ class MainContainer(QMainWindow):
         view = WebView(self.tabWidget, autoAction)
         view.load(QUrl("http://www.taobao.com/"))
         # view.load(QUrl("http://item.taobao.com/item.htm?id=9248227645"))
+
+        # 捷易通查单网址：
+        # http://dx.jieyitong.net/system/index.asp
     
     def closeTab(self, tabIndex):
         view = self.tabWidget.widget(tabIndex)
