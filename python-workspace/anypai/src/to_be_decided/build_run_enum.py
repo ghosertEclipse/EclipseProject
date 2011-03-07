@@ -30,6 +30,7 @@ call(consoleString)
 
 os.system('del new_enum.ahk')
 
+# run for testing purpose.
 consoleString = u'"new_enum.exe /force /ErrorStdOut "likecider - ghosert" "代理梦想家80后 - ghosert"'.encode('cp936')
 os.system(consoleString)
 
