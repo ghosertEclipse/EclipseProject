@@ -52,7 +52,7 @@ import database
 from database import UserInfo
 
 class UserInfoManager:
-    def __init__(self, ownerTaobaoId, max_acceptable_price):
+    def __init__(self, ownerTaobaoId = None, max_acceptable_price = None):
         self.ownerTaobaoId = ownerTaobaoId
         self.max_acceptable_price = max_acceptable_price
 
@@ -113,7 +113,7 @@ class AutoAction(QObject):
         # jiawzhang XXX: if your signal is sent from sub-thread, set Qt.BlockingQueuedConnection will make sure:
         # after emit signal, the sub-thread will be blocked until the corresponding slot is completed.
         # If the signal is sent from the same thread, the default behavior is already similar like above.
-        self.connect(self, SIGNAL('asynClickOn'), self.__clickOn, Qt.BlockingQueuedConnection)
+        self.connect(self, SIGNAL('asynClickOn'), self.clickOn, Qt.BlockingQueuedConnection)
         self.connect(self, SIGNAL('new_webview'), self.__new_webview, Qt.BlockingQueuedConnection)
         self.connect(self, SIGNAL('stop_webview'), self.__stop_webview, Qt.BlockingQueuedConnection)
         self.keyword = keyword
@@ -127,7 +127,7 @@ class AutoAction(QObject):
         # jiawzhang TODO: this number should be configurable later.
         self.queue = Queue(5)
         
-    def __clickOn(self, element):
+    def clickOn(self, element):
         clickOnString = None
         # <a> has a different implementation javascript for simulating clicking on it.
         if element.tagName() == 'A':
@@ -172,22 +172,22 @@ class AutoAction(QObject):
         searchBox = frame.findFirstElement('input#q')
         self.__setValueOn(searchBox, self.keyword)
         searchButton = frame.findFirstElement('button.tsearch-submit')
-        self.__clickOn(searchButton)
+        self.clickOn(searchButton)
     
     def search(self, frame):
         # See whether the current user login or not.
         p_login_info = frame.findFirstElement('p.login-info')
         isLogin = p_login_info.findFirst('a')
         if not isLogin.hasClass('user-nick'):
-            self.__clickOn(isLogin)
+            self.clickOn(isLogin)
             return
                 
         # check wang wang online option, check it if it's not checked.
         wwonline = frame.findFirstElement('input#filterServiceWWOnline')
         if not self.__isCheckedOn(wwonline):
-            self.__clickOn(wwonline)
+            self.clickOn(wwonline)
             confirmButton = frame.findFirstElement('button#J_SubmitBtn')
-            self.__clickOn(confirmButton)
+            self.clickOn(confirmButton)
             return
         else:
             class AsynHandler(threading.Thread):
@@ -317,14 +317,14 @@ class AutoAction(QObject):
         safeLoginCheckbox = frame.findFirstElement('input#J_SafeLoginCheck')
         if (self.__isCheckedOn(safeLoginCheckbox)):
             # if safeLoginChecked, uncheck it first.
-            self.__clickOn(safeLoginCheckbox)
+            self.clickOn(safeLoginCheckbox)
                 
         username = frame.findFirstElement('input#TPL_username_1')
         password = frame.findFirstElement('span#J_StandardPwd input.login-text')
         self.__setValueOn(username, self.username)
         self.__setValueOn(password, self.password)
         loginButton = frame.findFirstElement('button.J_Submit')
-        self.__clickOn(loginButton)
+        self.clickOn(loginButton)
         
     def item(self, frame, userInfo):
         # test whether there is a username/password div pop up after clicking on buy now link.
@@ -344,7 +344,7 @@ class AutoAction(QObject):
     def buy(self, frame, userInfo):
         shippingFirstOption = frame.findFirstElement('table#trade-info tbody tr#J_Post input#shipping1')
         if not shippingFirstOption.isNull():
-            self.__clickOn(shippingFirstOption)
+            self.clickOn(shippingFirstOption)
         message_box = frame.findFirstElement('textarea#J_msgtosaler')
         self.__setValueOn(message_box, self.message_to_seller)
         
@@ -474,6 +474,71 @@ class WebView(QWebView):
     def load_progress(self, progress):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.sender()), str(progress) + "%")
         
+class VerifyAction(AutoAction):
+    def __init__(self, username, password, alipayPassword, seller_payment):
+        QObject.__init__(self)
+        # self.connect(self, SIGNAL('asynClickOn'), self.clickOn, Qt.BlockingQueuedConnection)
+        # self.connect(self, SIGNAL('new_webview'), self.__new_webview, Qt.BlockingQueuedConnection)
+        # self.connect(self, SIGNAL('stop_webview'), self.__stop_webview, Qt.BlockingQueuedConnection)
+        self.username = username
+        self.password = password
+        self.alipayPassword = alipayPassword
+        self.seller_payment = seller_payment
+        self.userInfoManager = UserInfoManager()
+        
+    def myTaobao(self, frame):
+        # See whether the current user login or not.
+        p_login_info = frame.findFirstElement('p.login-info')
+        isLogin = p_login_info.findFirst('a')
+        if not isLogin.hasClass('user-nick'):
+            self.clickOn(isLogin)
+            return
+        
+    def perform(self, frame, url, userInfo):
+        if (re.search(r'^http://i\.taobao\.com/', url)):
+            self.myTaobao(frame)
+        elif (re.search(r'^https://login\.taobao\.com/member/login\.jhtml', url)):
+            self.login(frame)
+        else:
+            print 'find unexpected url: ' + url
+            # self.process_incomplete(frame, userInfo)
+class MainPanel(QWidget):
+    def __init__(self, tabWidget = None):
+        QWidget.__init__(self, tabWidget)
+        self.tabWidget = tabWidget
+        
+        hLayout = QHBoxLayout()
+        btBeginPai = QPushButton(u'开始拍货')
+        btPayVerify = QPushButton(u'开始验证')
+        hLayout.addWidget(btBeginPai)
+        hLayout.addWidget(btPayVerify)
+        
+        textEdit = QTextEdit()
+        
+        vLayout = QVBoxLayout()
+        vLayout.addLayout(hLayout)
+        vLayout.addWidget(textEdit)
+        
+        self.setLayout(vLayout)
+        
+        self.connect(btBeginPai, SIGNAL('clicked()'), self.beginPai)
+        self.connect(btPayVerify, SIGNAL('clicked()'), self.payVerify)
+    
+    def beginPai(self):
+        # jiawzhang TODO: If running tons of view.load, I saw "Segmentation fault" and then PyQt exits, not sure Windows has the same issue, google it 'Segmentation fault Qt webkit'!
+        # Make sure fill in unicode characters.
+        autoAction = AutoAction(u'捷易通充值平台加款卡1元自动转帐', u'ghosert', u'011849', u'011849', 0.90, 1.00, u'捷易通ID: ghosert')
+        view = WebView(self.tabWidget, autoAction)
+        view.load(QUrl("http://www.taobao.com/"))
+        # view.load(QUrl("http://item.taobao.com/item.htm?id=9248227645"))
+        
+    def payVerify(self):
+        # 捷易通查单网址：
+        # http://dx.jieyitong.net/system/index.asp
+        autoAction = VerifyAction(u'ghosert', u'011849', u'011849', 1.00)
+        view = WebView(self.tabWidget, autoAction)
+        view.load(QUrl("http://i.taobao.com/"))
+
 class MainContainer(QMainWindow):
     def __init__(self, parent = None):
         QMainWindow.__init__(self, parent)
@@ -483,17 +548,10 @@ class MainContainer(QMainWindow):
         self.connect(self.tabWidget, SIGNAL('tabCloseRequested(int)'), self.closeTab)
         self.setCentralWidget(self.tabWidget)
         
-        # jiawzhang TODO: If running tons of view.load, I saw "Segmentation fault" and then PyQt exits, not sure Windows has the same issue, google it 'Segmentation fault Qt webkit'!
+        mainPanel = MainPanel(self.tabWidget)
+        self.tabWidget.addTab(mainPanel, 'Main Panel')
         
-        # Make sure fill in unicode characters.
-        autoAction = AutoAction(u'捷易通充值平台加款卡1元自动转帐', u'ghosert', u'011849', u'011849', 0.90, 1.00, u'捷易通ID: ghosert')
-    
-        view = WebView(self.tabWidget, autoAction)
-        view.load(QUrl("http://www.taobao.com/"))
-        # view.load(QUrl("http://item.taobao.com/item.htm?id=9248227645"))
-
-        # 捷易通查单网址：
-        # http://dx.jieyitong.net/system/index.asp
+        self.resize(942, 563)
     
     def closeTab(self, tabIndex):
         view = self.tabWidget.widget(tabIndex)
