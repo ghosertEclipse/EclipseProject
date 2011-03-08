@@ -52,16 +52,12 @@ import database
 from database import UserInfo
 
 class UserInfoManager:
-    def __init__(self, ownerTaobaoId = None, max_acceptable_price = None):
-        self.ownerTaobaoId = ownerTaobaoId
-        self.max_acceptable_price = max_acceptable_price
-
-    def addUserInfo(self, newUserInfo):
+    def addUserInfo(self, newUserInfo, ownerTaobaoId, max_acceptable_price):
         # Don't buy the item from yourself.
-        if self.ownerTaobaoId == newUserInfo.taobaoId:
+        if ownerTaobaoId == newUserInfo.taobaoId:
             return
         
-        if newUserInfo.buyer_payment > self.max_acceptable_price:
+        if newUserInfo.buyer_payment > max_acceptable_price:
             return
         
         # If the userInfo exists, below is the logic which allow to continue. Otherwise just return, don't add userInfo anymore.
@@ -105,6 +101,8 @@ class AutoAction(QObject):
     # allow only one alipay page at a time.
     alipayChannel.startConsumer(1)
     
+    userInfoManager = UserInfoManager()
+    
     # jiawzhang TODO: remove this later.
     debug_num = 0
     
@@ -123,7 +121,6 @@ class AutoAction(QObject):
         self.max_acceptable_price = max_acceptable_price
         self.seller_payment = seller_payment
         self.message_to_seller = message_to_seller
-        self.userInfoManager = UserInfoManager(username, max_acceptable_price)
         # jiawzhang TODO: this number should be configurable later.
         self.queue = Queue(5)
         
@@ -190,30 +187,6 @@ class AutoAction(QObject):
             self.clickOn(confirmButton)
             return
         else:
-            class AsynHandler(threading.Thread):
-                def __init__(self, autoAction, items, nextPage):
-                    threading.Thread.__init__(self)
-                    self.autoAction = autoAction
-                    self.items = items
-                    self.nextPage = nextPage
-                def run(self):
-                    # handle legacy userInfos here.
-                    self.autoAction.handleUserInfoList()
-                    
-                    for item in self.items:
-                        self.autoAction.userInfoManager.addUserInfo(item)
-                    
-                    # handle new userInfos from search page here.
-                    self.autoAction.handleUserInfoList()
-                    
-                    # click on next page on search page for capturing new taobao items.
-                    if not self.nextPage.isNull():
-                        print 'call next page here.'
-                        self.autoAction.emit(SIGNAL('asynClickOn'), self.nextPage)
-                    else:
-                        # jiawzhang TODO: add something to prompt it stopped here.
-                        print 'all the search pages are handled.'
-            
             # We can't have frame.findXXXX functions in sub-thread, so I promote the code snip on parsing frame here.
             items = frame.findFirstElement('ul.list-view').findAll('li.list-item').toList()
             for index, item in enumerate(items):
@@ -232,6 +205,30 @@ class AutoAction(QObject):
                 items[index] = UserInfo(taobaoId, itemLink, wangwangLink, buyer_payment, self.seller_payment)
             nextPage = frame.findFirstElement('div.page-bottom a.page-next')
             
+            class AsynHandler(threading.Thread):
+                def __init__(self, autoAction, items, nextPage):
+                    threading.Thread.__init__(self)
+                    self.autoAction = autoAction
+                    self.items = items
+                    self.nextPage = nextPage
+                def run(self):
+                    # handle legacy userInfos here.
+                    self.autoAction.handleUserInfoList()
+                    
+                    for item in self.items:
+                        AutoAction.userInfoManager.addUserInfo(item, self.autoAction.username, self.autoAction.max_acceptable_price)
+                    
+                    # handle new userInfos from search page here.
+                    self.autoAction.handleUserInfoList()
+                    
+                    # click on next page on search page for capturing new taobao items.
+                    if not self.nextPage.isNull():
+                        print 'call next page here.'
+                        self.autoAction.emit(SIGNAL('asynClickOn'), self.nextPage)
+                    else:
+                        # jiawzhang TODO: add something to prompt it stopped here.
+                        print 'all the search pages are handled.'
+            
             # jiawzhang TODO: make sure we clear all the sub-threads we made when we exit app or press stop button on the GUI.
             asyncHandler = AsynHandler(self, items, nextPage)
             asyncHandler.setDaemon(True)
@@ -248,9 +245,9 @@ class AutoAction(QObject):
             def doAction(self):
                 if (datetime.now() - self.userInfo.last_status_time).days > 1:
                     if self.userInfo.status == UserInfo.Status_Confirmed_Buy:
-                        self.autoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Failed_Buy)
+                        AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Failed_Buy)
                     else:
-                        self.autoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_RETRY)
+                        AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_RETRY)
                     return
                     
                 # jiawzhang TODO: wangwang message version:
@@ -261,7 +258,7 @@ class AutoAction(QObject):
                     
                 # Instance purchase version:
                 if self.userInfo.status == UserInfo.Status_Not_Processing or self.userInfo.status == UserInfo.Status_Processing:
-                    self.autoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Will_Buy)
+                    AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Will_Buy)
                     
                 link = None
                 if self.userInfo.status == UserInfo.Status_Will_Buy:
@@ -299,7 +296,7 @@ class AutoAction(QObject):
                     AutoAction.debug_num = AutoAction.debug_num + 1
                     print 'item completed: ' + str(AutoAction.debug_num) + ' ' + self.userInfo.taobaoId + ' ' + str(self.userInfo.buyer_payment) + ' ' + str(self.userInfo.last_status_time)
                         
-        userInfoList = self.userInfoManager.getUnhandledUserInfoList()
+        userInfoList = AutoAction.userInfoManager.getUnhandledUserInfoList()
         if userInfoList:
             for userInfo in userInfoList:
                 AutoAction.channel.putRequest(MyRequest(self, userInfo))
@@ -335,7 +332,7 @@ class AutoAction(QObject):
         buynow = frame.findFirstElement('a#J_LinkBuy')
         if buynow.isNull():
             # Set status to failed buy if the item is offline.
-            self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
+            AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
             self.__terminateCurrentFlow(frame)
         else:
             # jiawzhang TODO: change this to 61 seconds when on production.
@@ -372,13 +369,13 @@ class AutoAction(QObject):
             
         else:
             # Set status to retry if the price of item is changed.
-            self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
+            AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
             self.__terminateCurrentFlow(frame)
         
     def alipay(self, frame, userInfo):
         # Set status to confirmed buy and save the alipay link.
         # jiawzhang XXX: The string to be saved to sqlite must be unicode first, otherwise, error happens.
-        self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Confirmed_Buy, unicode(frame.url().toString()))
+        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Confirmed_Buy, unicode(frame.url().toString()))
         
         confirmButton = frame.findFirstElement('input.J_ForAliControl')
         if not confirmButton.isNull():
@@ -388,7 +385,7 @@ class AutoAction(QObject):
             self.__asyncall(2, confirmButton)
         else:
             # Set status to fail to buy if there is no comfirmed button for alipay page.
-            self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
+            AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
             self.__terminateCurrentFlow(frame)
     
     def __asyncall(self, seconds, clickableElement):
@@ -403,17 +400,17 @@ class AutoAction(QObject):
         
     def pay_success(self, frame, userInfo):
         # Set status to completed buy.
-        self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Succeed_Buy)
+        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Succeed_Buy)
         self.__terminateCurrentFlow(frame)
             
     def pay_fail(self, frame, userInfo):
         # Set status to fail to buy.
-        self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
+        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
         self.__terminateCurrentFlow(frame)
     
     def process_incomplete(self, frame, userInfo):
         # Set status to retry.
-        self.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
+        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
         self.__terminateCurrentFlow(frame)
     
     def __terminateCurrentFlow(self, frame):
@@ -484,7 +481,6 @@ class VerifyAction(AutoAction):
         self.password = password
         self.alipayPassword = alipayPassword
         self.seller_payment = seller_payment
-        self.userInfoManager = UserInfoManager()
         
     def myTaobao(self, frame):
         # See whether the current user login or not.

@@ -44,7 +44,7 @@ class UserInfo:
         self.alipayLink = None
         self.active = 1
     def __str__(self):
-        return '{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}'.format(self.id, self.taobaoId, self.itemLink, self.wangwangLink, self.buyer_payment, self.seller_payment,
+        return u'{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}'.format(self.id, self.taobaoId, self.itemLink, self.wangwangLink, self.buyer_payment, self.seller_payment,
                                                          self.status, self.last_status_time, self.alipayLink, self.active)
 
 def createTable():
@@ -180,9 +180,8 @@ def __test():
         print userInfo
     
 def __queryProduction():
-    users = getObjects(UserInfo, 'select * from user_info where id = 7 and active = 1')
-    users[0]
-    updateUser(users[0], status = UserInfo.Status_Succeed_Buy)
+    # users = getObjects(UserInfo, 'select * from user_info where id = 7 and active = 1')
+    # updateUser(users[0], status = UserInfo.Status_Succeed_Buy)
     print 'getUnhandledUserInfoList'
     userInfos = getUnhandledUserInfoList()
     for userInfo in userInfos:
@@ -196,4 +195,3 @@ if __name__ == '__main__':
     # __test()
     __queryProduction()
     
-        
