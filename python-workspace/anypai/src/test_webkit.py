@@ -243,6 +243,7 @@ class AutoAction(QObject):
                 self.userInfo = userInfo
                 self.autoAction = autoAction
             def doAction(self):
+                # jiawzhang TODO: for all the legacy unhandled items, maybe set them retry directly.
                 if (datetime.now() - self.userInfo.last_status_time).days > 1:
                     if self.userInfo.status == UserInfo.Status_Confirmed_Buy:
                         AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Failed_Buy)
@@ -389,12 +390,16 @@ class AutoAction(QObject):
             self.__terminateCurrentFlow(frame)
     
     def __asyncall(self, seconds, clickableElement):
-        autoAction = self
         class AsynCall(threading.Thread):
+            def __init__(self, autoAction, seconds, clickableElement):
+                threading.Thread.__init__(self)
+                self.autoAction = autoAction
+                self.seconds = seconds
+                self.clickableElement = clickableElement
             def run(self):
-                time.sleep(seconds)
-                autoAction.emit(SIGNAL('asynClickOn'), clickableElement)
-        asyncCall = AsynCall()
+                time.sleep(self.seconds)
+                self.autoAction.emit(SIGNAL('asynClickOn'), self.clickableElement)
+        asyncCall = AsynCall(self, seconds, clickableElement)
         asyncCall.setDaemon(True)
         asyncCall.start()
         
