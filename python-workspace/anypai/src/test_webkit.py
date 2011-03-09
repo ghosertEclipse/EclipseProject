@@ -494,15 +494,35 @@ class VerifyAction(AutoAction):
         if not isLogin.hasClass('user-nick'):
             self.clickOn(isLogin)
             return
+        infoCenter = frame.findAllElements('div.infocenter div.section ul li')
+        # 待付款 infoCenter[0]
+        # 待确认收货 infoCenter[1]
+        # 待评价 infoCenter[2]
+        confirmPayUrl = infoCenter[1].findFirst('a')
+        if confirmPayUrl.isNull():
+            # jiawzhang TODO: finish verify flow.
+            print 'no item to be confirmed, finish verify flow'
+            return
+        self.clickOn(confirmPayUrl)
+    
+    def listBoughtItems(self, frame):
+        items = frame.findAllElements('table#J_BoughtTable tbody').toList()
+        for item in items:
+            confirmButton = item.findFirst('td.operate a')
+            # jiawzhang TODO: continue coding here.
+        
         
     def perform(self, frame, url, userInfo):
         if (re.search(r'^http://i\.taobao\.com/', url)):
             self.myTaobao(frame)
         elif (re.search(r'^https://login\.taobao\.com/member/login\.jhtml', url)):
             self.login(frame)
+        elif (re.search(r'^http://trade\.taobao\.com/trade/itemlist/listBoughtItems\.htm', url)):
+            self.listBoughtItems(frame)
         else:
             print 'find unexpected url: ' + url
             # self.process_incomplete(frame, userInfo)
+            
 class MainPanel(QWidget):
     def __init__(self, tabWidget = None):
         QWidget.__init__(self, tabWidget)
