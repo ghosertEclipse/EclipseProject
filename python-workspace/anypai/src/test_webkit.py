@@ -115,8 +115,8 @@ class AutoAction(QObject):
         # after emit signal, the sub-thread will be blocked until the corresponding slot is completed.
         # If the signal is sent from the same thread, the default behavior is already similar like above.
         self.connect(self, SIGNAL('asynClickOn'), self.clickOn, Qt.BlockingQueuedConnection)
-        self.connect(self, SIGNAL('new_webview'), self.__new_webview, Qt.BlockingQueuedConnection)
-        self.connect(self, SIGNAL('stop_webview'), self.__stop_webview, Qt.BlockingQueuedConnection)
+        self.connect(self, SIGNAL('new_webview'), self.new_webview, Qt.BlockingQueuedConnection)
+        self.connect(self, SIGNAL('stop_webview'), self.stop_webview, Qt.BlockingQueuedConnection)
         self.keyword = keyword
         self.username = username
         self.password = password
@@ -278,7 +278,7 @@ class AutoAction(QObject):
                     # waiting here, until view.userInfo is not None, means the whole buy flow completed.
                     # Any following flows which will be terminated should:
                     # 1. Set user status
-                    # 2. Invoke self.__terminateCurrentFlow(frame) to make sure the corresponding worker thread can jump out of the while below and pick up the next request.
+                    # 2. Invoke self.terminateCurrentFlow(frame) to make sure the corresponding worker thread can jump out of the while below and pick up the next request.
                     waitingInterval = 0
                     while view.userInfo != None:
                         time.sleep(2)
@@ -307,10 +307,10 @@ class AutoAction(QObject):
             AutoAction.channel.startConsumer(self.queue.maxsize, True, False)
             AutoAction.channel.waitingForConsumerExist()
             
-    def __new_webview(self, view, link):
+    def new_webview(self, view, link):
         view.load(QUrl(link))
         
-    def __stop_webview(self, view):
+    def stop_webview(self, view):
         view.stop()
     
     def login(self, frame):
@@ -337,7 +337,7 @@ class AutoAction(QObject):
         if buynow.isNull():
             # Set status to failed buy if the item is offline.
             AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
-            self.__terminateCurrentFlow(frame)
+            self.terminateCurrentFlow(frame)
         else:
             # jiawzhang TODO: change this to 61 seconds when on production.
             self.asyncall(1, buynow)
@@ -374,7 +374,7 @@ class AutoAction(QObject):
         else:
             # Set status to retry if the price of item is changed.
             AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
-            self.__terminateCurrentFlow(frame)
+            self.terminateCurrentFlow(frame)
         
     def alipay(self, frame, userInfo):
         # Set status to confirmed buy and save the alipay link.
@@ -390,7 +390,7 @@ class AutoAction(QObject):
         else:
             # Set status to fail to buy if there is no comfirmed button for alipay page.
             AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
-            self.__terminateCurrentFlow(frame)
+            self.terminateCurrentFlow(frame)
     
     def asyncall(self, seconds, clickableElement):
         class AsynCall(threading.Thread):
@@ -409,19 +409,19 @@ class AutoAction(QObject):
     def pay_success(self, frame, userInfo):
         # Set status to completed buy.
         AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Succeed_Buy)
-        self.__terminateCurrentFlow(frame)
+        self.terminateCurrentFlow(frame)
             
     def pay_fail(self, frame, userInfo):
         # Set status to fail to buy.
         AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
-        self.__terminateCurrentFlow(frame)
+        self.terminateCurrentFlow(frame)
     
     def process_incomplete(self, frame, userInfo):
         # Set status to retry.
         AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_RETRY)
-        self.__terminateCurrentFlow(frame)
+        self.terminateCurrentFlow(frame)
     
-    def __terminateCurrentFlow(self, frame):
+    def terminateCurrentFlow(self, frame):
         "Invoking on this method will make sure the worker thread pick up next request or to be stopped if no requests."
         frame.page().view().userInfo = None
         
@@ -483,8 +483,8 @@ class VerifyAction(AutoAction):
     def __init__(self, username, password, alipayPassword, userPayMap):
         QObject.__init__(self)
         self.connect(self, SIGNAL('asynClickOn'), self.clickOn, Qt.BlockingQueuedConnection)
-        self.connect(self, SIGNAL('new_webview'), self.__new_webview, Qt.BlockingQueuedConnection)
-        self.connect(self, SIGNAL('stop_webview'), self.__stop_webview, Qt.BlockingQueuedConnection)
+        self.connect(self, SIGNAL('new_webview'), self.new_webview, Qt.BlockingQueuedConnection)
+        self.connect(self, SIGNAL('stop_webview'), self.stop_webview, Qt.BlockingQueuedConnection)
         self.connect(self, SIGNAL('reload'), self.__reload, Qt.BlockingQueuedConnection)
         self.username = username
         self.password = password
@@ -493,7 +493,6 @@ class VerifyAction(AutoAction):
         self.view = None
         
     def myTaobao(self, frame):
-        self.view = WebView(frame.page().view().tabWidget, self)
         # See whether the current user login or not.
         p_login_info = frame.findFirstElement('p.login-info')
         isLogin = p_login_info.findFirst('a')
@@ -509,6 +508,7 @@ class VerifyAction(AutoAction):
             # jiawzhang TODO: finish verify flow.
             print 'no item to be confirmed, finish verify flow'
             return
+        self.view = WebView(frame.page().view().tabWidget, self)
         self.clickOn(confirmPayUrl)
     
     def listBoughtItems(self, frame):
@@ -558,10 +558,19 @@ class VerifyAction(AutoAction):
         frame.page().action(QWebPage.Reload).trigger()
     
     def confirmGoods(self, frame):
-        confirmButton = frame.findFirstElement('div.submit-line input.btn')
         ahkpython.sendAlipayPassword(self.alipayPassword)
-        self.asyncall(2, confirmButton)
-        # jiawzhang TODO: we should have a way to click js popup window here.
+        frame = frame.childFrames()[0]
+        confirmButton = frame.findFirstElement('div.submit-line input.btn')
+        # Below maybe the right way to confirm a js popup window.
+        # 1. Start the confirm operation thread first, then press the confirm button to trigger the js popup.
+        class PreJsConfirm(threading.Thread):
+            def run(self):
+                time.sleep(5)
+                ahkpython.confirmJavaScript()
+        self.asyncall(3, confirmButton)
+        pjc = PreJsConfirm()
+        pjc.setDaemon(True)
+        pjc.start()
     
     def comment(self, frame):
         commentButton = frame.findFirstElement('a.long-btn')
@@ -580,7 +589,7 @@ class VerifyAction(AutoAction):
     def rateSuccess(self, frame, userInfo):
         # Set status to completed buy.
         AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Confirmed_Payment)
-        self.__terminateCurrentFlow(frame)
+        self.terminateCurrentFlow(frame)
         
     def perform(self, frame, url, userInfo):
         if (re.search(r'^http://i\.taobao\.com/', url)):

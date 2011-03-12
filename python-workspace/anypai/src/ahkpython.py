@@ -172,6 +172,12 @@ sendMessageToWangwang(taobaoId, wangwangUrl, message)
     ControlSend, RichEditComponent1, {Enter}, %wangwang_title%
 }
 
+confirmJavaScript(){
+    ;The last parameter is the windows title of the python application.
+    aString := UTF82Ansi("JavaScript Confirm")
+    ControlSend, , {Enter}, %aString%
+}
+
 exitApp()
 {
     ExitApp
@@ -194,6 +200,10 @@ def sendMessageToWangwang(wangwangId, wangwangUrl, message):
     # jiawzhang XXX This is the way how I pass in unicode characters.
     return_value = cast(ahk.ahkFunction(create_string_buffer("sendMessageToWangwang"), create_string_buffer(wangwangId.encode('utf-8')), create_string_buffer(wangwangUrl.encode('utf-8')), 
                                         create_string_buffer(message.encode('utf-8'))), c_char_p).value
+    return return_value.decode('utf-8') if return_value is not None else None
+
+def confirmJavaScript():
+    return_value = cast(ahk.ahkFunction(create_string_buffer("confirmJavaScript")), c_char_p).value
     return return_value.decode('utf-8') if return_value is not None else None
 
 import subprocess as sub
