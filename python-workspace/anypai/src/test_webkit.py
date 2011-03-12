@@ -86,6 +86,9 @@ class UserInfoManager:
     def getUnhandledUserInfoList(self):
         return database.getUnhandledUserInfoList()
     
+    def getActiveUserByTaobaoId(self, taobaoId):
+        return database.getActiveUserByTaobaoId(taobaoId)
+    
     def setUserInfoStatus(self, userInfo, status, alipayLink = None):
         if (status == UserInfo.Status_Confirmed_Buy) and alipayLink:
             pass
@@ -337,7 +340,7 @@ class AutoAction(QObject):
             self.__terminateCurrentFlow(frame)
         else:
             # jiawzhang TODO: change this to 61 seconds when on production.
-            self.__asyncall(1, buynow)
+            self.asyncall(1, buynow)
     
     def buy(self, frame, userInfo):
         shippingFirstOption = frame.findFirstElement('table#trade-info tbody tr#J_Post input#shipping1')
@@ -383,13 +386,13 @@ class AutoAction(QObject):
             ahkpython.sendAlipayPassword(self.alipayPassword)
             # jiawzhang XXX: Should Have a Async Click On Confirm Button for Security ActiveX Inputbox
             # Other wise, you will always get button clicked first, then fill the password into the Security ActiveX Inputbox, which lead to issues.
-            self.__asyncall(2, confirmButton)
+            self.asyncall(2, confirmButton)
         else:
             # Set status to fail to buy if there is no comfirmed button for alipay page.
             AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
             self.__terminateCurrentFlow(frame)
     
-    def __asyncall(self, seconds, clickableElement):
+    def asyncall(self, seconds, clickableElement):
         class AsynCall(threading.Thread):
             def __init__(self, autoAction, seconds, clickableElement):
                 threading.Thread.__init__(self)
@@ -477,17 +480,20 @@ class WebView(QWebView):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.sender()), str(progress) + "%")
         
 class VerifyAction(AutoAction):
-    def __init__(self, username, password, alipayPassword, seller_payment):
+    def __init__(self, username, password, alipayPassword, userPayMap):
         QObject.__init__(self)
-        # self.connect(self, SIGNAL('asynClickOn'), self.clickOn, Qt.BlockingQueuedConnection)
-        # self.connect(self, SIGNAL('new_webview'), self.__new_webview, Qt.BlockingQueuedConnection)
-        # self.connect(self, SIGNAL('stop_webview'), self.__stop_webview, Qt.BlockingQueuedConnection)
+        self.connect(self, SIGNAL('asynClickOn'), self.clickOn, Qt.BlockingQueuedConnection)
+        self.connect(self, SIGNAL('new_webview'), self.__new_webview, Qt.BlockingQueuedConnection)
+        self.connect(self, SIGNAL('stop_webview'), self.__stop_webview, Qt.BlockingQueuedConnection)
+        self.connect(self, SIGNAL('reload'), self.__reload, Qt.BlockingQueuedConnection)
         self.username = username
         self.password = password
         self.alipayPassword = alipayPassword
-        self.seller_payment = seller_payment
+        self.userPayMap = userPayMap
+        self.view = None
         
     def myTaobao(self, frame):
+        self.view = WebView(frame.page().view().tabWidget, self)
         # See whether the current user login or not.
         p_login_info = frame.findFirstElement('p.login-info')
         isLogin = p_login_info.findFirst('a')
@@ -506,11 +512,75 @@ class VerifyAction(AutoAction):
         self.clickOn(confirmPayUrl)
     
     def listBoughtItems(self, frame):
+        confirmUrlMap = {}
         items = frame.findAllElements('table#J_BoughtTable tbody').toList()
         for item in items:
-            confirmButton = item.findFirst('td.operate a')
-            # jiawzhang TODO: continue coding here.
+            # taobao deal time: 2011-03-08 21:39
+            dealTime = unicode(item.findFirst('span.deal-time').toPlainText())
+            ymdhm = re.match(r'.*?(\d+)-(\d+)-(\d+) (\d+):(\d+).*?', dealTime).groups()
+            dealTime = datetime(int(ymdhm[0]), int(ymdhm[1]), int(ymdhm[2]), int(ymdhm[3]), int(ymdhm[4]))
+            taobaoId = unicode(item.findFirst('span.seller a').toPlainText())
+            if not self.userPayMap.has_key(taobaoId):
+                continue
+            seller_paytime = self.userPayMap[taobaoId]
+            if seller_paytime < dealTime:
+                continue
+            confirmUrl = unicode(item.findFirst('td.operate a').attribute('href', ''))
+            confirmUrlMap[taobaoId] = confirmUrl
+            
+        if not confirmUrlMap:
+            print 'All the items are confirmed.'
+            return
         
+        class AsynHandler(threading.Thread):
+            def __init__(self, autoAction, confirmUrlMap, frame):
+                threading.Thread.__init__(self)
+                self.autoAction = autoAction
+                self.confirmUrlMap = confirmUrlMap
+                self.frame = frame
+            def run(self):
+                view = self.autoAction.view
+                for taobaoId, confirmUrl in confirmUrlMap.iteritems():
+                    print 'Begin Verify Request ...'
+                    view.userInfo = AutoAction.userInfoManager.getActiveUserByTaobaoId(taobaoId)
+                    self.autoAction.emit(SIGNAL('new_webview'), view, confirmUrl)
+                    while view.userInfo != None:
+                        time.sleep(2)
+                    print 'End Verify Request ...'
+                self.autoAction.emit(SIGNAL('reload'), frame)
+            
+        asyncHandler = AsynHandler(self, confirmUrlMap, frame)
+        asyncHandler.setDaemon(True)
+        asyncHandler.start()
+        return
+    
+    def __reload(self, frame):
+        frame.page().action(QWebPage.Reload).trigger()
+    
+    def confirmGoods(self, frame):
+        confirmButton = frame.findFirstElement('div.submit-line input.btn')
+        ahkpython.sendAlipayPassword(self.alipayPassword)
+        self.asyncall(2, confirmButton)
+        # jiawzhang TODO: we should have a way to click js popup window here.
+    
+    def comment(self, frame):
+        commentButton = frame.findFirstElement('a.long-btn')
+        self.clickOn(commentButton)
+        
+    def rate(self, frame):
+        okButton = frame.findFirstElement('td.ok input')
+        self.clickOn(okButton)
+        shopRatings = frame.findAllElements('div.shop-rating').toList()
+        for shopRating in shopRatings:
+            fiveStars = shopRating.findFirst('a.five-stars')
+            self.clickOn(fiveStars)
+        confirmButton = frame.findFirstElement('div.rate-submit button.btn')
+        self.clickOn(confirmButton)
+    
+    def rateSuccess(self, frame, userInfo):
+        # Set status to completed buy.
+        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Confirmed_Payment)
+        self.__terminateCurrentFlow(frame)
         
     def perform(self, frame, url, userInfo):
         if (re.search(r'^http://i\.taobao\.com/', url)):
@@ -519,6 +589,16 @@ class VerifyAction(AutoAction):
             self.login(frame)
         elif (re.search(r'^http://trade\.taobao\.com/trade/itemlist/listBoughtItems\.htm', url)):
             self.listBoughtItems(frame)
+        elif (re.search(r'^http://trade\.taobao\.com/trade/itemlist/list_bought_items\.htm', url)):
+            self.listBoughtItems(frame)
+        elif (re.search(r'^http://trade\.taobao\.com/trade/confirm_goods\.htm', url)):
+            self.confirmGoods(frame)
+        elif (re.search(r'^http://trade\.taobao\.com/trade/trade_success\.htm', url)):
+            self.comment(frame)
+        elif (re.search(r'^http://rate\.taobao\.com/remark_seller\.jhtml\?$', url) or re.search(r'^http://rate\.taobao\.com/remarkSeller\.jhtml\?$', url)):
+            self.rateSuccess(frame, userInfo)
+        elif (re.search(r'^http://rate\.taobao\.com/remark_seller\.jhtml', url) or re.search(r'^http://rate\.taobao\.com/remarkSeller\.jhtml', url)):
+            self.rate(frame)
         else:
             print 'find unexpected url: ' + url
             # self.process_incomplete(frame, userInfo)
@@ -534,11 +614,11 @@ class MainPanel(QWidget):
         hLayout.addWidget(btBeginPai)
         hLayout.addWidget(btPayVerify)
         
-        textEdit = QTextEdit()
+        self.textEdit = QTextEdit()
         
         vLayout = QVBoxLayout()
         vLayout.addLayout(hLayout)
-        vLayout.addWidget(textEdit)
+        vLayout.addWidget(self.textEdit)
         
         self.setLayout(vLayout)
         
@@ -556,7 +636,29 @@ class MainPanel(QWidget):
     def payVerify(self):
         # 捷易通查单网址：
         # http://dx.jieyitong.net/system/index.asp
-        autoAction = VerifyAction(u'ghosert', u'011849', u'011849', 1.00)
+        seller_payment = 1.00
+        jytPaymentString = unicode(self.textEdit.toPlainText())
+        payList = jytPaymentString.split('\n')
+        tdLength = 7
+        if len(payList) < tdLength:
+            return
+        payList = payList[1 : len(payList) - 1]
+        userPayMap = {}
+        rows = len(payList) / tdLength
+        for row in range(rows):
+            itemList = payList[tdLength * row : tdLength * (row + 1)]
+            if not re.match(r'\d', itemList[0]):
+                continue
+            if itemList[1] != u'资金转入':
+                continue
+            if float(itemList[2]) < seller_payment:
+                continue
+            taobaoId = itemList[6]
+            # 2011-3-9 3:57:00
+            ymdhms = re.match(r'(\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)', itemList[4]).groups()
+            seller_paytime = datetime(int(ymdhms[0]), int(ymdhms[1]), int(ymdhms[2]), int(ymdhms[3]), int(ymdhms[4]), int(ymdhms[5]))
+            userPayMap[taobaoId] = seller_paytime
+        autoAction = VerifyAction(u'ghosert', u'011849', u'011849', userPayMap)
         view = WebView(self.tabWidget, autoAction)
         view.load(QUrl("http://i.taobao.com/"))
 

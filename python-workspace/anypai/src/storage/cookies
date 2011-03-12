@@ -38,7 +38,6 @@ alipay=K1iSL1mlXo29okFw2bJjVN+Ufcgk376gUtuLUDwIBoCwD7sJGe8=; expires=Tue, 08-Mar
 ali_apache_tracktmp=uid=2088002115107175; domain=.alipay.com; path=/
 NSC_dbtijfs.ttm3.aub_wt=ffffffffaf19f95e45525d5f4f58455e445a4a423660; secure; HttpOnly; domain=cashier.alipay.com; path=/
 ck=lvj=UoMyxrcT8fwWE%2B%2BzGA%3D%3D; domain=.jipiao.taobao.com; path=/
-p_d=r:1; expires=Wed, 09-Mar-2011 14:07:55 GMT; domain=.alimama.com; path=/
 NSC_dbtijfs.ttm3.auc_wt=ffffffffaf19f97945525d5f4f58455e445a4a423660; secure; HttpOnly; domain=cashier.alipay.com; path=/
 NSC_ubpcbp.ttm1.aub_wt=ffffffffaf199c7045525d5f4f58455e445a4a423660; secure; HttpOnly; domain=taobao.alipay.com; path=/
 JSESSIONID=1162BAE09DB29A22B6133222E66A6AC7; domain=taobao.alipay.com; path=/
@@ -52,34 +51,37 @@ showOnlineService=Y; domain=cashier.alipay.com; path=/
 apay_id=1983706353.1299571884155531.1299593453758900.1299593521648448.32; expires=Thu, 30-Nov-2084 01:01:01 GMT; domain=.kcart.alipay.com; path=/
 apay_sid=1586094176.12995915544574.1299593521.648445.67.889548.27; domain=.alipay.com; path=/
 TAOBAOUIDA=32881973; expires=Fri, 05-Mar-2021 14:12:09 GMT; domain=.atpanel.com; path=/
-_tb_token_=579b33613b981; HttpOnly; domain=.taobao.com; path=/
+NSC_zovg.ttm1.auc_wt=ffffffffaf19ed3745525d5f4f58455e445a4a423660; secure; domain=ynuf.alipay.com; path=/
+TAOBAOPMIDA=; domain=.atpanel.com; path=/
+NSC_zovg.ttm1.aub_wt=ffffffffaf19ed3745525d5f4f58455e445a4a423660; secure; HttpOnly; domain=ynuf.alipay.com; path=/
+_tb_token_=ebb6b69e43837; HttpOnly; domain=.taobao.com; path=/
 v=0; domain=.taobao.com; path=/
 _lang=zh_CN:GBK; domain=.taobao.com; path=/
 cnaex=32881973; expires=Thu, 31-Dec-2037 16:00:00 GMT; domain=.acookie.taobao.com; path=/
-ali_apache_sid=172.17.181.210.1299654783157.2|1299656583; domain=.alipay.com; path=/
-JSESSIONID=A29B8013A9D329A9CFEC796CC789A126; domain=ynuf.alipay.com; path=/
-NSC_zovg.ttm1.auc_wt=ffffffffaf19ed3745525d5f4f58455e445a4a423660; secure; domain=ynuf.alipay.com; path=/
-ck1=; expires=Wed, 23-Mar-2011 07:13:03 GMT; domain=.taobao.com; path=/
+ali_apache_sid=172.17.182.18.1299763306684.6|1299765106; domain=.alipay.com; path=/
+JSESSIONID=329D7E7DEF59A2B9B1893BAAA1851061; domain=ynuf.alipay.com; path=/
+NSC_zovg.ttm2.auc_wt=ffffffffaf193d3045525d5f4f58455e445a4a423660; secure; HttpOnly; domain=ynuf.alipay.com; path=/
+ck1=; expires=Thu, 24-Mar-2011 13:21:46 GMT; domain=.taobao.com; path=/
 _sv_=0; domain=.taobao.com; path=/
-tg=0; expires=Fri, 23-Nov-2012 07:13:03 GMT; domain=.taobao.com; path=/
-_cc_=VFC%2FuZ9ajQ%3D%3D; expires=Thu, 08-Mar-2012 07:13:03 GMT; domain=.taobao.com; path=/
-t=c2c95c0a449e1e2d6ae313394864734d; expires=Tue, 07-Jun-2011 07:13:03 GMT; domain=.taobao.com; path=/
+tg=0; expires=Sat, 24-Nov-2012 13:21:46 GMT; domain=.taobao.com; path=/
+_cc_=VT5L2FSpdA%3D%3D; expires=Fri, 09-Mar-2012 13:21:46 GMT; domain=.taobao.com; path=/
+t=c2c95c0a449e1e2d6ae313394864734d; expires=Wed, 08-Jun-2011 13:21:46 GMT; domain=.taobao.com; path=/
 unb=32881973; HttpOnly; domain=.taobao.com; path=/
 _nk_=ghosert; domain=.taobao.com; path=/
 _l_g_=Ug%3D%3D; domain=.taobao.com; path=/
 cookie2=f8850502fdcfbef9acc88d420e3d340d; HttpOnly; domain=.taobao.com; path=/
 _wwmsg_=0%2C0; domain=.taobao.com; path=/
-tracknick=ghosert; expires=Thu, 08-Mar-2012 07:13:03 GMT; domain=.taobao.com; path=/
-ssllogin=1; expires=Thu, 08-Mar-2012 07:13:03 GMT; domain=.taobao.com; path=/
-lastgetwwmsg=MTI5OTY1NDc4Mw%3D%3D; domain=.taobao.com; path=/
+tracknick=ghosert; expires=Fri, 09-Mar-2012 13:21:46 GMT; domain=.taobao.com; path=/
+ssllogin=1; expires=Fri, 09-Mar-2012 13:21:46 GMT; domain=.taobao.com; path=/
+lastgetwwmsg=MTI5OTc2MzMwNg%3D%3D; domain=.taobao.com; path=/
 cookie1=UNk%2FTLtIioR4bDJIQsjXvxA5JHY8%2B7p1GsUC6l2PnP8%3D; HttpOnly; domain=.taobao.com; path=/
 cookie17=UNJZK6Xd9LM%3D; HttpOnly; domain=.taobao.com; path=/
-TAOBAOPMIDA=; domain=.atpanel.com; path=/
-linezing_session=0cd4f33495b961a103ba9913_1299654783_2; domain=.acookie.taobao.com; path=/
-TAOBAOSIDA=5581974791210445002_20110309151303; expires=Sat, 06-Mar-2021 07:13:03 GMT; domain=.atpanel.com; path=/
-TAOBAOCHIDA=112_20110309151303; expires=Wed, 09-Mar-2011 08:13:03 GMT; domain=.atpanel.com; path=/
-x=e%3D1%26p%3Dtdog%26s%3D0%26c%3D0%26f%3D0%26g%3D0%26t%3D0%26_ll%3D0%26l%3D-1; expires=Thu, 08-Mar-2012 07:15:32 GMT; domain=.taobao.com; path=/
+tlut=UoMyxrUAfpmjDQ%3D%3D; domain=.taobao.com; path=/
+p_d=r:1; expires=Fri, 11-Mar-2011 13:30:54 GMT; domain=.alimama.com; path=/
+uc1=lltime=1299741427&cookie14=UoMyxrUAfpJUVQ%3D%3D&existShop=false&cookie16=VT5L2FSpNgq6fDudInPRgavC%2BQ%3D%3D&sg=t3b&_yb_=false&cookie21=UIHiLt3xSw%3D%3D&cookie15=UtASsssmOIJ0bQ%3D%3D; domain=.taobao.com; path=/
+TAOBAOSIDA=5582440910127730812_20110310213055; expires=Sun, 07-Mar-2021 13:30:55 GMT; domain=.atpanel.com; path=/
+TAOBAOCHIDA=112_20110310213055; expires=Thu, 10-Mar-2011 14:30:55 GMT; domain=.atpanel.com; path=/
+linezing_session=08b4295ac3e34890691d1fea_1299763856_7; domain=.acookie.taobao.com; path=/
+x=e%3D1%26p%3Dtdog%26s%3D0%26c%3D0%26f%3D0%26g%3D0%26t%3D0%26_ll%3D0%26l%3D-1; expires=Fri, 09-Mar-2012 13:30:58 GMT; domain=.taobao.com; path=/
 wms=0%260; domain=.taobao.com; path=/
 whl=0%260; domain=.taobao.com; path=/
-uc1=lltime=1299653655&cookie14=UoMyxrSneRun2w%3D%3D&existShop=false&cookie16=UtASsssmPlP%2Ff1IHDsDaPRu%2BPw%3D%3D&sg=t3b&_yb_=false&cookie21=UtASsssmfA%3D%3D&cookie15=V32FPkk%2Fw0dUvg%3D%3D; domain=.taobao.com; path=/
-tlut=UoMyxrSneRun2w%3D%3D; domain=.taobao.com; path=/
