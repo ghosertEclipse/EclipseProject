@@ -125,7 +125,7 @@ class AutoAction(QObject):
         self.seller_payment = seller_payment
         self.message_to_seller = message_to_seller
         # jiawzhang TODO: this number should be configurable later.
-        self.queue = Queue(5)
+        self.queue = Queue(3)
         
     def clickOn(self, element):
         clickOnString = None
@@ -340,7 +340,7 @@ class AutoAction(QObject):
             self.terminateCurrentFlow(frame)
         else:
             # jiawzhang TODO: change this to 61 seconds when on production.
-            self.asyncall(1, buynow)
+            self.asyncall(5, buynow)
     
     def buy(self, frame, userInfo):
         shippingFirstOption = frame.findFirstElement('table#trade-info tbody tr#J_Post input#shipping1')
@@ -423,6 +423,7 @@ class AutoAction(QObject):
     
     def terminateCurrentFlow(self, frame):
         "Invoking on this method will make sure the worker thread pick up next request or to be stopped if no requests."
+        print 'terminateCurrentFlow for next buy request.'
         frame.page().view().userInfo = None
         
     def perform(self, frame, url, userInfo):
@@ -519,7 +520,7 @@ class VerifyAction(AutoAction):
             dealTime = unicode(item.findFirst('span.deal-time').toPlainText())
             ymdhm = re.match(r'.*?(\d+)-(\d+)-(\d+) (\d+):(\d+).*?', dealTime).groups()
             dealTime = datetime(int(ymdhm[0]), int(ymdhm[1]), int(ymdhm[2]), int(ymdhm[3]), int(ymdhm[4]))
-            taobaoId = unicode(item.findFirst('span.seller a').toPlainText())
+            taobaoId = unicode(item.findFirst('span.seller a').attribute('title', ''))
             if not self.userPayMap.has_key(taobaoId):
                 continue
             seller_paytime = self.userPayMap[taobaoId]
@@ -637,7 +638,7 @@ class MainPanel(QWidget):
     def beginPai(self):
         # jiawzhang TODO: If running tons of view.load, I saw "Segmentation fault" and then PyQt exits, not sure Windows has the same issue, google it 'Segmentation fault Qt webkit'!
         # Make sure fill in unicode characters.
-        autoAction = AutoAction(u'捷易通充值平台加款卡1元自动转帐', u'ghosert', u'011849', u'011849', 0.90, 1.00, u'捷易通ID: ghosert')
+        autoAction = AutoAction(u'捷易通充值平台加款卡10元自动转帐', u'ghosert', u'011849', u'011849', 9.90, 10.00, u'捷易通ID: ghosert')
         view = WebView(self.tabWidget, autoAction)
         view.load(QUrl("http://www.taobao.com/"))
         # view.load(QUrl("http://item.taobao.com/item.htm?id=9248227645"))
@@ -645,7 +646,7 @@ class MainPanel(QWidget):
     def payVerify(self):
         # 捷易通查单网址：
         # http://dx.jieyitong.net/system/index.asp
-        seller_payment = 1.00
+        seller_payment = 10.00
         jytPaymentString = unicode(self.textEdit.toPlainText())
         payList = jytPaymentString.split('\n')
         tdLength = 7
