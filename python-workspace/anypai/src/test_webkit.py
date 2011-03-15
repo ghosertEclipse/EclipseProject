@@ -272,26 +272,31 @@ class AutoAction(QObject):
                         
                 if link:
                     view = self.autoAction.queue.get()
-                    view.userInfo = self.userInfo
-                    self.autoAction.emit(SIGNAL('new_webview'), view, link)
-                        
-                    # waiting here, until view.userInfo is not None, means the whole buy flow completed.
-                    # Any following flows which will be terminated should:
-                    # 1. Set user status
-                    # 2. Invoke self.terminateCurrentFlow(frame) to make sure the corresponding worker thread can jump out of the while below and pick up the next request.
-                    waitingInterval = 0
-                    while view.userInfo != None:
-                        time.sleep(2)
-                        waitingInterval = waitingInterval + 2
-                        if waitingInterval % 30 == 0:
-                            # jiawzhang TODO: set time out here, the number should be configurable, force stop the view and try again, this will trigger WebView.load_finished
-                            # Test the situation If buy now page is blocked because of security picture verification.
-                            url = view.url().toString()
-                            if (re.search(r'^http://www\.taobao\.com', url) or re.search(r'^http://s\.taobao\.com/search\?q=', url) or
-                                re.search(r'^https://login\.taobao\.com/member/login\.jhtml', url) or re.search(r'^http://item\.taobao\.com/item\.htm\?id=', url)):
-                                print 'try stopping home, search, login, item page.'
-                                self.autoAction.emit(SIGNAL('stop_webview'), view)
-                            print 'This url takes long time more than 30s: ' + url
+                    
+                    view.condition.acquire()
+                    try:
+                        view.userInfo = self.userInfo
+                        self.autoAction.emit(SIGNAL('new_webview'), view, link)
+                            
+                        # waiting here, until view.userInfo is not None, means the whole buy flow completed.
+                        # Any following flows which will be terminated should:
+                        # 1. Set user status
+                        # 2. Invoke self.terminateCurrentFlow(frame) to make sure the corresponding worker thread can jump out of the while below and pick up the next request.
+                        waitingInterval = 0
+                        while view.userInfo != None:
+                            view.condition.wait(2)
+                            waitingInterval = waitingInterval + 2
+                            if waitingInterval % 30 == 0:
+                                # jiawzhang TODO: set time out here, the number should be configurable, force stop the view and try again, this will trigger WebView.load_finished
+                                # Test the situation If buy now page is blocked because of security picture verification.
+                                url = view.url().toString()
+                                if (re.search(r'^http://www\.taobao\.com', url) or re.search(r'^http://s\.taobao\.com/search\?q=', url) or
+                                    re.search(r'^https://login\.taobao\.com/member/login\.jhtml', url) or re.search(r'^http://item\.taobao\.com/item\.htm\?id=', url)):
+                                    print 'try stopping home, search, login, item page.'
+                                    self.autoAction.emit(SIGNAL('stop_webview'), view)
+                                print 'This url takes long time more than 30s: ' + url
+                    finally:
+                        view.condition.release()
                             
                     # push back the view for reusing.
                     self.autoAction.queue.put(view)
@@ -366,8 +371,11 @@ class AutoAction(QObject):
                     print 'Begin Alipay Request ...'
                     self.autoAction.emit(SIGNAL('asynClickOn'), self.confirmButton)
                     view = self.frame.page().view()
-                    while view.userInfo != None:
-                        time.sleep(2)
+                    view.condition.acquire()
+                    try:
+                        view.condition.wait()
+                    finally:
+                        view.condition.release()
                     print 'End Alipay Request ...'
             AutoAction.alipayChannel.putRequest(AlipayRequest(self, confirmButton, frame))
             
@@ -423,8 +431,13 @@ class AutoAction(QObject):
     
     def terminateCurrentFlow(self, frame):
         "Invoking on this method will make sure the worker thread pick up next request or to be stopped if no requests."
-        print 'terminateCurrentFlow for next buy request.'
-        frame.page().view().userInfo = None
+        view = frame.page().view()
+        view.condition.acquire()
+        try:
+            view.userInfo = None
+            view.condition.notifyAll()
+        finally:
+            view.condition.release()
         
     def perform(self, frame, url, userInfo):
         if (re.search(r'^http://www\.taobao\.com', url)):
@@ -464,6 +477,7 @@ class WebView(QWebView):
         self.tabWidget = tabWidget
         self.frame = self.page().currentFrame()
         self.userInfo = None
+        self.condition = threading.Condition()
         self.autoAction = autoAction
     
     def createWindow(self, webWindowType):
@@ -543,10 +557,14 @@ class VerifyAction(AutoAction):
                 view = self.autoAction.view
                 for taobaoId, confirmUrl in confirmUrlMap.iteritems():
                     print 'Begin Verify Request ...'
-                    view.userInfo = AutoAction.userInfoManager.getActiveUserByTaobaoId(taobaoId)
-                    self.autoAction.emit(SIGNAL('new_webview'), view, confirmUrl)
-                    while view.userInfo != None:
-                        time.sleep(2)
+                    view.condition.acquire()
+                    try:
+                        view.userInfo = AutoAction.userInfoManager.getActiveUserByTaobaoId(taobaoId)
+                        self.autoAction.emit(SIGNAL('new_webview'), view, confirmUrl)
+                        while view.userInfo != None:
+                            view.condition.wait(2)
+                    finally:
+                        view.condition.release()
                     print 'End Verify Request ...'
                 self.autoAction.emit(SIGNAL('reload'), frame)
             
