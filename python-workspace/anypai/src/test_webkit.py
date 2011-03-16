@@ -126,7 +126,7 @@ class AutoAction(QObject):
         self.seller_payment = seller_payment
         self.message_to_seller = message_to_seller
         # jiawzhang TODO: this number should be configurable later.
-        self.queue = Queue(1)
+        self.queue = Queue(5)
         
     def clickOn(self, element):
         clickOnString = None
@@ -367,7 +367,7 @@ class AutoAction(QObject):
         self.__setValueOn(message_box, self.message_to_seller)
         
         # Verify buyer_payment here with actual price including shipping fee here.
-        actualPriceString = frame.findFirstElement('span.actual-price strong#J_ActualFee').toPlainText()
+        actualPriceString = unicode(frame.findFirstElement('span.actual-price strong#J_ActualFee').toPlainText())
         print 'Actual Price String: ' + actualPriceString + ' for ' + userInfo.taobaoId
         actualPrice = -10000.0 if actualPriceString == '' else float(actualPriceString)
         if (userInfo.buyer_payment == actualPrice):
