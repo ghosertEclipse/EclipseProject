@@ -115,6 +115,7 @@ class AutoAction(QObject):
         # after emit signal, the sub-thread will be blocked until the corresponding slot is completed.
         # If the signal is sent from the same thread, the default behavior is already similar like above.
         self.connect(self, SIGNAL('asynClickOn'), self.clickOn, Qt.BlockingQueuedConnection)
+        self.connect(self, SIGNAL('asynLocateCheckCodeInput'), self.locateCheckCodeInput, Qt.BlockingQueuedConnection)
         self.connect(self, SIGNAL('new_webview'), self.new_webview, Qt.BlockingQueuedConnection)
         self.connect(self, SIGNAL('stop_webview'), self.stop_webview, Qt.BlockingQueuedConnection)
         self.keyword = keyword
@@ -125,7 +126,7 @@ class AutoAction(QObject):
         self.seller_payment = seller_payment
         self.message_to_seller = message_to_seller
         # jiawzhang TODO: this number should be configurable later.
-        self.queue = Queue(3)
+        self.queue = Queue(1)
         
     def clickOn(self, element):
         clickOnString = None
@@ -136,14 +137,17 @@ class AutoAction(QObject):
             clickOnString = 'this.click();'
         return element.evaluateJavaScript(clickOnString)
     
+    def locateCheckCodeInput(self, view, element):
+        view.tabWidget.setCurrentIndex(view.tabWidget.indexOf(view))
+        return element.evaluateJavaScript('this.focus();')
+    
     def __setValueOn(self, element, value):
         "Support most 'input' tag  with 'textarea' tag either, since the value could be Chinese, make sure it passed in as unicode based."
         # We can also use element.setAttribute('value', value) instead, but this clause fail to work in some cases, it's safer to use javascript based set-value function.
         # When invoking string1.format(string2), make sure both string1 & string2 are unicode based like below.
         if element.tagName() == 'TEXTAREA':
             # textarea element should be focus first, then set innerHTML.
-            element.setFocus()
-            return element.evaluateJavaScript(u'this.innerHTML="{0}";'.format(value))
+            return element.evaluateJavaScript(u'this.focus();this.innerHTML="{0}";'.format(value))
         else:
             return element.evaluateJavaScript(u'this.value="{0}";'.format(value))
 
@@ -184,10 +188,15 @@ class AutoAction(QObject):
                 
         # check wang wang online option, check it if it's not checked.
         wwonline = frame.findFirstElement('input#filterServiceWWOnline')
+        # Sort items by price asc
+        priceSortButton = frame.findFirstElement('ul#J_FilterToolbar a.by-price')
         if not self.__isCheckedOn(wwonline):
             self.clickOn(wwonline)
             confirmButton = frame.findFirstElement('button#J_SubmitBtn')
             self.clickOn(confirmButton)
+            return
+        elif re.match(r'.*?sort=price-asc.*', priceSortButton.attribute('href', '')):
+            self.clickOn(priceSortButton)
             return
         else:
             # We can't have frame.findXXXX functions in sub-thread, so I promote the code snip on parsing frame here.
@@ -195,6 +204,9 @@ class AutoAction(QObject):
             for index, item in enumerate(items):
                 itemLink = unicode(item.findFirst('h3.summary a').attribute('href', ''))
                 buyer_payment = float(item.findFirst('ul.attribute li.price em').toPlainText())
+                if buyer_payment > self.max_acceptable_price:
+                    # jiawzhang TODO: terminate all flows here.
+                    pass
                 shipping_fee = float(item.findFirst('ul.attribute li.price span.shipping').toPlainText()[3:])
                 buyer_payment = buyer_payment + shipping_fee
                 taobaoId = unicode(item.findFirst('p.seller a').toPlainText())
@@ -356,28 +368,32 @@ class AutoAction(QObject):
         
         # Verify buyer_payment here with actual price including shipping fee here.
         actualPriceString = frame.findFirstElement('span.actual-price strong#J_ActualFee').toPlainText()
-        print 'Actual Price String: ' + actualPriceString
+        print 'Actual Price String: ' + actualPriceString + ' for ' + userInfo.taobaoId
         actualPrice = -10000.0 if actualPriceString == '' else float(actualPriceString)
         if (userInfo.buyer_payment == actualPrice):
             confirmButton = frame.findFirstElement('input#performSubmit')
+            checkCodeInput = frame.findFirstElement('input#J_checkCodeInput')
             
             # Add this multiple thread so that I make sure only one alipay page will be handled at a time.
             class AlipayRequest(thread_util.Request):
-                def __init__(self, autoAction, confirmButton, frame):
+                def __init__(self, autoAction, confirmButton, checkCodeInput, frame):
                     self.autoAction = autoAction
                     self.confirmButton = confirmButton
+                    self.checkCodeInput = checkCodeInput
                     self.frame = frame
                 def doAction(self):
                     print 'Begin Alipay Request ...'
-                    self.autoAction.emit(SIGNAL('asynClickOn'), self.confirmButton)
                     view = self.frame.page().view()
                     view.condition.acquire()
                     try:
+                        self.autoAction.emit(SIGNAL('asynClickOn'), self.confirmButton)
+                        if not self.checkCodeInput.isNull():
+                            self.autoAction.emit(SIGNAL('asynLocateCheckCodeInput'), view, self.checkCodeInput)
                         view.condition.wait()
                     finally:
                         view.condition.release()
                     print 'End Alipay Request ...'
-            AutoAction.alipayChannel.putRequest(AlipayRequest(self, confirmButton, frame))
+            AutoAction.alipayChannel.putRequest(AlipayRequest(self, confirmButton, checkCodeInput, frame))
             
         else:
             # Set status to retry if the price of item is changed.
