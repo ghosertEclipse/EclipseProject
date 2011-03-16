@@ -72,9 +72,9 @@ class UserInfoManager:
             elif userInfo.status == UserInfo.Status_NotTo_Buy:
                 if (datetime.now() - userInfo.last_status_time).days <= 6:
                     return
-            # Failed buy and the last status time more than 3 days will allow to continue.
+            # Failed buy and the last status time more than 1 days will allow to continue.
             elif userInfo.status == UserInfo.Status_Failed_Buy:
-                if (datetime.now() - userInfo.last_status_time).days <= 3:
+                if (datetime.now() - userInfo.last_status_time).days <= 1:
                     return
             elif userInfo.status == UserInfo.Status_RETRY:
                 pass
@@ -695,7 +695,8 @@ class MainContainer(QMainWindow):
         QMainWindow.__init__(self, parent)
         
         self.tabWidget = QTabWidget(self)
-        self.tabWidget.setTabsClosable(True)
+        self.tabWidget.setStyleSheet('QTabBar::tab {width: 100px;}')
+        self.tabWidget.setTabsClosable(False)
         self.connect(self.tabWidget, SIGNAL('tabCloseRequested(int)'), self.closeTab)
         self.setCentralWidget(self.tabWidget)
         
