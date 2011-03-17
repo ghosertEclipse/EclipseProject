@@ -64,8 +64,7 @@ class UserInfoManager:
         userInfo = database.getActiveUserByTaobaoId(newUserInfo.taobaoId)
         if userInfo:
             # Succeed buy/Confirmed order and the last status time more than 31 days will allow to continue.
-            if (userInfo.status == UserInfo.Status_Succeed_Buy or userInfo.status == UserInfo.Status_Confirmed_Payment or
-                userInfo.status == UserInfo.Status_Refunded_Payment):
+            if (userInfo.status == UserInfo.Status_Succeed_Buy or userInfo.status == UserInfo.Status_Confirmed_Payment):
                 if (datetime.now() - userInfo.last_status_time).days <= 31:
                     return
             # NotTo buy and the last status time more than 6 days will allow to continue.
@@ -89,12 +88,8 @@ class UserInfoManager:
     def getActiveUserByTaobaoId(self, taobaoId):
         return database.getActiveUserByTaobaoId(taobaoId)
     
-    def setUserInfoStatus(self, userInfo, status, alipayLink = None):
-        if (status == UserInfo.Status_Confirmed_Buy) and alipayLink:
-            pass
-        else:
-            alipayLink = None
-        database.updateUser(userInfo, status = status, alipayLink = alipayLink, last_status_time = datetime.now())
+    def setUserInfoStatus(self, userInfo, status):
+        database.updateUser(userInfo, status = status, last_status_time = datetime.now())
 
 class AutoAction(QObject):
     
@@ -258,12 +253,12 @@ class AutoAction(QObject):
                 self.userInfo = userInfo
                 self.autoAction = autoAction
             def doAction(self):
-                # jiawzhang TODO: for all the legacy unhandled items, maybe set them retry directly.
+                if self.userInfo.status == UserInfo.Status_Confirmed_Buy:
+                    AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Failed_Buy)
+                    return
+                    
                 if (datetime.now() - self.userInfo.last_status_time).days > 1:
-                    if self.userInfo.status == UserInfo.Status_Confirmed_Buy:
-                        AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Failed_Buy)
-                    else:
-                        AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_RETRY)
+                    AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_RETRY)
                     return
                     
                 # jiawzhang TODO: wangwang message version:
@@ -276,12 +271,8 @@ class AutoAction(QObject):
                 if self.userInfo.status == UserInfo.Status_Not_Processing or self.userInfo.status == UserInfo.Status_Processing:
                     AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Will_Buy)
                     
-                link = None
-                if self.userInfo.status == UserInfo.Status_Will_Buy:
-                    link = self.userInfo.itemLink
-                elif self.userInfo.status == UserInfo.Status_Confirmed_Buy:
-                    link = self.userInfo.alipayLink
-                        
+                link = self.userInfo.itemLink
+                
                 if link:
                     view = self.autoAction.queue.get()
                     
@@ -401,9 +392,9 @@ class AutoAction(QObject):
             self.terminateCurrentFlow(frame)
         
     def alipay(self, frame, userInfo):
-        # Set status to confirmed buy and save the alipay link.
+        # Set status to confirmed buy.
         # jiawzhang XXX: The string to be saved to sqlite must be unicode first, otherwise, error happens.
-        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Confirmed_Buy, unicode(frame.url().toString()))
+        AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Confirmed_Buy)
         
         confirmButton = frame.findFirstElement('input.J_ForAliControl')
         if not confirmButton.isNull():

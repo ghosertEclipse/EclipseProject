@@ -24,12 +24,10 @@ class UserInfo:
     Status_Confirmed_Buy = 5
     # status after failing to payment.
     Status_Failed_Buy = 6
-    # status after succeeding to payment.
+    # status after succeeding to payment. if the item keeps 7 always, means this item is refunded.
     Status_Succeed_Buy = 7
     # status after confirming payment.
     Status_Confirmed_Payment = 8
-    # status after refunding payment.
-    Status_Refunded_Payment = 9
     # jiawzhang XXX: convert any string in this class to unicode, otherwise, it reports error when storing to sqlite3.
     def __init__(self, taobaoId = None, itemLink = None, wangwangLink = None, buyer_payment = None, seller_payment = None):
         """convert any string in this class to unicode before passing them into constructor, otherwise, it reports error when storing to sqlite3."""
@@ -41,11 +39,10 @@ class UserInfo:
         self.seller_payment = seller_payment
         self.status = UserInfo.Status_Not_Processing
         self.last_status_time = datetime.now()
-        self.alipayLink = None
         self.active = 1
     def __str__(self):
-        return u'{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}'.format(self.id, self.taobaoId, self.itemLink, self.wangwangLink, self.buyer_payment, self.seller_payment,
-                                                         self.status, self.last_status_time, self.alipayLink, self.active)
+        return u'{0} {1} {2} {3} {4} {5} {6} {7} {8}'.format(self.id, self.taobaoId, self.itemLink, self.wangwangLink, self.buyer_payment, self.seller_payment,
+                                                         self.status, self.last_status_time, self.active)
 
 def createTable():
     conn = sqlite3.connect(db_location, detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
@@ -54,7 +51,7 @@ def createTable():
     # Create table
     c.execute("""
     create table user_info (id integer primary key, taobaoId text, itemLink text, wangwangLink text, buyer_payment real, seller_payment real,
-    status integer, last_status_time timestamp, alipayLink text, active integer)
+    status integer, last_status_time timestamp, active integer)
     """)
     
     # Save (commit) the changes
@@ -106,9 +103,9 @@ def getUnhandledUserInfoList():
 
 def getHandledUserInfoList():
     "Get all the handled userInfos."
-    users = getObjects(UserInfo, 'select * from user_info where status in (?, ?, ?, ?, ?, ?)',
+    users = getObjects(UserInfo, 'select * from user_info where status in (?, ?, ?, ?, ?)',
                        UserInfo.Status_RETRY, UserInfo.Status_NotTo_Buy, UserInfo.Status_Failed_Buy,
-                       UserInfo.Status_Succeed_Buy, UserInfo.Status_Confirmed_Payment, UserInfo.Status_Refunded_Payment)
+                       UserInfo.Status_Succeed_Buy, UserInfo.Status_Confirmed_Payment)
     return users
     
 def getObjects(class_type, select_sql, *params):
