@@ -517,6 +517,7 @@ class VerifyAction(AutoAction):
         self.connect(self, SIGNAL('new_webview'), self.new_webview, Qt.BlockingQueuedConnection)
         self.connect(self, SIGNAL('stop_webview'), self.stop_webview, Qt.BlockingQueuedConnection)
         self.connect(self, SIGNAL('reload'), self.__reload, Qt.BlockingQueuedConnection)
+        self.connect(self, SIGNAL('messageFromSubThread'), self.__messageFromSubThread, Qt.BlockingQueuedConnection)
         self.username = username
         self.password = password
         self.alipayPassword = alipayPassword
@@ -575,10 +576,17 @@ class VerifyAction(AutoAction):
                     print 'Begin Verify Request ...'
                     view.condition.acquire()
                     try:
-                        view.userInfo = AutoAction.userInfoManager.getActiveUserByTaobaoId(taobaoId)
-                        self.autoAction.emit(SIGNAL('new_webview'), view, confirmUrl)
-                        while view.userInfo != None:
-                            view.condition.wait(2)
+                        userInfo = AutoAction.userInfoManager.getActiveUserByTaobaoId(taobaoId)
+                        if userInfo:
+                            if userInfo.status != UserInfo.Status_Confirmed_Payment:
+                                view.userInfo = userInfo
+                                self.autoAction.emit(SIGNAL('new_webview'), view, confirmUrl)
+                                while view.userInfo != None:
+                                    view.condition.wait(2)
+                            else:
+                                title = u'提示:'
+                                content = u'本月内已有针对卖家 ' + userInfo.taobaoId + u' 的打款记录，不再放款。系统有bug，请人为干预，申请退款或手动确认该交易'
+                                self.autoAction.emit(SIGNAL('messageFromSubThread'), title, content)
                     finally:
                         view.condition.release()
                     print 'End Verify Request ...'
@@ -588,6 +596,9 @@ class VerifyAction(AutoAction):
         asyncHandler.setDaemon(True)
         asyncHandler.start()
         return
+    
+    def __messageFromSubThread(self, title, content):
+        QMessageBox.information(None, title, content, QMessageBox.Ok)
     
     def __reload(self, frame):
         frame.page().action(QWebPage.Reload).trigger()
