@@ -478,9 +478,10 @@ class WebView(QWebView):
         tabWidget.addTab(self, 'loading')
         # index = tabWidget.addTab(self, 'loading')
         # tabWidget.setCurrentIndex(index)
-        tabWidget.connect(self, SIGNAL('loadStarted()'), self.load_started)
-        tabWidget.connect(self, SIGNAL('loadFinished(bool)'), self.load_finished)
-        tabWidget.connect(self, SIGNAL('loadProgress(int)'), self.load_progress)
+        # jiawzhang TODO: see whether chagne Qt.connectiontype will resolve the ramdon crash issue.
+        tabWidget.connect(self, SIGNAL('loadStarted()'), self.load_started, Qt.QueuedConnection)
+        tabWidget.connect(self, SIGNAL('loadFinished(bool)'), self.load_finished, Qt.QueuedConnection)
+        tabWidget.connect(self, SIGNAL('loadProgress(int)'), self.load_progress, Qt.QueuedConnection)
         self.tabWidget = tabWidget
         self.frame = self.page().currentFrame()
         self.userInfo = None
