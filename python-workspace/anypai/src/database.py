@@ -7,7 +7,9 @@ from datetime import timedelta
 
 from PyQt4.QtCore import QUrl
 
-db_location = './storage/database'
+from properties import StoragePath
+
+db_location = StoragePath + 'database'
 
 class UserInfo:
     # set UserInfo retry will make that UserInfo re-process if our search mechanism pickup the same user once again.
@@ -136,7 +138,7 @@ def __getUsersMonthly():
     return users
 
 def __test():
-    db_location = './storage/database_test'
+    db_location = StoragePath + 'database_test'
     import os
     if os.path.exists(db_location):
         os.remove(db_location)

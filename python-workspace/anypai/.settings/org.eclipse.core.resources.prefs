@@ -1,5 +1,8 @@
-#Wed Mar 02 23:12:59 CST 2011
+#Fri Mar 18 16:11:58 CST 2011
 eclipse.preferences.version=1
+encoding//src/actions.py=utf-8
 encoding//src/ahkpython.py=utf-8
 encoding//src/database.py=utf-8
+encoding//src/properties.py=utf-8
 encoding//src/test_webkit.py=utf-8
+encoding//src/webview.py=utf-8
