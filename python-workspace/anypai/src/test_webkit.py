@@ -13,8 +13,8 @@ from datetime import datetime
 
 import database
 from webview import WebView
-from actions import AutoAction
-from actions import VerifyAction
+from actions.pai_action import PaiAction
+from actions.verify_action import VerifyAction
 from properties import StoragePath
 
 class MainPanel(QWidget):
@@ -42,7 +42,7 @@ class MainPanel(QWidget):
     def beginPai(self):
         # jiawzhang TODO: If running tons of view.load, I saw "Segmentation fault" and then PyQt exits, not sure Windows has the same issue, google it 'Segmentation fault Qt webkit'!
         # Make sure fill in unicode characters.
-        autoAction = AutoAction(u'捷易通充值平台加款卡10元自动转帐', u'ghosert', u'011849', u'011849', 9.90, 10.00, u'捷易通ID: ghosert')
+        autoAction = PaiAction(u'捷易通充值平台加款卡10元自动转帐', u'ghosert', u'011849', u'011849', 9.90, 10.00, u'捷易通ID: ghosert')
         view = WebView(self.tabWidget, autoAction)
         view.load(QUrl("http://www.taobao.com/"))
         # view.load(QUrl("http://item.taobao.com/item.htm?id=9248227645"))
