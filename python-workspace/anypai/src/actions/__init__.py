@@ -67,6 +67,8 @@ class AutoAction(QObject):
         self.connect(self, SIGNAL('stop_webview'), self.stop_webview, Qt.BlockingQueuedConnection)
         self.connect(self, SIGNAL('reload'), self.reload, Qt.BlockingQueuedConnection)
         self.connect(self, SIGNAL('messageFromSubThread'), self.messageFromSubThread, Qt.BlockingQueuedConnection)
+        self.asyncHandler = None
+        self.isTerminated = False
         
     def messageFromSubThread(self, title, content):
         QMessageBox.information(None, title, content, QMessageBox.Ok)
@@ -157,4 +159,20 @@ class AutoAction(QObject):
             view.condition.notifyAll()
         finally:
             view.condition.release()
+            
+    def termintateAll(self, tabWidget):
+        self.isTerminated = True
+        if self.asyncHandler:
+            self.asyncHandler.kill()
+        while tabWidget.count() >= 2:
+            view = tabWidget.widget(1)
+            view.stop()
+            view.condition.acquire()
+            try:
+                view.userInfo = None
+                view.condition.notifyAll()
+            finally:
+                view.condition.release()
+            view.close()
+            tabWidget.removeTab(1)
             

@@ -17,15 +17,21 @@ from actions.pai_action import PaiAction
 from actions.verify_action import VerifyAction
 from properties import StoragePath
 
+# jiawzhang TODO:
+# 1. Stop pai function.
+# 2. Stop pai when the buy_payment exceed max acceptable price.
+# 3. Stop pai when the money in zhi fu bao is not enough.
+# 4. Automatically asking refund if the seller fail to delivery item.
+
 class MainPanel(QWidget):
     def __init__(self, tabWidget = None):
         QWidget.__init__(self, tabWidget)
         self.tabWidget = tabWidget
         
         hLayout = QHBoxLayout()
-        btBeginPai = QPushButton(u'开始拍货')
+        self.btBeginPai = QPushButton(u'开始拍货')
         btPayVerify = QPushButton(u'开始验证')
-        hLayout.addWidget(btBeginPai)
+        hLayout.addWidget(self.btBeginPai)
         hLayout.addWidget(btPayVerify)
         
         self.textEdit = QTextEdit()
@@ -36,16 +42,23 @@ class MainPanel(QWidget):
         
         self.setLayout(vLayout)
         
-        self.connect(btBeginPai, SIGNAL('clicked()'), self.beginPai)
+        self.connect(self.btBeginPai, SIGNAL('clicked()'), self.beginPai)
         self.connect(btPayVerify, SIGNAL('clicked()'), self.payVerify)
+        
+        self.autoAction = None
     
     def beginPai(self):
         # jiawzhang TODO: If running tons of view.load, I saw "Segmentation fault" and then PyQt exits, not sure Windows has the same issue, google it 'Segmentation fault Qt webkit'!
-        # Make sure fill in unicode characters.
-        autoAction = PaiAction(u'捷易通充值平台加款卡10元自动转帐', u'ghosert', u'011849', u'011849', 9.90, 10.00, u'捷易通ID: ghosert')
-        view = WebView(self.tabWidget, autoAction)
-        view.load(QUrl("http://www.taobao.com/"))
-        # view.load(QUrl("http://item.taobao.com/item.htm?id=9248227645"))
+        if self.btBeginPai.text() == u'开始拍货':
+            # Make sure fill in unicode characters.
+            self.autoAction = PaiAction(u'捷易通充值平台加款卡10元自动转帐', u'ghosert', u'011849', u'011849', 9.90, 10.00, u'捷易通ID: ghosert')
+            view = WebView(self.tabWidget, self.autoAction)
+            view.load(QUrl("http://www.taobao.com/"))
+            # view.load(QUrl("http://item.taobao.com/item.htm?id=9248227645"))
+            self.btBeginPai.setText(u'停止拍货')
+        else:
+            self.autoAction.termintateAll(self.tabWidget)
+            self.btBeginPai.setText(u'开始拍货')
         
     def payVerify(self):
         # 捷易通查单网址：

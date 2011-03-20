@@ -62,13 +62,13 @@ class Producer:
            2. If this method maybe throw exceptions, make sure you'v try-except it.
               If you invoked channel.putRequest(), it may raise FullQueue Exception(see below), re-raise it if you want to stop current producer thread.
               
-			    try:
-			        # (block = False) or (block = True and timeout is not None) may cause FullQueue Exception when the queue is full.
-			        channel.putRequest(request, False) 
-			    except FullQueue as full:
-			        raise full
-			    except Exception as e:
-			        print "I'm handling."
+                try:
+                    # (block = False) or (block = True and timeout is not None) may cause FullQueue Exception when the queue is full.
+                    channel.putRequest(request, False) 
+                except FullQueue as full:
+                    raise full
+                except Exception as e:
+                    print "I'm handling."
         """
         pass
 
@@ -172,8 +172,9 @@ class Channel:
             consumerThread.start()
             
     def stopConsumer(self):
-        for consumerThread in self.__consumers:
-            consumerThread.shutdown()
+        if self.__consumers:
+            for consumerThread in self.__consumers:
+                consumerThread.shutdown()
     
     def waitingForConsumerExist(self):
         for consumerThread in self.__consumers:

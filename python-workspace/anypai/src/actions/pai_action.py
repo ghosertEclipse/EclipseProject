@@ -2,7 +2,6 @@
 
 import re
 import time
-import threading
 from Queue import Queue
 from datetime import datetime
 
@@ -23,8 +22,6 @@ class PaiAction(AutoAction):
     channel = thread_util.Channel()
     
     alipayChannel = thread_util.Channel()
-    # allow only one alipay page at a time.
-    alipayChannel.startConsumer(1)
     
     def __init__(self, keyword, username, password, alipayPassword, max_acceptable_price, seller_payment, message_to_seller):
         AutoAction.__init__(self)
@@ -36,6 +33,8 @@ class PaiAction(AutoAction):
         self.seller_payment = seller_payment
         self.message_to_seller = message_to_seller
         self.queue = Queue(MaxPaiThreadNum)
+        # allow only one alipay page at a time.
+        PaiAction.alipayChannel.startConsumer(1)
         
     def home(self, frame):
         # When visiting the home, begin to create view and put them to the queue, sub-threads will leverage them later.
@@ -89,9 +88,9 @@ class PaiAction(AutoAction):
                 items[index] = UserInfo(taobaoId, itemLink, wangwangLink, buyer_payment, self.seller_payment)
             nextPage = frame.findFirstElement('div.page-bottom a.page-next')
             
-            class AsynHandler(threading.Thread):
+            class AsynHandler(thread_util.KThread):
                 def __init__(self, autoAction, items, nextPage):
-                    threading.Thread.__init__(self)
+                    thread_util.KThread.__init__(self)
                     self.autoAction = autoAction
                     self.items = items
                     self.nextPage = nextPage
@@ -114,9 +113,9 @@ class PaiAction(AutoAction):
                         print 'all the search pages are handled.'
             
             # jiawzhang TODO: make sure we clear all the sub-threads we made when we exit app or press stop button on the GUI.
-            asyncHandler = AsynHandler(self, items, nextPage)
-            asyncHandler.setDaemon(True)
-            asyncHandler.start()
+            self.asyncHandler = AsynHandler(self, items, nextPage)
+            self.asyncHandler.setDaemon(True)
+            self.asyncHandler.start()
             return
 
     def handleUserInfoList(self):
@@ -276,6 +275,8 @@ class PaiAction(AutoAction):
         self.terminateCurrentFlow(frame)
     
     def perform(self, frame, url, userInfo):
+        if self.isTerminated:
+            return
         if (re.search(r'^http://www\.taobao\.com', url)):
             self.home(frame)
         elif (re.search(r'^http://s\.taobao\.com/search\?q=', url)):
@@ -296,3 +297,7 @@ class PaiAction(AutoAction):
             print 'find unexpected url: ' + url
             # self.process_incomplete(frame, userInfo)
         
+    def termintateAll(self, tabWidget):
+        PaiAction.channel.stopConsumer()
+        PaiAction.alipayChannel.stopConsumer()
+        AutoAction.termintateAll(self, tabWidget)
