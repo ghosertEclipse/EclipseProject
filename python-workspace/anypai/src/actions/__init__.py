@@ -153,13 +153,16 @@ class AutoAction(QObject):
     def terminateCurrentFlow(self, frame):
         "Invoking on this method will make sure the worker thread pick up next request or to be stopped if no requests."
         view = frame.page().view()
+        self.__terminateCurrentFlow(view)
+            
+    def __terminateCurrentFlow(self, view):
         view.condition.acquire()
         try:
             view.userInfo = None
             view.condition.notifyAll()
         finally:
             view.condition.release()
-            
+        
     def termintateAll(self, tabWidget):
         self.isTerminated = True
         if self.asyncHandler:
@@ -167,12 +170,7 @@ class AutoAction(QObject):
         while tabWidget.count() >= 2:
             view = tabWidget.widget(1)
             view.stop()
-            view.condition.acquire()
-            try:
-                view.userInfo = None
-                view.condition.notifyAll()
-            finally:
-                view.condition.release()
+            self.__terminateCurrentFlow(view)
             view.close()
             tabWidget.removeTab(1)
             

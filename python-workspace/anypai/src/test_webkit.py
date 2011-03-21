@@ -30,9 +30,9 @@ class MainPanel(QWidget):
         
         hLayout = QHBoxLayout()
         self.btBeginPai = QPushButton(u'开始拍货')
-        btPayVerify = QPushButton(u'开始验证')
+        self.btPayVerify = QPushButton(u'开始验证')
         hLayout.addWidget(self.btBeginPai)
-        hLayout.addWidget(btPayVerify)
+        hLayout.addWidget(self.btPayVerify)
         
         self.textEdit = QTextEdit()
         
@@ -43,7 +43,7 @@ class MainPanel(QWidget):
         self.setLayout(vLayout)
         
         self.connect(self.btBeginPai, SIGNAL('clicked()'), self.beginPai)
-        self.connect(btPayVerify, SIGNAL('clicked()'), self.payVerify)
+        self.connect(self.btPayVerify, SIGNAL('clicked()'), self.payVerify)
         
         self.autoAction = None
     
@@ -63,31 +63,36 @@ class MainPanel(QWidget):
     def payVerify(self):
         # 捷易通查单网址：
         # http://dx.jieyitong.net/system/index.asp
-        seller_payment = 10.00
-        jytPaymentString = unicode(self.textEdit.toPlainText())
-        payList = jytPaymentString.split('\n')
-        tdLength = 7
-        if len(payList) < tdLength:
-            return
-        payList = payList[1 : len(payList) - 1]
-        userPayMap = {}
-        rows = len(payList) / tdLength
-        for row in range(rows):
-            itemList = payList[tdLength * row : tdLength * (row + 1)]
-            if not re.match(r'\d', itemList[0]):
-                continue
-            if itemList[1] != u'资金转入':
-                continue
-            if float(itemList[2]) < seller_payment:
-                continue
-            taobaoId = itemList[6]
-            # 2011-3-9 3:57:00
-            ymdhms = re.match(r'(\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)', itemList[4]).groups()
-            seller_paytime = datetime(int(ymdhms[0]), int(ymdhms[1]), int(ymdhms[2]), int(ymdhms[3]), int(ymdhms[4]), int(ymdhms[5]))
-            userPayMap[taobaoId] = seller_paytime
-        autoAction = VerifyAction(u'ghosert', u'011849', u'011849', userPayMap)
-        view = WebView(self.tabWidget, autoAction)
-        view.load(QUrl("http://i.taobao.com/"))
+        if self.btPayVerify.text() == u'开始验证':
+            seller_payment = 10.00
+            jytPaymentString = unicode(self.textEdit.toPlainText())
+            payList = jytPaymentString.split('\n')
+            tdLength = 7
+            if len(payList) < tdLength:
+                return
+            payList = payList[1 : len(payList) - 1]
+            userPayMap = {}
+            rows = len(payList) / tdLength
+            for row in range(rows):
+                itemList = payList[tdLength * row : tdLength * (row + 1)]
+                if not re.match(r'\d', itemList[0]):
+                    continue
+                if itemList[1] != u'资金转入':
+                    continue
+                if float(itemList[2]) < seller_payment:
+                    continue
+                taobaoId = itemList[6]
+                # 2011-3-9 3:57:00
+                ymdhms = re.match(r'(\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)', itemList[4]).groups()
+                seller_paytime = datetime(int(ymdhms[0]), int(ymdhms[1]), int(ymdhms[2]), int(ymdhms[3]), int(ymdhms[4]), int(ymdhms[5]))
+                userPayMap[taobaoId] = seller_paytime
+            self.autoAction = VerifyAction(u'ghosert', u'011849', u'011849', userPayMap)
+            view = WebView(self.tabWidget, self.autoAction)
+            view.load(QUrl("http://i.taobao.com/"))
+            self.btBeginPai.setText(u'停止验证')
+        else:
+            self.autoAction.termintateAll(self.tabWidget)
+            self.btBeginPai.setText(u'开始验证')
 
 class MainContainer(QMainWindow):
     def __init__(self, parent = None):

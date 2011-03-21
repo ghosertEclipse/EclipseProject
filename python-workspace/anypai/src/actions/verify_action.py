@@ -1,12 +1,13 @@
 # encoding: utf-8
 
 import re
-import time
 import threading
+import time
 from datetime import datetime
 
 from PyQt4.QtCore import *
 
+import thread_util
 from actions import AutoAction
 from webview import WebView
 from database import UserInfo
@@ -64,9 +65,9 @@ class VerifyAction(AutoAction):
             print 'All the items are confirmed.'
             return
         
-        class AsynHandler(threading.Thread):
+        class AsynHandler(thread_util.KThread):
             def __init__(self, autoAction, confirmUrlMap, frame):
-                threading.Thread.__init__(self)
+                thread_util.KThread.__init__(self)
                 self.autoAction = autoAction
                 self.confirmUrlMap = confirmUrlMap
                 self.frame = frame
@@ -92,9 +93,9 @@ class VerifyAction(AutoAction):
                     print 'End Verify Request ...'
                 self.autoAction.emit(SIGNAL('reload'), frame)
             
-        asyncHandler = AsynHandler(self, confirmUrlMap, frame)
-        asyncHandler.setDaemon(True)
-        asyncHandler.start()
+        self.asyncHandler = AsynHandler(self, confirmUrlMap, frame)
+        self.asyncHandler.setDaemon(True)
+        self.asyncHandler.start()
         return
     
     def confirmGoods(self, frame):
@@ -132,6 +133,8 @@ class VerifyAction(AutoAction):
         self.terminateCurrentFlow(frame)
         
     def perform(self, frame, url, userInfo):
+        if self.isTerminated:
+            return
         if (re.search(r'^http://i\.taobao\.com/', url)):
             self.myTaobao(frame)
         elif (re.search(r'^https://login\.taobao\.com/member/login\.jhtml', url)):

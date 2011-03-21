@@ -19,10 +19,6 @@ if platform.system() == 'Windows':
 
 class PaiAction(AutoAction):
     
-    channel = thread_util.Channel()
-    
-    alipayChannel = thread_util.Channel()
-    
     def __init__(self, keyword, username, password, alipayPassword, max_acceptable_price, seller_payment, message_to_seller):
         AutoAction.__init__(self)
         self.keyword = keyword
@@ -33,8 +29,10 @@ class PaiAction(AutoAction):
         self.seller_payment = seller_payment
         self.message_to_seller = message_to_seller
         self.queue = Queue(MaxPaiThreadNum)
+        self.channel = thread_util.Channel()
+        self.alipayChannel = thread_util.Channel()
         # allow only one alipay page at a time.
-        PaiAction.alipayChannel.startConsumer(1)
+        self.alipayChannel.startConsumer(1)
         
     def home(self, frame):
         # When visiting the home, begin to create view and put them to the queue, sub-threads will leverage them later.
@@ -183,9 +181,9 @@ class PaiAction(AutoAction):
         userInfoList = AutoAction.userInfoManager.getUnhandledUserInfoList()
         if userInfoList:
             for userInfo in userInfoList:
-                PaiAction.channel.putRequest(MyRequest(self, userInfo))
-            PaiAction.channel.startConsumer(self.queue.maxsize, True, False)
-            PaiAction.channel.waitingForConsumerExist()
+                self.channel.putRequest(MyRequest(self, userInfo))
+            self.channel.startConsumer(self.queue.maxsize, True, False)
+            self.channel.waitingForConsumerExist()
             
     def item(self, frame, userInfo):
         # test whether there is a username/password div pop up after clicking on buy now link.
@@ -236,7 +234,7 @@ class PaiAction(AutoAction):
                     finally:
                         view.condition.release()
                     print 'End Alipay Request ...'
-            PaiAction.alipayChannel.putRequest(AlipayRequest(self, confirmButton, checkCodeInput, frame))
+            self.alipayChannel.putRequest(AlipayRequest(self, confirmButton, checkCodeInput, frame))
             
         else:
             # Set status to retry if the price of item is changed.
@@ -298,6 +296,6 @@ class PaiAction(AutoAction):
             # self.process_incomplete(frame, userInfo)
         
     def termintateAll(self, tabWidget):
-        PaiAction.channel.stopConsumer()
-        PaiAction.alipayChannel.stopConsumer()
+        self.channel.stopConsumer()
+        self.alipayChannel.stopConsumer()
         AutoAction.termintateAll(self, tabWidget)
