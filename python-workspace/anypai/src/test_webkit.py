@@ -18,8 +18,6 @@ from actions.verify_action import VerifyAction
 from properties import StoragePath
 
 # jiawzhang TODO:
-# 2. Stop pai when the buy_payment exceed max acceptable price.
-# 3. Stop pai when the money in zhi fu bao is not enough.
 # 4. Automatically asking refund if the seller fail to delivery item.
 
 class MainPanel(QWidget):

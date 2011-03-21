@@ -66,14 +66,14 @@ class PaiAction(AutoAction):
             self.clickOn(priceSortButton)
             return
         else:
+            isMaxAcceptablePriceAccessed = False
             # We can't have frame.findXXXX functions in sub-thread, so I promote the code snip on parsing frame here.
             items = frame.findFirstElement('ul.list-view').findAll('li.list-item').toList()
             for index, item in enumerate(items):
                 itemLink = unicode(item.findFirst('h3.summary a').attribute('href', ''))
                 buyer_payment = float(item.findFirst('ul.attribute li.price em').toPlainText())
                 if buyer_payment > self.max_acceptable_price:
-                    # jiawzhang TODO: terminate all flows here.
-                    pass
+                    isMaxAcceptablePriceAccessed = True
                 shipping_fee = float(item.findFirst('ul.attribute li.price span.shipping').toPlainText()[3:])
                 buyer_payment = buyer_payment + shipping_fee
                 taobaoId = unicode(item.findFirst('p.seller a').toPlainText())
@@ -88,11 +88,12 @@ class PaiAction(AutoAction):
             nextPage = frame.findFirstElement('div.page-bottom a.page-next')
             
             class AsynHandler(thread_util.KThread):
-                def __init__(self, autoAction, items, nextPage):
+                def __init__(self, autoAction, items, isMaxAcceptablePriceAccessed, nextPage):
                     thread_util.KThread.__init__(self)
                     self.autoAction = autoAction
                     self.items = items
                     self.nextPage = nextPage
+                    self.isMaxAcceptablePriceAccessed = isMaxAcceptablePriceAccessed
                 def run(self):
                     # handle legacy userInfos here.
                     self.autoAction.handleUserInfoList()
@@ -104,15 +105,14 @@ class PaiAction(AutoAction):
                     self.autoAction.handleUserInfoList()
                     
                     # click on next page on search page for capturing new taobao items.
-                    if not self.nextPage.isNull():
+                    if not self.nextPage.isNull() and self.isMaxAcceptablePriceAccessed == False:
                         print 'call next page here.'
                         self.autoAction.emit(SIGNAL('asynClickOn'), self.nextPage)
                     else:
-                        # jiawzhang TODO: add something to prompt it stopped here.
-                        print 'all the search pages are handled.'
+                        self.autoAction.emit(SIGNAL('messageFromSubThread'), u'拍货完成', u'所有符合条件的宝贝都已经拍下，请稍候再拍或换帐号继续拍。')
+                        self.autoAction.emit(SIGNAL('terminateAll'))
             
-            # jiawzhang TODO: make sure we clear all the sub-threads we made when we exit app or press stop button on the GUI.
-            self.asyncHandler = AsynHandler(self, items, nextPage)
+            self.asyncHandler = AsynHandler(self, items, isMaxAcceptablePriceAccessed, nextPage)
             self.asyncHandler.setDaemon(True)
             self.asyncHandler.start()
             return

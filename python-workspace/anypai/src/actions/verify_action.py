@@ -38,7 +38,6 @@ class VerifyAction(AutoAction):
         # 待评价 infoCenter[2]
         confirmPayUrl = infoCenter[1].findFirst('a')
         if confirmPayUrl.isNull():
-            # jiawzhang TODO: finish verify flow.
             print 'no item to be confirmed, finish verify flow'
             return
         self.view = WebView(frame.page().view().tabWidget, self)
