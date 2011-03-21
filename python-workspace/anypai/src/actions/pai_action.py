@@ -6,6 +6,7 @@ from Queue import Queue
 from datetime import datetime
 
 from PyQt4.QtCore import *
+from PyQt4.QtGui import QMessageBox
 
 import thread_util
 from database import UserInfo
@@ -128,7 +129,7 @@ class PaiAction(AutoAction):
                     AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Failed_Buy)
                     return
                     
-                if (datetime.now() - self.userInfo.last_status_time).days > 1:
+                if (datetime.now() - self.userInfo.last_status_time).seconds > 3600:
                     AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_RETRY)
                     return
                     
@@ -255,7 +256,8 @@ class PaiAction(AutoAction):
         else:
             # Set status to fail to buy if there is no comfirmed button for alipay page.
             AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
-            self.terminateCurrentFlow(frame)
+            QMessageBox.information(None, u'支付失败', u'您的支付宝余额可能不足，即将停止拍货，请充值后重新拍货。', QMessageBox.Ok)
+            self.emit(SIGNAL('terminateAll'))
     
     def pay_success(self, frame, userInfo):
         # Set status to completed buy.

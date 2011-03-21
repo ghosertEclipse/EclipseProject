@@ -3,4 +3,4 @@
 
 StoragePath = './storage/'
 
-MaxPaiThreadNum = 5
+MaxPaiThreadNum = 1

@@ -18,7 +18,6 @@ from actions.verify_action import VerifyAction
 from properties import StoragePath
 
 # jiawzhang TODO:
-# 1. Stop pai function.
 # 2. Stop pai when the buy_payment exceed max acceptable price.
 # 3. Stop pai when the money in zhi fu bao is not enough.
 # 4. Automatically asking refund if the seller fail to delivery item.
@@ -52,13 +51,16 @@ class MainPanel(QWidget):
         if self.btBeginPai.text() == u'开始拍货':
             # Make sure fill in unicode characters.
             self.autoAction = PaiAction(u'捷易通充值平台加款卡10元自动转帐', u'ghosert', u'011849', u'011849', 9.90, 10.00, u'捷易通ID: ghosert')
+            self.connect(self.autoAction, SIGNAL('terminateAll'), self.btBeginPai.click)
             view = WebView(self.tabWidget, self.autoAction)
             view.load(QUrl("http://www.taobao.com/"))
             # view.load(QUrl("http://item.taobao.com/item.htm?id=9248227645"))
             self.btBeginPai.setText(u'停止拍货')
+            self.btPayVerify.setDisabled(True)
         else:
             self.autoAction.termintateAll(self.tabWidget)
             self.btBeginPai.setText(u'开始拍货')
+            self.btPayVerify.setDisabled(False)
         
     def payVerify(self):
         # 捷易通查单网址：
@@ -89,10 +91,12 @@ class MainPanel(QWidget):
             self.autoAction = VerifyAction(u'ghosert', u'011849', u'011849', userPayMap)
             view = WebView(self.tabWidget, self.autoAction)
             view.load(QUrl("http://i.taobao.com/"))
-            self.btBeginPai.setText(u'停止验证')
+            self.btPayVerify.setText(u'停止验证')
+            self.btBeginPai.setDisabled(True)
         else:
             self.autoAction.termintateAll(self.tabWidget)
-            self.btBeginPai.setText(u'开始验证')
+            self.btPayVerify.setText(u'开始验证')
+            self.btBeginPai.setDisabled(False)
 
 class MainContainer(QMainWindow):
     def __init__(self, parent = None):
@@ -101,18 +105,12 @@ class MainContainer(QMainWindow):
         self.tabWidget = QTabWidget(self)
         self.tabWidget.setStyleSheet('QTabBar::tab {width: 100px;}')
         self.tabWidget.setTabsClosable(False)
-        self.connect(self.tabWidget, SIGNAL('tabCloseRequested(int)'), self.closeTab)
         self.setCentralWidget(self.tabWidget)
         
         mainPanel = MainPanel(self.tabWidget)
         self.tabWidget.addTab(mainPanel, 'Main Panel')
         
         self.resize(942, 563)
-    
-    def closeTab(self, tabIndex):
-        view = self.tabWidget.widget(tabIndex)
-        view.close()
-        self.tabWidget.removeTab(tabIndex)
     
     def closeEvent(self, event):
         self.tabWidget.clear()
