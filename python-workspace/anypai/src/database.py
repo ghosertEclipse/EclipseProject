@@ -52,7 +52,7 @@ def createTable():
 
     # Create table
     c.execute("""
-    create table user_info (id integer primary key, taobaoId text, itemLink text, wangwangLink text, buyer_payment real, seller_payment real,
+    create table user_info (id integer primary key autoincrement not null, taobaoId text, itemLink text, wangwangLink text, buyer_payment real, seller_payment real,
     status integer, last_status_time timestamp, active integer)
     """)
     
