@@ -105,9 +105,9 @@ class VerifyAction(AutoAction):
         # 1. Start the confirm operation thread first, then press the confirm button to trigger the js popup.
         class PreJsConfirm(threading.Thread):
             def run(self):
-                time.sleep(5)
+                time.sleep(4)
                 ahkpython.confirmJavaScript()
-        self.asynClickOn(3, confirmButton)
+        self.asynClickOn(2, confirmButton)
         pjc = PreJsConfirm()
         pjc.setDaemon(True)
         pjc.start()

@@ -7,12 +7,14 @@ from datetime import datetime
 
 from PyQt4.QtCore import *
 from PyQt4.QtGui import QMessageBox
+from PyQt4.QtWebKit import *
 
 import thread_util
 from database import UserInfo
 from actions import AutoAction
 from webview import WebView
 from properties import MaxPaiThreadNum
+from properties import WaitingSecondsOnItemPage
 
 import platform
 if platform.system() == 'Windows':
@@ -198,8 +200,7 @@ class PaiAction(AutoAction):
             AutoAction.userInfoManager.setUserInfoStatus(userInfo, UserInfo.Status_Failed_Buy)
             self.terminateCurrentFlow(frame)
         else:
-            # jiawzhang TODO: change this to 61 seconds when on production.
-            self.asynClickOn(5, buynow)
+            self.asynClickOn(WaitingSecondsOnItemPage, buynow)
     
     def buy(self, frame, userInfo):
         shippingFirstOption = frame.findFirstElement('table#trade-info tbody tr#J_Post input#shipping1')
@@ -285,7 +286,9 @@ class PaiAction(AutoAction):
             self.login(frame)
         elif (re.search(r'^http://item\.taobao\.com/item\.htm\?id=', url)):
             self.item(frame, userInfo)
+            frame.page().settings().setAttribute(QWebSettings.AutoLoadImages, True)
         elif (re.search(r'^http://buy\.taobao\.com/auction/buy_now\.jhtml', url)):
+            frame.page().settings().setAttribute(QWebSettings.AutoLoadImages, False)
             self.buy(frame, userInfo)
         elif (re.search(r'^https://cashier\.alipay\.com/standard/payment/cashier\.htm', url)):
             self.alipay(frame, userInfo)

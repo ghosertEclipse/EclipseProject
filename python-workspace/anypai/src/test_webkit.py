@@ -119,7 +119,7 @@ if __name__ == '__main__':
     
     # Enable plugins here will make activex turn on, it's important to taobao security activex control
     QWebSettings.globalSettings().setAttribute(QWebSettings.PluginsEnabled, True)
-    # QWebSettings.globalSettings().setAttribute(QWebSettings.AutoLoadImages, False)
+    QWebSettings.globalSettings().setAttribute(QWebSettings.AutoLoadImages, False)
     QWebSettings.globalSettings().enablePersistentStorage(StoragePath)
     
     # Uncomment thhis line for test purpose only.
