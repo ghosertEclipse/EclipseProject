@@ -159,19 +159,21 @@ class PaiAction(AutoAction):
                         # Any following flows which will be terminated should:
                         # 1. Set user status
                         # 2. Invoke self.terminateCurrentFlow(frame) to make sure the corresponding worker thread can jump out of the while below and pick up the next request.
-                        waitingInterval = 0
-                        while view.userInfo != None:
-                            view.condition.wait(2)
-                            waitingInterval = waitingInterval + 2
-                            if waitingInterval % 30 == 0:
-                                # jiawzhang TODO: set time out here, the number should be configurable, force stop the view and try again, this will trigger WebView.load_finished
-                                # Test the situation If buy now page is blocked because of security picture verification.
-                                url = view.url().toString()
-                                if (re.search(r'^http://www\.taobao\.com', url) or re.search(r'^http://s\.taobao\.com/search\?q=', url) or
-                                    re.search(r'^https://login\.taobao\.com/member/login\.jhtml', url) or re.search(r'^http://item\.taobao\.com/item\.htm\?id=', url)):
-                                    print 'try stopping home, search, login, item page.'
-                                    self.autoAction.emit(SIGNAL('stop_webview'), view)
-                                print 'This url takes long time more than 30s: ' + url
+                        
+                        view.condition.wait()
+#                        waitingInterval = 0
+#                        while view.userInfo != None:
+#                            view.condition.wait(2)
+                            # waitingInterval = waitingInterval + 2
+                            # if waitingInterval % 30 == 0:
+#                                # jiawzhang TODO: set time out here, the number should be configurable, force stop the view and try again, this will trigger WebView.load_finished
+#                                # Test the situation If buy now page is blocked because of security picture verification.
+#                                url = view.url().toString()
+#                                if (re.search(r'^http://www\.taobao\.com', url) or re.search(r'^http://s\.taobao\.com/search\?q=', url) or
+#                                    re.search(r'^https://login\.taobao\.com/member/login\.jhtml', url) or re.search(r'^http://item\.taobao\.com/item\.htm\?id=', url)):
+#                                    print 'try stopping home, search, login, item page.'
+#                                    self.autoAction.emit(SIGNAL('stop_webview'), view)
+#                                print 'This url takes long time more than 30s: ' + url
                     finally:
                         view.condition.release()
                             
@@ -229,7 +231,9 @@ class PaiAction(AutoAction):
                     view = self.frame.page().view()
                     view.condition.acquire()
                     try:
+                        print 'Begin click on buy confirm button ...'
                         self.autoAction.emit(SIGNAL('asynClickOn'), self.confirmButton)
+                        print 'End click on buy confirm button ...'
                         if not self.checkCodeInput.isNull():
                             self.autoAction.emit(SIGNAL('asynLocateCheckCodeInput'), view, self.checkCodeInput)
                         view.condition.wait()
@@ -285,8 +289,8 @@ class PaiAction(AutoAction):
         elif (re.search(r'^https://login\.taobao\.com/member/login\.jhtml', url)):
             self.login(frame)
         elif (re.search(r'^http://item\.taobao\.com/item\.htm\?id=', url)):
-            self.item(frame, userInfo)
             frame.page().settings().setAttribute(QWebSettings.AutoLoadImages, True)
+            self.item(frame, userInfo)
         elif (re.search(r'^http://buy\.taobao\.com/auction/buy_now\.jhtml', url)):
             frame.page().settings().setAttribute(QWebSettings.AutoLoadImages, False)
             self.buy(frame, userInfo)

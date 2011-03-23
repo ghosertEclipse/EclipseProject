@@ -81,7 +81,7 @@ class MainPanel(QWidget):
                     continue
                 if float(itemList[2]) < seller_payment:
                     continue
-                taobaoId = itemList[6]
+                taobaoId = itemList[6].split(' ')[0]
                 # 2011-3-9 3:57:00
                 ymdhms = re.match(r'(\d+)-(\d+)-(\d+) (\d+):(\d+):(\d+)', itemList[4]).groups()
                 seller_paytime = datetime(int(ymdhms[0]), int(ymdhms[1]), int(ymdhms[2]), int(ymdhms[3]), int(ymdhms[4]), int(ymdhms[5]))

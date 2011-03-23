@@ -24,6 +24,7 @@ class VerifyAction(AutoAction):
         self.alipayPassword = alipayPassword
         self.userPayMap = userPayMap
         self.view = None
+        self.items = []
         
     def myTaobao(self, frame):
         # See whether the current user login or not.
@@ -45,8 +46,12 @@ class VerifyAction(AutoAction):
     
     def listBoughtItems(self, frame):
         confirmUrlMap = {}
-        items = frame.findAllElements('table#J_BoughtTable tbody').toList()
-        for item in items:
+        self.items.extend(frame.findAllElements('table#J_BoughtTable tbody').toList())
+        nextPage = frame.findFirstElement('li.next-page a')
+        if not nextPage.isNull():
+            self.clickOn(nextPage)
+            return
+        for item in self.items:
             # taobao deal time: 2011-03-08 21:39
             dealTime = unicode(item.findFirst('span.deal-time').toPlainText())
             ymdhm = re.match(r'.*?(\d+)-(\d+)-(\d+) (\d+):(\d+).*?', dealTime).groups()
@@ -76,6 +81,7 @@ class VerifyAction(AutoAction):
                     print 'Begin Verify Request ...'
                     view.condition.acquire()
                     try:
+                        print u'taobaoId:' + taobaoId
                         userInfo = AutoAction.userInfoManager.getActiveUserByTaobaoId(taobaoId)
                         if userInfo:
                             if userInfo.status != UserInfo.Status_Confirmed_Payment:
@@ -90,7 +96,6 @@ class VerifyAction(AutoAction):
                     finally:
                         view.condition.release()
                     print 'End Verify Request ...'
-                self.autoAction.emit(SIGNAL('reload'), frame)
             
         self.asyncHandler = AsynHandler(self, confirmUrlMap, frame)
         self.asyncHandler.setDaemon(True)

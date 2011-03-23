@@ -65,7 +65,8 @@ class WebView(QWebView):
         pass
         
     def load_finished(self, status):
-        self.__class__.cookieJar.saveAllCookies()
+        # jiawzhang TODO: See whether this will resolve the item page is blocked issue.
+        # self.__class__.cookieJar.saveAllCookies()
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.sender()), self.sender().title())
         self.autoAction.perform(self.frame, self.url().toString(), self.userInfo)
     
