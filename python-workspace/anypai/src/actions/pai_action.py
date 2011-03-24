@@ -131,7 +131,7 @@ class PaiAction(AutoAction):
                     AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_Failed_Buy)
                     return
                     
-                if (datetime.now() - self.userInfo.last_status_time).seconds > 3600:
+                if (datetime.now() - self.userInfo.last_status_time).seconds >= 3600:
                     AutoAction.userInfoManager.setUserInfoStatus(self.userInfo, UserInfo.Status_RETRY)
                     return
                     

@@ -26,15 +26,15 @@ class UserInfoManager:
         if userInfo:
             # Succeed buy/Confirmed order and the last status time more than 31 days will allow to continue.
             if (userInfo.status == UserInfo.Status_Succeed_Buy or userInfo.status == UserInfo.Status_Confirmed_Payment):
-                if (datetime.now() - userInfo.last_status_time).days <= 31:
+                if (datetime.now() - userInfo.last_status_time).days < 31:
                     return
             # NotTo buy and the last status time more than 6 days will allow to continue.
             elif userInfo.status == UserInfo.Status_NotTo_Buy:
-                if (datetime.now() - userInfo.last_status_time).days <= 6:
+                if (datetime.now() - userInfo.last_status_time).days < 6:
                     return
             # Failed buy and the last status time more than 1 days will allow to continue.
             elif userInfo.status == UserInfo.Status_Failed_Buy:
-                if (datetime.now() - userInfo.last_status_time).days <= 1:
+                if (datetime.now() - userInfo.last_status_time).days < 1:
                     return
             elif userInfo.status == UserInfo.Status_RETRY:
                 pass
@@ -115,6 +115,9 @@ class AutoAction(QObject):
         "This is major for input box."
         keyupOnString = "var evObj = document.createEvent('UIEvents');evObj.initEvent( 'keyup', true, true );this.dispatchEvent(evObj);"
         return element.evaluateJavaScript(keyupOnString)
+    
+    def selectDropdownList(self, element, index):
+        return element.evaluateJavaScript("this.selectedIndex = {0}".format(index))
     
     def new_webview(self, view, link):
         view.load(QUrl(link))
