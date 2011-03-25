@@ -48,6 +48,6 @@ delete from user_info where id is null;
 
 insert into user_info(taobaoId, itemLink, wangwangLink, buyer_payment, seller_payment, status, last_status_time, active)
 values ('jiaweitestjiaweitest', 'jiaweitestjiaweitest', '', 9.9, 10, 1, datetime('now'), 1);
-
-
+
+select * from user_info where taobaoId like '»’%';
 

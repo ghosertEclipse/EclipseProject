@@ -148,8 +148,8 @@ class VerifyAction(AutoAction):
     
     def refund(self, frame):
         self.clickOn(frame.findFirstElement('input#good-unreceived'))
-        self.selectDropdownList(frame.findFirstElement('select#J_RefundReason2'), 3)
-        self.setValueOn(frame.findFirstElement('textarea#J_RefundInfo'), u'卖家没有发货')
+        self.selectDropdownList(frame.findFirstElement('select#J_RefundReason2'), 1)
+        self.setValueOn(frame.findFirstElement('textarea#J_RefundInfo'), u'卖家没货')
         ahkpython.sendAlipayPassword(self.alipayPassword)
         
         frame = frame.childFrames()[0]
