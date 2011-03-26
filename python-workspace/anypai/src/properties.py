@@ -3,5 +3,5 @@
 
 StoragePath = './storage/'
 
-MaxPaiThreadNum = 10
+MaxPaiThreadNum = 1
 WaitingSecondsOnItemPage = 3

@@ -33,24 +33,39 @@ class VerifyAction(AutoAction):
         if not isLogin.hasClass('user-nick'):
             self.clickOn(isLogin)
             return
-        infoCenter = frame.findAllElements('div.infocenter div.section ul li')
-        # 待付款 infoCenter[0]
-        # 待确认收货 infoCenter[1]
-        # 待评价 infoCenter[2]
-        confirmPayUrl = infoCenter[1].findFirst('a')
-        if confirmPayUrl.isNull():
-            print 'no item to be confirmed, finish verify flow'
-            return
         self.view = WebView(frame.page().view().tabWidget, self)
-        self.clickOn(confirmPayUrl)
+        self.clickOn(frame.findFirstElement('a#J_MyPurchases'))
     
-    def listBoughtItems(self, frame):
-        confirmUrlMap = {}
+    def __fetchAllItems(self, frame):
+        "Return True means all the itmes are fetched. Vice Verse"
+        noResults = frame.findFirstElement('table#J_BoughtTable tbody.msg')
+        if not noResults.isNull():
+            return True
         self.items.extend(frame.findAllElements('table#J_BoughtTable tbody').toList())
         nextPage = frame.findFirstElement('li.next-page a')
         if not nextPage.isNull():
             self.clickOn(nextPage)
+            return False
+        else:
+            return True
+        
+    def listBoughtItems(self, frame):
+        tradeSelect = frame.findFirstElement('select#J_TradeStatusHandle')
+        selectedTradeIndex = self.getSelectedIndex(tradeSelect)
+        if selectedTradeIndex == '0':
+            # select PAID option.
+            self.selectDropdownList(tradeSelect, 2)
+            return 
+        if selectedTradeIndex == '2':
+            if self.__fetchAllItems(frame):
+                # select SEND option.
+                self.selectDropdownList(tradeSelect, 3)
             return
+        if selectedTradeIndex == '3':
+            if not self.__fetchAllItems(frame):
+                return
+        
+        confirmUrlMap = {}
         for item in self.items:
             # taobao deal time: 2011-03-08 21:39
             dealTime = unicode(item.findFirst('span.deal-time').toPlainText())
@@ -59,8 +74,10 @@ class VerifyAction(AutoAction):
             taobaoId = unicode(item.findFirst('span.seller a').attribute('title', ''))
             seller_paytime = self.userPayMap.get(taobaoId)
             if seller_paytime != None and seller_paytime >= dealTime:
-                confirmUrl = unicode(item.findFirst('td.operate a').attribute('href', ''))
-                confirmUrlMap[taobaoId] = confirmUrl
+                operationUrl = item.findFirst('td.operate a')
+                if unicode(operationUrl.toPlainText()) == u'确认收货':
+                    confirmUrl = unicode(operationUrl.attribute('href', ''))
+                    confirmUrlMap[taobaoId] = confirmUrl
             elif (datetime.now() - dealTime).days >= 1:
                 desc = unicode(item.findFirst('td.after-service a').toPlainText())
                 if desc == u'申请退款':

@@ -117,7 +117,11 @@ class AutoAction(QObject):
         return element.evaluateJavaScript(keyupOnString)
     
     def selectDropdownList(self, element, index):
-        return element.evaluateJavaScript("this.selectedIndex = {0}".format(index))
+        element.evaluateJavaScript("this.options[{0}].selected = true;".format(index))
+        element.evaluateJavaScript("var evObj = document.createEvent('HTMLEvents');evObj.initEvent('change', true, true );this.dispatchEvent(evObj);")
+    
+    def getSelectedIndex(self, element):
+        return element.evaluateJavaScript("this.selectedIndex;").toString()
     
     def new_webview(self, view, link):
         view.load(QUrl(link))

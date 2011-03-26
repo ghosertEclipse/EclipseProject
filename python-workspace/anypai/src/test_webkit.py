@@ -18,7 +18,7 @@ from actions.verify_action import VerifyAction
 from properties import StoragePath
 
 # jiawzhang TODO:
-# 4. Automatically asking refund if the seller fail to delivery item.
+# 1. Rate with word-comments.
 
 class MainPanel(QWidget):
     def __init__(self, tabWidget = None):
